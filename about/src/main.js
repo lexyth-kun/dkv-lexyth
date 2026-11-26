@@ -5,10 +5,12 @@ import {
   validateContentSchema,
   resolveHeaderTheme,
   createTeamCarouselController,
+  createKeahlianDeckController,
   escapeHtml
 } from './ui-controllers.js';
 import { createWebGLStage } from './webgl-stage.js';
 import { createTeamPointCloudScene } from './scene-team.js';
+import { createKeahlianShardScene } from './scene-keahlian.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -410,6 +412,212 @@ function mountTeamSection(content, stage, mountEl) {
   }
 }
 
+function mountBrandsAndKeahlian(content, stage, mountEl) {
+  const { brands, keahlian } = content;
+
+  // 3A. Stacked Statement + 3-Layer Marquee ("DKV")
+  const brandsSec = document.createElement('section');
+  brandsSec.id = 'sec-brands';
+  brandsSec.className = 'sec sec-brands';
+  brandsSec.setAttribute('data-theme-section', 'brands');
+  brandsSec.setAttribute('aria-label', 'Prinsip Berkarya DKV');
+  const repeatTrack = (txt) => `${escapeHtml(txt)}`.repeat(4);
+
+  brandsSec.innerHTML = `
+    <div class="brands-statement-wrap">
+      <p class="brands-eyebrow">${escapeHtml(brands.eyebrow)}</p>
+      <h2 class="brands-statement">
+        ${brands.statement.map((line) => `<span class="brands-statement-line">${escapeHtml(line)}</span>`).join('')}
+      </h2>
+    </div>
+    <div class="marquee-stack" aria-hidden="true">
+      <div class="marquee-row marquee-row-1"><div class="marquee-track">${repeatTrack(brands.marqueeRows[0])}</div></div>
+      <div class="marquee-row marquee-row-2"><div class="marquee-track">${repeatTrack(brands.marqueeRows[1])}</div></div>
+      <div class="marquee-row marquee-row-3"><div class="marquee-track">${repeatTrack(brands.marqueeRows[2])}</div></div>
+    </div>
+  `;
+  mountEl.appendChild(brandsSec);
+
+  ScrollTrigger.create({
+    trigger: brandsSec,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: () => setSurfaceAndHeader('brands'),
+    onEnterBack: () => setSurfaceAndHeader('brands')
+  });
+
+  // 3B. KEAHLIAN 08 Pinned Interactive Swipe/Drag/Scroll Stage
+  const firstSkill = keahlian.items[0];
+  const keahlianSec = document.createElement('section');
+  keahlianSec.id = 'sec-keahlian';
+  keahlianSec.className = 'sec sec-keahlian';
+  keahlianSec.setAttribute('data-theme-section', 'keahlian');
+  keahlianSec.setAttribute('aria-label', 'Delapan Keahlian Utama DKV');
+  keahlianSec.innerHTML = `
+    <div id="keahlianViewport" class="keahlian-pin-viewport">
+      <div class="keahlian-top-bar">
+        <div class="keahlian-heading-group">
+          <h2 class="keahlian-title">${escapeHtml(keahlian.title)}</h2>
+          <span class="keahlian-count">${escapeHtml(keahlian.count)}</span>
+        </div>
+        <p class="keahlian-hint">${escapeHtml(keahlian.hint)}</p>
+      </div>
+
+      <div class="keahlian-watermark" aria-hidden="true">${escapeHtml(keahlian.watermark)}</div>
+
+      <div class="keahlian-bottom-stage">
+        <article class="keahlian-card" aria-live="polite">
+          <div class="keahlian-card-meta">
+            <span id="keahlianItemIndex">${escapeHtml(firstSkill.index)} / ${escapeHtml(keahlian.count)}</span>
+            <span id="keahlianItemSub" class="keahlian-card-sub">${escapeHtml(firstSkill.sublabel)}</span>
+          </div>
+          <h3 id="keahlianItemTitle" class="keahlian-card-title">${escapeHtml(firstSkill.title)}</h3>
+          <p id="keahlianItemDesc" class="keahlian-card-desc">${escapeHtml(firstSkill.description)}</p>
+        </article>
+
+        <div class="keahlian-nav-panel">
+          <div class="keahlian-arrows">
+            <button id="keahlianPrevBtn" type="button" class="team-arrow-btn" aria-label="Keahlian sebelumnya">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button id="keahlianNextBtn" type="button" class="team-arrow-btn team-arrow-btn-primary" aria-label="Keahlian berikutnya">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+          <div id="keahlianIndexStrip" class="keahlian-index-strip" role="tablist" aria-label="Pilih keahlian DKV">
+            ${keahlian.items
+              .map(
+                (item, idx) => `
+              <button
+                type="button"
+                role="tab"
+                class="keahlian-index-btn"
+                data-skill-idx="${idx}"
+                aria-selected="${idx === 0 ? 'true' : 'false'}"
+                aria-label="Keahlian ${escapeHtml(item.index)}: ${escapeHtml(item.title)}"
+              >${escapeHtml(item.index)}</button>`
+              )
+              .join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  mountEl.appendChild(keahlianSec);
+
+  let shardScene = null;
+  if (stage.isWebGL && stage.THREE) {
+    shardScene = createKeahlianShardScene(stage.THREE, stage.isMobile);
+    stage.registerScene('keahlian', shardScene);
+  }
+
+  const deck = createKeahlianDeckController(keahlian.items.length);
+  const idxEl = keahlianSec.querySelector('#keahlianItemIndex');
+  const subEl = keahlianSec.querySelector('#keahlianItemSub');
+  const titleEl = keahlianSec.querySelector('#keahlianItemTitle');
+  const descEl = keahlianSec.querySelector('#keahlianItemDesc');
+  const tabBtns = Array.from(keahlianSec.querySelectorAll('.keahlian-index-btn'));
+
+  let activeIdx = 0;
+  const renderSkill = (nextIdx) => {
+    activeIdx = nextIdx;
+    const item = keahlian.items[nextIdx];
+    if (idxEl) idxEl.textContent = `${item.index} / ${keahlian.count}`;
+    if (subEl) subEl.textContent = item.sublabel;
+    if (titleEl) titleEl.textContent = item.title;
+    if (descEl) descEl.textContent = item.description;
+    tabBtns.forEach((btn, i) => btn.setAttribute('aria-selected', String(i === nextIdx)));
+    stage.setState({ keahlianIndex: nextIdx });
+    shardScene?.spinToIndex(nextIdx);
+  };
+
+  let keahlianTrigger = null;
+  const goToSkill = (nextIdx, syncScroll = true) => {
+    const clamped = deck.setIndex(nextIdx);
+    renderSkill(clamped);
+    if (syncScroll && keahlianTrigger && !prefersReducedMotion) {
+      const span = keahlianTrigger.end - keahlianTrigger.start;
+      const denom = Math.max(1, keahlian.items.length - 1);
+      window.scrollTo({ top: keahlianTrigger.start + (clamped / denom) * span, behavior: 'smooth' });
+    }
+  };
+
+  keahlianSec.querySelector('#keahlianPrevBtn')?.addEventListener('click', () => goToSkill(activeIdx - 1));
+  keahlianSec.querySelector('#keahlianNextBtn')?.addEventListener('click', () => goToSkill(activeIdx + 1));
+  tabBtns.forEach((btn, idx) => btn.addEventListener('click', () => goToSkill(idx)));
+
+  // Pointer drag/swipe support on stage
+  const vp = keahlianSec.querySelector('#keahlianViewport');
+  let dragStartX = null;
+  vp?.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('button')) return;
+    dragStartX = e.clientX;
+  });
+  vp?.addEventListener('pointermove', (e) => {
+    if (dragStartX === null) return;
+    stage.setState({ keahlianDrag: e.clientX - dragStartX });
+  });
+  const endDrag = (e) => {
+    if (dragStartX === null) return;
+    const delta = e.clientX - dragStartX;
+    dragStartX = null;
+    stage.setState({ keahlianDrag: 0 });
+    const nextIdx = deck.applyDragDelta(delta, 44);
+    if (nextIdx !== activeIdx) goToSkill(nextIdx, false);
+  };
+  vp?.addEventListener('pointerup', endDrag);
+  vp?.addEventListener('pointercancel', endDrag);
+
+  keahlianSec.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      goToSkill(activeIdx + 1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToSkill(activeIdx - 1);
+    }
+  });
+
+  if (!prefersReducedMotion) {
+    keahlianTrigger = ScrollTrigger.create({
+      trigger: keahlianSec,
+      start: 'top top',
+      end: '+=2800',
+      pin: true,
+      scrub: 0.5,
+      onEnter() {
+        setSurfaceAndHeader('keahlian');
+        stage.setState({ activeScene: 'keahlian' });
+      },
+      onEnterBack() {
+        setSurfaceAndHeader('keahlian');
+        stage.setState({ activeScene: 'keahlian' });
+      },
+      onLeaveBack() {
+        setSurfaceAndHeader('brands');
+        stage.setState({ activeScene: 'team' });
+      },
+      onUpdate(self) {
+        const nextIdx = deck.setFromProgress(self.progress);
+        stage.setState({ activeScene: 'keahlian', keahlianProgress: self.progress, keahlianIndex: nextIdx });
+        if (nextIdx !== activeIdx) renderSkill(nextIdx);
+      }
+    });
+  } else {
+    ScrollTrigger.create({
+      trigger: keahlianSec,
+      start: 'top center',
+      end: 'bottom center',
+      onEnter: () => stage.setState({ activeScene: 'keahlian' }),
+      onEnterBack: () => stage.setState({ activeScene: 'keahlian' })
+    });
+  }
+}
+
 async function bootstrap() {
   const banner = document.getElementById('dataStateBanner');
   let content = null;
@@ -453,6 +661,7 @@ async function bootstrap() {
   initHeroScrollChoreography(stage);
   if (mountEl) {
     mountTeamSection(content, stage, mountEl);
+    mountBrandsAndKeahlian(content, stage, mountEl);
   }
   setSurfaceAndHeader('hero');
 

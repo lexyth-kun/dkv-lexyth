@@ -911,6 +911,291 @@ button:disabled,
   color: #E8EBF5;
 }
 
+/* =========================================================
+   SECTION 3A: BRANDS STATEMENT + 3-LAYER "DKV" MARQUEE (#000000)
+   ========================================================= */
+.sec-brands {
+  background: #000000;
+  color: #FFFFFF;
+  padding: clamp(88px, 14vh, 148px) 0 clamp(72px, 11vh, 128px);
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brands-statement-wrap {
+  max-width: 1240px;
+  margin: 0 auto clamp(56px, 9vh, 104px);
+  padding: 0 clamp(20px, 4vw, 48px);
+}
+
+.brands-eyebrow {
+  margin: 0 0 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--ink-muted-dark);
+}
+
+.brands-statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.8vw, 72px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+}
+
+.brands-statement-line {
+  display: block;
+}
+
+.brands-statement-line:nth-child(2) {
+  color: #B5B8C4;
+}
+
+.marquee-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-row {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-right: 0.4em;
+}
+
+.marquee-row-1 .marquee-track {
+  font-size: clamp(22px, 3vw, 42px);
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  animation: marqueeLeft 28s linear infinite;
+}
+
+.marquee-row-2 .marquee-track {
+  font-size: clamp(72px, 13vw, 178px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: 0.06em;
+  color: transparent;
+  -webkit-text-stroke: clamp(1.2px, 0.16vw, 2.2px) rgba(255, 255, 255, 0.78);
+  animation: marqueeRight 24s linear infinite;
+}
+
+.marquee-row-3 .marquee-track {
+  font-size: clamp(18px, 2.2vw, 30px);
+  letter-spacing: 0.1em;
+  color: #B5B8C4;
+  animation: marqueeLeft 32s linear infinite;
+}
+
+html.is-motion-paused .marquee-track {
+  animation-play-state: paused !important;
+}
+
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+/* =========================================================
+   SECTION 3B: KEAHLIAN 08 PINNED 3D SHARD DECK (#000000)
+   ========================================================= */
+.sec-keahlian {
+  background: transparent;
+  color: #FFFFFF;
+}
+
+.keahlian-pin-viewport {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 680px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 12px) clamp(20px, 4vw, 48px) clamp(24px, 4vh, 44px);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.keahlian-top-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.keahlian-heading-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.keahlian-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.keahlian-count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.keahlian-hint {
+  margin: 6px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-muted-dark);
+}
+
+.keahlian-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(76px, 16vw, 240px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.16);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.keahlian-bottom-stage {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+}
+
+.keahlian-card {
+  max-width: 560px;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: clamp(18px, 2.6vw, 28px);
+}
+
+.keahlian-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--accent-cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.keahlian-card-meta > span:first-child {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.keahlian-card-sub {
+  color: var(--ink-muted-dark);
+}
+
+.keahlian-card-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+
+.keahlian-card-desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #E4E6EE;
+}
+
+.keahlian-nav-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.keahlian-arrows {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.keahlian-index-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.keahlian-index-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.65);
+  color: #D2D6E4;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.keahlian-index-btn:hover {
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.keahlian-index-btn[aria-selected="true"] {
+  background: #FFFFFF;
+  color: #09090B;
+  border-color: #FFFFFF;
+}
+
 /* Fullscreen Next-Page Transition Overlay */
 .page-transition-overlay {
   position: fixed;
@@ -975,6 +1260,19 @@ button:disabled,
     font-size: clamp(120px, 28vw, 200px);
     opacity: 0.72;
   }
+
+  .keahlian-bottom-stage {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .keahlian-nav-panel {
+    align-items: flex-start;
+  }
+
+  .keahlian-index-strip {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1030,6 +1328,22 @@ button:disabled,
   .team-fixed-bio {
     font-size: 13px;
     line-height: 1.5;
+  }
+
+  .keahlian-hint {
+    display: none;
+  }
+
+  .keahlian-card {
+    padding: 16px;
+  }
+
+  .keahlian-card-desc {
+    font-size: 14px;
+  }
+
+  .keahlian-index-strip {
+    gap: 4px;
   }
 }
 
