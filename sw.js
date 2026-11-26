@@ -1,7 +1,7 @@
 /* ============================================================================
  * BINA BANGSA NEXUS — SERVICE WORKER (PWA OFFLINE SHELL & SMART CACHE)
  * ============================================================================ */
-const SW_VERSION = "bb-nexus-pwa-v34";
+const SW_VERSION = "bb-nexus-pwa-v35";
 const STATIC_CACHE = `bb-static-${SW_VERSION}`;
 const RUNTIME_CACHE = `bb-runtime-${SW_VERSION}`;
 
@@ -106,7 +106,9 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith("/assets/dashboard-ui.css") ||
     url.pathname.endsWith("/assets/index-D0mw0hQR.js") ||
     url.pathname.endsWith("/assets/lusion-experience.js") ||
-    url.pathname.endsWith("/assets/lusion-experience.css");
+    url.pathname.endsWith("/assets/lusion-experience.css") ||
+    url.pathname.startsWith("/about/dist/") ||
+    url.pathname.endsWith("/about/content.json");
 
   if (isNav || isCoreAsset) {
     event.respondWith(

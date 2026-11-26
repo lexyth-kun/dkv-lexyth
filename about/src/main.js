@@ -1185,7 +1185,7 @@ async function bootstrap() {
   let content = null;
 
   try {
-    const res = await fetch('/about/content.json', { cache: 'no-cache' });
+    const res = await fetch('/about/content.json?v=20261126d', { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     content = await res.json();
     const check = validateContentSchema(content);

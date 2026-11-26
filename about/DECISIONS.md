@@ -10,7 +10,7 @@
 
 ## 2. Keputusan dari Konfirmasi Charles (A1–A5)
 1. **Mode Antislop (`AFTER`):** Aturan anti-slop dari Prompt B.4 tetap dipatuhi selama build, lalu audit bernomor Mode AFTER ditulis di `about/anti-slop/audit-001-2026-11-26.md` beserta laporan Delivery Gate sebelum penyerahan.
-2. **Isolasi 100% Folder `/about/`:** Nol perubahan pada `index.html`, `assets/index-D0mw0hQR.js`, atau halaman lain di `dkv-lexyth`. Seluruh sumber kode, aset baru (`adrian-lusion-portrait.webp`, `logo.webp`, `materi-01..03.webp`), bundle, pengujian, dokumentasi, dan tangkapan layar disimpan di dalam `/about/`.
+2. **Isolasi Halaman & Handoff Rute Beranda -> `/about/`:** Seluruh kode visual, aset, bundle, pengujian, dan dokumentasi halaman About tetap terisolasi di dalam folder `/about/`. Atas laporan pengguna bahwa klik `ABOUT` dari Beranda masih menampilkan tampilan lama karena SPA router di `assets/index-D0mw0hQR.js` mencegat `navigateTo("about")` dan Service Worker `sw.js` menyimpan cache lama (`v34`), ditambahkan 1 baris handoff `window.location.href="/about/"` pada `navigateTo("about")` (tanpa mengubah tampilan Beranda sama sekali) plus pembaruan versi `sw.js` ke `bb-nexus-pwa-v35` (Network-First untuk `/about/dist/*` & `/about/content.json`).
 3. **Menu Dropdown & Bar Hitam Next-Page:**
    - Karena codebase DKV tidak memiliki backend newsletter maupun halaman LABS, Menu Dropdown hanya menampilkan 4 tautan nyata (`BERANDA /`, `TENTANG /about/`, `MATERI /materi-siswa`, `KUMPUL TUGAS /kumpul-tugas`) tanpa form palsu dan tanpa kartu ketiga fiktif.
    - Bar Hitam Next-Page di bawah Footer diarahkan ke `/database-tugas` (`Galeri Karya Siswa`).
