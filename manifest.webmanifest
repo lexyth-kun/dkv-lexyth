@@ -1,0 +1,65 @@
+{
+  "id": "/?source=pwa",
+  "name": "Portal Akademik — SMK Bina Bangsa",
+  "short_name": "Portal DKV",
+  "description": "Portal Akademik SMK Bina Bangsa: Absensi QR, Tugas Siswa, Penilaian KKM, dan Jadwal Mengajar.",
+  "lang": "id",
+  "dir": "ltr",
+  "start_url": "/dashboard-guru.html?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#0a0f1d",
+  "background_color": "#ffffff",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png?v=bb2",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png?v=bb2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png?v=bb2",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png?v=bb2",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Absensi & QR Google Lens",
+      "short_name": "Absensi QR",
+      "description": "Buka halaman khusus Absensi & Proyektor QR Google Lens",
+      "url": "/dashboard-guru.html?tab=absen",
+      "icons": [{ "src": "/icons/icon-192.png?v=bb2", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Database Tugas Masuk",
+      "short_name": "Database Tugas",
+      "description": "Buka halaman khusus evaluasi Database Tugas siswa",
+      "url": "/dashboard-guru.html?tab=tugas",
+      "icons": [{ "src": "/icons/icon-192.png?v=bb2", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Kumpul Tugas Terbuka",
+      "short_name": "Kumpul Tugas",
+      "description": "Kirim tugas video, poster, atau proyek siswa tanpa login",
+      "url": "/kumpul-tugas.html?shortcut=submit",
+      "icons": [{ "src": "/icons/icon-192.png?v=bb2", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

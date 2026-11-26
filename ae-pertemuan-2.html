@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 2 After Effects — 10 Teknik Teks Animasi Tanpa Plugin (Tugas 1 AE)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #3730A3;
+      --primary-light: #EEF2FF;
+      --accent-sky: #818CF8;
+      --bg-stage: #070913;
+      --slide-bg: #FFFFFF;
+      --text-heading: #1E1B4B;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --border-card: rgba(79, 70, 229, 0.25);
+      --border-subtle: rgba(79, 70, 229, 0.14);
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      padding: 75px 0 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+    }
+    .floating-nav-bar {
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 1000;
+      background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(16px);
+      border: 1px solid rgba(129, 140, 248, 0.35); border-radius: 999px;
+      padding: 8px 20px; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); max-width: 95vw;
+    }
+    .nav-brand-title { font-family: var(--font-heading); font-size: 10.5px; color: #FFFFFF; letter-spacing: 0.06em; }
+    .nav-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.2); }
+    .nav-link-btn { color: #A5B4FC; text-decoration: none; font-size: 12.5px; font-weight: 700; }
+    .slide-counter-pill {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      background: rgba(79, 70, 229, 0.35); border: 1px solid rgba(129, 140, 248, 0.45);
+      color: #C7D2FE; padding: 4px 12px; border-radius: 999px;
+    }
+    .slide {
+      width: 1440px; min-height: 810px; max-width: 96vw;
+      background-color: var(--slide-bg); border: 1.5px solid var(--border-card);
+      border-radius: 20px; position: relative; display: flex; flex-direction: column;
+      justify-content: space-between; padding: 46px 64px;
+      box-shadow: 0 25px 60px rgba(79, 70, 229, 0.15);
+    }
+    .slide-title-mixed { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+    .title-script { font-family: var(--font-script); font-size: 62px; color: var(--primary); line-height: 0.9; }
+    .title-serif { font-family: var(--font-heading); font-size: 25px; color: var(--text-heading); }
+    .slide-subtitle { font-size: 15.5px; color: var(--text-secondary); line-height: 1.5; }
+    .slide-subtitle strong { color: var(--primary-dark); }
+    .slide-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; margin: 16px 0; }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-box {
+      background: #FFFFFF; border: 1.5px solid var(--border-card); border-radius: 16px;
+      padding: 20px 22px; display: flex; flex-direction: column; gap: 9px;
+    }
+    .card-badge {
+      display: inline-block; align-self: flex-start; background: var(--primary-light);
+      color: var(--primary-dark); border: 1px solid var(--border-card);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .card-title { font-size: 17.5px; font-weight: 800; color: var(--text-heading); line-height: 1.3; }
+    .card-body { font-size: 14px; color: var(--text-body); line-height: 1.58; }
+    .card-body ul, .card-body ol { padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+    kbd {
+      background: #EEF2FF; color: #3730A3; border: 1px solid #818CF8;
+      border-radius: 6px; padding: 2px 7px; font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    }
+    .pr-shortcut-banner {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      border: 1.5px solid rgba(129, 140, 248, 0.45); border-radius: 14px;
+      padding: 13px 18px; margin-top: 12px; display: flex; align-items: center;
+      gap: 14px; flex-wrap: wrap; color: #F8FAFC;
+    }
+    .pr-shortcut-tag {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #C7D2FE;
+      background: rgba(129, 140, 248, 0.2); border: 1px solid rgba(129, 140, 248, 0.4);
+      padding: 4px 10px; border-radius: 6px;
+    }
+    .pr-tutorial-text { font-size: 13.5px; line-height: 1.45; color: #E0E7FF; flex: 1; }
+    .slide-footer-meta {
+      display: flex; justify-content: space-between; font-family: var(--font-mono);
+      font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border-subtle); padding-top: 12px;
+    }
+    .btn-cta-submit {
+      display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 13px 18px; background: linear-gradient(135deg, #4F46E5, #3730A3);
+      color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 13.5px;
+      border-radius: 12px; box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 2 (PL).pdf" data-pdf-mode="auto">
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">← Beranda</a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">AE PERTEMUAN 02 • 10 TEKS ANIMASI</span>
+    <span class="slide-counter-pill">10 SLIDE RESEP</span>
+  </nav>
+
+  <!-- SLIDE 1 -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Pertemuan 02</span>
+        <span class="title-serif">10 TEKNIK TEKS ANIMASI SINEMATIK (TANPA PLUGIN)</span>
+      </div>
+      <p class="slide-subtitle">Belajar <strong>10 Gaya Teks Animasi Profesional</strong> di After Effects untuk dipakai pada <strong>Bumper Opening Logo Studio Film Animasi</strong> milikmu!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">🎬 DAFTAR 10 TEKS ANIMASI YANG KITA PELAJARI</span>
+          <h3 class="card-title">Berdasarkan Referensi Smertimba Graphics</h3>
+          <div class="card-body">
+            <ol>
+              <li><strong>Smooth Position</strong> (00:15) — Huruf naik bergantian dengan halus</li>
+              <li><strong>Smooth Scale</strong> (01:01) — Huruf tumbuh membesar per karakter</li>
+              <li><strong>Flicker</strong> (01:29) — Efek lampu neon berkedip acak</li>
+              <li><strong>Smooth Fade</strong> (02:02) — Muncul lembut dari kiri ke kanan</li>
+              <li><strong>Typewriter</strong> (02:24) — Efek ketikan mesin ketik</li>
+              <li><strong>Pop Up</strong> (02:46) — Teks membal naik per kata</li>
+              <li><strong>Masking Position</strong> (03:21) — Muncul dari balik garis jendela</li>
+              <li><strong>Snappy Position</strong> (04:19) — Melesat cepat + huruf melebar</li>
+              <li><strong>3D Flip</strong> (05:03) — Huruf berputar 3 dimensi</li>
+              <li><strong>Cinematic Blur</strong> (05:34) — Buram sinematik trailer film!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="justify-content:space-between;">
+          <div>
+            <span class="card-badge">▶️ VIDEO TUTORIAL REFERENSI RESMI</span>
+            <h3 class="card-title">Tonton &amp; Ikuti Langsung sambil Membaca Slide Ini</h3>
+            <div class="card-body">
+              <p style="margin-bottom:10px;">Seluruh angka parameter di slide ini dirangkum langsung dari video <strong>"10 Text Animations in After Effects"</strong> agar kamu tidak perlu bingung menebak tombol mana yang diklik!</p>
+              <ul>
+                <li><strong>Font yang disarankan:</strong> <code>Montserrat Bold</code> (warna Putih di atas Background Gelap).</li>
+                <li><strong>Ukuran Kanvas:</strong> <kbd>Ctrl + N</kbd> (1920x1080p, 30 fps).</li>
+              </ul>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/watch?v=lRYGnwitZpY&t=117s" target="_blank" rel="noopener noreferrer" class="btn-cta-submit">
+            ▶️ BUKA VIDEO YOUTUBE (10 TEKS ANIMASI) ↗
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>PERTEMUAN 02 • 10 TEXT ANIMATIONS IN AFTER EFFECTS</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: RUMUS KUNCI TEXT ANIMATOR -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Rumus Dasar</span>
+        <span class="title-serif">CARA MEMBUKA MENU 'ANIMATE ▶' &amp; RUMUS RAMP UP</span>
+      </div>
+      <p class="slide-subtitle">8 dari 10 teks animasi ini menggunakan <strong>1 rumus dasar yang sama</strong> di dalam menu <strong>Text Animator</strong>:</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">KLIK 1: KETIK &amp; BUKA SEGITIGA</span>
+          <h3 class="card-title">Klik Tombol Kecil <code>Animate: ▶</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Tekan <kbd>Ctrl + T</kbd> dan ketik teks nama studiomu di tengah layar.</li>
+              <li>Di Timeline bawah, klik <strong>segitiga kecil</strong> di sebelah kiri layer teks.</li>
+              <li>Di sebelah kanan kata <em>Text</em>, klik tombol bulat kecil bertuliskan <strong><code>Animate: ▶</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">KLIK 2: BUKA ADVANCED</span>
+          <h3 class="card-title">Ubah <code>Shape</code> Jadi <code>Ramp Up</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Setelah memilih properti (misal <em>Position</em> atau <em>Scale</em>), buka <strong><code>Range Selector 1</code></strong>.</li>
+              <li>Buka sub-menu <strong><code>Advanced</code></strong> di dalamnya.</li>
+              <li>Ubah <strong>Shape</strong> dari <em>Square</em> menjadi <strong><code>Ramp Up</code></strong>!</li>
+              <li>Isi <strong>Ease Low = <code>100%</code></strong> (atau <code>50%</code>) agar gerakannya mulus seperti gelombang!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">KLIK 3: GERAKKAN OFFSET</span>
+          <h3 class="card-title">Keyframe <code>Offset: -100%</code> ke <code>100%</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Di detik <code>00:00</code>: klik ikon Jam pada <strong><code>Offset</code></strong> lalu isi angkanya <strong><code>-100%</code></strong>.</li>
+              <li>Geser waktu ke detik <code>01:15</code>: ubah angka <strong><code>Offset</code></strong> menjadi <strong><code>100%</code></strong>!</li>
+              <li>Tekan <kbd>Spasi</kbd>—hurufmu akan bergerak satu per satu secara otomatis!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RUMUS INTI TEXT ANIMATOR: SHAPE RAMP UP + OFFSET (-100% KE 100%)</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: TEKS #1 SMOOTH POSITION & #2 SMOOTH SCALE -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Teks 01 &amp; 02</span>
+        <span class="title-serif">1. SMOOTH POSITION (00:15) &amp; 2. SMOOTH SCALE (01:01)</span>
+      </div>
+      <p class="slide-subtitle">Dua animasi teks paling populer dan bersih untuk menampilkan nama studio di bawah logo.</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">TEKS #1: SMOOTH POSITION (MENIT 00:15)</span>
+          <h3 class="card-title">Huruf Naik Bergelombang Sambil Muncul Halus</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶</code> &rarr; pilih <code>Position</code></strong>.</li>
+              <li>Di sebelah <em>Animator 1</em>, klik <strong><code>Add: ▶ &rarr; Property &rarr; Opacity</code></strong>.</li>
+              <li>Ubah nilai <strong>Position Y = <code>120</code></strong> (turun) dan <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>: ubah <strong>Shape = <code>Ramp Up</code></strong>, isi <strong>Ease Low = <code>100%</code></strong>.</li>
+              <li>Pasang keyframe <strong><code>Offset</code></strong>: detik <code>00:00</code> isi <strong><code>-100%</code></strong> &rarr; detik <code>01:15</code> isi <strong><code>100%</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TEKS #2: SMOOTH SCALE (MENIT 01:01)</span>
+          <h3 class="card-title">Huruf Tumbuh Membesar Satu per Satu dari 0%</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶</code> &rarr; pilih <code>Scale</code></strong> (dan tambahkan <strong><code>Add: ▶ &rarr; Property &rarr; Opacity</code></strong>).</li>
+              <li>Ubah nilai <strong>Scale = <code>0%</code></strong> dan <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>: ubah <strong>Shape = <code>Ramp Up</code></strong>, isi <strong>Ease High = <code>50%</code></strong> dan <strong>Ease Low = <code>50%</code></strong>.</li>
+              <li>Pasang keyframe <strong><code>Offset</code></strong>: detik <code>00:00</code> isi <strong><code>-100%</code></strong> &rarr; detik <code>01:15</code> isi <strong><code>100%</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RESEP #1 SMOOTH POSITION &amp; #2 SMOOTH SCALE</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: TEKS #3 FLICKER & #4 SMOOTH FADE -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Teks 03 &amp; 04</span>
+        <span class="title-serif">3. FLICKER NEON (01:29) &amp; 4. SMOOTH FADE (02:02)</span>
+      </div>
+      <p class="slide-subtitle">Hanya dengan 1 properti <strong>Opacity</strong>, kita bisa membuat efek kedip lampu neon maupun kemunculan selembut sutra!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TEKS #3: FLICKER / KEDIP ACAK (MENIT 01:29)</span>
+          <h3 class="card-title">Huruf Menyala Berkedip Acak Seperti Lampu Sci-Fi</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶</code> &rarr; pilih <code>Opacity</code></strong>, lalu isi <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>:
+                <ul>
+                  <li>Ubah <strong>Smoothness = <code>0%</code></strong> (agar kedipannya tegas, tidak abu-abu).</li>
+                  <li>Ubah <strong>Randomize Order = <code>ON</code></strong> (agar urutan huruf yang berkedip diacak!).</li>
+                </ul>
+              </li>
+              <li>Pasang keyframe pada <strong><code>Start</code></strong>: detik <code>00:00</code> isi <strong><code>0%</code></strong> &rarr; detik <code>01:15</code> isi <strong><code>100%</code></strong> (atau goyangkan <em>Random Seed</em>)!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">TEKS #4: SMOOTH FADE (MENIT 02:02)</span>
+          <h3 class="card-title">Huruf Muncul Menyapu Lembut dari Kiri ke Kanan</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶</code> &rarr; pilih <code>Opacity</code></strong>, lalu isi <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>:
+                <ul>
+                  <li>Ubah <strong>Shape = <code>Ramp Up</code></strong>.</li>
+                  <li>Isi <strong>Ease High = <code>50%</code></strong> dan <strong>Ease Low = <code>50%</code></strong>.</li>
+                </ul>
+              </li>
+              <li>Pasang keyframe pada <strong><code>Offset</code></strong>: detik <code>00:00</code> isi <strong><code>-100%</code></strong> &rarr; detik <code>01:15</code> isi <strong><code>100%</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RESEP #3 FLICKER &amp; #4 SMOOTH FADE</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: TEKS #5 TYPEWRITER & #6 POP UP -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Teks 05 &amp; 06</span>
+        <span class="title-serif">5. TYPEWRITER (02:24) &amp; 6. POP UP BOUNCE (02:46)</span>
+      </div>
+      <p class="slide-subtitle">Efek ketikan satu per satu dan efek teks membal yang energik!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">TEKS #5: TYPEWRITER / MESIN KETIK (MENIT 02:24)</span>
+          <h3 class="card-title">Huruf Muncul Satu Demi Satu Seperti Diketik</h3>
+          <div class="card-body">
+            <p style="margin-bottom:6px;"><strong>Cara Paling Cepat (1 Detik):</strong> Ketik <code>Typewriter</code> di panel <em>Effects &amp; Presets</em> kanan lalu tarik ke teks!</p>
+            <p style="margin-bottom:6px;"><strong>Cara Manual (Sesuai Video):</strong></p>
+            <ol>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Opacity</code></strong> (isi <strong><code>0%</code></strong>).</li>
+              <li>Buka <em>Advanced</em>: ubah <strong>Smoothness = <code>0%</code></strong> (biarkan <em>Randomize Order = OFF</em>).</li>
+              <li>Pasang keyframe pada <strong><code>Start</code></strong>: detik <code>00:00</code> isi <strong><code>0%</code></strong> &rarr; detik <code>01:15</code> isi <strong><code>100%</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TEKS #6: POP UP (MENIT 02:46)</span>
+          <h3 class="card-title">Teks Muncul Membal Dinamis</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Scale</code></strong>, isi <strong>Scale = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>: ubah <strong>Shape = <code>Ramp Up</code></strong>, <strong>Ease Low = <code>100%</code></strong>, dan ubah <strong>Based On = <code>Words</code></strong> (jika ingin muncul per kata) atau <code>Characters</code>.</li>
+              <li>Gerakkan <strong><code>Offset</code></strong> dari <strong><code>-100%</code></strong> ke <strong><code>100%</code></strong>, lalu duplikasi Animator (<kbd>Ctrl + D</kbd>) dengan Scale <code>115%</code> agar ada efek membal (<em>overshoot</em>)!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RESEP #5 TYPEWRITER &amp; #6 POP UP</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: TEKS #7 MASKING POSITION & #8 SNAPPY POSITION -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Teks 07 &amp; 08</span>
+        <span class="title-serif">7. MASKING POSITION (03:21) &amp; 8. SNAPPY POSITION (04:19)</span>
+      </div>
+      <p class="slide-subtitle">Dua teknik favorit untuk menampilkan judul utama dan slogan di bawah logo studio!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TEKS #7: MASKING POSITION (MENIT 03:21)</span>
+          <h3 class="card-title">Teks Naik dari Balik Garis Jendela Tak Terlihat</h3>
+          <div class="card-body">
+            <ol>
+              <li><strong>Pastikan layer Teks sedang terpilih (diklik)!</strong></li>
+              <li>Ambil <strong>Rectangle Tool (<kbd>Q</kbd>)</strong> di Toolbar atas, lalu gambar kotak pas mengelilingi tulisanmu (otomatis menjadi <em>Mask 1</em>).</li>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Position</code></strong>.</li>
+              <li>Di detik <code>00:00</code>: klik ikon Jam <em>Position</em> (di dalam Animator 1) dan tarik angka Y ke bawah sampai teks bersembunyi di luar kotak.</li>
+              <li>Di detik <code>01:00</code>: ubah angka Position kembali ke <strong><code>0, 0</code></strong>. Tekan <kbd>F9</kbd> dan tarik kurva <em>Speed Graph</em> ke tengah agar melesat mulus!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">TEKS #8: SNAPPY POSITION (MENIT 04:19)</span>
+          <h3 class="card-title">Melesat Cepat + Huruf Merenggang (Tracking)</h3>
+          <div class="card-body">
+            <ol>
+              <li>Tekan <kbd>P</kbd> (Position): gerakkan teks meluncur dari kiri ke tengah layar (detik <code>00:00</code> ke <code>01:00</code>), tekan <kbd>F9</kbd> &amp; tarik <em>Speed Graph</em> tajam.</li>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Tracking</code></strong> (pengatur jarak antar-huruf).</li>
+              <li>Di detik <code>00:00</code> isi <strong>Tracking Amount = <code>-20</code></strong> (rapat), lalu di detik <code>01:15</code> ubah menjadi <strong><code>25</code></strong> (melebar) + tekan <kbd>F9</kbd>!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RESEP #7 MASKING POSITION &amp; #8 SNAPPY POSITION</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: TEKS #9 3D FLIP & #10 CINEMATIC BLUR -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Teks 09 &amp; 10</span>
+        <span class="title-serif">9. 3D FLIP (05:03) &amp; 10. CINEMATIC BLUR (05:34)</span>
+      </div>
+      <p class="slide-subtitle">Dua efek paling sinematik yang wajib kamu coba untuk <strong>Nama Studio Film Animasi</strong> milikmu!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">TEKS #9: 3D FLIP / PUTAR HURUF 3D (MENIT 05:03)</span>
+          <h3 class="card-title">Setiap Huruf Berputar 90 Derajat Seperti Papan Bandara</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Enable Per-character 3D</code></strong> (muncul ikon kubus ganda pada layer teks).</li>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Rotation</code></strong>, lalu klik <strong><code>Add: ▶ &rarr; Property &rarr; Opacity</code></strong>.</li>
+              <li>Ubah <strong>X Rotation = <code>-90°</code></strong> (tidur ke belakang) dan <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>: ubah <strong>Shape = <code>Ramp Up</code></strong>, <strong>Ease Low = <code>50%</code></strong>.</li>
+              <li>Gerakkan keyframe <strong><code>Offset</code></strong> dari <strong><code>-100%</code></strong> ke <strong><code>100%</code></strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">⭐ TEKS #10: CINEMATIC BLUR (MENIT 05:34)</span>
+          <h3 class="card-title">Efek Buram Bioskop (Paling Cocok untuk Bumper Studio!)</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong><code>Animate: ▶ &rarr; Blur</code></strong>.</li>
+              <li>Klik <strong><code>Add: ▶ &rarr; Property &rarr; Opacity</code></strong> (dan boleh tambah <em>Position / Scale</em> sedikit).</li>
+              <li>Isi angka <strong>Blur = <code>50</code></strong> dan <strong>Opacity = <code>0%</code></strong>.</li>
+              <li>Buka <em>Range Selector 1 &gt; Advanced</em>: ubah <strong>Shape = <code>Ramp Up</code></strong>, <strong>Ease High = <code>50%</code></strong>, <strong>Ease Low = <code>50%</code></strong>.</li>
+              <li>Gerakkan keyframe <strong><code>Offset</code></strong> dari <strong><code>-100%</code></strong> ke <strong><code>100%</code></strong>! Huruf muncul dari kabut buram menjadi tajam!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>RESEP #9 3D FLIP &amp; #10 CINEMATIC BLUR</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: CARA COPY-PASTE EFEK TEKS ANTAR LAYER -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Trik Cepat</span>
+        <span class="title-serif">CARA DUPLIKASI (CTRL + D) AGAR TIDAK CAPEK MULAI DARI NOL!</span>
+      </div>
+      <p class="slide-subtitle">Karena ke-10 teks animasi memakai struktur <em>Range Selector</em> yang mirip, gunakan trik hemat waktu ini:</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">TRIK 1: DUPLIKASI COMP</span>
+          <h3 class="card-title">Tekan <kbd>Ctrl + D</kbd> di Panel Project</h3>
+          <div class="card-body">Setelah kamu selesai membuat <strong>Teks #1 (Smooth Position)</strong>, kamu cukup menduplikasi Composition atau Layer Teks tersebut dengan menekan <kbd>Ctrl + D</kbd>, lalu tinggal mengganti <em>Position</em> menjadi <em>Scale</em> atau <em>Blur</em>!</div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">TRIK 2: TENGAHKAN POROS</span>
+          <h3 class="card-title">Selalu Tekan <kbd>Ctrl + Alt + Home</kbd></h3>
+          <div class="card-body">Setiap kali selesai mengetik teks baru, klik ikon Panah (<kbd>V</kbd>), lalu tekan <kbd>Ctrl + Alt + Home</kbd> diikuti <kbd>Ctrl + Home</kbd> supaya tulisanmu selalu berada persis di tengah layar.</div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TRIK 3: PILIH 2 FAVORITMU</span>
+          <h3 class="card-title">Siapkan untuk Bumper Minggu Depan</h3>
+          <div class="card-body">Dari 10 teks animasi yang kamu coba hari ini, tandai <strong>2 gaya favoritmu</strong> (misal: <em>#10 Cinematic Blur</em> untuk Nama Utama Studio dan <em>#8 Snappy Tracking</em> untuk Slogan Bawah) untuk dipasang di bawah <strong>3D Logo</strong> minggu depan!</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>TIPS EFISIENSI PRAKTIK 10 TEKS ANIMASI</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: TABEL RINGKASAN 10 TEKS -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Contekan</span>
+        <span class="title-serif">RINGKASAN 1 HALAMAN: RUMUS 10 TEKS ANIMASI</span>
+      </div>
+      <p class="slide-subtitle">Simpan atau lihat slide ini saat praktik di komputer lab:</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">TEKS 01 S/D 05</span>
+          <div class="card-body">
+            <ol>
+              <li><strong>Smooth Position:</strong> <code>Animate &gt; Position (Y:120) + Opacity (0%)</code> | Shape: <code>Ramp Up</code> (Ease Low 100%) | Offset: <code>-100% &rarr; 100%</code></li>
+              <li><strong>Smooth Scale:</strong> <code>Animate &gt; Scale (0%) + Opacity (0%)</code> | Shape: <code>Ramp Up</code> (Ease 50/50) | Offset: <code>-100% &rarr; 100%</code></li>
+              <li><strong>Flicker:</strong> <code>Animate &gt; Opacity (0%)</code> | Smoothness: <code>0%</code>, <code>Randomize Order: ON</code> | Start: <code>0% &rarr; 100%</code></li>
+              <li><strong>Smooth Fade:</strong> <code>Animate &gt; Opacity (0%)</code> | Shape: <code>Ramp Up</code> (Ease 50/50) | Offset: <code>-100% &rarr; 100%</code></li>
+              <li><strong>Typewriter:</strong> <code>Animate &gt; Opacity (0%)</code> | Smoothness: <code>0%</code> (Random OFF) | Start: <code>0% &rarr; 100%</code></li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TEKS 06 S/D 10</span>
+          <div class="card-body">
+            <ol start="6">
+              <li><strong>Pop Up:</strong> <code>Animate &gt; Scale (0%)</code> | Shape: <code>Ramp Up</code> | Based On: <code>Words / Characters</code></li>
+              <li><strong>Masking Position:</strong> Gambar kotak Mask (<kbd>Q</kbd>) di teks | <code>Animate &gt; Position Y</code> naik dari bawah kotak + <kbd>F9</kbd></li>
+              <li><strong>Snappy Position:</strong> Geser <code>Position X</code> (<kbd>F9</kbd> Speed Graph) + <code>Animate &gt; Tracking (-20 &rarr; 25)</code></li>
+              <li><strong>3D Flip:</strong> <code>Enable Per-character 3D</code> + <code>Rotation X (-90°)</code> + <code>Opacity (0%)</code> | Shape: <code>Ramp Up</code></li>
+              <li><strong>Cinematic Blur:</strong> <code>Animate &gt; Blur (50) + Opacity (0%)</code> | Shape: <code>Ramp Up</code> | Offset: <code>-100% &rarr; 100%</code></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>CONTEKAN CEPAT 10 TEKS ANIMASI</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: PENGUMPULAN TUGAS 1 AE -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Tugas 1 AE</span>
+        <span class="title-serif">PENGUMPULAN TUGAS 1 AE: PRAKTIK 10 TEKS ANIMASI</span>
+      </div>
+      <p class="slide-subtitle">Praktikkan teknik animasi teks di atas menggunakan <strong>Nama Studio Film Animasi</strong> milikmu!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">📋 KETENTUAN TUGAS 1 AE (PERTEMUAN 02)</span>
+          <h3 class="card-title">Apa yang Dikumpulkan?</h3>
+          <div class="card-body">
+            <ul>
+              <li>Buat latihan minimal <strong>5 sampai 10 gaya Teks Animasi</strong> dari tutorial di atas menggunakan kata/nama <strong>Studio Film Animasi</strong> milikmu.</li>
+              <li>Simpan file proyek (<code>.aep</code>) karena teks terbaikmu akan kita gabungkan dengan <strong>3D Logo Animation</strong> pada pertemuan berikutnya!</li>
+              <li>Kumpulkan hasil <strong>Video Preview (<code>.MP4</code>)</strong> atau <strong>Screenshot Timeline</strong> ke portal pengumpulan tugas.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light); justify-content:space-between;">
+          <div>
+            <span class="card-badge">📥 LINK PENGUMPULAN &amp; VIDEO YOUTUBE</span>
+            <h3 class="card-title">Kirim Tugas 1 AE di Sini</h3>
+            <div class="card-body">
+              <p>Jika ingin melihat ulang langkah videonya, klik tombol YouTube di bawah, atau langsung unggah hasil karyamu ke form pengumpulan:</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+            <a href="https://www.youtube.com/watch?v=lRYGnwitZpY&t=117s" target="_blank" rel="noopener noreferrer" class="btn-cta-submit" style="background:#1e293b;">
+              ▶️ TONTON VIDEO YOUTUBE (10 TEKS ANIMASI) ↗
+            </a>
+            <a href="/kumpul-tugas?id=ae-02" class="btn-cta-submit">
+              🚀 KUMPULKAN TUGAS 1 AE (10 TEKS ANIMASI) &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+<!-- MOBILE & DESKTOP INTERACTIVE SLIDE CAROUSEL + TOUCH SWIPE -->
+<style id="antigravity-mobile-slide-deck-css">
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .floating-nav-bar {
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    flex-wrap: nowrap !important;
+  }
+  .nav-link-btn,
+  .slide-counter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-brand-title {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    max-width: min(56vw, 740px);
+  }
+  .cover-title-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .cover-script,
+  .cover-serif {
+    display: block !important;
+  }
+  .cover-script {
+    margin-bottom: 0 !important;
+  }
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Single-slide carousel mode */
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop / Laptop clear clearance between top and bottom floating bars */
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 42px) clamp(32px, 3.8vw, 58px) !important;
+    }
+    body.ag-carousel-mode .cover-script {
+      font-size: clamp(60px, 5.8vw, 90px) !important;
+      line-height: 1.04 !important;
+      margin-bottom: 2px !important;
+    }
+    body.ag-carousel-mode .cover-serif {
+      font-size: clamp(28px, 2.8vw, 40px) !important;
+    }
+  }
+
+  /* Responsive Mobile & Tablet Adjustments for All 14 Slide Decks */
+  @media (max-width: 1024px) {
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    body {
+      padding: 62px 8px 84px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    body.ag-carousel-mode {
+      padding: 62px 8px 84px !important;
+      justify-content: flex-start !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+    }
+    .nav-link-btn {
+      font-size: 11.5px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-brand-title {
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: center !important;
+    }
+    .nav-divider { display: none !important; }
+    .slide-counter-pill {
+      font-size: 9.5px !important;
+      padding: 3px 8px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide > div:first-child {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      max-width: 100% !important;
+    }
+    .cover-center {
+      gap: 14px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-title-group {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-script {
+      display: block !important;
+      font-size: clamp(30px, 8.8vw, 48px) !important;
+      line-height: 1.05 !important;
+      margin-bottom: 4px !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+    .cover-serif {
+      display: block !important;
+      font-size: clamp(16.5px, 4.6vw, 24px) !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .cover-sub-box {
+      padding: 12px 14px !important;
+      font-size: 13.5px !important;
+      max-width: 100% !important;
+      line-height: 1.55 !important;
+    }
+    .cover-tags-row {
+      gap: 6px !important;
+    }
+    .tag-badge {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+    }
+    .slide-title-mixed {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      max-width: 100% !important;
+    }
+    .title-script {
+      font-size: clamp(28px, 7.8vw, 38px) !important;
+      line-height: 1.02 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .title-serif {
+      font-size: clamp(15px, 4.2vw, 18.5px) !important;
+      line-height: 1.28 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .slide-subtitle {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      max-width: 100% !important;
+    }
+    .slide-content {
+      margin: 6px 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .grid-2, .grid-3, .grid-2-col, .grid-3-col, .grid-4-col,
+    [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      min-width: 0 !important;
+    }
+    .card-surface, .card-box {
+      padding: 14px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    .card-title-group {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .card-heading, .card-title {
+      font-size: 14.5px !important;
+      line-height: 1.32 !important;
+      overflow-wrap: break-word !important;
+    }
+    .card-desc, .card-body {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .formula-badge, code, kbd {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .pr-shortcut-banner, .ae-shortcut-banner {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .pr-keys-list, .ae-keys-list {
+      border-right: none !important;
+      padding-right: 0 !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .pr-tutorial-text, .ae-tutorial-text {
+      font-size: 12.5px !important;
+      line-height: 1.45 !important;
+    }
+    .btn-cta-submit {
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      padding: 12px 14px !important;
+      font-size: 11.5px !important;
+    }
+    .slide-footer-meta {
+      font-size: 10px !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn {
+      padding: 7px 10px !important;
+      font-size: 11.5px !important;
+    }
+    .ag-slide-btn.secondary {
+      padding: 7px 9px !important;
+      font-size: 11px !important;
+    }
+    .ag-slide-indicator {
+      min-width: 52px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  @media print {
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+    body, body.ag-carousel-mode {
+      background: #ffffff !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important;
+      width: 1440px !important;
+      height: 810px !important;
+      max-width: none !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+  <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="agStepSlide(-1)">◀ Seblm</button>
+  <span class="ag-slide-indicator" id="agSlideIndicator">1 / 10</span>
+  <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="agStepSlide(1)">Lanjut ▶</button>
+  <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+</div>
+
+<script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

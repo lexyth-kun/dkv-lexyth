@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panduan Master Guru & Script 12 Pertemuan — PAV (Berita/ILM) & After Effects (Bumper Studio)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070C17;
+      --bg-card: #0F172A;
+      --bg-surface: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --sky: #38BDF8;
+      --sky-dark: #0284C7;
+      --purple: #A78BFA;
+      --emerald: #34D399;
+      --amber: #FBBF24;
+      --border: rgba(148, 163, 184, 0.2);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding-bottom: 100px;
+    }
+
+    /* PIN LOCK SCREEN OVERLAY (PIN: 201023) */
+    #guru-lock-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: radial-gradient(circle at 50% 25%, #0C2D48 0%, #050B14 75%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    #guru-lock-overlay.unlocked {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-card {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 24px;
+      padding: 36px 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    .lock-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: rgba(2, 132, 199, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 18px;
+    }
+
+    .lock-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .lock-card p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      background: #09111E;
+      color: #38BDF8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.35em;
+      margin-bottom: 14px;
+      outline: none;
+    }
+
+    .pin-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #0284C7, #2563EB);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .pin-error {
+      color: #F87171;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* TOP NAVIGATION BAR */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .brand-pill {
+      background: #0284C7;
+      color: #FFF;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: var(--bg-surface);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--sky);
+      background: #0284C7;
+      color: #FFF;
+    }
+
+    .nav-btn.highlight-amber {
+      background: linear-gradient(135deg, #D97706, #F59E0B);
+      color: #FFFFFF;
+      border-color: #FBBF24;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    /* HERO MASTER CURRICULUM */
+    .master-hero {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(124, 58, 237, 0.16));
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 24px;
+      padding: 32px;
+      margin-bottom: 28px;
+    }
+
+    .master-hero h1 {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .master-hero p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 950px;
+      margin-bottom: 20px;
+    }
+
+    /* ROADMAP TABLE (VERIFICATION OF ORDER & CONSISTENCY) */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .roadmap-grid { grid-template-columns: 1fr; }
+    }
+
+    .roadmap-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .roadmap-box h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .roadmap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .roadmap-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .roadmap-list li a {
+      color: var(--sky);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .f-btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .f-btn.active {
+      background: #0284C7;
+      border-color: #38BDF8;
+      color: #FFFFFF;
+    }
+
+    /* MEETING CARDS */
+    .guru-meeting-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 22px;
+      padding: 28px;
+      margin-bottom: 32px;
+      scroll-margin-top: 80px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.3);
+    }
+
+    .guru-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+
+    .guru-badge {
+      display: inline-block;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .guru-title {
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .guru-target {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .guru-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .g-btn {
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .g-btn.primary {
+      background: #0284C7;
+      color: #FFFFFF;
+    }
+
+    .g-btn.amber {
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: #FBBF24;
+    }
+
+    .g-btn.ghost {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    /* 3-BOX SCRIPT GRID */
+    .guru-script-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 980px) {
+      .guru-script-grid { grid-template-columns: 1fr; }
+    }
+
+    .script-box {
+      background: var(--bg-surface);
+      border-radius: 14px;
+      padding: 18px;
+      border-top: 4px solid #38BDF8;
+    }
+
+    .script-box.demo { border-top-color: #FBBF24; }
+    .script-box.close { border-top-color: #34D399; }
+
+    .s-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #38BDF8;
+      margin-bottom: 10px;
+    }
+
+    .script-box.demo .s-label { color: #FBBF24; }
+    .script-box.close .s-label { color: #34D399; }
+
+    .script-box p {
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+
+    /* TECH STEPS & TROUBLESHOOTING */
+    .guru-tech-row {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .guru-tech-row { grid-template-columns: 1fr; }
+    }
+
+    .tech-col h4, .trouble-col h4 {
+      font-size: 14.5px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--sky);
+    }
+
+    .tech-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tech-step-item {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .tech-step-num {
+      background: #0284C7;
+      color: #FFF;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .tech-step-body strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .tech-step-body p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .trouble-box {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .unplugged-cta {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px dashed rgba(251, 191, 36, 0.5);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 13.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .unplugged-cta a {
+      color: #FBBF24;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    /* COMPACT MULTI-PAGE PAGER & QUICK JUMP BAR */
+    .master-hero.compact-hero {
+      padding: 22px 26px;
+      margin-bottom: 18px;
+    }
+    .master-hero.compact-hero h1 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      margin-bottom: 6px;
+    }
+    .master-hero.compact-hero p {
+      font-size: 13.5px;
+      margin-bottom: 14px;
+    }
+
+    .guru-toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .guru-toolbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .guru-toolbar .filter-bar {
+      margin-bottom: 0;
+      gap: 8px;
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      gap: 4px;
+      background: #09111E;
+      border: 1px solid var(--border);
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn.active {
+      background: #0284C7;
+      color: #FFFFFF;
+    }
+
+    .jump-pills-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .guru-jump-pill {
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .guru-jump-pill:hover {
+      border-color: var(--sky);
+      color: #FFFFFF;
+    }
+
+    .guru-jump-pill.pav.active {
+      background: linear-gradient(135deg, #0284C7, #2563EB);
+      border-color: #38BDF8;
+      color: #FFFFFF;
+    }
+
+    .guru-jump-pill.ae.active {
+      background: linear-gradient(135deg, #7C3AED, #4F46E5);
+      border-color: #A78BFA;
+      color: #FFFFFF;
+    }
+
+    .guru-stepper-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1.5px solid rgba(56, 189, 248, 0.28);
+      border-radius: 16px;
+      padding: 12px 18px;
+      margin: 18px 0;
+    }
+
+    .stepper-btn {
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .stepper-btn:hover:not(:disabled) {
+      background: #0284C7;
+      border-color: #38BDF8;
+      color: #FFFFFF;
+    }
+
+    .stepper-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .stepper-status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--sky);
+      text-align: center;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
+    @media (max-width: 900px) {
+      .top-nav {
+        position: static;
+        padding: 12px 14px;
+      }
+      .brand-group {
+        width: 100%;
+        font-size: 13px;
+      }
+      .container {
+        padding: 18px 14px;
+      }
+      .master-hero {
+        padding: 20px 16px;
+        border-radius: 18px;
+      }
+      .roadmap-grid {
+        grid-template-columns: 1fr;
+      }
+      .guru-stepper-bar {
+        padding: 10px 12px;
+      }
+    }
+
+    @media print {
+      .top-nav, .guru-toolbar, .guru-stepper-bar, .guru-links { display: none !important; }
+      body { background: #FFFFFF; color: #000000; }
+      .guru-meeting-card { display: block !important; break-inside: avoid; border: 1px solid #CCC; box-shadow: none; }
+    }
+  
+    /* ag-code-style */
+    code { font-family: 'JetBrains Mono', monospace; background: rgba(56,189,248,0.14); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.28); border-radius: 5px; padding: 1px 6px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+
+  <!-- PIN LOCK OVERLAY (PIN: 201023) -->
+  <div id="guru-lock-overlay">
+    <div class="lock-card">
+      <div class="lock-icon">🔐</div>
+      <h2>Akses Khusus Guru Pengampu</h2>
+      <p>Masukkan 6 digit PIN Otorisasi Guru untuk membuka Panduan Master & Script Mengajar 12 Pertemuan.</p>
+      <form onsubmit="verifyPin(event)">
+        <input type="password" id="guru-pin-input" class="pin-input" placeholder="••••••" maxlength="6" autocomplete="off" autofocus>
+        <button type="submit" class="pin-btn">BUKA PANDUAN GURU</button>
+        <div id="guru-pin-error" class="pin-error">❌ Kode PIN salah! Gunakan PIN Guru Pengampu.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- STICKY HEADER -->
+  <header class="top-nav">
+    <div class="brand-group">
+      <span class="brand-pill">PEGANGAN GURU</span>
+      <span>Panduan & Script Mengajar 12 Pertemuan — Adrian Ali Muthi, M.Pd</span>
+    </div>
+    <div class="nav-actions">
+      <a href="/script-mengajar-kelas.html" class="nav-btn">Catatan Teori</a>
+      <a href="/karhutla/panduan-berita-karhutla.html" class="nav-btn">📺 Proyek Berita Karhutla</a>
+      <a href="/materi-siswa" class="nav-btn">📚 Portal Materi Siswa</a>
+      <a href="/kumpul-tugas" class="nav-btn">📥 Portal Tugas</a>
+      <a href="/" class="nav-btn">🏠 Beranda Utama</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="master-hero compact-hero">
+      <h1>Panduan Master Guru &amp; Script 12 Pertemuan (MODE BERHALAMAN)</h1>
+      <p>
+        Kurikulum berurutan untuk <strong>(1) PAV Premiere Pro 2021</strong> (Berita Kolaborasi &amp; ILM) serta <strong>(2) After Effects 2021</strong> (Opening Bumper Studio).
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="/script-mengajar-kelas.html" class="nav-btn" style="padding:9px 15px;">Catatan Materi Kelas</a>
+        <button class="nav-btn" onclick="printAllMeetings()" style="padding:9px 15px;">🖨️ Cetak / Simpan Semua PDF</button>
+      </div>
+    </section>
+
+    <!-- COMPACT MULTI-PAGE TOOLBAR & QUICK JUMP -->
+    <section class="guru-toolbar" id="guruToolbar">
+      <div class="guru-toolbar-top">
+        <div class="filter-bar">
+          <button type="button" class="f-btn active" data-subj="all" onclick="filterGuru('all', this)">Semua 12 Pertemuan</button>
+          <button type="button" class="f-btn" data-subj="pav" onclick="filterGuru('pav', this)">🎬 PAV (01–06)</button>
+          <button type="button" class="f-btn" data-subj="ae" onclick="filterGuru('ae', this)">✨ After Effects (01–06)</button>
+        </div>
+
+        <div class="mode-switch" role="tablist" aria-label="Mode Tampilan Panduan">
+          <button type="button" class="mode-btn active" id="modePagedBtn" onclick="setGuruViewMode('paged')">📖 Per Pertemuan</button>
+          <button type="button" class="mode-btn" id="modeRoadmapBtn" onclick="setGuruViewMode('roadmap')">🗺️ Peta 12 Modul</button>
+          <button type="button" class="mode-btn" id="modeAllBtn" onclick="setGuruViewMode('all')">📑 Semua Halaman</button>
+        </div>
+      </div>
+
+      <div class="jump-pills-strip" id="guruJumpStrip"></div>
+    </section>
+
+    <!-- PETA URUTAN KURIKULUM 7 MINGGU PAV & 7 MINGGU AE (DEDICATED ROADMAP TAB) -->
+    <section class="roadmap-grid" id="roadmapGridSection" style="display:none;">
+      <div class="roadmap-box">
+        <h3 style="color:#38BDF8;">🎬 Urutan 6 Pertemuan PAV (Premiere Pro 2021) → Berita TV &amp; ILM</h3>
+        <ul class="roadmap-list">
+          <li><span><strong>M01:</strong> Pra-Produksi Iklan Produk (TVC) &amp; Storyboard Produk</span><div><a href="#pr-01" onclick="jumpToGuruCard('pr-01'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-1.html">Slide</a> • <a href="/downloads/Pertemuan%201%20(PAV).pdf" target="_blank">PDF</a></div></li>
+          <li><span><strong>M02:</strong> Manajemen 5 Folder &amp; Rough Cut Cepat (Q &amp; W)</span><div><a href="#pr-02" onclick="jumpToGuruCard('pr-02'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-2.html">Slide</a> • <a href="/downloads/Pertemuan%202%20(PAV).pdf" target="_blank">PDF</a></div></li>
+          <li><span><strong>M03:</strong> Tata Suara Bersih (DeNoise) &amp; Audio Ducking</span><div><a href="#pr-03" onclick="jumpToGuruCard('pr-03'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-3.html">Slide</a> • <a href="/downloads/Pertemuan%203%20(PAV).pdf" target="_blank">PDF</a></div></li>
+          <li><span><strong>M04:</strong> Elemen Grafis Berita (Lower Third, Running Text &amp; Safe Margin)</span><div><a href="#pr-04" onclick="jumpToGuruCard('pr-04'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-4.html">Slide</a> • <a href="/downloads/Pertemuan%204%20(PAV).pdf" target="_blank">PDF</a></div></li>
+          <li><span><strong>M05:</strong> Studio Green Screen (Ultra Key) &amp; B-Roll Berita</span><div><a href="#pr-05" onclick="jumpToGuruCard('pr-05'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-5.html">Slide</a></div></li>
+          <li><span><strong>M06:</strong> Color Grading (Lumetri Color) &amp; Master Export H.264 (Ctrl+M)</span><div><a href="#pr-06" onclick="jumpToGuruCard('pr-06'); return false;">Buka Hal</a> • <a href="/pav-pertemuan-6.html">Slide</a></div></li>
+        </ul>
+      </div>
+
+      <div class="roadmap-box">
+        <h3 style="color:#A78BFA;">✨ Urutan 6 Pertemuan Desain (After Effects 2021) → Bumper Studio</h3>
+        <ul class="roadmap-list">
+          <li><span><strong>M01:</strong> Kanvas Studio, Anchor Point &amp; 5 Shortcut (P,S,R,T,A)</span><div><a href="#ae-01" onclick="jumpToGuruCard('ae-01'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-1.html">Slide</a></div></li>
+          <li><span><strong>M02:</strong> Gerak Halus Organik: Easy Ease (F9) &amp; Speed Graph</span><div><a href="#ae-02" onclick="jumpToGuruCard('ae-02'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-2.html">Slide</a></div></li>
+          <li><span><strong>M03:</strong> Anatomi 3 Layer Logo, Parenting &amp; Garis Trim Paths</span><div><a href="#ae-03" onclick="jumpToGuruCard('ae-03'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-3.html">Slide</a></div></li>
+          <li><span><strong>M04:</strong> Reveal Teks Nama Studio: Alpha Track Matte &amp; Tracking</span><div><a href="#ae-04" onclick="jumpToGuruCard('ae-04'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-4.html">Slide</a></div></li>
+          <li><span><strong>M05:</strong> Kemilau Cahaya: Radial Ramp, CC Light Sweep &amp; Glow</span><div><a href="#ae-05" onclick="jumpToGuruCard('ae-05'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-5.html">Slide</a></div></li>
+          <li><span><strong>M06:</strong> Sound Design (LL), Work Area (B-N) &amp; Render Final Bumper (.MP4)</span><div><a href="#ae-06" onclick="jumpToGuruCard('ae-06'); return false;">Buka Hal</a> • <a href="/ae-pertemuan-6.html">Slide</a></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="guru-stepper-bar" id="guruStepperTop"></div>
+
+    <!-- ALL 12 MEETING TEACHER GUIDES & SCRIPTS -->
+    <div id="guru-cards-wrapper">
+      
+        <section class="guru-meeting-card" id="pr-01" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 01</span>
+              <h2 class="guru-title">Pra-Produksi Iklan Produk TVC &amp; Storyboard Produk</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Ide, Tema, Konsep TVC Monolog 16:9, Naskah 2 Kolom, dan Storyboard Produk 9 Frame (ACC Guru).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-1.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#pr-01" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/downloads/Pertemuan%201%20(PAV).pdf" target="_blank" class="g-btn ghost">📄 PDF Materi</a>
+              <a href="/kumpul-tugas?id=pr-01" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Selamat pagi rekan-rekan kreatif semua! Mulai hari ini hingga akhir November (Pertemuan 1 sampai 6), kita akan memproduksi dua karya nyata yang seru: pertama, <strong>Video Siaran Berita TV Kolaborasi Satu Kelas</strong> (terintegrasi dengan mata pelajaran Bahasa Indonesia), dan kedua, <strong>Video Iklan Produk TVC Per Kelompok</strong> berdurasi 30–45 detik dengan konsep <em>Slice of Life</em> &amp; <em>Voice Over Monolog</em>. Hari ini kita belum pusing dengan tombol rumit; kita merancang <strong>Naskah 2 Kolom (Visual-Audio)</strong> dan <strong>Storyboard 9 Frame</strong> sebagai tiket izin syuting!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Perhatikan layar di depan: setiap produksi televisi selalu membagi naskahnya menjadi dua kolom. Kolom Kiri adalah <strong>VISUAL</strong> (apa yang ditangkap kamera: <em>Wide Shot</em> untuk suasana lokasi, <em>Medium Shot</em> untuk pembawa berita dari pinggang ke atas, dan <em>Close-Up</em> untuk detail ekspresi wajah). Kolom Kanan adalah <strong>AUDIO</strong> (kalimat narasi <em>Voice Over</em>, wawancara warga, dan musik latar). Setelah naskah tertulis, tuangkan ke dalam <strong>9 kotak Storyboard</strong>: Kotak 1–3 untuk memunculkan masalah/fakta berita, Kotak 4–6 untuk dampak, dan Kotak 7–9 untuk solusi atau ajakan masyarakat."</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Silakan kumpulkan lembar Naskah 2 Kolom dan Storyboard 9 Frame kelompok kalian ke meja Bapak untuk Bapak beri paraf ACC. Jangan lupa difoto dan diunggah ke halaman Kumpul Tugas. Minggu depan kita langsung masuk ke Adobe Premiere Pro 2021 untuk memotong video dengan cepat! Wassalamu'alaikum warahmatullahi wabarakatuh."</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Riset Isu Berita & Pembagian Tim</strong>
+                <p>Bagi kelas menjadi Tim Inti Siaran Berita Kelas (2 Anchor Studio, Reporter Lapangan, Kameramen, Editor Master) sekaligus kelompok ILM (3–4 siswa/kelompok).</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Penyusunan Naskah 2 Kolom (AV Script)</strong>
+                <p>Gunakan kaidah Bahasa Indonesia baku untuk segmen Berita TV (5W+1H) dan kalimat <em>Voice Over Monolog</em> natural &amp; menonjolkan detail produk (ECU/CU).</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Penggambaran Storyboard 9 Frame</strong>
+                <p>Gambarkan sketsa 9 adegan lengkap dengan keterangan Shot (WS/MS/CU), pergerakan kamera (Static/Pan/Tilt), dan durasi detik tiap kotak.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika siswa mengeluh 'tidak bisa menggambar bagus', tekankan bahwa Storyboard industri pun hanya menggunakan gambar orang-orangan lidi (stickman) asalkan batas kepala, badan, dan arah pandangnya jelas (WS/MS/CU).</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="pr-02" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 02</span>
+              <h2 class="guru-title">Manajemen Folder Anti-Missing & Rough Cut Cepat (Ripple Trim Q & W)</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Folder Produksi 5 Subfolder + Timeline Rough Cut 45–60 Detik Tanpa Celah Kosong (Black Frame).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-2.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#pr-02" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/downloads/Pertemuan%202%20(PAV).pdf" target="_blank" class="g-btn ghost">📄 PDF Materi</a>
+              <a href="/kumpul-tugas?id=pr-02" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Hari ini kita resmi membuka <strong>Adobe Premiere Pro 2021</strong>! Banyak pemula yang ketika memindahkan file proyeknya ke komputer lain, tiba-tiba videonya berubah menjadi merah bertuliskan <em>Media Offline</em>. Hari ini Bapak ajarkan aturan pertama editor profesional: membuat <strong>Rumah 5 Folder</strong> di Partisi D:, lalu merangkai potongan video kasar (<strong>Rough Cut</strong>) secepat kilat hanya dengan tombol <strong>I, O, Q, dan W</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Lihat layar proyektor Bapak: sebelum buka Premiere Pro, kita buat folder induk <code>PR02_NamaKelompok</code> di Data D:, lalu di dalamnya buat 5 folder: <code>01_Footage</code>, <code>02_Audio</code>, <code>03_Graphics</code>, <code>04_Project</code>, dan <code>05_Exports</code>. Sekarang tekan <strong>Ctrl + N</strong> untuk membuat Sequence <strong>1080p (1920x1080, 25 atau 30 fps)</strong>. Klik dua kali video di Project Panel agar masuk ke <em>Source Monitor</em>, tekan <strong>I</strong> di awal adegan bagus dan <strong>O</strong> di akhir adegan bagus, lalu tarik ke Timeline. Kalau di Timeline masih ada sisa bagian goyang di awal klip, taruh garis biru (<em>Playhead</em>) di batasnya lalu tekan <strong>Q</strong>! Untuk membuang sisa akhir klip dan langsung merapatkannya, tekan <strong>W</strong>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Pastikan kalian menekan <strong>Ctrl + S</strong> setiap 5 menit! Cek kembali timeline kalian dari detik 00:00 sampai akhir: pastikan tidak ada celah hitam kosong (<em>black gap</em>) di antara sambungan video. Unggah tangkapan layar timeline Rough Cut kalian ke portal tugas!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>5 Folder Wajib di Drive D:</strong>
+                <p>Buat <code>01_Footage</code>, <code>02_Audio</code>, <code>03_Graphics</code>, <code>04_Project</code>, <code>05_Exports</code> sebelum mengimpor (<code>Ctrl + I</code>) file apa pun.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Three-Point Editing di Source Monitor</strong>
+                <p>Buka klip di Source Monitor -> tekan <code>I</code> (Mark In) -> tekan <code>O</code> (Mark Out) -> tarik ke Track <code>V1</code> di Timeline.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Shortcut Pemotongan Cepat (C, V, Q, W)</strong>
+                <p>Gunakan <code>C</code> (Razor Tool) untuk membelah tengah klip, <code>V</code> (Selection Tool) untuk memilih, <code>Q</code> (Ripple Trim Previous) membuang kiri & rapat otomatis, <code>W</code> (Ripple Trim Next) membuang kanan & rapat otomatis.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika muncul peringatan 'Clip Mismatch Warning' saat menarik video pertama ke timeline, instruksikan siswa klik <strong>'Change Sequence Settings'</strong> agar resolusi & frame rate mengikuti video kamera/HP mereka.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="pr-03" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 03</span>
+              <h2 class="guru-title">Tata Suara Bersih & Audio Ducking: DeNoise Vokal & Musik Berita/ILM</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Timeline Audio 3 Track (A1 Vokal -6 dB + DeNoise, A2 SFX, A3 Musik Latar dengan Kurva Audio Ducking -24 dB).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-3.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#pr-03" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/downloads/Pertemuan%203%20(PAV).pdf" target="_blank" class="g-btn ghost">📄 PDF Materi</a>
+              <a href="/kumpul-tugas?id=pr-03" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Di pertemuan ke-2 kemarin, potongan gambar berita dan ILM kalian sudah tersusun rapi. Tapi coba putar suaranya: apakah suara narator atau pembawa beritanya masih bercampur suara angin/kipas ruangan? Dan apakah saat diberi musik, suara orang bicaranya malah tenggelam kalah keras oleh musik? Hari ini kita benahi total dengan <strong>Efek DeNoise</strong> dan teknik <strong>Audio Ducking</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Perhatikan struktur track audio di proyektor Bapak: <strong>Track A1</strong> khusus untuk suara manusia (Presenter/Voice Over), <strong>Track A2</strong> untuk efek suara suasana (SFX), dan <strong>Track A3</strong> untuk Musik Latar (BGM). Pertama, pastikan puncak meter suara A1 berada di zona hijau-kuning <strong>-6 dB sampai -3 dB</strong> (klik kanan > <em>Audio Gain</em>). Kedua, ketik <strong>DeNoise</strong> di panel Effects, tarik ke klip suara A1, buka <em>Effect Controls > Edit</em>, dan geser slider ke <strong>20%–30%</strong> saja agar desis hilang tanpa membuat suara seperti robot. Ketiga, pada garis volume putih di Track A3 (Musik), tahan tombol <strong>Ctrl lalu Klik 4 titik</strong> membentuk <strong>trapesium terbalik</strong>: saat presenter mulai bicara, turunkan garis musik ke <strong>-24 dB</strong>, dan naikkan kembali ke <strong>-12 dB</strong> saat jeda!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Coba dengarkan hasil akhir timeline kalian menggunakan headphone atau speaker lab: sekarang suara berita dan pesan ILM terdengar sangat bulat, bersih, dan musiknya sopan menunduk saat narator berbicara. Simpan proyek (<code>Ctrl + S</code>) dan kumpulkan bukti kurva Audio Ducking kalian!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Normalisasi Level Vokal Track A1 (-6 dB)</strong>
+                <p>Klik kanan klip vokal di A1 -> pilih <code>Audio Gain</code> -> pilih <code>Normalize Max Peak to: -3 dB</code> atau <code>-6 dB</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Pembersihan Noise Ruangan (DeNoise 15%–35%)</strong>
+                <p>Panel Effects -> cari <code>DeNoise</code> -> tarik ke klip A1 -> Effect Controls -> Custom Setup <code>Edit</code> -> Amount <code>20%–35%</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Kurva Trapesium Audio Ducking di Track A3</strong>
+                <p>Lebarkan tinggi Track A3 -> tahan <code>Ctrl</code> (atau pilih Pen Tool <code>P</code>) -> klik 4 titik pada garis karet putih -> tarik bagian tengah turun ke <code>-22 dB s/d -25 dB</code> tepat di bawah dialog A1.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika garis putih karet volume di Track A3 tidak terlihat, minta siswa melebarkan tinggi baris Track A3 dengan menarik garis batas bawah header A3 ke arah bawah, lalu klik ikon Kunci Pas (Wrench) di Timeline -> centang 'Show Audio Keyframes'.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="pr-04" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 04</span>
+              <h2 class="guru-title">Elemen Grafis Berita (Essential Graphics): Lower Third, Running Text & Safe Margins</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Paket Grafis Siaran Berita & ILM di Track V4: Lower Third 2 Baris Beranimasi, Running News Ticker, Logo Bug, dan Title Safe Area.</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-4.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/downloads/Pertemuan%204%20(PAV).pdf" target="_blank" class="g-btn ghost">📄 PDF Materi</a>
+              <a href="/script-mengajar-kelas.html#pr-04" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=pr-04" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Di pertemuan ke-3 kemarin, tata suara berita dan Audio Ducking kalian sudah jernih dan seimbang. Hari ini di Pertemuan ke-4, kita akan memasang 'seragam resmi' televisi menggunakan <strong>Essential Graphics</strong>: membuat papan nama presenter (<strong>Lower Third</strong>), teks berita berjalan di bawah (<strong>Running News Ticker / Running Text</strong>), serta mengaktifkan garis batas aman (<strong>Safe Margins</strong>)!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Langkah pertama, klik ikon <strong>Kunci Pas (Wrench)</strong> di bawah <em>Program Monitor</em> lalu centang <strong>Safe Margins</strong>. Kalian akan melihat dua kotak garis putih tipis: pastikan semua tulisan dan logo berada di dalam <strong>kotak bagian dalam (Title Safe 80%)</strong> agar tidak terpotong di layar TV atau HP! Sekarang buka menu <em>Window > Essential Graphics</em>, klik <em>New Layer > Rectangle</em> untuk membuat pita biru tua dan aksen merah/emas di kiri bawah. Tekan <strong>T (Type Tool)</strong> untuk mengetik Nama Presenter (huruf tebal besar) dan Jabatan/Topik di baris bawahnya. Untuk menganimasikan Lower Third meluncur masuk, nyalakan ikon jam (<strong>Toggle Animation</strong>) pada <em>Position</em> di detik 00:00 (geser ke kiri luar layar), lalu maju 15 frame dan kembalikan ke posisi normal + klik kanan keyframe pilih <strong>Ease In</strong>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Cek kembali ejaan Bahasa Indonesia pada semua Lower Third, judul berita, dan Running Text kelompok kalian—jangan sampai ada salah ketik (<em>typo</em>)! Simpan proyek kalian dan unggah tangkapan layar grafis siaran ke halaman tugas. Minggu depan kita masuk ke teknik studio virtual Green Screen!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                <div class="tech-step-item">
+                  <div class="tech-step-num">1</div>
+                  <div class="tech-step-body">
+                    <strong>Aktifkan Safe Margins di Program Monitor</strong>
+                    <p>Klik ikon Kunci Pas (<code>Settings</code>) di Program Monitor -> centang <code>Safe Margins</code>. Pastikan seluruh teks berada di dalam kotak dalam (<code>Title Safe 80%</code>).</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">2</div>
+                  <div class="tech-step-body">
+                    <strong>Desain Lower Third 2 Lapis di Essential Graphics</strong>
+                    <p>Buka <code>Window > Essential Graphics</code> -> tab <code>Edit</code> -> buat <code>Rectangle</code> dasar gelap + aksen warna kontras -> tambahkan <code>Text</code> Nama (Bold 48pt) & Jabatan (Regular 28pt).</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">3</div>
+                  <div class="tech-step-body">
+                    <strong>Animasi Masuk Lower Third & Running Text (Ticker)</strong>
+                    <p>Gunakan Keyframe <code>Position X</code> (luar kiri ke dalam selama 15 frame dengan <code>Ease In</code>) untuk Lower Third, dan Keyframe <code>Position X</code> dari kanan (<code>+1920</code>) ke kiri (<code>-1920</code>) selama 12–15 detik untuk Running News Ticker.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika siswa mengetik teks panjang untuk Running Ticker dan teksnya terpotong sebelum selesai berjalan, ingatkan untuk menulis seluruh kalimat dalam 1 baris memanjang (tanpa Enter) lalu menarik jarak waktu antara keyframe awal dan akhir menjadi lebih lebar (15–20 detik).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="guru-meeting-card" id="pr-05" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 05</span>
+              <h2 class="guru-title">Studio Green Screen & B-Roll: Ultra Key Anchor Berita TV</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Komposisi Multi-Track Berita TV: V1 Studio Virtual (+Gaussian Blur), V2 Presenter Ultra Key Bersih, dan V3 B-Roll Liputan.</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-5.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#pr-05" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=pr-05" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Di pertemuan ke-4 kemarin kalian sudah mahir memasang Lower Third dan Running Text siaran berita. Hari ini kita masuk ke pertemuan ke-5 yang paling seru: menyulap rekaman pembawa berita di depan kain hijau (<strong>Green Screen</strong>) menjadi tampak berada di dalam <strong>Studio Berita Televisi Modern</strong>, lengkap dengan sisipan video bukti liputan (<strong>B-Roll</strong>)! Ingat rumus kue lapis kita: yang paling bawah di <strong>V1 adalah Background Studio</strong>, di tengah <strong>V2 adalah Presenter Green Screen</strong>, dan di paling atas <strong>V3 adalah video B-Roll</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Mari lihat ke layar proyektor: taruh video Presenter Green Screen di <strong>Track V2</strong>, dan taruh gambar Studio Berita di bawahnya pada <strong>Track V1</strong>. Buka panel <em>Effects</em>, ketik <strong>Ultra Key</strong>, lalu seret ke klip Presenter di V2. Di panel <em>Effect Controls</em>, klik ikon <strong>Pipet (Eyedropper)</strong> di sebelah <em>Key Color</em>, lalu klik warna hijau di dekat pundak presenter! Seketika kain hijau hilang! Sekarang ganti <em>Output</em> dari <em>Composite</em> ke <strong>Alpha Channel</strong>: tubuh presenter harus <strong>100% Putih</strong> dan latar belakang <strong>100% Hitam Pekat</strong>. Jika masih ada bercak abu-abu di latar, naikkan <strong>Pedestal ke 80–95</strong> di menu <em>Matte Generation</em>. Kembalikan Output ke <em>Composite</em>, beri efek <strong>Gaussian Blur (nilai 10)</strong> pada gambar studio di V1, lalu taruh 3 klip liputan lapangan (<strong>B-Roll</strong>) di <strong>Track V3</strong> agar menutupi visual saat presenter menjelaskan berita!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Periksa tepi rambut dan bahu presenter kalian: pastikan tidak ada garis hijau berpendar (<em>green spill</em>). Dengan menaruh B-Roll di Track V3 sementara suara presenter di A1 tetap berjalan (teknik L-Cut), tayangan berita kelas kalian sudah tampak seperti stasiun TV nasional! Minggu depan adalah Pertemuan ke-6 (Puncak Proyek) untuk Color Grading & Export Final!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                <div class="tech-step-item">
+                  <div class="tech-step-num">1</div>
+                  <div class="tech-step-body">
+                    <strong>Susunan 3 Lapis Track Video (V1, V2, V3)</strong>
+                    <p>V1 = Background Studio Berita (beri <code>Gaussian Blur: 8–12</code>), V2 = Video Anchor Green Screen, V3 = Klip B-Roll Liputan Lapangan.</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">2</div>
+                  <div class="tech-step-body">
+                    <strong>Penerapan Ultra Key & Cek Alpha Channel</strong>
+                    <p>Tarik efek <code>Ultra Key</code> ke klip V2 -> ambil sampel warna hijau dengan Pipet <code>Key Color</code> -> ubah <code>Output: Alpha Channel</code> -> naikkan <code>Pedestal (80–95)</code> di Matte Generation hingga latar hitam pekat.</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">3</div>
+                  <div class="tech-step-body">
+                    <strong>Pembersihan Tepi & Sisipan B-Roll</strong>
+                    <p>Di <code>Matte Cleanup</code>, atur <code>Choke (10–20)</code> dan <code>Soften (10–15)</code>. Kembalikan <code>Output: Composite</code>, lalu letakkan minimal 3 klip B-Roll di V3 berdurasi 3–5 detik tiap klip.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika bagian pojok ruangan di luar kain hijau masih ikut terlihat di layar, tambahkan efek <strong>Crop</strong> pada klip presenter di V2, lalu tarik persentase Left/Right/Top hingga area di luar kain hijau terpotong bersih.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="guru-meeting-card" id="pr-06" data-subj="pav" style="border-color: rgba(56, 189, 248, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #0284C7, #2563EB);">PAV — PERTEMUAN 06 (PUNCAK PROYEK)</span>
+              <h2 class="guru-title">Color Grading (Lumetri Color) & Master Export H.264 (Ctrl+M): Finalisasi Berita & ILM</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Penyeragaman warna & Mood ILM (Lumetri Color + Adjustment Layer V4), QC 5 Titik, dan File Video Master .MP4 Full HD (H.264, 1080p, 12–15 Mbps, AAC 320 kbps).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/pav-pertemuan-6.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#pr-06" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=pr-06" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Selamat datang di <strong>Pertemuan ke-6, puncak proyek Pengolahan Audio & Video</strong>! Susunan cerita, audio ducking, grafis berita (Lower Third & Running Text), dan studio Green Screen kalian sudah lengkap. Hari ini kita tuntaskan dua tahap pamungkas editor profesional: menyamakan warna & memberi mood sinematik lewat <strong>Lumetri Color</strong>, lalu merakit dan mengekspor karya utuh Berita Kelas & ILM menjadi file <code>.mp4</code> Full HD menggunakan <strong>Ctrl + M</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Tahap 1 — <strong>Lumetri Color</strong>: buka <em>Window > Lumetri Color</em>, samakan <em>Temperature</em> & <em>Exposure</em> klip HP yang belang di <em>Basic Correction</em>. Buat <strong>Adjustment Layer</strong> di Track atas: Babak Masalah (<code>Saturation 75%</code>, <code>Temp -15 Dingin</code>) dan Babak Solusi (<code>Saturation 110%</code>, <code>Temp +15 Hangat</code>). Tahap 2 — <strong>QC & Export Media (Ctrl + M)</strong>: cek 5 titik QC (bebas black gap, bebas typo grafis, audio ducking rapi, green screen bersih, warna seragam). Pasang <strong>I (Mark In)</strong> di <code>00:00</code> dan <strong>O (Mark Out)</strong> di akhir video, tekan <strong>Ctrl + M</strong>, pilih <strong>Format: H.264</strong> & <strong>Preset: Match Source - High Bitrate</strong> (VBR 1-Pass 12–15 Mbps, AAC 320 kbps), simpan ke <code>05_Exports</code>, lalu klik <strong>Export</strong>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Putar file <code>.mp4</code> kalian di VLC/Media Player dari awal sampai akhir untuk memastikan warna, suara, dan gambarnya mulus, lalu unggah ke Google Drive dan kirim tautannya di halaman Kumpul Tugas. Bapak sangat bangga dengan karya kalian selama 6 pertemuan ini!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                <div class="tech-step-item">
+                  <div class="tech-step-num">1</div>
+                  <div class="tech-step-body">
+                    <strong>Color Correction & Mood Adjustment Layer (Lumetri Color)</strong>
+                    <p>Samakan terang/suhu klip di <code>Basic Correction</code>, lalu pasang <code>Adjustment Layer</code> di atas timeline: Babak Masalah (<code>Saturation 75</code>, <code>Temp -15</code>) & Babak Solusi (<code>Saturation 110</code>, <code>Temp +15</code>, <code>Vignette -0.4</code>).</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">2</div>
+                  <div class="tech-step-body">
+                    <strong>Quality Control (QC) 5 Titik & Kunci Work Area (I–O)</strong>
+                    <p>Cek bebas celah hitam, typo Lower Third, Audio Ducking (-6 dB vokal / -24 dB musik), kerapian Green Screen, lalu pasang <code>Mark In (I)</code> di 00:00 dan <code>Mark Out (O)</code> di akhir video.</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">3</div>
+                  <div class="tech-step-body">
+                    <strong>Master Export H.264 (Ctrl + M) & Verifikasi .MP4</strong>
+                    <p>Tekan <code>Ctrl + M</code> -> <code>Format: H.264</code> -> <code>Preset: Match Source - High Bitrate</code> (<code>12–15 Mbps</code>, Audio <code>AAC 320 kbps 48 kHz</code>) -> simpan ke <code>05_Exports</code>, cek hasil render, lalu kumpulkan link Drive ke <code>/tugas?id=pr-06</code>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika wajah tampak terlalu oranye saat grading, turunkan <em>Vibrance/Saturation</em> di bawah 110. Dan jika hasil ekspor memiliki layar hitam panjang di belakang, pasang <strong>Mark Out (O)</strong> tepat di detik akhir Credit Roll sebelum menekan <code>Ctrl + M</code>.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="guru-meeting-card" id="ae-01" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 01</span>
+              <h2 class="guru-title">Fondasi Kanvas Studio & 5 Shortcut Transform (P, S, R, T, A)</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> File Komposisi 1080p 7 Detik (.aep) dengan Animasi Dasar Logo Masuk Menggunakan Kombinasi Keyframe P, S, R, T & Anchor Point Tengah.</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-1.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-01" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-01" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Selamat datang di mata pelajaran <strong>Perangkat Lunak Desain (Adobe After Effects 2021)</strong>! Sampai akhir November nanti (Pertemuan 1–6), target akhir kita sangat jelas dan keren: setiap dari kalian akan menghasilkan <strong>Video Opening Bumper Logo Production House atau Film Studio Animasi berdurasi 5–7 detik Full HD</strong>! Jangan khawatir kalau baru pertama kali membuka After Effects; hari ini kita hanya fokus menaklukkan kanvas kerja, <strong>Anchor Point</strong>, dan <strong>5 Tombol Sakti: P, S, R, T, A</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Perhatikan layar proyektor Bapak: tekan <strong>Ctrl + N (New Composition)</strong>, beri nama <code>01_Bumper_Studio</code>, atur <strong>Width: 1920, Height: 1080, Frame Rate: 30 fps</strong>, dan <strong>Duration: 0:00:07:00 (7 detik)</strong>. Saat kalian membuat gambar atau memasukkan logo ke tengah layar, langkah pertama yang <strong>wajib</strong> dilakukan sebelum menganimasikan apa pun adalah menaruh titik poros (<strong>Anchor Point</strong>) tepat di tengah objek dengan menekan <strong>Ctrl + Alt + Home</strong>! Setelah porosnya di tengah, hafalkan 5 tombol jari kiri: tekan <strong>P</strong> untuk <em>Position</em>, <strong>S</strong> untuk <em>Scale</em>, <strong>R</strong> untuk <em>Rotation</em>, dan <strong>T</strong> untuk <em>Opacity (Transparansi)</em>. Untuk menggerakkannya, taruh garis waktu di detik <code>00:00</code>, klik <strong>Ikon Jam (Stopwatch)</strong> pada Scale (isi <code>0%</code>), lalu geser ke detik <code>01:15</code> dan ubah angkanya menjadi <code>100%</code>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Tekan tombol <strong>Spasi (Spacebar)</strong> untuk memutar animasi pertama kalian! Ingat baik-baik: jangan pernah mematikan ikon Stopwatch setelah membuat keyframe karena semua titik animasi kalian akan terhapus. Simpan file <code>.aep</code> kalian dan kumpulkan latihan hari ini!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Membuat Composition Standar Bumper (Ctrl + N)</strong>
+                <p>Resolusi <code>1920 x 1080 px</code>, <code>Frame Rate: 30 fps</code>, <code>Duration: 00:00:07:00</code> (7 detik), Background Color Hitam/Gelap.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Kunci Titik Poros di Tengah (Ctrl + Alt + Home)</strong>
+                <p>Klik layer objek/logo -> tekan <code>Ctrl + Alt + Home</code> (atau gunakan Pan Behind Tool <code>Y</code>) agar titik target Anchor Point berada persis di pusat objek.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Animasi 2 Titik Keyframe dengan P, S, R, T</strong>
+                <p>Di detik <code>00:00</code> klik ikon Stopwatch (<code>S</code> Scale = 0%, <code>T</code> Opacity = 0%, <code>R</code> Rotation = -45°) -> geser Playhead ke detik <code>01:15</code> -> ubah nilai ke kondisi normal (<code>Scale = 100%</code>, <code>Opacity = 100%</code>, <code>Rotation = 0°</code>).</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika saat siswa membuat Shape kotak/lingkaran malah menjadi masker yang memotong gambar lain, penyebabnya ada layer yang masih terpilih; instruksikan tekan <strong>F2 (Deselect All)</strong> di ruang kosong sebelum menggambar Shape baru.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="ae-02" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 02</span>
+              <h2 class="guru-title">Kelembutan Gerak Organik: Easy Ease (F9), Speed Graph & Motion Blur</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Animasi Logo & Teks Masuk Berirama Halus (Keyframe Jam Pasir F9 + Kurva Speed Graph Puncak Kiri + Motion Blur Aktif).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-2.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-02" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-02" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Di pertemuan pertama kemarin, logo kalian sudah bisa bergerak membesar dan berputar. Tapi coba perhatikan: gerakannya masih terasa kaku seperti robot dan berhenti mendadak, bukan? Hari ini di Pertemuan ke-2, kita akan mempelajari rahasia yang membedakan animator pemula dan profesional: menyulap keyframe belah ketupat menjadi selembut sutra menggunakan <strong>Tombol F9 (Easy Ease)</strong>, <strong>Speed Graph Editor</strong>, dan <strong>Motion Blur</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Lihat layar proyektor: blok kedua titik keyframe yang sudah kalian buat kemarin (tekan tombol <strong>U</strong> untuk memunculkan semua keyframe yang tersembunyi), lalu tekan tombol <strong>F9</strong> di baris atas keyboard! Bentuk belah ketupat (<code>◆</code>) langsung berubah menjadi <strong>Jam Pasir (<code>⧗</code>)</strong>. Sekarang klik ikon <strong>Graph Editor</strong> di atas timeline (pastikan klik kanan di dalam grafik -> pilih <strong>Edit Speed Graph</strong>). Klik titik kanan, lalu tarik <strong>tuas kuningnya ke arah kiri</strong> hingga kurvanya membentuk gunung yang condong ke kiri! Terakhir, centang <strong>Ikon 3 Lingkaran (Motion Blur)</strong> pada layer dan nyalakan saklar utama Motion Blur di atas timeline. Tekan Spasi dan lihat betapa mewahnya gerakan logo kalian sekarang!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Mulai hari ini sampai pertemuan ke-7 nanti, setiap kali kalian membuat keyframe di After Effects, wajib hukumnya menekan <strong>F9</strong> dan menyalakan <strong>Motion Blur</strong>! Simpan proyek kalian dan unggah tangkapan layar kurva gunung Speed Graph ke portal tugas."</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Ubah Keyframe Kaku Jadi Easy Ease (Tombol F9)</strong>
+                <p>Tekan <code>U</code> pada layer untuk menampilkan keyframe -> blok seluruh keyframe dengan mouse -> tekan <code>F9</code> hingga ikon berubah menjadi Jam Pasir (<code>⧗</code>).</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Bentuk Kurva Akselerasi di Speed Graph Editor</strong>
+                <p>Klik ikon <code>Graph Editor</code> -> klik kanan area grafik pastikan terpilih <code>Edit Speed Graph</code> -> tarik gagang kuning (<em>bezier handle</em>) ke kiri (Influence <code>75%–85%</code>).</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Aktifkan Motion Blur & Staggering 5 Frame</strong>
+                <p>Centang kolom <code>Motion Blur</code> (ikon 3 lingkaran bertumpuk) di layer dan aktifkan tombol Master Motion Blur di atas timeline. Geser layer kedua mundur 5 frame agar muncul bergantian.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika saat membuka Graph Editor garis kurvanya aneh (naik lurus dari bawah ke atas, bukan melengkung seperti gunung), berarti masih berada di mode 'Value Graph'; klik kanan di area hitam grafik lalu pilih <strong>'Edit Speed Graph'</strong>.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="ae-03" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 03</span>
+              <h2 class="guru-title">Anatomi Logo & Shape Layer: Persiapan Aset & Animasi Garis Trim Paths</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Struktur 3 Layer Komponen Logo Studio (Bingkai Trim Paths 0–100%, Ikon Utama Induk, dan Teks Anak Terikat Parenting).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-3.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-03" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-03" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Mulai Pertemuan ke-3 hari ini, kita resmi membangun <strong>Proyek Utama Bumper Logo Studio Animasi / Production House</strong> kalian! Supaya bumper kita tampak hidup seperti studio film sungguhan, kita tidak boleh hanya memakai satu gambar logo mati. Kita akan membagi logo menjadi <strong>3 Layer Terpisah</strong> (Bingkai Luar, Ikon Lambang Tengah, dan Teks Nama Studio), lalu membuat garis bingkainya menggambar sendiri secara ajaib menggunakan <strong>Trim Paths</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Perhatikan langkah Bapak di proyektor: pertama, pastikan tidak ada layer yang terpilih (tekan <strong>F2</strong>), lalu gunakan <em>Polygon / Ellipse Tool</em> dengan <strong>Fill: None</strong> dan <strong>Stroke: 8 px</strong> untuk membuat bingkai perisai/lingkaran di sekeliling tengah layar. Buka isi Shape Layer tersebut, klik tombol bulat kecil <strong>Add: ▶</strong> di sebelah kanan <em>Contents</em>, lalu pilih <strong>Trim Paths</strong>! Buka <em>Trim Paths 1</em>: di detik <code>00:00</code> klik Stopwatch <strong>End = 0%</strong>, lalu di detik <code>01:15</code> ubah <strong>End = 100%</strong> dan tekan <strong>F9</strong>! Lihat, garis bingkai logo kalian sekarang merayap menggambar dirinya sendiri! Terakhir, tarik ikon spiral (<strong>Pick Whip <code>@</code></strong>) dari layer komponen kecil ke layer Ikon Logo Utama agar terikat sebagai anak dan induk (<strong>Parenting</strong>)."</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Sekarang kerangka dasar Bumper Logo Studio kalian sudah berdiri! Minggu depan di Pertemuan ke-4, kita akan menambahkan animasi kemunculan Nama Production House kalian dari balik garis tak terlihat menggunakan teknik <strong>Track Matte</strong>. Simpan file <code>.aep</code> kalian dengan baik!"</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Pemisahan 3 Layer Anatomi Logo Studio</strong>
+                <p>Susun 3 layer di timeline: Layer 1 = <code>Bingkai_Garis_Luar</code>, Layer 2 = <code>Ikon_Utama_Studio</code> (Pusat), Layer 3 = <code>Ornamen_Pendukung</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Animasi Garis Menggambar Sendiri (Add > Trim Paths)</strong>
+                <p>Pada Shape Layer bingkai (Fill: Off, Stroke: 6–10px) -> klik <code>Add: ▶</code> -> pilih <code>Trim Paths</code> -> Keyframe <code>End</code> dari <code>0%</code> (00:00) ke <code>100%</code> (01:15) + keyframe <code>Offset</code> sedikit berputar + tekan <code>F9</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Pengikatan Hierarki Parenting (Pick Whip @)</strong>
+                <p>Tarik ikon spiral (<code>Parent Pick Whip</code>) dari layer Bingkai dan Ornamen menuju layer <code>Ikon_Utama_Studio</code> agar mengikuti gerakan pusat secara otomatis.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika tombol 'Add: ▶ (Trim Paths)' tidak ditemukan, penyebabnya siswa menggambar di atas layer gambar biasa (sehingga menjadi Mask), bukan Shape Layer mandiri; solusinya tekan <strong>F2</strong> dulu di tempat kosong, baru gambar ulang dengan Pen/Rectangle Tool.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="ae-04" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 04</span>
+              <h2 class="guru-title">Animasi Teks Sinematik & Track Matte: Reveal Nama Production House</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Animasi Kemunculan Teks Nama Studio & Slogan dari Balik Garis Tengah Menggunakan Alpha Track Matte (F4) & Tracking Sinematik.</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-4.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-04" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-04" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Di Pertemuan ke-3 kemarin, bingkai cahaya dan ikon logo studio kalian sudah bisa muncul dengan elegan. Hari ini di Pertemuan ke-4, kita akan memunculkan <strong>Teks Nama Production House / Studio Animasi</strong> kalian tepat di bawah logo—bukan muncul biasa, melainkan naik dari balik lantai gaib tak terlihat menggunakan teknik <strong>Alpha Track Matte</strong>, ditambah efek huruf merenggang (<strong>Tracking</strong>) khas judul film bioskop!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Mari buka file proyek Bumper minggu lalu! Pertama, tekan <strong>Ctrl + T (Type Tool)</strong> dan ketik nama studio kalian dengan huruf tebal (misal: <code>GARUDA ANIMATION</code>) tepat di bawah ikon logo. Kedua, tekan <strong>F2</strong> (agar tidak ada yang terpilih), lalu ambil <strong>Rectangle Tool</strong> dan gambar sebuah kotak yang menutupi pas di atas area tulisan tadi. Beri nama layer kotak itu <code>Matte_Teks</code> dan pastikan posisinya berada <strong>tepat 1 baris di ATAS layer teks</strong>! Sekarang tekan tombol <strong>F4</strong> di keyboard untuk memunculkan kolom <strong>TrkMat (Track Matte)</strong>. Pada baris layer Teks, ubah pilihan <em>TrkMat</em> dari <em>None</em> menjadi <strong>Alpha Matte 'Matte_Teks'</strong>. Terakhir, animasikan <strong>Position Y (P)</strong> layer teks dari bawah naik ke tempatnya + tekan <strong>F9</strong>! Untuk sub-judul <code>'PRODUCTION HOUSE'</code>, klik <code>Animate: ▶ > Tracking</code>, atur dari angka <code>50</code> merenggang pelan ke <code>300</code>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Lihat hasilnya saat diputar: ikon logo kalian menggambar dengan Trim Paths, lalu dari garis bawahnya muncul nama studio kalian secara bersih tanpa terlihat datang dari pinggir layar! Simpan proyek kalian dan unggah tangkapan layar susunan Alpha Matte ke halaman tugas."</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Susunan Pasangan Layer Teks & Kotak Matte</strong>
+                <p>Ketik teks nama studio (<code>Ctrl + T</code>). Tekan <code>F2</code>, buat kotak Shape Layer (<code>Matte_Jendela</code>) menutupi teks, dan letakkan layer kotak tepat <strong>di atas</strong> layer teks.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Aktifkan Alpha Track Matte (Tombol F4)</strong>
+                <p>Tekan <code>F4</code> hingga kolom <code>TrkMat</code> muncul -> pada baris Layer Teks, pilih <code>Alpha Matte "Matte_Jendela"</code> -> animasikan <code>Position Y</code> teks naik dari bawah kotak ke dalam kotak + <code>F9</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Animasi Renggang Huruf Slogan (Animate > Tracking)</strong>
+                <p>Pada teks baris kedua (<code>STUDIOS / PRODUCTIONS</code>), buka segitiga layer -> klik <code>Animate: ▶</code> -> pilih <code>Tracking</code> -> keyframe <code>Tracking Amount</code> dari <code>40</code> ke <code>280</code> selama 2 detik.</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika saat menggerakkan teks, jendela kotaknya ikut bergerak naik sehingga teks tetap terlihat terus, itu karena siswa tidak sengaja menggerakkan layer Kotak Matte-nya; pastikan yang diberi keyframe Position (P) hanya <strong>Layer Teks di bawah</strong>, bukan Layer Matte di atas.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="ae-05" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 05</span>
+              <h2 class="guru-title">Efek Visual Kemilau Studio: CC Light Sweep, Deep Glow & Atmosfer Background</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> Bumper Studio Berkemilau Sinematik: Background Radial Gradient Ramp + Sapuan Kilau CC Light Sweep + 2 Tumpuk Stylize Glow.</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-5.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-05" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-05" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <!-- SCRIPT BICARA GURU DI LAB / KELAS -->
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA & APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Memasuki Pertemuan ke-5, gerakan logo dan teks studio kalian sudah sangat mulus! Namun tampilannya masih terlihat datar di atas latar hitam polos. Hari ini kita akan menyulap logo kalian menjadi tampak berkilau seperti logam emas/kaca mewah menggunakan 3 efek cahaya bawaan After Effects 2021 yang ringan: <strong>Gradient Ramp</strong>, <strong>CC Light Sweep</strong>, dan <strong>Double Glow</strong>!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN & DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Perhatikan proyektor Bapak: pertama, tekan <strong>Ctrl + Y (New Solid)</strong> untuk membuat layar latar belakang, taruh di urutan <strong>paling bawah timeline</strong>, lalu beri efek <strong>Generate > Gradient Ramp</strong>. Ubah <em>Ramp Shape</em> menjadi <strong>Radial Ramp</strong>, beri warna biru malam gelap (<code>#1E293B</code>) di tengah dan hitam pekat (<code>#050811</code>) di sudut layar. Kedua, klik layer Logo Utama kalian, cari di panel <em>Effects & Presets</em>: <strong>CC Light Sweep</strong>! Atur <em>Direction</em> ke <code>45°</code>, <em>Width</em> <code>45</code>, dan <em>Edge Intensity</em> <code>60</code>. Di detik <code>02:00</code> (saat logo sudah utuh), klik Stopwatch <strong>Center</strong> dan taruh titiknya di kiri bawah logo; lalu maju ke detik <code>04:00</code> dan tarik titik <strong>Center</strong> menyapu miring ke kanan atas logo! Ketiga, tambahkan efek <strong>Stylize > Glow</strong> (Radius <code>25</code>, Intensity <code>0.8</code>), lalu tekan <strong>Ctrl + D</strong> pada efek Glow tersebut dan ubah Radius Glow kedua menjadi <code>120</code> (Intensity <code>0.4</code>) agar pendaran cahayanya lembut!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS & PENUTUP (10 MENIT)</div>
+              <p>"Coba tekan Spasi dan saksikan saat kilatan cahaya <em>CC Light Sweep</em> menyapu permukaan logo dan teks studio kalian—langsung terlihat seperti bumper bioskop sungguhan! Simpan proyek kalian dan unggah preview frame saat cahaya menyapu logo ke halaman tugas."</p>
+            </div>
+          </div>
+
+          <!-- LANGKAH TEKNIS & TROUBLESHOOTING -->
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis & Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                
+            <div class="tech-step-item">
+              <div class="tech-step-num">1</div>
+              <div class="tech-step-body">
+                <strong>Latar Kedalaman Ruang (Ctrl+Y + Radial Gradient Ramp)</strong>
+                <p>Tekan <code>Ctrl + Y</code> buat Solid <code>BG_Studio</code> di layer terbawah -> pasang efek <code>Gradient Ramp</code> -> pilih <code>Radial Ramp</code> (Tengah <code>#1E293B</code>, Tepi <code>#050811</code>, <code>Ramp Scatter: 50</code>).</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">2</div>
+              <div class="tech-step-body">
+                <strong>Sapuan Kilat Kaca/Logam (CC Light Sweep)</strong>
+                <p>Tarik efek <code>CC Light Sweep</code> ke layer Logo & Teks -> <code>Direction: 45°</code>, <code>Shape: Smooth</code>, <code>Width: 40</code> -> Keyframe properti <code>Center</code> menyapu dari kiri bawah (02:00) ke kanan atas (04:00) + <code>F9</code>.</p>
+              </div>
+            </div>
+            
+
+            <div class="tech-step-item">
+              <div class="tech-step-num">3</div>
+              <div class="tech-step-body">
+                <strong>Pendaran Cahaya Ganda (Double Stylize Glow)</strong>
+                <p>Tarik <code>Stylize > Glow</code> ke layer garis/logo: <strong>Glow 1</strong> (<code>Threshold: 60%</code>, <code>Radius: 25</code>, <code>Intensity: 0.8</code>), lalu duplikasi (<code>Ctrl + D</code>) menjadi <strong>Glow 2</strong> (<code>Radius: 120</code>, <code>Intensity: 0.4</code>).</p>
+              </div>
+            </div>
+            
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika setelah dipasang efek Glow warna asli logo malah berubah menjadi putih silau seluruhnya, turunkan nilai <strong>Glow Intensity</strong> ke angka <code>0.3 – 0.5</code> dan naikkan <strong>Glow Threshold</strong> ke <code>70%</code>.</p>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+        
+
+        <section class="guru-meeting-card" id="ae-06" data-subj="ae" style="border-color: rgba(167, 139, 250, 0.35);">
+          <div class="guru-card-top">
+            <div>
+              <span class="guru-badge" style="background: linear-gradient(135deg, #7C3AED, #4F46E5);">AE — PERTEMUAN 06 (PUNCAK PROYEK)</span>
+              <h2 class="guru-title">Sound Design (SFX LL), Work Area (B–N) &amp; Render Final Master Bumper (.MP4)</h2>
+              <p class="guru-target"><strong>🎯 Target Output Pertemuan:</strong> File Video Master Opening Bumper Logo Studio (.MP4 Full HD 1920x1080, 30 fps, Durasi 5–7 Detik, Sinkron 3D + Audio SFX Menyala).</p>
+            </div>
+            <div class="guru-links">
+              <a href="/ae-pertemuan-6.html" class="g-btn primary">🖥️ Buka Slide 10 Halaman</a>
+              <a href="/script-mengajar-kelas.html#ae-06" class="g-btn ghost">Catatan Kelas</a>
+              <a href="/kumpul-tugas?id=ae-06" class="g-btn ghost">📥 Form Tugas Siswa</a>
+            </div>
+          </div>
+
+          <div class="guru-script-grid">
+            <div class="script-box open">
+              <div class="s-label">🗣️ 1. SCRIPT PEMBUKA &amp; APERSEPSI (5–10 MENIT)</div>
+              <p>"Assalamu'alaikum warahmatullahi wabarakatuh. Selamat datang di <strong>Pertemuan ke-6, puncak proyek akhir Perangkat Lunak Desain (After Effects 2021)</strong>! Hari ini kita menuntaskan dua sentuhan terakhir Bumper Studio kalian: memasang <strong>Efek Suara Sinematik (SFX Whoosh, Impact, Shimmer)</strong> lewat tombol <strong>LL</strong>, mengunci durasi 5–7 detik dengan <strong>Tombol B &amp; N</strong>, lalu merender Master Bumper <code>.mp4</code> Full HD siap tayang!"</p>
+            </div>
+            <div class="script-box demo">
+              <div class="s-label">🖥️ 2. SCRIPT PENJELASAN &amp; DEMO PROYEKTOR (20–25 MENIT)</div>
+              <p>"Pertama, impor file SFX ke timeline, klik layer audio lalu tekan huruf <strong>L dua kali cepat (<code>LL</code>)</strong> untuk membuka <em>Waveform</em>, dan paskan puncak dentuman saat 3D Logo berhenti di tengah. Kedua, buat Solid Hitam (<code>Ctrl + Y</code>) di baris paling atas untuk <em>Fade-Out</em> akhir, lalu kunci durasi render: Playhead di <code>00:00</code> tekan <strong>B</strong>, di <code>07:00</code> tekan <strong>N</strong>. Ketiga, tekan <strong>Ctrl + Alt + M</strong> (Adobe Media Encoder -> <strong>H.264</strong>), atau jika memakai <strong>Render Queue (<code>Ctrl + M</code>)</strong> pastikan <strong>Audio Output dicentang ke ON</strong>!"</p>
+            </div>
+            <div class="script-box close">
+              <div class="s-label">🏁 3. SCRIPT INSTRUKSI TUGAS &amp; PENUTUP (10 MENIT)</div>
+              <p>"Selamat untuk kalian semua! Dari nol hingga menghasilkan <strong>Opening Bumper Logo Studio Animasi Full HD</strong> lengkap dengan suara SFX. Putar preview file <code>.mp4</code>-nya dan kirimkan di halaman Kumpul Tugas!"</p>
+            </div>
+          </div>
+
+          <div class="guru-tech-row">
+            <div class="tech-col">
+              <h4>⌨️ Urutan Langkah Teknis &amp; Shortcut Windows (2021):</h4>
+              <div class="tech-steps-list">
+                <div class="tech-step-item">
+                  <div class="tech-step-num">1</div>
+                  <div class="tech-step-body">
+                    <strong>Sinkronisasi Audio Waveform (Shortcut LL &amp; Audio Levels L)</strong>
+                    <p>Impor SFX (<code>Whoosh</code>, <code>Impact Boom</code>, <code>Shimmer</code>) -> tekan <code>LL</code> cepat untuk menyamakan puncak gelombang dengan gerakan 3D Logo, lalu Fade-Out audio (<code>L</code>: <code>-3 dB</code> ke <code>-40 dB</code>).</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">2</div>
+                  <div class="tech-step-body">
+                    <strong>Solid Fade-Out &amp; Kunci Work Area Bar (Tombol B dan N)</strong>
+                    <p>Buat Solid Hitam di baris teratas (<code>Ctrl + Y</code>, Opacity 0%→100% di 1 detik terakhir), lalu tekan <code>B</code> di <code>00:00</code> dan <code>N</code> di <code>07:00</code>.</p>
+                  </div>
+                </div>
+                <div class="tech-step-item">
+                  <div class="tech-step-num">3</div>
+                  <div class="tech-step-body">
+                    <strong>Render Final Full HD 1080p + Audio ON (Ctrl + M / Ctrl + Alt + M)</strong>
+                    <p>Tekan <code>Ctrl + Alt + M</code> (Media Encoder: <code>H.264 .mp4</code>) atau <code>Ctrl + M</code> (Render Queue: wajib pastikan <code>Audio Output: On</code>) dan kumpulkan di <code>/kumpul-tugas?id=ae-06</code>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="trouble-col">
+              <h4>🛠️ Solusi Cepat Kendala Siswa di Lab (Troubleshooting):</h4>
+              <div class="trouble-box">
+                <p>Jika hasil render tidak bersuara sama sekali padahal di timeline ada audionya, di jendela Render Queue (<code>Ctrl + M</code>) bagian <code>Output Module > Lossless</code> ubah opsi <strong>Audio Output</strong> menjadi <strong>'Audio Output: On'</strong> lalu render ulang.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+    </div>
+
+    <div class="guru-stepper-bar" id="guruStepperBottom"></div>
+  </main>
+
+  <script>
+    const VALID_PIN = '201023';
+    const overlay = document.getElementById('guru-lock-overlay');
+    const pinInput = document.getElementById('guru-pin-input');
+    const pinError = document.getElementById('guru-pin-error');
+
+    if (sessionStorage.getItem('guru_auth_token') === 'unlocked_201023') {
+      overlay.classList.add('unlocked');
+    }
+
+    function verifyPin(e) {
+      e.preventDefault();
+      if (pinInput.value.trim() === VALID_PIN) {
+        sessionStorage.setItem('guru_auth_token', 'unlocked_201023');
+        overlay.classList.add('unlocked');
+      } else {
+        pinError.style.display = 'block';
+        pinInput.value = '';
+        pinInput.focus();
+      }
+    }
+
+    let guruSubjectFilter = 'all';
+    let guruViewMode = 'paged'; // 'paged' | 'roadmap' | 'all'
+    let currentGuruIdx = 0;
+
+    function getAllGuruCards() {
+      return Array.from(document.querySelectorAll('.guru-meeting-card'));
+    }
+
+    function getFilteredGuruCards() {
+      return getAllGuruCards().filter(c => guruSubjectFilter === 'all' || c.getAttribute('data-subj') === guruSubjectFilter);
+    }
+
+    function formatShortPillLabel(card) {
+      const id = card.id || '';
+      if (id.startsWith('pr-')) return 'PAV ' + id.replace('pr-', '');
+      if (id.startsWith('ae-')) return 'AE ' + id.replace('ae-', '');
+      return id.toUpperCase();
+    }
+
+    function renderGuruView(scrollToCard) {
+      const allCards = getAllGuruCards();
+      const filtered = getFilteredGuruCards();
+      const roadmapEl = document.getElementById('roadmapGridSection');
+      const cardsWrap = document.getElementById('guru-cards-wrapper');
+      const stepperTop = document.getElementById('guruStepperTop');
+      const stepperBottom = document.getElementById('guruStepperBottom');
+      const jumpStrip = document.getElementById('guruJumpStrip');
+
+      if (currentGuruIdx >= filtered.length) currentGuruIdx = Math.max(0, filtered.length - 1);
+      if (currentGuruIdx < 0) currentGuruIdx = 0;
+
+      document.getElementById('modePagedBtn')?.classList.toggle('active', guruViewMode === 'paged');
+      document.getElementById('modeRoadmapBtn')?.classList.toggle('active', guruViewMode === 'roadmap');
+      document.getElementById('modeAllBtn')?.classList.toggle('active', guruViewMode === 'all');
+
+      document.querySelectorAll('.f-btn[data-subj]').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-subj') === guruSubjectFilter);
+      });
+
+      const activeCard = filtered[currentGuruIdx];
+
+      if (jumpStrip) {
+        jumpStrip.style.display = guruViewMode === 'roadmap' ? 'none' : 'flex';
+        jumpStrip.innerHTML = filtered.map((card, idx) => {
+          const subj = card.getAttribute('data-subj') || 'pav';
+          const isAct = guruViewMode === 'paged' && idx === currentGuruIdx;
+          return `<button type="button" class="guru-jump-pill ${subj} ${isAct ? 'active' : ''}" onclick="jumpToGuruCard('${card.id}')">${formatShortPillLabel(card)}</button>`;
+        }).join('');
+      }
+
+      if (guruViewMode === 'roadmap') {
+        if (roadmapEl) roadmapEl.style.display = 'grid';
+        if (cardsWrap) cardsWrap.style.display = 'none';
+        if (stepperTop) stepperTop.style.display = 'none';
+        if (stepperBottom) stepperBottom.style.display = 'none';
+        return;
+      }
+
+      if (roadmapEl) roadmapEl.style.display = 'none';
+      if (cardsWrap) cardsWrap.style.display = 'block';
+
+      if (guruViewMode === 'all') {
+        allCards.forEach(c => {
+          const match = filtered.includes(c);
+          c.style.display = match ? 'block' : 'none';
+        });
+        if (stepperTop) stepperTop.style.display = 'none';
+        if (stepperBottom) stepperBottom.style.display = 'none';
+        return;
+      }
+
+      // Mode 'paged' — render 1 meeting per page
+      allCards.forEach(c => {
+        c.style.display = (activeCard && c === activeCard) ? 'block' : 'none';
+      });
+
+      const titleBadge = activeCard ? (activeCard.querySelector('.guru-badge')?.textContent || formatShortPillLabel(activeCard)) : '';
+      const stepperHtml = `
+        <button type="button" class="stepper-btn" ${currentGuruIdx <= 0 ? 'disabled' : ''} onclick="stepGuruCard(-1)">&larr; Pertemuan Sebelumnya</button>
+        <div class="stepper-status">Halaman ${currentGuruIdx + 1} / ${filtered.length} &bull; ${titleBadge}</div>
+        <button type="button" class="stepper-btn" ${currentGuruIdx >= filtered.length - 1 ? 'disabled' : ''} onclick="stepGuruCard(1)">Pertemuan Berikutnya &rarr;</button>
+      `;
+
+      [stepperTop, stepperBottom].forEach(el => {
+        if (!el) return;
+        el.style.display = 'flex';
+        el.innerHTML = stepperHtml;
+      });
+
+      if (scrollToCard && activeCard) {
+        const anchor = document.getElementById('guruStepperTop') || activeCard;
+        const rect = anchor.getBoundingClientRect();
+        if (rect.top < 50 || rect.top > window.innerHeight * 0.5) {
+          anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    function setGuruViewMode(mode) {
+      guruViewMode = mode;
+      renderGuruView(false);
+    }
+
+    function filterGuru(subj, btn) {
+      guruSubjectFilter = subj;
+      currentGuruIdx = 0;
+      if (guruViewMode === 'roadmap') {
+        guruViewMode = 'paged';
+      }
+      renderGuruView(false);
+    }
+
+    function stepGuruCard(delta) {
+      const filtered = getFilteredGuruCards();
+      currentGuruIdx = Math.min(Math.max(0, currentGuruIdx + delta), filtered.length - 1);
+      guruViewMode = 'paged';
+      renderGuruView(true);
+    }
+
+    function jumpToGuruCard(cardId) {
+      const target = document.getElementById(cardId);
+      if (!target) return;
+      const subj = target.getAttribute('data-subj');
+      if (guruSubjectFilter !== 'all' && guruSubjectFilter !== subj) {
+        guruSubjectFilter = 'all';
+      }
+      guruViewMode = 'paged';
+      const filtered = getFilteredGuruCards();
+      const idx = filtered.indexOf(target);
+      currentGuruIdx = idx >= 0 ? idx : 0;
+      renderGuruView(true);
+    }
+
+    function printAllMeetings() {
+      guruViewMode = 'all';
+      renderGuruView(false);
+      window.print();
+    }
+
+    function syncGuruFromHash() {
+      const hashId = (window.location.hash || '').replace(/^#/, '');
+      if (hashId && document.getElementById(hashId)) {
+        jumpToGuruCard(hashId);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('unlocked')) return;
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+      if (guruViewMode !== 'paged') return;
+      if (e.key === 'ArrowRight') stepGuruCard(1);
+      if (e.key === 'ArrowLeft') stepGuruCard(-1);
+    });
+
+    window.addEventListener('hashchange', syncGuruFromHash);
+    renderGuruView(false);
+    syncGuruFromHash();
+  </script>
+</body>
+</html>

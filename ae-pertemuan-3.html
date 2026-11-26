@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 3 After Effects — 3D Logo Animation Tanpa Plugin dari File .PNG (Tugas 2 AE)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #D97706;
+      --primary-dark: #B45309;
+      --primary-light: #FFFBEB;
+      --accent-sky: #FBBF24;
+      --bg-stage: #0B0906;
+      --slide-bg: #FFFFFF;
+      --text-heading: #78350F;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --border-card: rgba(217, 119, 6, 0.25);
+      --border-subtle: rgba(217, 119, 6, 0.14);
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      padding: 75px 0 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+    }
+    .floating-nav-bar {
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 1000;
+      background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(16px);
+      border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 999px;
+      padding: 8px 20px; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55); max-width: 95vw;
+    }
+    .nav-brand-title { font-family: var(--font-heading); font-size: 10.5px; color: #FFFFFF; letter-spacing: 0.06em; }
+    .nav-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.2); }
+    .nav-link-btn { color: var(--accent-sky); text-decoration: none; font-size: 12.5px; font-weight: 700; }
+    .slide-counter-pill {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      background: rgba(217, 119, 6, 0.35); border: 1px solid rgba(251, 191, 36, 0.45);
+      color: var(--accent-sky); padding: 4px 12px; border-radius: 999px;
+    }
+    .slide {
+      width: 1440px; min-height: 810px; max-width: 96vw;
+      background-color: var(--slide-bg); border: 1.5px solid var(--border-card);
+      border-radius: 20px; position: relative; display: flex; flex-direction: column;
+      justify-content: space-between; padding: 46px 64px;
+      box-shadow: 0 25px 60px rgba(217, 119, 6, 0.15);
+    }
+    .slide-title-mixed { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+    .title-script { font-family: var(--font-script); font-size: 62px; color: var(--primary); line-height: 0.9; }
+    .title-serif { font-family: var(--font-heading); font-size: 25px; color: var(--text-heading); }
+    .slide-subtitle { font-size: 15.5px; color: var(--text-secondary); line-height: 1.5; }
+    .slide-subtitle strong { color: var(--primary-dark); }
+    .slide-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; margin: 16px 0; }
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-box {
+      background: #FFFFFF; border: 1.5px solid var(--border-card); border-radius: 16px;
+      padding: 20px 22px; display: flex; flex-direction: column; gap: 9px;
+    }
+    .card-badge {
+      display: inline-block; align-self: flex-start; background: var(--primary-light);
+      color: var(--primary-dark); border: 1px solid var(--border-card);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .card-title { font-size: 17.5px; font-weight: 800; color: var(--text-heading); line-height: 1.3; }
+    .card-body { font-size: 14px; color: var(--text-body); line-height: 1.58; }
+    .card-body ul, .card-body ol { padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+    kbd {
+      background: #FEF3C7; color: #92400E; border: 1px solid #F59E0B;
+      border-radius: 6px; padding: 2px 7px; font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    }
+    .pr-shortcut-banner {
+      background: linear-gradient(135deg, #271202 0%, #451a03 100%);
+      border: 1.5px solid rgba(251, 191, 36, 0.45); border-radius: 14px;
+      padding: 13px 18px; margin-top: 12px; display: flex; align-items: center;
+      gap: 14px; flex-wrap: wrap; color: #F8FAFC;
+    }
+    .pr-shortcut-tag {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #FBBF24;
+      background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.35);
+      padding: 4px 10px; border-radius: 6px;
+    }
+    .pr-tutorial-text { font-size: 13.5px; line-height: 1.45; color: #FDE68A; flex: 1; }
+    .slide-footer-meta {
+      display: flex; justify-content: space-between; font-family: var(--font-mono);
+      font-size: 11px; color: var(--text-secondary); border-top: 1px solid var(--border-subtle); padding-top: 12px;
+    }
+    .btn-cta-submit {
+      display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 13px 18px; background: linear-gradient(135deg, #D97706, #B45309);
+      color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 13.5px;
+      border-radius: 12px; box-shadow: 0 8px 20px rgba(217, 119, 6, 0.3);
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 3 (PL).pdf" data-pdf-mode="auto">
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">← Beranda</a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">AE PERTEMUAN 03 • 3D LOGO ANIMATION (.PNG)</span>
+    <span class="slide-counter-pill">10 SLIDE 3D LOGO</span>
+  </nav>
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Pertemuan 03</span>
+        <span class="title-serif">3D LOGO ANIMATION TANPA PLUGIN (DARI FILE .PNG)</span>
+      </div>
+      <p class="slide-subtitle">Mengubah gambar <strong><code>Logo_Studio.png</code></strong> datar milikmu menjadi <strong>Balok 3D Tebal Berbayang + Gerakan Kamera 3D Orbit</strong>!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">🧊 APA YANG KITA PELAJARI DI PERTEMUAN 03 INI?</span>
+          <h3 class="card-title">Tutorial 3D Logo Intro (Smertimba Graphics)</h3>
+          <div class="card-body">
+            <ul>
+              <li><strong>Bekerja 100% dengan gambar <code>.PNG</code> transparan!</strong> Tidak perlu plugin berbayar seperti Element 3D.</li>
+              <li><strong>Trik Ketebalan 3D (Extrude):</strong> Menyusun ketebalan 3D otomatis di sumbu Z menggunakan rumus pendek <code>[value[0], value[1], index]</code>.</li>
+              <li><strong>Shading &amp; Bayangan Nyata:</strong> Memberi efek gelap di pinggiran 3D (<em>Brightness &amp; Contrast</em>) dan bayangan lembut (<em>Drop Shadow</em>).</li>
+              <li><strong>3D Camera &amp; Null Orbit:</strong> Memutar kamera 3D mengelilingi logo dengan mulus!</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-box" style="justify-content:space-between;">
+          <div>
+            <span class="card-badge">▶️ VIDEO TUTORIAL REFERENSI RESMI</span>
+            <h3 class="card-title">3D Logo Animation Tutorial in After Effects (No Plugins)</h3>
+            <div class="card-body">
+              <p style="margin-bottom:10px;">Seluruh langkah di slide ini mengikuti persis tahapan video tutorial <strong>Smertimba Graphics</strong> agar mudah kamu ikuti klik demi klik di kelas maupun di rumah:</p>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/watch?v=AncnuhGuzvE" target="_blank" rel="noopener noreferrer" class="btn-cta-submit">
+            ▶️ BUKA VIDEO YOUTUBE (3D LOGO TUTORIAL) ↗
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>PERTEMUAN 03 • 3D LOGO ANIMATION (.PNG) TANPA PLUGIN</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: LANGKAH 1 - MEMBUAT 2 COMPOSITION (MAIN & LOGO) -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 01</span>
+        <span class="title-serif">BUAT 2 COMPOSITION: 'MAIN' (1920x1080) &amp; 'LOGO' (1000x1000)</span>
+      </div>
+      <p class="slide-subtitle">Kenapa kita membuat 2 Composition? Supaya kapan pun kamu ingin mengganti gambar <code>.PNG</code> logomu, seluruh efek 3D-nya otomatis menyesuaikan!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">1. COMP UTAMA (MAIN)</span>
+          <h3 class="card-title">Tekan <kbd>Ctrl + N</kbd> &rarr; Beri Nama <code>Main</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Tekan <kbd>Ctrl + N</kbd> (New Composition).</li>
+              <li><strong>Composition Name:</strong> Ketik <code>Main</code>.</li>
+              <li><strong>Width:</strong> <code>1920</code> px | <strong>Height:</strong> <code>1080</code> px.</li>
+              <li><strong>Frame Rate:</strong> <code>30</code> fps | <strong>Duration:</strong> <code>0:00:07:00</code> (7 Detik). Klik <strong>OK</strong>.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">2. COMP WADAH LOGO (LOGO)</span>
+          <h3 class="card-title">Tekan <kbd>Ctrl + N</kbd> Lagi &rarr; Beri Nama <code>Logo</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Tekan <kbd>Ctrl + N</kbd> sekali lagi untuk membuat wadah khusus logo.</li>
+              <li><strong>Composition Name:</strong> Ketik <code>Logo</code>.</li>
+              <li><strong>Width:</strong> <code>1000</code> px | <strong>Height:</strong> <code>1000</code> px (Kotak Persegi).</li>
+              <li><strong>Duration:</strong> <code>0:00:07:00</code>. Klik <strong>OK</strong>.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">3. MASUKKAN FILE .PNG KE 'LOGO'</span>
+          <h3 class="card-title">Import <code>Logo_Studio.png</code> (<kbd>Ctrl + I</kbd>)</h3>
+          <div class="card-body">
+            <ol>
+              <li>Pastikan kamu sedang berada di dalam tab Timeline <strong><code>Logo</code></strong>.</li>
+              <li>Tekan <kbd>Ctrl + I</kbd>, pilih file gambar <strong><code>Logo_Studio.png</code></strong> transparan milikmu, lalu tarik ke Timeline <code>Logo</code>.</li>
+              <li>Atur ukurannya (<kbd>S</kbd>) agar pas di tengah kotak (jangan terlalu mepet ke tepi).</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 01: SETUP COMPOSITION MAIN &amp; LOGO</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: LANGKAH 2 - MASUKKAN KE MAIN & NYALAKAN KUBUS 3D -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 02</span>
+        <span class="title-serif">TARIK COMP 'LOGO' KE 'MAIN' &amp; NYALAKAN SAKLAR KUBUS 3D</span>
+      </div>
+      <p class="slide-subtitle">Sekarang kita kembali ke panggung utama (<code>Main</code>) dan mengubah logo datar menjadi objek 3 Dimensi!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">1. PINDAH KE TAB 'MAIN'</span>
+          <h3 class="card-title">Tarik Comp <code>Logo</code> dari Panel Project ke Timeline <code>Main</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik tab <strong><code>Main</code></strong> di Timeline bawah.</li>
+              <li>Lihat ke panel <strong>Project</strong> (kiri atas), cari ikon Composition bernama <strong><code>Logo</code></strong>, lalu tarik turun ke Timeline <code>Main</code>.</li>
+              <li>Buat juga latar belakang dengan menekan <kbd>Ctrl + Y</kbd> (New Solid, beri nama <code>BG</code>, warna abu-abu terang atau biru malam gelap), lalu taruh layer <code>BG</code> di <strong>baris paling bawah</strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">2. NYALAKAN SAKLAR 3D (IKON KUBUS 🧊)</span>
+          <h3 class="card-title">Centang Kotak di Bawah Ikon Kubus pada Layer <code>Logo</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Lihat barisan ikon di sebelah kanan nama layer <code>Logo</code> di Timeline.</li>
+              <li>Cari ikon berbentuk <strong>Kubus Kecil (3D Layer)</strong>, lalu <strong>centang kotaknya</strong>!</li>
+              <li><strong>Tips Penting:</strong> Jika ikon kubus belum terlihat, tekan tombol <kbd>F4</kbd> di keyboard (atau klik tombol <em>Toggle Switches / Modes</em> di bagian paling bawah Timeline).</li>
+              <li><em>Catatan:</em> Jangan centang kubus 3D pada layer <code>BG</code>!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 02: MENGAKTIFKAN 3D LAYER SWITCH</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: LANGKAH 3 - RUMUS AJAIB KETEBALAN 3D (EXTRUDE TANPA PLUGIN) -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 03</span>
+        <span class="title-serif">TRIK KETEBALAN 3D (EXTRUDE) DENGAN RUMUS 'INDEX'</span>
+      </div>
+      <p class="slide-subtitle">Bagaimana cara membuat gambar <code>.PNG</code> tipis menjadi tebal seperti balok 3D tanpa plugin? Gunakan rumus 1 baris ini!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">🪄 KLIK 1: MASUKKAN RUMUS PENGGESER SUMBU Z</span>
+          <h3 class="card-title">Tahan <kbd>Alt</kbd> + Klik Ikon Jam <code>Position</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik layer <strong><code>Logo</code></strong> di Timeline <code>Main</code>, lalu tekan huruf <kbd>P</kbd> (muncul <strong>Position</strong> dengan 3 angka: X, Y, dan Z).</li>
+              <li><strong>Tahan tombol <kbd>Alt</kbd> di keyboard</strong>, lalu <strong>klik Ikon Jam (Stopwatch)</strong> di sebelah kata <em>Position</em>!</li>
+              <li>Di kotak teks rumus yang terbuka di kanan, hapus tulisannya lalu ketik persis seperti ini:<br>
+                <code style="display:inline-block; margin-top:6px; padding:6px 12px; background:#1e293b; color:#fde047; border-radius:8px; font-weight:700; font-size:15px;">[value[0], value[1], index]</code>
+              </li>
+              <li>Klik di area kosong luar kotak untuk mengunci rumusnya.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">🧱 KLIK 2: DUPLIKASI LAYER (CTRL + D)</span>
+          <h3 class="card-title">Tekan <kbd>Ctrl + D</kbd> Sebanyak 20 Sampai 25 Kali!</h3>
+          <div class="card-body">
+            <p style="margin-bottom:8px;">Apa arti rumus <code>[value[0], value[1], index]</code> tadi? Artinya: posisi Kiri-Kanan (<code>value[0]</code>) dan Atas-Bawah (<code>value[1]</code>) tetap diam, tetapi posisi Kedalaman 3D (Sumbu Z) otomatis mundur ke belakang sesuai nomor urut baris layer (<code>index</code>)!</p>
+            <ul>
+              <li>Sebelum menduplikasi, mari kita pasang efek bayangan dulu di Slide berikutnya supaya kita tidak perlu mengulang 20 kali!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 03: RUMUS EXTRUDE 3D [value[0], value[1], index]</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: LANGKAH 4 - SHADING SAMPING 3D & DUPLIKASI 25X -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 04</span>
+        <span class="title-serif">MEMBERI SHADING PINGGIRAN 3D &amp; MENDUPLIKASI LAYER</span>
+      </div>
+      <p class="slide-subtitle">Kalau semua tumpukan 3D warnanya sama persis, ketebalan sampingnya tidak akan terlihat. Kita gelapkan sedikit bagian sampingnya!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">1. DUPLIKASI 1 KALI DULU</span>
+          <h3 class="card-title">Tekan <kbd>Ctrl + D</kbd> (Jadi 2 Layer Logo)</h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik layer <code>Logo</code> (yang sudah ada rumus <code>index</code> tadi), lalu tekan <kbd>Ctrl + D</kbd> <strong>1 kali saja dulu</strong>.</li>
+              <li>Biarkan <strong>Layer 1 (Paling Atas)</strong> tetap murni tanpa efek karena itu adalah <strong>Wajah Depan Logo</strong>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">2. GELAPKAN LAYER KE-2</span>
+          <h3 class="card-title">Beri Efek <code>Brightness &amp; Contrast</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik <strong>Layer <code>Logo</code> nomor 2</strong> (yang di bawahnya).</li>
+              <li>Di panel kanan <em>Effects &amp; Presets</em>, ketik <strong><code>Brightness &amp; Contrast</code></strong> lalu tarik ke Layer 2 tersebut.</li>
+              <li>Ubah angka <strong>Brightness menjadi <code>-40</code></strong> (atau <code>-50</code>) supaya warna pinggiran 3D menjadi lebih gelap berbayang!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">3. TEKAN CTRL + D 20 KALI!</span>
+          <h3 class="card-title">Gandakan Layer ke-2 Sampai Tebal!</h3>
+          <div class="card-body">
+            <ol>
+              <li>Sekarang klik <strong>Layer <code>Logo</code> nomor 2</strong> (yang sudah gelap tadi), lalu tekan <kbd>Ctrl + D</kbd> berulang-ulang sampai <strong>Layer ke-20 atau ke-25</strong>!</li>
+              <li>Semua duplikat otomatis tersusun ke belakang membentuk daging 3D yang tebal!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 04: SHADING PINGGIRAN 3D &amp; DUPLIKASI EXTRUDE</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: LANGKAH 5 - MEMBUAT CAMERA 3D & NULL OBJECT (CAM CONTROL) -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 05</span>
+        <span class="title-serif">MEMBUAT 3D CAMERA &amp; KENDALI 'CAM CONTROL' (NULL OBJECT)</span>
+      </div>
+      <p class="slide-subtitle">Saatnya melihat ketebalan 3D logomu dengan memutar kamera mengelilingi logo!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">1. BUAT KAMERA 3D</span>
+          <h3 class="card-title"><em>Layer &gt; New &gt; Camera</em></h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik menu atas <strong>Layer &gt; New &gt; Camera...</strong> (atau <kbd>Ctrl + Alt + Shift + C</kbd>).</li>
+              <li>Pilih Preset <strong><code>35mm</code></strong> (atau <code>50mm</code>), lalu klik <strong>OK</strong>.</li>
+              <li>Taruh layer <code>Camera 1</code> di urutan paling atas Timeline.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">2. BUAT 'CAM CONTROL'</span>
+          <h3 class="card-title"><em>Layer &gt; New &gt; Null Object</em></h3>
+          <div class="card-body">
+            <ol>
+              <li>Klik menu atas <strong>Layer &gt; New &gt; Null Object</strong>.</li>
+              <li>Tekan <kbd>Enter</kbd> pada namanya dan ubah menjadi <strong><code>Cam Control</code></strong>.</li>
+              <li><strong>WAJIB:</strong> Centang kotak <strong>Ikon Kubus 3D</strong> pada baris <code>Cam Control</code>!</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">3. IKAT KAMERA KE NULL</span>
+          <h3 class="card-title">Tarik Spiral <code>@</code> dari Camera ke <code>Cam Control</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Cari ikon spiral (<strong>Parent Pick Whip <code>@</code></strong>) pada baris <strong><code>Camera 1</code></strong>.</li>
+              <li>Klik-tahan-tarik garisnya menuju tulisan <strong><code>Cam Control</code></strong>!</li>
+              <li>Sekarang kamu cukup memutar <code>Cam Control</code> untuk menggerakkan kamera 3D dengan sangat mudah!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 05: SETUP 3D CAMERA &amp; CAM CONTROL NULL</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: LANGKAH 6 - MENGGERAKKAN PUTARAN 3D LOGO (ROTATION & SCALE) -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 06</span>
+        <span class="title-serif">ANIMASIKAN PUTARAN KAMERA 3D (HURUF R &amp; HURUF S)</span>
+      </div>
+      <p class="slide-subtitle">Lihat keajaiban 3D-nya! Begitu kamu memutar angka Rotation pada <code>Cam Control</code>, ketebalan samping logo <code>.PNG</code> langsung terlihat!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">⏱️ DETIK 00:00 (POSISI AWAL MIRING 3D)</span>
+          <h3 class="card-title">1. Klik <code>Cam Control</code> &rarr; Tekan <kbd>R</kbd> dan <kbd>Shift + S</kbd></h3>
+          <div class="card-body">
+            <ol>
+              <li>Geser garis waktu biru ke paling awal (<strong>detik <code>00:00</code></strong>).</li>
+              <li>Klik layer <strong><code>Cam Control</code></strong>, tekan huruf <kbd>R</kbd> (Rotation) lalu tekan <kbd>Shift + S</kbd> (agar Scale juga muncul).</li>
+              <li>Klik <strong>Ikon Jam</strong> pada: <strong>X Rotation, Y Rotation, Z Rotation,</strong> dan <strong>Scale</strong>.</li>
+              <li>Isi angka awalnya agar logo tampak miring 3D yang dramatis:<br>
+                • <strong>X Rotation:</strong> <code>+35°</code> &nbsp;|&nbsp; <strong>Y Rotation:</strong> <code>-45°</code><br>
+                • <strong>Z Rotation:</strong> <code>-15°</code> &nbsp;|&nbsp; <strong>Scale:</strong> <code>55%</code> (dekat/zoom)
+              </li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">⏱️ DETIK 02:30 (POSISI AKHIR MENGHADAP DEPAN)</span>
+          <h3 class="card-title">2. Geser ke <code>02:30</code> &rarr; Kembalikan ke <code>0°</code> &amp; Tekan <kbd>F9</kbd>!</h3>
+          <div class="card-body">
+            <ol>
+              <li>Geser garis waktu biru ke <strong>detik <code>02:30</code></strong>.</li>
+              <li>Kembalikan angka-angkanya agar logo menghadap lurus ke depan:<br>
+                • <strong>X Rotation:</strong> <code>0°</code> &nbsp;|&nbsp; <strong>Y Rotation:</strong> <code>0°</code> &nbsp;|&nbsp; <strong>Z Rotation:</strong> <code>0°</code><br>
+                • <strong>Scale:</strong> <code>100%</code> (ukuran normal).
+              </li>
+              <li>Blok semua titik keyframe pada <code>Cam Control</code>, tekan tombol <kbd>F9</kbd> (<em>Easy Ease</em>), lalu buka <strong>Graph Editor (Speed Graph)</strong> dan tarik gagang kuning ke tengah/kiri agar putarannya mengerem super mulus!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 06: ANIMASI ORBIT 3D CAMERA + EASY EASE F9</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: LANGKAH 7 - DROP SHADOW & DEPTH OF FIELD -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Langkah 07</span>
+        <span class="title-serif">TAMBAHKAN DROP SHADOW &amp; CAMERA DEPTH OF FIELD</span>
+      </div>
+      <p class="slide-subtitle">Dua sentuhan akhir dari video tutorial Smertimba Graphics yang membuat logo 3D terlihat sangat realistis:</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">1. BAYANGAN LEMBUT DI BELAKANG LOGO 3D</span>
+          <h3 class="card-title">Pasang <code>Drop Shadow</code> di Layer Logo Paling Bawah</h3>
+          <div class="card-body">
+            <ol>
+              <li>Cari layer <strong><code>Logo</code> yang paling bawah</strong> (misal <code>Logo 20</code>, tepat di atas layer <code>BG</code>).</li>
+              <li>Ketik <strong><code>Drop Shadow</code></strong> di panel <em>Effects &amp; Presets</em> lalu tarik ke layer <code>Logo</code> paling bawah tersebut.</li>
+              <li>Atur di Effect Controls: <strong>Opacity = <code>45%</code></strong>, <strong>Distance = <code>25</code></strong>, dan <strong>Softness = <code>120</code></strong>.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">2. EFEK BURAM LENSA (DEPTH OF FIELD)</span>
+          <h3 class="card-title">Nyalakan <code>Depth of Field</code> pada Layer <code>Camera 1</code></h3>
+          <div class="card-body">
+            <ol>
+              <li>Buka segitiga pada layer <strong><code>Camera 1</code> &gt; <code>Camera Options</code></strong>.</li>
+              <li>Ubah <strong>Depth of Field</strong> menjadi <strong><code>ON</code></strong>.</li>
+              <li>Atur <strong>Aperture = <code>80</code></strong> dan <strong>Blur Level = <code>120%</code></strong> (pastikan di detik <code>02:30</code> logo terlihat tajam dengan mengatur <em>Focus Distance</em>).</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>LANGKAH 07: DROP SHADOW &amp; CAMERA DEPTH OF FIELD</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: TIPS AGAR KOMPUTER RINGAN (PRE-COMPOSE / RESOLUTION) -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Tips Lab</span>
+        <span class="title-serif">3 TIPS PENTING AGAR PRATINJAU 3D LANCAR &amp; TIDAK BERAT</span>
+      </div>
+      <p class="slide-subtitle">Karena ada 20 tumpukan layer 3D, gunakan 3 tips cerdas ini saat mengedit di komputer lab:</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3-col">
+        <div class="card-box">
+          <span class="card-badge">TIPS 1: RESOLUSI PREVIEW</span>
+          <h3 class="card-title">Ubah <code>Full</code> Jadi <code>Half / Third</code></h3>
+          <div class="card-body">Di bagian bawah layar tengah (Composition), ubah menu bertuliskan <strong><code>Full</code></strong> menjadi <strong><code>Half</code></strong> atau <strong><code>Third</code></strong> supaya saat menekan <kbd>Spasi</kbd> putaran 3D-nya sangat ringan dan ngebut! (Saat di-render nanti hasilnya tetap tajam 100%).</div>
+        </div>
+        <div class="card-box">
+          <span class="card-badge">TIPS 2: SEMBUNYIKAN 19 LAYER</span>
+          <h3 class="card-title">Gunakan Ikon <code>Shy Guy</code> (Orang Ngintip)</h3>
+          <div class="card-body">Supaya Timeline tidak penuh dengan 20 baris layer <code>Logo</code>, klik ikon <strong>Shy (gambar orang mengintip di atas tembok)</strong> pada layer <code>Logo 2</code> sampai <code>Logo 20</code>, lalu nyalakan tombol Shy besar di atas Timeline. Timeline-mu langsung ringkas!</div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light);">
+          <span class="card-badge">TIPS 3: GANTI LOGO KAPAN SAJA</span>
+          <h3 class="card-title">Cukup Edit di Dalam Tab <code>Logo</code></h3>
+          <div class="card-body">Ingin mengganti gambar <code>Logo_Studio.png</code> dengan logo lain? Kamu tidak perlu mengulang dari awal! Cukup buka tab <strong><code>Logo</code></strong>, ganti gambarnya di sana, dan tampilan 3D di tab <strong><code>Main</code></strong> langsung berubah otomatis!</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>TIPS OPTIMASI 3D LOGO DI LAB KOMPUTER</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: PENGUMPULAN TUGAS 2 AE -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">Tugas 2 AE</span>
+        <span class="title-serif">PENGUMPULAN TUGAS 2 AE: PEMBUATAN DESAIN ASET LOGO (.PNG)</span>
+      </div>
+      <p class="slide-subtitle">Kumpulkan aset desain logo <strong>.PNG Transparan</strong> milikmu sekarang! Di Pertemuan 3 ini Bapak men-tutorialkan animasi 3D logo langsung menggunakan logo yang sudah kamu kumpulkan!</p>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2-col">
+        <div class="card-box">
+          <span class="card-badge">📋 CHECKLIST TUGAS 2 AE (ASET LOGO STUDIO)</span>
+          <h3 class="card-title">Kriteria Aset Logo Wajib:</h3>
+          <div class="card-body">
+            <ol>
+              <li>Format file wajib <strong><code>.PNG</code> Transparan</strong> (tanpa latar kotak putih) atau file vektor (<code>.AI</code> / <code>.EPS</code>).</li>
+              <li>Resolusi tinggi (minimal <strong>2000 × 2000 px</strong>) agar garis logo tidak pecah saat di-zoom kamera 3D di After Effects.</li>
+              <li>Memiliki <strong>siluet simbol / ikon yang tegas &amp; kontras</strong> untuk Studio Film Animasi / Personal Branding.</li>
+              <li>Format penamaan: <code>Tugas2_Logo_Kelas_NamaLengkap.png</code> (simpan juga di Flashdisk / Drive untuk sesi lab).</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card-box" style="background:var(--primary-light); justify-content:space-between;">
+          <div>
+            <span class="card-badge">🗓️ JADWAL BATAS PENGUMPULAN PER KELAS</span>
+            <h3 class="card-title">Deadline Pengumpulan Tugas 2 AE:</h3>
+            <div class="card-body">
+              <ul style="margin-left: 18px; margin-bottom: 12px; line-height: 1.6;">
+                <li><strong>XI DKV 1:</strong> Rabu, 18 November 2026 (23:59 WIB)</li>
+                <li><strong>XI DKV 2:</strong> Kamis, 19 November 2026 (23:59 WIB)</li>
+                <li><strong>XI DKV 3:</strong> Kamis, 19 November 2026 (23:59 WIB)</li>
+              </ul>
+              <p style="font-size:0.88rem; color:#475569;">Klik tombol di bawah untuk mengunggah file logo transparan milikmu:</p>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+            <a href="https://www.youtube.com/watch?v=AncnuhGuzvE" target="_blank" rel="noopener noreferrer" class="btn-cta-submit" style="background:#1e293b;">
+              ▶️ TONTON VIDEO YOUTUBE (TUTORIAL 3D LOGO AE) ↗
+            </a>
+            <a href="/kumpul-tugas?id=ae-03" class="btn-cta-submit">
+              🚀 KUMPULKAN TUGAS 2 AE (DESAIN ASET LOGO) &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+<!-- MOBILE & DESKTOP INTERACTIVE SLIDE CAROUSEL + TOUCH SWIPE -->
+<style id="antigravity-mobile-slide-deck-css">
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .floating-nav-bar {
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    flex-wrap: nowrap !important;
+  }
+  .nav-link-btn,
+  .slide-counter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-brand-title {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    max-width: min(56vw, 740px);
+  }
+  .cover-title-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .cover-script,
+  .cover-serif {
+    display: block !important;
+  }
+  .cover-script {
+    margin-bottom: 0 !important;
+  }
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Single-slide carousel mode */
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop / Laptop clear clearance between top and bottom floating bars */
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 42px) clamp(32px, 3.8vw, 58px) !important;
+    }
+    body.ag-carousel-mode .cover-script {
+      font-size: clamp(60px, 5.8vw, 90px) !important;
+      line-height: 1.04 !important;
+      margin-bottom: 2px !important;
+    }
+    body.ag-carousel-mode .cover-serif {
+      font-size: clamp(28px, 2.8vw, 40px) !important;
+    }
+  }
+
+  /* Responsive Mobile & Tablet Adjustments for All 14 Slide Decks */
+  @media (max-width: 1024px) {
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    body {
+      padding: 62px 8px 84px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    body.ag-carousel-mode {
+      padding: 62px 8px 84px !important;
+      justify-content: flex-start !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+    }
+    .nav-link-btn {
+      font-size: 11.5px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-brand-title {
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: center !important;
+    }
+    .nav-divider { display: none !important; }
+    .slide-counter-pill {
+      font-size: 9.5px !important;
+      padding: 3px 8px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide > div:first-child {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      max-width: 100% !important;
+    }
+    .cover-center {
+      gap: 14px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-title-group {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-script {
+      display: block !important;
+      font-size: clamp(30px, 8.8vw, 48px) !important;
+      line-height: 1.05 !important;
+      margin-bottom: 4px !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+    .cover-serif {
+      display: block !important;
+      font-size: clamp(16.5px, 4.6vw, 24px) !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .cover-sub-box {
+      padding: 12px 14px !important;
+      font-size: 13.5px !important;
+      max-width: 100% !important;
+      line-height: 1.55 !important;
+    }
+    .cover-tags-row {
+      gap: 6px !important;
+    }
+    .tag-badge {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+    }
+    .slide-title-mixed {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      max-width: 100% !important;
+    }
+    .title-script {
+      font-size: clamp(28px, 7.8vw, 38px) !important;
+      line-height: 1.02 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .title-serif {
+      font-size: clamp(15px, 4.2vw, 18.5px) !important;
+      line-height: 1.28 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .slide-subtitle {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      max-width: 100% !important;
+    }
+    .slide-content {
+      margin: 6px 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .grid-2, .grid-3, .grid-2-col, .grid-3-col, .grid-4-col,
+    [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      min-width: 0 !important;
+    }
+    .card-surface, .card-box {
+      padding: 14px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    .card-title-group {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .card-heading, .card-title {
+      font-size: 14.5px !important;
+      line-height: 1.32 !important;
+      overflow-wrap: break-word !important;
+    }
+    .card-desc, .card-body {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .formula-badge, code, kbd {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .pr-shortcut-banner, .ae-shortcut-banner {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .pr-keys-list, .ae-keys-list {
+      border-right: none !important;
+      padding-right: 0 !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .pr-tutorial-text, .ae-tutorial-text {
+      font-size: 12.5px !important;
+      line-height: 1.45 !important;
+    }
+    .btn-cta-submit {
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      padding: 12px 14px !important;
+      font-size: 11.5px !important;
+    }
+    .slide-footer-meta {
+      font-size: 10px !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn {
+      padding: 7px 10px !important;
+      font-size: 11.5px !important;
+    }
+    .ag-slide-btn.secondary {
+      padding: 7px 9px !important;
+      font-size: 11px !important;
+    }
+    .ag-slide-indicator {
+      min-width: 52px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  @media print {
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+    body, body.ag-carousel-mode {
+      background: #ffffff !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important;
+      width: 1440px !important;
+      height: 810px !important;
+      max-width: none !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+  <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="agStepSlide(-1)">◀ Seblm</button>
+  <span class="ag-slide-indicator" id="agSlideIndicator">1 / 10</span>
+  <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="agStepSlide(1)">Lanjut ▶</button>
+  <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+</div>
+
+<script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

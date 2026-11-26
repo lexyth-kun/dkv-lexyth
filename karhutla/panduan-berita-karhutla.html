@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul & Panduan Tugas: Produksi Berita Televisi — Pengolahan Audio & Video SMK</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  // Immediate anti-flicker check for authorized teacher session
+  (function() {
+    try {
+      if (sessionStorage.getItem('guru_auth_token') === 'unlocked_201023') {
+        document.documentElement.classList.add('guru-unlocked');
+      }
+    } catch(e) {}
+  })();
+</script>
+
+<style>
+  /* Guru Lock Screen Protection */
+  html:not(.guru-unlocked) body {
+    overflow: hidden !important;
+    height: 100vh !important;
+  }
+  html:not(.guru-unlocked) .doc-controls,
+  html:not(.guru-unlocked) .doc-container {
+    display: none !important;
+  }
+
+  /* LIGHT & ELEGANT SKY BLUE PIN MODAL */
+  #guruLockScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999999;
+    background: rgba(240, 249, 255, 0.94);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow-y: auto;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+
+  html.guru-unlocked #guruLockScreen {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .lock-card-box {
+    width: 100%;
+    max-width: 440px;
+    background: #FFFFFF;
+    border: 2px solid #BAE6FD;
+    border-radius: 24px;
+    padding: 36px 28px;
+    box-shadow: 0 25px 70px rgba(2, 132, 199, 0.16), 0 10px 30px rgba(0, 0, 0, 0.04);
+    text-align: center;
+    position: relative;
+    animation: lockModalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes lockModalIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .lock-card-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #38BDF8, #0284C7, transparent);
+    border-radius: 3px;
+  }
+
+  .lock-avatar-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+    border: 2px solid #38BDF8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
+    transition: all 0.3s ease;
+  }
+
+  .lock-avatar-icon svg {
+    width: 32px;
+    height: 32px;
+    color: #0284C7;
+    transition: all 0.3s ease;
+  }
+
+  .lock-avatar-icon.unlocked {
+    background: linear-gradient(135deg, #ECFDF5 0%, #A7F3D0 100%);
+    border-color: #10B981;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.35);
+  }
+
+  .lock-avatar-icon.unlocked svg {
+    color: #059669;
+    transform: scale(1.1);
+  }
+
+  .lock-top-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: #E0F2FE;
+    border: 1.5px solid #7DD3FC;
+    color: #0284C7;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 999px;
+    margin-bottom: 12px;
+  }
+
+  .lock-main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+
+  .lock-subtitle {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  /* Interactive PIN Display & Slots */
+  .pin-display-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+    cursor: text;
+  }
+
+  .pin-hidden-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: auto;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    cursor: text;
+  }
+
+  .pin-slots-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .pin-slot {
+    width: 48px;
+    height: 56px;
+    border: 2px solid #CBD5E1;
+    border-radius: 12px;
+    background: #F8FAFC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: #0284C7;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  .pin-slot.active {
+    border-color: #0284C7;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .pin-slot.filled {
+    border-color: #38BDF8;
+    background: #F0F9FF;
+    color: #0369A1;
+  }
+
+  .pin-slot.error {
+    border-color: #EF4444 !important;
+    background: #FEF2F2 !important;
+    color: #DC2626 !important;
+    animation: pinShake 0.4s ease;
+  }
+
+  .pin-slot.success {
+    border-color: #10B981 !important;
+    background: #ECFDF5 !important;
+    color: #059669 !important;
+    transform: scale(1.04);
+  }
+
+  @keyframes pinShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+
+  .pin-toggle-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .pin-toggle-btn {
+    background: none;
+    border: none;
+    color: #0284C7;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .pin-toggle-btn:hover {
+    background: #E0F2FE;
+  }
+
+  .pin-status-msg {
+    min-height: 24px;
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .pin-status-msg.info { color: #0369A1; }
+  .pin-status-msg.error { color: #DC2626; }
+  .pin-status-msg.success { color: #059669; }
+
+  /* On-Screen Numpad */
+  .numpad-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .numpad-key {
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 13px 0;
+    font-size: 19px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: #0F172A;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .numpad-key:hover {
+    background: #E0F2FE;
+    border-color: #38BDF8;
+    color: #0284C7;
+    transform: translateY(-2px);
+  }
+
+  .numpad-key:active {
+    background: #BAE6FD;
+    transform: translateY(1px);
+  }
+
+  .numpad-key.func-key {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748B;
+  }
+
+  .btn-unlock-action {
+    width: 100%;
+    background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    color: #FFFFFF;
+    font-size: 13.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+  }
+
+  .btn-unlock-action:hover {
+    background: linear-gradient(135deg, #0369A1 0%, #075985 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+  }
+
+  .lock-card-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+
+  .lock-card-footer a {
+    color: #0284C7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .lock-card-footer a:hover {
+    color: #0369A1;
+    text-decoration: underline;
+  }
+
+  /* ========================================================= */
+  /* MAIN DOCUMENT STYLING (UNLOCKED STATE)                    */
+  /* ========================================================= */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: #F8FAFC;
+    color: #1E293B;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.65;
+    padding: 40px 20px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .doc-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 56px 64px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.05);
+    position: relative;
+  }
+
+  /* Clean Floating Controls */
+  .doc-controls {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
+    max-width: 1000px;
+    margin: 0 auto 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 10px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .doc-btn {
+    background: #1849D6;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .doc-btn:hover {
+    background: #0F3299;
+    transform: translateY(-2px);
+  }
+
+  .doc-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #F8FAFC;
+  }
+
+  .doc-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .badge-guru-verified {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+
+  .btn-relock {
+    background: #DC2626;
+    color: #FFFFFF;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-relock:hover {
+    background: #B91C1C;
+  }
+
+  /* Document Header (Clean Swiss Editorial, NO AI SLOP) */
+  .doc-header {
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+
+  .doc-kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1849D6;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .doc-subtitle {
+    font-size: 15px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .doc-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 12.5px;
+    color: #334155;
+  }
+
+  .doc-meta-item strong {
+    color: #0F172A;
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  /* Headings & Sections */
+  h2.section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2.section-heading::before {
+    content: "✦";
+    color: #1849D6;
+    font-size: 18px;
+  }
+
+  h3.sub-heading {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.7;
+  }
+
+  .card-box {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  .card-box.blue-accent {
+    border-left: 4px solid #1849D6;
+    background: #F8FAFC;
+  }
+
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .role-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .role-badge {
+    align-self: flex-start;
+    padding: 3px 10px;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: #1849D6;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .role-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0F172A;
+  }
+
+  .role-desc {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.55;
+  }
+
+  /* AV Script Table */
+  .script-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 28px;
+    font-size: 13px;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .script-table th {
+    background: #0F172A;
+    color: #FFFFFF;
+    padding: 12px 16px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  .script-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #E2E8F0;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .script-table tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  .timecode-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: #1849D6;
+    font-size: 11.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Custom Lists */
+  ul.custom-list, ol.custom-list {
+    margin-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  ul.custom-list li, ol.custom-list li {
+    margin-bottom: 8px;
+    font-size: 13.5px;
+    color: #334155;
+  }
+
+  code {
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: #1849D6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  kbd {
+    background: #0F172A;
+    color: #38BDF8;
+    border: 1px solid #0284C7;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+
+  /* Premiere Shortcut Box in Guide */
+  .pr-guide-banner {
+    background: #0B1120;
+    border: 1px solid #1E293B;
+    border-left: 4px solid #38BDF8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    color: #F1F5F9;
+  }
+
+  .pr-guide-title {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #38BDF8;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pr-guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .pr-guide-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  html, body { max-width: 100%; overflow-x: clip; }
+
+  /* Multi-Page Chapter Navigation Controls */
+  .chapter-pager-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    margin-bottom: 24px;
+  }
+  .chapter-tab-btn {
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #334155;
+    padding: 8px 13px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .chapter-tab-btn:hover:not(:disabled) {
+    border-color: #1849D6;
+    color: #1849D6;
+  }
+  .chapter-tab-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .chapter-tab-btn.active {
+    background: #1849D6;
+    border-color: #1849D6;
+    color: #FFFFFF;
+    box-shadow: 0 6px 16px rgba(24, 73, 214, 0.25);
+  }
+  .chapter-page.is-hidden-page {
+    display: none;
+  }
+  .chapter-nav-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1.5px solid #E2E8F0;
+  }
+  .chapter-nav-footer .chapter-page-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1849D6;
+  }
+
+  @media (max-width: 768px) {
+    .doc-container { padding: 22px 16px; border-radius: 14px; max-width: 100%; overflow: hidden; }
+    .doc-title { font-size: 22px; }
+    .doc-meta-grid { grid-template-columns: 1fr 1fr; padding: 10px 12px; }
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .pr-guide-grid { grid-template-columns: 1fr; }
+    .script-table { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .doc-controls { flex-direction: column; gap: 10px; align-items: stretch; }
+    .lock-card-box { padding: 28px 18px; }
+    .pin-slots-container { gap: 6px; }
+    .pin-slot { width: 42px; height: 50px; font-size: 20px; }
+    .chapter-pager-bar { padding: 8px; gap: 6px; }
+    .chapter-tab-btn { flex: 1 1 auto; text-align: center; font-size: 11.5px; padding: 8px 10px; }
+    .chapter-nav-footer { justify-content: center; }
+  }
+
+  @media print {
+    body { background: transparent !important; padding: 0 !important; }
+    .doc-container { border: none !important; box-shadow: none !important; padding: 0 !important; }
+    .doc-controls, .chapter-pager-bar, .chapter-nav-footer { display: none !important; }
+    .chapter-page, .chapter-page.is-hidden-page { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- GURU SECURITY LOCK SCREEN OVERLAY -->
+  <div id="guruLockScreen" role="dialog" aria-modal="true" aria-label="Kunci Dokumen Guru">
+    <div class="lock-card-box">
+      <!-- Animated Lock Icon Circle -->
+      <div class="lock-avatar-icon" id="lockAvatarIcon">
+        <svg id="lockSvgIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+
+      <div class="lock-top-badge">
+        <span>🔒 DOKUMEN KHUSUS GURU &amp; REDAKSI</span>
+      </div>
+
+      <h1 class="lock-main-title">Panduan Modul Berita TV Terkunci</h1>
+      <p class="lock-subtitle">
+        Modul naskah AV Script 2 kolom, bank pertanyaan liputan, dan rubrik asesmen dilindungi. Masukkan <strong>6 digit kode PIN guru</strong> untuk membuka.
+      </p>
+
+      <!-- PIN Input Area -->
+      <div class="pin-display-wrapper" id="pinDisplayWrapper" title="Klik untuk mengetik PIN via keyboard">
+        <input 
+          type="password" 
+          inputmode="numeric" 
+          pattern="[0-9]*" 
+          maxlength="6" 
+          id="pinHiddenInput" 
+          class="pin-hidden-input" 
+          autocomplete="off"
+          autofocus
+        />
+        <div class="pin-slots-container">
+          <div class="pin-slot active" data-index="0">-</div>
+          <div class="pin-slot" data-index="1">-</div>
+          <div class="pin-slot" data-index="2">-</div>
+          <div class="pin-slot" data-index="3">-</div>
+          <div class="pin-slot" data-index="4">-</div>
+          <div class="pin-slot" data-index="5">-</div>
+        </div>
+      </div>
+
+      <div class="pin-toggle-row">
+        <button type="button" class="pin-toggle-btn" id="btnTogglePinVisibility">
+          <span id="togglePinIcon">👁️</span>
+          <span id="togglePinText">Tampilkan Angka PIN</span>
+        </button>
+      </div>
+
+      <div class="pin-status-msg info" id="pinStatusMsg">
+        <span>💡 Masukkan 6 digit kode PIN guru</span>
+      </div>
+
+      <!-- On-Screen Numpad -->
+      <div class="numpad-container">
+        <button type="button" class="numpad-key" data-digit="1">1</button>
+        <button type="button" class="numpad-key" data-digit="2">2</button>
+        <button type="button" class="numpad-key" data-digit="3">3</button>
+        <button type="button" class="numpad-key" data-digit="4">4</button>
+        <button type="button" class="numpad-key" data-digit="5">5</button>
+        <button type="button" class="numpad-key" data-digit="6">6</button>
+        <button type="button" class="numpad-key" data-digit="7">7</button>
+        <button type="button" class="numpad-key" data-digit="8">8</button>
+        <button type="button" class="numpad-key" data-digit="9">9</button>
+        <button type="button" class="numpad-key func-key" id="btnNumpadClear">RESET</button>
+        <button type="button" class="numpad-key" data-digit="0">0</button>
+        <button type="button" class="numpad-key func-key" id="btnNumpadBackspace">⌫</button>
+      </div>
+
+      <button type="button" class="btn-unlock-action" id="btnUnlockSubmit">
+        <span>BUKA PANDUAN GURU 🔓</span>
+      </button>
+
+      <div class="lock-card-footer">
+        <a href="index.html">&larr; Slide Interaktif Siswa</a>
+        <a href="/">Ke Portal Utama &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Sticky Controls -->
+  <div class="doc-controls">
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <a href="index.html" class="doc-btn">🖥️ Slide Presentasi Interaktif</a>
+      <button onclick="window.print()" class="doc-btn secondary">🖨️ Cetak Dokumen</button>
+      <a href="/" class="doc-btn secondary">🏠 Portal Utama</a>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span class="badge-guru-verified">🔒 AKSES GURU TERVERIFIKASI</span>
+      <button type="button" class="btn-relock" id="btnRelockKarhutla">🔒 Kunci Dokumen</button>
+    </div>
+  </div>
+
+  <main class="doc-container">
+    <!-- Header Document (Clean Swiss Editorial, NO AI SLOP) -->
+    <header class="doc-header">
+      <span class="doc-kicker">Modul Pembelajaran Pengolahan Audio &amp; Video (PAV) • Semester Gasal</span>
+      <h1 class="doc-title">Produksi Berita Televisi (Broadcast News)</h1>
+      <div class="doc-subtitle">
+        Pedoman Lengkap Pembelajaran Proyek: Kaidah 5W+1H &amp; Piramida Terbalik, Format Naskah Dua Kolom (AV Script), Manajemen 5 Peran Redaksi, Liputan Lapangan, dan Pascaproduksi di Adobe Premiere Pro 2021 Windows.
+      </div>
+      <div class="doc-meta-grid">
+        <div class="doc-meta-item">
+          <strong>Mata Pelajaran</strong>
+          Pengolahan Audio &amp; Video
+        </div>
+        <div class="doc-meta-item">
+          <strong>Tingkat Kelas</strong>
+          SMK Kelas XI / XII Multimedia
+        </div>
+        <div class="doc-meta-item">
+          <strong>Durasi Karya</strong>
+          3 – 5 Menit (Full HD 1080p)
+        </div>
+        <div class="doc-meta-item">
+          <strong>Model Pembelajaran</strong>
+          Project-Based Learning (Kelompok 5)
+        </div>
+      </div>
+    </header>
+
+    <div class="chapter-pager-bar" role="tablist" aria-label="Navigasi Halaman Bab">
+      <button type="button" class="chapter-tab-btn active" data-page="1" onclick="setKarhutlaPage(1)">📄 Bab 1–3: Konsep &amp; Redaksi</button>
+      <button type="button" class="chapter-tab-btn" data-page="2" onclick="setKarhutlaPage(2)">📄 Bab 4: Naskah AV Script</button>
+      <button type="button" class="chapter-tab-btn" data-page="3" onclick="setKarhutlaPage(3)">📄 Bab 5–6: Liputan &amp; Lab PR</button>
+      <button type="button" class="chapter-tab-btn" data-page="4" onclick="setKarhutlaPage(4)">📄 Bab 7–8: Rubrik &amp; KEJ</button>
+      <button type="button" class="chapter-tab-btn" data-page="all" onclick="setKarhutlaPage('all')">📜 Semua Bab</button>
+    </div>
+
+    <div class="chapter-page" data-chapter-page="1">
+    <!-- BAB 1 -->
+    <section>
+      <h2 class="section-heading">1. Karakteristik Berita Televisi &amp; Nilai Berita</h2>
+      <p>
+        Berita televisi memiliki keunikan dibanding media lainnya karena menggabungkan kekuatan <strong>audio dan visual secara bersamaan</strong>. Penonton menyerap informasi secara sekilas dengar dan sekilas pandang, sehingga bahasa yang digunakan harus lugas, jelas, dan tidak berbelit-belit.
+      </p>
+      <p>
+        Melalui proyek ini, peserta didik diajak untuk tidak hanya menguasai keterampilan teknis <em>video editing</em>, tetapi juga mempraktikkan <strong>integritas jurnalisme penyiaran</strong>: menyajikan fakta terverifikasi, menyuarakan aspirasi masyarakat (<em>human interest</em>), serta mengemas karya dengan standar etika penyiaran profesional.
+      </p>
+      <div class="card-box blue-accent">
+        <strong>Tujuan Instruksional Pembelajaran Siswa:</strong>
+        <ul class="custom-list" style="margin-top: 8px;">
+          <li>Peserta didik mampu merancang konsep liputan berita dengan menerapkan kaidah jurnalistik 5W + 1H dan piramida terbalik.</li>
+          <li>Peserta didik mampu menyusun naskah penyiaran standar dua kolom (<em>Audio vs Video Script</em>) sebelum pengambilan gambar.</li>
+          <li>Peserta didik mampu mengkurasi footage B-roll secara etis dan menyertakan atribusi sumber resmi (hak cipta).</li>
+          <li>Peserta didik mampu melakukan teknik wawancara warga (<em>Vox Pop</em>) dengan framing kamera stabil dan audio jernih.</li>
+          <li>Peserta didik mampu melakukan pascaproduksi di Adobe Premiere Pro: <em>Ultra Key (Chroma Key)</em>, <em>Audio Auto-Ducking</em>, <em>Lower-Third</em>, dan <em>Title Safe Area 90%</em>.</li>
+        </ul>
+      </div>
+
+      <div class="card-box">
+        <h3 class="sub-heading" style="margin-top: 0;">Pilihan Topik Liputan Kelompok:</h3>
+        <p>Siswa dibebaskan memilih tema liputan yang memiliki nilai berita nyata bagi publik:</p>
+        <ul class="custom-list">
+          <li><strong>Topik A: Isu Lingkungan &amp; Kebencanaan</strong> (Contoh: Dampak kabut asap karhutla, pengelolaan bank sampah sekolah, atau banjir rob pemukiman).</li>
+          <li><strong>Topik B: Inovasi Pendidikan &amp; Prestasi Sekolah</strong> (Contoh: Karya robotika siswa SMK, bengkel praktik digital, atau profil wirausaha muda siswa).</li>
+          <li><strong>Topik C: Denyut Sosial-Ekonomi Masyarakat</strong> (Contoh: Daya beli pasar tradisional, perjuangan UMKM kuliner lokal, atau fasilitas transportasi publik).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BAB 2 -->
+    <section>
+      <h2 class="section-heading">2. Konsep Siaran Berita &amp; Rumus 5W + 1H</h2>
+      <p>
+        Format paket berita televisi disusun berdasarkan prinsip <strong>Piramida Terbalik</strong>: fakta paling mendesak dan krusial disajikan pada detik-detik awal, diikuti oleh rincian data pendukung, kesaksian lapangan, dan solusi tindak lanjut.
+      </p>
+
+      <div class="card-box">
+        <h3 class="sub-heading" style="margin-top: 0;">Penerapan 5W + 1H dalam Penulisan Berita:</h3>
+        <ul class="custom-list">
+          <li><strong>WHAT (Apa peristiwanya?):</strong> Inti kejadian atau permasalahan utama yang sedang berlangsung secara objektif dan faktual.</li>
+          <li><strong>WHERE (Di mana lokasinya?):</strong> Menyebutkan nama jalan, kelurahan, kecamatan, kabupaten, hingga provinsi secara spesifik.</li>
+          <li><strong>WHEN (Kapan terjadinya?):</strong> Waktu dan kronologi peristiwa (hari, tanggal, jam, atau rentang waktu terjadinya kejadian).</li>
+          <li><strong>WHO (Siapa pihak terkait?):</strong> Warga terdampak, saksi mata lapangan, pihak berwenang, atau tokoh narasumber ahli.</li>
+          <li><strong>WHY (Mengapa dapat terjadi?):</strong> Latar belakang penyebab permasalahan (kondisi cuaca, kendala sarana, kebijakan baru, dsb).</li>
+          <li><strong>HOW (Bagaimana penanganannya?):</strong> Upaya yang telah atau sedang dilakukan, solusi konkret di lapangan, dan harapan masyarakat ke depan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- BAB 3 -->
+    <section>
+      <h2 class="section-heading">3. Pembagian Peran Kerja Redaksi (Tim 5 Siswa)</h2>
+      <p>
+        Setiap kelompok beranggotakan 5 siswa dengan pembagian tanggung jawab spesifik layaknya kru stasiun televisi penyiaran profesional:
+      </p>
+
+      <div class="card-grid-2">
+        <div class="role-card">
+          <span class="role-badge">Peran 01</span>
+          <div class="role-title">News Anchor (Studio)</div>
+          <div class="role-desc">
+            Membawakan pembukaan siaran (lead-in) dan narasi voice-over (VO). Artikulasi formal, kontak mata tegas ke kamera, dan intonasi penyiaran lugas.
+          </div>
+        </div>
+
+        <div class="role-card">
+          <span class="role-badge">Peran 02</span>
+          <div class="role-title">Field Reporter (Lapangan)</div>
+          <div class="role-desc">
+            Melakukan laporan pandangan mata di lokasi peristiwa (<em>stand-up report</em>), memegang mic liputan, dan memandu wawancara warga secara empati.
+          </div>
+        </div>
+
+        <div class="role-card">
+          <span class="role-badge">Peran 03</span>
+          <div class="role-title">Narasumber / Warga (SOT)</div>
+          <div class="role-desc">
+            Menyampaikan kesaksian autentik atau keluhan nyata (<em>Sound on Tape / Vox Pop</em>): warga terdampak, pedagang, pelajar, atau pihak terkait.
+          </div>
+        </div>
+
+        <div class="role-card">
+          <span class="role-badge">Peran 04</span>
+          <div class="role-title">Juru Kamera &amp; Audio</div>
+          <div class="role-desc">
+            Menjaga stabilitas framing 16:9 (<em>Rule of Thirds</em>), variasi shot WS-MS-CU, pencahayaan, dan kejernihan perekaman mic lavalier.
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card" style="margin-bottom: 24px;">
+        <span class="role-badge">Peran 05</span>
+        <div class="role-title">Video Editor &amp; Motion Graphics</div>
+        <div class="role-desc">
+          Merakit sequence di Premiere Pro, kunci <em>Ultra Key</em> green screen, <em>Audio Auto-Ducking</em>, perataan gain vokal, serta pemasangan Lower-Third dan News Ticker berstandar Title Safe Area 90%.
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="chapter-page is-hidden-page" data-chapter-page="2">
+    <!-- BAB 4 -->
+    <section>
+      <h2 class="section-heading">4. Format Naskah Siaran Dua Kolom (AV Script)</h2>
+      <p>
+        Format naskah baku pertelevisian yang memisahkan instruksi visual dengan dialog suara secara sejajar:
+      </p>
+
+      <table class="script-table">
+        <thead>
+          <tr>
+            <th style="width: 45%;">KOLOM VIDEO (VISUAL)</th>
+            <th style="width: 55%;">KOLOM AUDIO (DIALOG &amp; SUARA)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="timecode-label">[00:00 - 00:08] • BUMPER OPENING</span>
+              Animasi 3D Bumper Program Berita TV.<br>
+              Logo stasiun TV kelompok di sudut kanan atas.<br>
+              Headline teks: "LIPUTAN KHUSUS DARURAT BENCANA".
+            </td>
+            <td>
+              AUDIO: SFX Urgent News Drumbeat &amp; Brass Jingle menggelegar.<br>
+              VOICE OVER: "Inilah Berita Utama SMK Bina Bangsa News... Laporan Terkini!"
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="timecode-label">[00:08 - 00:45] • ANCHOR STUDIO</span>
+              STUDIO ANCHOR: Medium Shot Anchor di meja redaksi.<br>
+              LOWER-THIRD: [Nama Anchor] / News Anchor.<br>
+              OTS GRAPHICS: Kotak infografis peta sebaran peristiwa di samping kepala anchor.
+            </td>
+            <td>
+              ANCHOR (ON CAM):<br>
+              "Halo pemirsa, Laporan Berita kembali hadir bersama saya [Nama Anchor]. Peristiwa penting yang menjadi sorotan utama redaksi hari ini adalah krisis kabut asap pekat yang menyelimuti sejumlah wilayah pemukiman warga sejak beberapa hari terakhir. Kualitas udara dilaporkan masuk kategori berbahaya, melumpuhkan aktivitas sekolah dan transportasi."
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="timecode-label">[00:45 - 01:45] • B-ROLL FOOTAGE</span>
+              ROLL B-ROLL FOOTAGE LAPANGAN:<br>
+              - WS: Hamparan kabut tebal menyelimuti jalan raya.<br>
+              - MS: Warga dan anak-anak mengenakan masker medis.<br>
+              - CU: Pengendara motor menyalakan lampu utama di siang hari.<br>
+              LABEL SUMBER: "Dok. BNPB / Liputan Mandiri".
+            </td>
+            <td>
+              ANCHOR (VOICE OVER):<br>
+              (BGM Berita mengalun pelan, ducking -22 dB)<br>
+              "Berdasarkan pantauan langsung di lapangan, jarak pandang turun drastis di bawah lima puluh meter. Partikel debu pekat mengakibatkan ribuan warga mengeluhkan gangguan pernapasan. Satuan tugas bersama aparat gabungan saat ini terus berupaya melakukan mitigasi penanganan darurat di lapangan."
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="timecode-label">[01:45 - 02:30] • STAND-UP REPORTER</span>
+              STAND-UP REPORTER ON LOCATION:<br>
+              Medium Shot reporter bermasker memegang mic liputan.<br>
+              Latar belakang kabut asap tebal / green screen studio virtual.<br>
+              LOWER-THIRD: [Nama Reporter] / Pelapor Lapangan.
+            </td>
+            <td>
+              REPORTER (STAND-UP ON CAM):<br>
+              "Ya rekan studio, saat ini saya berada langsung di titik kawasan terdampak. Seperti yang Anda saksikan di belakang saya, pekatnya kabut asap membuat aroma sisa pembakaran terasa perih di mata dan tenggorokan. Untuk mengetahui keluhan warga secara langsung, berikut petikan wawancaranya."
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="timecode-label">[02:30 - 03:45] • WAWANCARA (VOX POP)</span>
+              WAWANCARA WARGA / SAKSI MATA (VOX POP):<br>
+              Shot 1: Warga terdampak (Ibu Rumah Tangga).<br>
+              LOWER-THIRD: [Nama Warga 1] / Warga Setempat.<br><br>
+              Shot 2: Pelajar / Pedagang Pasar.<br>
+              LOWER-THIRD: [Nama Warga 2] / Pedagang Pasar.
+            </td>
+            <td>
+              WARGA 1 (SOUND ON TAPE):<br>
+              "Kondisi ini sudah berlangsung hampir seminggu, mas. Anak saya batuk dan sesak napas. Sekolah terpaksa belajar dari rumah, tapi asap tetap masuk ke dalam kamar."<br><br>
+              WARGA 2 (SOUND ON TAPE):<br>
+              "Penjualan toko sepi sekali karena orang takut keluar rumah. Kami berharap pemerintah segera membagikan masker medis dan menyelesaikan sumber masalahnya."
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="timecode-label">[03:45 - 04:30] • SOLUSI &amp; CLOSING</span>
+              VISUAL AKSI PENANGANAN:<br>
+              Satgas mendirikan posko oksigen darurat &amp; pembagian masker.<br>
+              Anchor kembali tampil di studio.<br>
+              CREDIT TITLE: Tim Redaksi Siswa Kelas XI Multimedia.
+            </td>
+            <td>
+              ANCHOR (ON CAM):<br>
+              "Posko bantuan darurat saat ini telah dibuka di sejumlah titik layanan kesehatan. Warga diimbau untuk membatasi aktivitas luar ruangan serta selalu mengenakan masker pelindung. Demikian Laporan Berita edisi hari ini, saya [Nama Anchor] bersama seluruh tim redaksi pamit undur diri. Selamat beraktivitas dan sampai jumpa."<br>
+              (BGM Berita Climax Outro &rarr; Fade to Black)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    </div>
+
+    <div class="chapter-page is-hidden-page" data-chapter-page="3">
+    <!-- BAB 5 -->
+    <section>
+      <h2 class="section-heading">5. Bank Pertanyaan Wawancara Jurnalistik (Vox Pop)</h2>
+      <p>
+        Panduan bagi Field Reporter saat menggali soundbite dari narasumber warga di lapangan:
+      </p>
+
+      <div class="card-box">
+        <h3 class="sub-heading" style="margin-top: 0;">4 Dimensi Pertanyaan Liputan:</h3>
+        <ol class="custom-list">
+          <li><strong>Dimensi Fakta Lapangan:</strong> <em>"Bisa bapak/ibu ceritakan kapan pertama kali peristiwa ini mulai terasa mengganggu aktivitas warga di sini?"</em></li>
+          <li><strong>Dimensi Dampak Kesehatan &amp; Kemanusiaan:</strong> <em>"Bagaimana kondisi anggota keluarga bapak/ibu, apakah ada anak kecil atau lansia yang mulai mengalami gangguan kesehatan?"</em></li>
+          <li><strong>Dimensi Kerugian Ekonomi &amp; Pendidikan:</strong> <em>"Sejauh mana peristiwa ini mempengaruhi mata pencaharian harian bapak/ibu atau aktivitas belajar anak-anak di sekolah?"</em></li>
+          <li><strong>Dimensi Solusi &amp; Harapan Kebijakan:</strong> <em>"Apa tindakan paling mendesak yang bapak/ibu harapkan dari pemerintah atau pihak berwenang saat ini?"</em></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- BAB 6 -->
+    <section>
+      <h2 class="section-heading">6. Panduan Praktik Lab Editing di Adobe Premiere Pro 2021 Windows</h2>
+      <p>
+        Petunjuk teknis pengolahan audio dan video di lab komputer bagi pemula:
+      </p>
+
+      <!-- Windows Shortcut Cheat Sheet -->
+      <div class="pr-guide-banner">
+        <div class="pr-guide-title">
+          <span>⌨️ PINTASAN KERAMAT PREMIERE PRO 2021 WINDOWS</span>
+        </div>
+        <div class="pr-guide-grid">
+          <div class="pr-guide-item"><kbd>Ctrl + N</kbd> <span>: New Sequence</span></div>
+          <div class="pr-guide-item"><kbd>Ctrl + I</kbd> <span>: Import Media</span></div>
+          <div class="pr-guide-item"><kbd>Ctrl + B</kbd> <span>: New Bin (Folder)</span></div>
+          <div class="pr-guide-item"><kbd>C</kbd> <span>: Razor Tool (Potong)</span></div>
+          <div class="pr-guide-item"><kbd>V</kbd> <span>: Selection Tool</span></div>
+          <div class="pr-guide-item"><kbd>Q</kbd> / <kbd>W</kbd> <span>: Ripple Trim Cepat</span></div>
+          <div class="pr-guide-item"><kbd>M</kbd> <span>: Tambah Marker Waktu</span></div>
+          <div class="pr-guide-item"><kbd>G</kbd> <span>: Atur Audio Gain</span></div>
+          <div class="pr-guide-item"><kbd>'</kbd> <span>: Toggle Safe Margins</span></div>
+          <div class="pr-guide-item"><kbd>Ctrl + T</kbd> <span>: Teks Judul / Grafis</span></div>
+          <div class="pr-guide-item"><kbd>Ctrl + S</kbd> <span>: Simpan Project</span></div>
+          <div class="pr-guide-item"><kbd>Ctrl + M</kbd> <span>: Ekspor Media MP4</span></div>
+        </div>
+      </div>
+
+      <div class="card-box">
+        <h3 class="sub-heading" style="margin-top:0;">Teknik 1: Studio Virtual Green Screen (Ultra Key)</h3>
+        <ol class="custom-list">
+          <li>Letakkan video latar belakang studio di track <strong>V1</strong>, dan rekaman presenter berlatar hijau di track <strong>V2</strong>.</li>
+          <li>Buka panel <strong>Effects</strong> (<kbd>Shift + 7</kbd>), cari efek <code>Ultra Key</code> dan drag ke klip presenter di track V2.</li>
+          <li>Buka panel <strong>Effect Controls</strong> (<kbd>Shift + 5</kbd>). Gunakan pipet (<em>eyedropper</em>) pada <strong>Key Color</strong> untuk mengambil sampel warna hijau di samping kepala presenter.</li>
+          <li>Ubah opsi <em>Setting</em> dari <em>Default</em> ke <strong>Aggressive</strong>. Buka opsi <em>Matte Cleanup</em>, atur <em>Choke</em> ke <code>2-3</code> dan <em>Soften</em> ke <code>1-2</code> agar garis hijau di rambut hilang.</li>
+          <li>Beri efek <code>Gaussian Blur (8-10px)</code> pada video background V1 agar fokus lensa presenter terlihat sinematik.</li>
+        </ol>
+
+        <h3 class="sub-heading">Teknik 2: Audio Auto-Ducking (Essential Sound)</h3>
+        <ol class="custom-list">
+          <li>Buka menu <strong>Window &gt; Essential Sound</strong>.</li>
+          <li>Pilih seluruh klip vokal presenter, reporter, dan warga di track A1 &rarr; klik tombol <strong>Dialogue</strong> &rarr; centang <em>Auto-Match</em> (-23 LUFS).</li>
+          <li>Pilih klip musik latar di track A2 &rarr; klik tombol <strong>Music</strong> &rarr; centang kotak <strong>Ducking</strong> terhadap ikon Dialogue.</li>
+          <li>Atur <em>Duck Amount:</em> <strong>-22.0 dB</strong>, <em>Fade Sensitivity:</em> <strong>7.0</strong>, <em>Fade Duration:</em> <strong>600 ms</strong> &rarr; Klik tombol <strong>Generate Keyframes</strong>!</li>
+        </ol>
+
+        <h3 class="sub-heading">Teknik 3: Desain Grafis Siaran &amp; Safe Margins</h3>
+        <ol class="custom-list">
+          <li>Tekan tombol tanda petik <kbd>'</kbd> untuk mengaktifkan garis pengaman <strong>Safe Margins</strong>.</li>
+          <li>Pastikan seluruh teks nama narasumber (Lower-Third) dan teks berjalan (News Ticker) berada di dalam kotak <strong>Title Safe Area 90%</strong>.</li>
+        </ol>
+      </div>
+    </section>
+    </div>
+
+    <div class="chapter-page is-hidden-page" data-chapter-page="4">
+    <!-- BAB 7 -->
+    <section>
+      <h2 class="section-heading">7. Ketentuan Ekspor &amp; Rubrik Penilaian Proyek</h2>
+      <div class="card-box blue-accent">
+        <h3 class="sub-heading" style="margin-top: 0;">Spesifikasi Pengumpulan File Akhir:</h3>
+        <ul class="custom-list">
+          <li><strong>Format Kontainer:</strong> MP4 (Codec Video: H.264 / AVC).</li>
+          <li><strong>Resolusi Standar:</strong> Full HD 1080p (1920 × 1080 pixel), Rasio Aspek 16:9 Widescreen.</li>
+          <li><strong>Frame Rate:</strong> 25 FPS atau 29.97 / 30 FPS progresif.</li>
+          <li><strong>Audio Format:</strong> AAC Stereo, Bitrate 320 kbps, Sample Rate 48.000 Hz.</li>
+        </ul>
+      </div>
+
+      <table class="script-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Komponen Penilaian</th>
+            <th style="width: 60%;">Deskripsi Capaian Mutu</th>
+            <th style="width: 15%;">Bobot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Naskah 5W+1H</strong></td>
+            <td>Kelengkapan fakta, akurasi data peristiwa, objektivitas narasi piramida terbalik, serta kekuatan human interest wawancara.</td>
+            <td><strong>25%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>2. Editing &amp; Chroma Key</strong></td>
+            <td>Ketepatan Ultra Key bersih tanpa green spill, variasi ritme shot (WS-MS-CU), dan stabilitas kamera 16:9.</td>
+            <td><strong>25%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>3. Tata Suara &amp; Ducking</strong></td>
+            <td>Kejernihan artikulasi dialog vokal (-12 dB s/d -6 dB), kurva auto-ducking musik latar mulus, dan sinkronisasi SFX.</td>
+            <td><strong>20%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>4. Grafis TV &amp; Atribusi</strong></td>
+            <td>Lower-third, running text, logo stasiun TV berada di dalam Title Safe Margins 90%, serta pencantuman atribusi sumber B-roll.</td>
+            <td><strong>15%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>5. Kerjasama Tim &amp; Ekspor</strong></td>
+            <td>Kekompakan pembagian 5 peran redaksi, file master Full HD 1080p, dan ketepatan waktu pengumpulan via portal tugas.</td>
+            <td><strong>15%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- BAB 8 -->
+    <section>
+      <h2 class="section-heading">8. Kode Etik Jurnalistik (KEJ) &amp; Integritas Penyiaran</h2>
+      <div class="card-box">
+        <p>Empat pilar integritas wartawan penyiaran yang wajib dipegang teguh oleh setiap siswa:</p>
+        <ul class="custom-list">
+          <li><strong>Akurasi &amp; Anti-Hoaks:</strong> Setiap data, kutipan, dan angka wajib melalui proses verifikasi fakta sebelum disiarkan ke publik.</li>
+          <li><strong>Keberimbangan (Cover Both Sides):</strong> Memberikan ruang yang adil dan berimbang kepada semua pihak yang terlibat dalam suatu isu.</li>
+          <li><strong>Penghormatan Martabat Korban:</strong> Menjaga privasi korban musibah atau anak di bawah umur, tidak mengeksploitasi penderitaan demi sensasi.</li>
+          <li><strong>Kepatuhan Hak Cipta:</strong> Menghormati hak kekayaan intelektual dengan selalu menyematkan label atribusi resmi pada video pihak ketiga.</li>
+        </ul>
+      </div>
+    </section>
+    </div>
+
+    <div class="chapter-nav-footer" id="chapterNavFooter">
+      <button type="button" class="chapter-tab-btn" id="btnChapterPrev" onclick="stepKarhutlaPage(-1)">← Bab Sebelumnya</button>
+      <span class="chapter-page-label" id="chapterPageLabel">Halaman 1 / 4 • Bab 1–3</span>
+      <button type="button" class="chapter-tab-btn" id="btnChapterNext" onclick="stepKarhutlaPage(1)">Bab Berikutnya →</button>
+    </div>
+
+    <!-- Footer Document -->
+    <footer style="margin-top: 32px; border-top: 2px solid #E2E8F0; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 13px; color: #64748B; font-weight: 600;">
+      <div>Pengolahan Audio &amp; Video (PAV) • SMK Multimedia &amp; Broadcasting</div>
+      <div>SMK Bina Bangsa • Adrian Ali Muthi</div>
+    </footer>
+  </main>
+
+  <!-- GURU PIN SECURITY CONTROLLER -->
+  <script>
+    (function() {
+      const CORRECT_PIN = "201023";
+      const AUTH_KEY = "guru_auth_token";
+      const AUTH_VAL = "unlocked_201023";
+
+      const lockScreen = document.getElementById('guruLockScreen');
+      const pinHiddenInput = document.getElementById('pinHiddenInput');
+      const pinSlots = document.querySelectorAll('.pin-slot');
+      const pinStatusMsg = document.getElementById('pinStatusMsg');
+      const btnUnlockSubmit = document.getElementById('btnUnlockSubmit');
+      const lockAvatarIcon = document.getElementById('lockAvatarIcon');
+      const lockSvgIcon = document.getElementById('lockSvgIcon');
+      const btnRelockKarhutla = document.getElementById('btnRelockKarhutla');
+      const pinDisplayWrapper = document.getElementById('pinDisplayWrapper');
+      const btnTogglePinVisibility = document.getElementById('btnTogglePinVisibility');
+      const togglePinIcon = document.getElementById('togglePinIcon');
+      const togglePinText = document.getElementById('togglePinText');
+
+      let currentPin = "";
+      let isPinVisible = false;
+
+      function updateSlotDisplay() {
+        pinSlots.forEach((slot, index) => {
+          slot.classList.remove('active', 'filled', 'error', 'success');
+          if (index < currentPin.length) {
+            slot.textContent = isPinVisible ? currentPin[index] : "●";
+            slot.classList.add('filled');
+          } else {
+            slot.textContent = "-";
+            if (index === currentPin.length) {
+              slot.classList.add('active');
+            }
+          }
+        });
+        if (pinHiddenInput) {
+          pinHiddenInput.value = currentPin;
+        }
+      }
+
+      function handlePinInput(val) {
+        const clean = val.replace(/\D/g, '').slice(0, 6);
+        currentPin = clean;
+        updateSlotDisplay();
+
+        if (currentPin.length === 6) {
+          attemptUnlock();
+        } else {
+          pinStatusMsg.className = "pin-status-msg info";
+          pinStatusMsg.innerHTML = "<span>💡 Masukkan 6 digit kode PIN guru (" + currentPin.length + "/6)</span>";
+        }
+      }
+
+      function attemptUnlock() {
+        if (currentPin.length < 6) {
+          pinStatusMsg.className = "pin-status-msg error";
+          pinStatusMsg.innerHTML = "<span>⚠️ Masukkan lengkap 6 digit kode PIN!</span>";
+          return;
+        }
+
+        if (currentPin === CORRECT_PIN) {
+          pinSlots.forEach(slot => slot.classList.add('success'));
+          pinStatusMsg.className = "pin-status-msg success";
+          pinStatusMsg.innerHTML = "<span>✅ Kode Benar! Membuka Panduan Guru...</span>";
+          
+          if (lockAvatarIcon) lockAvatarIcon.classList.add('unlocked');
+          if (lockSvgIcon) {
+            lockSvgIcon.innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path>';
+          }
+
+          try {
+            sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+          } catch(e) {}
+
+          setTimeout(() => {
+            document.documentElement.classList.add('guru-unlocked');
+          }, 450);
+        } else {
+          pinSlots.forEach(slot => slot.classList.add('error'));
+          pinStatusMsg.className = "pin-status-msg error";
+          pinStatusMsg.innerHTML = "<span>❌ Kode PIN Salah! Silakan coba lagi.</span>";
+          
+          setTimeout(() => {
+            currentPin = "";
+            updateSlotDisplay();
+            if (pinHiddenInput) {
+              pinHiddenInput.focus();
+            }
+          }, 850);
+        }
+      }
+
+      function relock() {
+        try {
+          sessionStorage.removeItem(AUTH_KEY);
+        } catch(e) {}
+        document.documentElement.classList.remove('guru-unlocked');
+        currentPin = "";
+        updateSlotDisplay();
+        pinStatusMsg.className = "pin-status-msg info";
+        pinStatusMsg.innerHTML = "<span>💡 Masukkan 6 digit kode PIN guru</span>";
+        if (lockAvatarIcon) lockAvatarIcon.classList.remove('unlocked');
+        if (lockSvgIcon) {
+          lockSvgIcon.innerHTML = '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>';
+        }
+        if (pinHiddenInput) {
+          pinHiddenInput.focus();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      if (btnTogglePinVisibility) {
+        btnTogglePinVisibility.addEventListener('click', () => {
+          isPinVisible = !isPinVisible;
+          if (isPinVisible) {
+            togglePinIcon.textContent = "🙈";
+            togglePinText.textContent = "Sembunyikan Angka";
+          } else {
+            togglePinIcon.textContent = "👁️";
+            togglePinText.textContent = "Tampilkan Angka PIN";
+          }
+          updateSlotDisplay();
+        });
+      }
+
+      document.querySelectorAll('.numpad-key[data-digit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentPin.length < 6) {
+            handlePinInput(currentPin + btn.getAttribute('data-digit'));
+          }
+        });
+      });
+
+      const btnNumpadBackspace = document.getElementById('btnNumpadBackspace');
+      if (btnNumpadBackspace) {
+        btnNumpadBackspace.addEventListener('click', () => {
+          if (currentPin.length > 0) {
+            handlePinInput(currentPin.slice(0, -1));
+          }
+        });
+      }
+
+      const btnNumpadClear = document.getElementById('btnNumpadClear');
+      if (btnNumpadClear) {
+        btnNumpadClear.addEventListener('click', () => {
+          handlePinInput('');
+        });
+      }
+
+      if (pinDisplayWrapper) {
+        pinDisplayWrapper.addEventListener('click', () => {
+          if (pinHiddenInput) pinHiddenInput.focus();
+        });
+      }
+
+      if (pinHiddenInput) {
+        pinHiddenInput.addEventListener('input', (e) => {
+          handlePinInput(e.target.value);
+        });
+        pinHiddenInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            attemptUnlock();
+          }
+        });
+      }
+
+      if (btnUnlockSubmit) {
+        btnUnlockSubmit.addEventListener('click', () => {
+          attemptUnlock();
+        });
+      }
+
+      if (btnRelockKarhutla) btnRelockKarhutla.addEventListener('click', relock);
+
+      if (!document.documentElement.classList.contains('guru-unlocked')) {
+        setTimeout(() => {
+          if (pinHiddenInput) pinHiddenInput.focus();
+        }, 300);
+      }
+    })();
+
+    (function() {
+      const PAGE_LABELS = {
+        1: 'Halaman 1 / 4 • Bab 1–3: Konsep & Redaksi',
+        2: 'Halaman 2 / 4 • Bab 4: Naskah AV Script',
+        3: 'Halaman 3 / 4 • Bab 5–6: Liputan & Lab PR',
+        4: 'Halaman 4 / 4 • Bab 7–8: Rubrik & KEJ',
+        'all': 'Menampilkan Seluruh 8 Bab (Mode Lengkap)'
+      };
+      let currentPage = 1;
+
+      window.setKarhutlaPage = function(page) {
+        currentPage = page;
+        document.querySelectorAll('.chapter-page').forEach(el => {
+          const p = parseInt(el.getAttribute('data-chapter-page'), 10);
+          el.classList.toggle('is-hidden-page', page !== 'all' && p !== page);
+        });
+        document.querySelectorAll('.chapter-pager-bar .chapter-tab-btn').forEach(btn => {
+          btn.classList.toggle('active', String(btn.getAttribute('data-page')) === String(page));
+        });
+        const lbl = document.getElementById('chapterPageLabel');
+        if (lbl) lbl.textContent = PAGE_LABELS[page] || '';
+        const prevBtn = document.getElementById('btnChapterPrev');
+        const nextBtn = document.getElementById('btnChapterNext');
+        if (prevBtn) prevBtn.disabled = (page === 'all' || page <= 1);
+        if (nextBtn) nextBtn.disabled = (page === 'all' || page >= 4);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.stepKarhutlaPage = function(dir) {
+        if (currentPage === 'all') currentPage = 1;
+        const target = currentPage + dir;
+        if (target >= 1 && target <= 4) {
+          window.setKarhutlaPage(target);
+        }
+      };
+
+      window.setKarhutlaPage(1);
+    })();
+  </script>
+</body>
+</html>

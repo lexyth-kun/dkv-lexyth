@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 4 PAV — Elemen Grafis Berita (Lower Third, Running Text & Safe Margins)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #ECFDF5;
+      --accent-cyan: #0EA5E9;
+      --accent-sky: #34D399;
+      --bg-stage: #070B0E;
+      --slide-bg: #FFFFFF;
+      --text-heading: #065F46;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-card: rgba(5, 150, 105, 0.24);
+      --border-subtle: rgba(5, 150, 105, 0.12);
+      
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @page {
+      size: 1440px 810px;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      padding: 75px 0 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .floating-nav-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(52, 211, 153, 0.28);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .nav-brand-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link-btn {
+      color: var(--accent-sky);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .slide-counter-pill {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      background: rgba(5, 150, 105, 0.35);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: var(--accent-sky);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .slide {
+      width: 1440px;
+      height: 810px;
+      max-width: 96vw;
+      background-color: var(--slide-bg);
+      border: 1.5px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 70px;
+      box-shadow: 0 25px 60px rgba(5, 150, 105, 0.15), 0 0 1px rgba(0, 0, 0, 0.2);
+      page-break-after: always;
+    }
+
+    .slide-header { position: relative; z-index: 10; }
+    .slide-title-mixed {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .title-script {
+      font-family: var(--font-script);
+      font-size: 68px;
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 0.9;
+      transform: translateY(2px);
+    }
+
+    .title-serif {
+      font-family: var(--font-heading);
+      font-size: 29px;
+      font-weight: 500;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      max-width: 1100px;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      margin: 15px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card-surface {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-surface.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-pill {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .formula-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(15, 23, 42, 0.05);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #0F172A;
+      margin-top: auto;
+    }
+
+    .pr-shortcut-banner {
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: #FFFFFF;
+    }
+
+    .pr-shortcut-tag {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-sky);
+      white-space: nowrap;
+    }
+
+    .pr-keys-list {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pr-key-item {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #E2E8F0;
+    }
+
+    kbd {
+      background: #1E293B;
+      border: 1px solid #475569;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #38BDF8;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .pr-tutorial-text {
+      font-size: 12.5px;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: auto 0;
+    }
+
+    .cover-script {
+      font-family: var(--font-script);
+      font-size: 110px;
+      color: var(--primary);
+      line-height: 0.85;
+      margin-bottom: -15px;
+    }
+
+    .cover-serif {
+      font-family: var(--font-heading);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 1200px;
+    }
+
+    .cover-sub-box {
+      max-width: 860px;
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+
+    .cover-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag-badge {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .btn-cta-submit {
+      background: linear-gradient(135deg, #059669, #0EA5E9);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cta-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(5, 150, 105, 0.5);
+    }
+
+    @media (max-width: 1200px) {
+      .slide { width: 95vw; height: auto; min-height: 700px; padding: 35px 25px; }
+      .title-script { font-size: 48px; }
+      .title-serif { font-size: 22px; }
+      .cover-script { font-size: 72px; }
+      .cover-serif { font-size: 32px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .pr-shortcut-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 4 (PAV).pdf" data-pdf-mode="always">
+
+  <!-- Floating Sticky Nav Bar -->
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>BERANDA SILABUS</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">PAV • MINGGU 04 (Elemen Grafis Berita: Lower Third & Running Text)</span>
+    <div class="nav-divider"></div>
+    <a href="/downloads/Pertemuan%204%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="nav-link-btn" style="background:rgba(5,150,105,0.28);padding:4px 12px;border-radius:999px;border:1px solid rgba(52,211,153,0.45);">📄 PDF Materi</a>
+    <div class="nav-divider"></div>
+    <span class="slide-counter-pill">10 SLIDES DECK</span>
+  </nav>
+
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div style="display:flex; justify-content:space-between; font-family:var(--font-heading); font-size:11px; color:var(--primary); letter-spacing:0.12em;">
+      <span>MODUL PRAKTIKUM LAB MULTIMEDIA SMK</span>
+      <span>MINGGU KE-4 • ADOBE PREMIERE PRO (ESSENTIAL GRAPHICS)</span>
+    </div>
+
+    <div class="cover-center">
+      <div class="cover-title-group">
+        <span class="cover-script">Grafis &amp;</span>
+        <span class="cover-serif">SIARAN BERITA TV &amp; TEKS ILM</span>
+      </div>
+      <div class="cover-sub-box">
+        Mendesain <strong>Lower Third</strong> identitas presenter/reporter, <strong>Running News Ticker</strong> berita berjalan, serta teks pesan kunci Iklan Layanan Masyarakat menggunakan panel <strong>Essential Graphics</strong> Premiere Pro 2021 dengan prinsip <em>Safe Margins</em> penyiaran.
+      </div>
+      <div class="cover-tags-row">
+        <span class="tag-badge">● ESSENTIAL GRAPHICS</span>
+        <span class="tag-badge">TITLE SAFE 90%</span>
+        <span class="tag-badge">LOWER THIRD 2-BARIS</span>
+        <span class="tag-badge">RUNNING NEWS TICKER</span>
+        <span class="tag-badge">KONTRAK VISUAL SIARAN</span>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: HIERARKI VISUAL -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">hierarki informasi</span>
+        <span class="title-serif">Mengapa Grafis TV Wajib Terbaca Jelas?</span>
+      </div>
+      <div class="slide-subtitle">Dalam siaran berita televisi dan ILM, penonton hanya memiliki waktu 3–5 detik untuk membaca teks sembari menyimak video!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">01</span>
+            <h3 class="card-heading">Fungsi Lower Third Siaran Berita</h3>
+          </div>
+          <p class="card-desc">
+            Memberikan legitimasi dan konteks instan kepada penonton mengenai <strong>siapa yang sedang berbicara</strong> dan <strong>apa jabatannya</strong>. Tanpa Lower Third, penonton bingung membedakan antara saksi mata, pakar, atau pejabat publik.
+          </p>
+          <div class="formula-badge">
+            FORMAT RESMI: [BARIS 1: NAMA LENGKAP KAPITAL] • [BARIS 2: Jabatan / Lokasi Peliputan]
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">02</span>
+            <h3 class="card-heading">Fungsi Ticker Berita Berjalan (News Ticker)</h3>
+          </div>
+          <p class="card-desc">
+            Menyajikan rangkuman berita sekunder atau <em>Breaking News</em> yang bergerak konstan di bagian paling bawah layar. Menggunakan kecepatan baca rata-rata 120–150 kata per menit agar mata pemirsa nyaman membaca tanpa pusing.
+          </p>
+          <div class="formula-badge">
+            PRINSIP GERAK: Linear Interpolation (Kecepatan Konstan, Tidak Boleh Mendadak Berhenti)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: SAFE MARGINS -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">area aman</span>
+        <span class="title-serif">Prinsip Safe Margins 90% Title Safe</span>
+      </div>
+      <div class="slide-subtitle">Setiap layar televisi, LED display, dan smartphone memiliki bezel pemotong (overscan). Selalu aktifkan garis pemandu safe margins!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">90%</span>
+            <h3 class="card-heading">Title Safe Margin (Kotak Dalam)</h3>
+          </div>
+          <p class="card-desc">
+            Area berjarak 10% dari tepi bingkai. <strong>SELURUH TEKS, LOGO, DAN LOWER THIRD WAJIB BERADA DI DALAM KOTAK INI!</strong> Jika teks menyentuh atau melewati garis ini, dipastikan terpotong pada televisi tabung, layar digital signage, atau terpotong UI TikTok/Reels.
+          </p>
+          <div class="formula-badge">
+            CARA AKTIFKAN: Klik ikon kunci inggris 🔧 di Program Monitor &gt; Centang "Safe Margins"
+          </div>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">80%</span>
+            <h3 class="card-heading">Action Safe Margin (Kotak Luar)</h3>
+          </div>
+          <p class="card-desc">
+            Area berjarak 5% dari tepi bingkai. Menjamin bahwa subjek aksi visual utama (wajah presenter, mikrofon, gesture tubuh) tetap terlihat utuh dan tidak terpotong oleh bingkai luar monitor.
+          </p>
+          <div class="formula-badge">
+            ATURAN EMAS: Aksi visual boleh di 80%, tetapi teks tipografi WAJIB di dalam 90%!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: TUTORIAL LOWER THIRD -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 1</span>
+        <span class="title-serif">Membuat Lower Third di Essential Graphics</span>
+      </div>
+      <div class="slide-subtitle">Langkah demi langkah mendesain plakat nama profesional dua baris langsung di Premiere Pro 2021 tanpa plugin tambahan.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 1</span>
+            <h3 class="card-heading">Buka Essential Graphics</h3>
+          </div>
+          <p class="card-desc">
+            Buka menu <strong>Window &gt; Workspaces &gt; Captions and Graphics</strong> atau buka tab <strong>Essential Graphics &gt; Edit</strong>. Klik ikon <em>New Layer &gt; Rectangle</em> untuk membuat kotak latar belakang.
+          </p>
+          <div class="formula-badge">
+            WARNA BOX: Deep Navy (#0F172A) Opacity 90%
+          </div>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 2</span>
+            <h3 class="card-heading">Ketik Teks Dua Baris</h3>
+          </div>
+          <p class="card-desc">
+            Pilih <strong>Type Tool (<kbd>T</kbd>)</strong>. Klik di atas kotak: Baris 1: <code>ADRIAN ALI MUTHI</code> (Font Bold 38pt Warna Putih). Baris 2: <code>Presenter Berita TV SMK</code> (Font Regular 24pt Warna Cyan / Kuning Emas).
+          </p>
+          <div class="formula-badge">
+            ALIGNMENT: Rata Kiri, Beri aksen bar vertikal merah
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 3</span>
+            <h3 class="card-heading">Animasi Masuk &amp; Keluar</h3>
+          </div>
+          <p class="card-desc">
+            Di panel <em>Effect Controls</em>, beri transisi <strong>Cross Dissolve</strong> durasi 12 frame, atau animasi keyframe <em>Position X</em> dari luar layar ke dalam dengan kurva halus.
+          </p>
+          <div class="formula-badge">
+            DURASI TAMPIL: 4 sampai 5 detik per narasumber
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: TUTORIAL RUNNING TICKER -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 2</span>
+        <span class="title-serif">Membuat Running Text Ticker Berita</span>
+      </div>
+      <div class="slide-subtitle">Membuat teks baris tunggal berita berjalan yang meluncur mulus dari kanan ke kiri di bagian bawah layar.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">TAHAP 1</span>
+            <h3 class="card-heading">Bar Ticker &amp; Header</h3>
+          </div>
+          <p class="card-desc">
+            Buat 1 kotak persegi panjang hitam/biru gelap di sepanjang dasar layar (<kbd>Y: 1010px, Height: 70px</kbd>). Di sebelah kiri, letakkan badge merah tetap bertuliskan <strong>BREAKING NEWS</strong> atau <strong>KILAS BERITA</strong>.
+          </p>
+          <div class="formula-badge">
+            BADGE MERAH: #DC2626 (Teks Putih Bold Tebal)
+          </div>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">TAHAP 2</span>
+            <h3 class="card-heading">Ketik Teks Berita Panjang</h3>
+          </div>
+          <p class="card-desc">
+            Ketik rangkaian ringkasan berita sekelas dipisahkan tanda bintang atau bulet: <code>✦ Siswa SMK DKV Menggelar Kolaborasi Berita Televisi ✦ Edukasi Mitigasi Bencana Lingkungan &amp; Bahaya Hoaks Media Sosial ✦ ...</code>
+          </p>
+          <div class="formula-badge">
+            UKURAN FONT: 26pt - 28pt (Jelas Terbaca dari Jauh)
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">TAHAP 3</span>
+            <h3 class="card-heading">Keyframe Posisi X Linear</h3>
+          </div>
+          <p class="card-desc">
+            Di frame awal klip grafis, atur <em>Position X</em> di luar sisi kanan monitor (<kbd>X: 2200px</kbd>). Di frame akhir klip (misal detik ke-20), tarik <em>Position X</em> hingga seluruh teks melintas habis ke kiri layar (<kbd>X: -3500px</kbd>).
+          </p>
+          <div class="formula-badge">
+            KEYFRAME INTERPOLATION: Linear (Kecepatan Rata)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: TIPOGRAFI PENYIARAN -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">standar tipografi</span>
+        <span class="title-serif">Aturan Font &amp; Keterbacaan Siaran</span>
+      </div>
+      <div class="slide-subtitle">Kesalahan nomor satu pemula adalah memilih font dekoratif yang indah di komputer namun tidak terbaca di layar kaca.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">DO</span>
+            <h3 class="card-heading">Wajib Diterapkan (Standar TV)</h3>
+          </div>
+          <ul class="card-desc" style="padding-left:18px; line-height:1.7;">
+            <li>Gunakan keluarga huruf <strong>Sans-Serif Tebal</strong>: <em>Montserrat, Arial, Roboto, Helvetica, Bebas Neue</em>.</li>
+            <li>Gunakan kontras tinggi: Teks putih di atas kotak gelap (#000000 atau #0F172A) atau teks kuning di atas kotak biru.</li>
+            <li>Aktifkan <strong>Drop Shadow</strong> halus (Opacity 50%, Distance 4, Softness 8) agar teks tetap terbaca bila latar belakang video berubah terang.</li>
+            <li>Pertahankan rasio ukuran nama lebih besar 40% dibandingkan keterangan jabatan/lokasi.</li>
+          </ul>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill" style="background:#EF4444">DON'T</span>
+            <h3 class="card-heading">Hindari Kesalahan Fatal Ini</h3>
+          </div>
+          <ul class="card-desc" style="padding-left:18px; line-height:1.7;">
+            <li>Jangan gunakan font script/latin bergelombang (seperti Brush Script atau Monotype Corsiva).</li>
+            <li>Jangan gunakan font Serif dengan garis kaki ultra-tipis (bisa berkedip/flicker saat di-interlace monitor TV).</li>
+            <li>Jangan menempelkan teks putih tanpa outline atau kotak di atas video tanpa memeriksa kontrasnya.</li>
+            <li>Jangan membuat running text bergerak terlalu kencang seperti balap lari hingga pemirsa tidak sempat membaca.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: TEKS ILM -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">iklan layanan masyarakat</span>
+        <span class="title-serif">Desain Grafis Tipografi Video ILM</span>
+      </div>
+      <div class="slide-subtitle">Khusus untuk proyek kelompok Iklan Layanan Masyarakat (ILM), grafis teks berfungsi sebagai pukulan emosional penutup.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. SLOGAN</span>
+            <h3 class="card-heading">Pesan Kunci / Tagline</h3>
+          </div>
+          <p class="card-desc">
+            Teks penegas di detik-detik akhir iklan (detik 45–55). Contoh: <em>"Satu Hektar Hutan Terbakar, Ribuan Paru-Paru Anak Terancam."</em> Tampilkan di tengah layar (<kbd>Center Alignment</kbd>) dengan ukuran besar dan pendaran kontras.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. CTA</span>
+            <h3 class="card-heading">Call to Action (Ajakan Nyata)</h3>
+          </div>
+          <p class="card-desc">
+            Instruksi langsung kepada audiens mengenai aksi yang harus diambil: <em>"Laporkan titik api ke hotline 112 atau kunjungi lapor.go.id"</em>. Berikan durasi tampil minimal 4 detik agar kontak terbaca.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. LOGO</span>
+            <h3 class="card-heading">Logo Instansi / Sekolah</h3>
+          </div>
+          <p class="card-desc">
+            Tampilkan logo sekolah (SMK Negeri) bersanding dengan logo dinas/kementerian terkait dan logo kelompok siswa di sudut kanan atas atau pada papan penutup (Endcard) bersama pesan copyright.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: MOGRT TEMPLATES -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">integrasi grafis</span>
+        <span class="title-serif">Memanfaatkan Template Motion Graphics (.MoGRT)</span>
+      </div>
+      <div class="slide-subtitle">Premiere Pro 2021 dapat membaca template animasi canggih dari After Effects tanpa perlu membuka After Effects!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">INSTALASI</span>
+            <h3 class="card-heading">Cara Memasang File .mogrt</h3>
+          </div>
+          <p class="card-desc">
+            1. Buka tab <strong>Essential Graphics &gt; Browse</strong>.<br>
+            2. Di pojok kanan bawah panel, klik tombol <strong>Install Motion Graphics Template (+)</strong>.<br>
+            3. Pilih file <code>.mogrt</code> dari folder bahan praktikum lab komputer.<br>
+            4. Drag template langsung ke track video <kbd>V2</kbd> di timeline!
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">KUSTOMISASI</span>
+            <h3 class="card-heading">Mengubah Teks &amp; Warna di Tab Edit</h3>
+          </div>
+          <p class="card-desc">
+            Saat klip template di klik di timeline, buka tab <strong>Essential Graphics &gt; Edit</strong>. Siswa dapat dengan mudah mengetik nama presenter baru, mengganti warna merah menjadi biru, dan mengatur ukuran logo tanpa merusak animasi kuncinya!
+          </p>
+          <div class="formula-badge">
+            KEUNTUNGAN: Hasil animasi halus setara studio siaran TV nasional!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: CHECKLIST EVALUASI -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">quality control</span>
+        <span class="title-serif">Checklist Evaluasi Grafis Siaran</span>
+      </div>
+      <div class="slide-subtitle">Sebelum video dikumpulkan, periksa 4 parameter keterbacaan wajib berikut di Program Monitor Premiere Pro:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1</span>
+            <h3 class="card-heading">Posisi Title Safe 90%</h3>
+          </div>
+          <p class="card-desc">Pastikan tidak ada huruf Lower Third atau tepi teks Ticker yang terpotong garis Safe Margins dalam.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2</span>
+            <h3 class="card-heading">Durasi Baca Cukup (Rule of 3s)</h3>
+          </div>
+          <p class="card-desc">Siswa penguji harus sempat membaca teks Lower Third sebanyak 2 kali dalam hati sebelum grafis menghilang.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3</span>
+            <h3 class="card-heading">Ejaan Nama &amp; Gelar Benar</h3>
+          </div>
+          <p class="card-desc">Cek penulisan nama narasumber, gelar, dan nama instansi sekolah. Kesalahan ketik (typo) di TV fatal!</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">4</span>
+            <h3 class="card-heading">Kelancaran Gerak Ticker (No Jitter)</h3>
+          </div>
+          <p class="card-desc">Pastikan teks berjalan tidak melompat-lompat atau tersendat-sendat dengan interpolasi Linear.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: TUGAS 05 & PREVIEW 06 -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">penugasan lab</span>
+        <span class="title-serif">Instruksi Tugas 04 &amp; Rencana Pertemuan 05</span>
+      </div>
+      <div class="slide-subtitle">Selesaikan pemasangan grafis lengkap pada paket siaran berita kelas atau draf ILM kelompokmu hari ini!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="card-surface highlight" style="margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h3 class="card-heading" style="font-size:16px; margin-bottom:8px;">TUGAS 04: ELEMEN GRAFIS BERITA (LOWER THIRD, RUNNING TEXT &amp; TEKS ILM)</h3>
+            <p class="card-desc" style="max-width:760px;">
+              <strong>Di Lab:</strong> Buat <strong>Teks Fakta Isu</strong>, papan nama <strong>Lower Third</strong>, dan layar <strong>Slogan Ajakan Penutup</strong> di dalam batas aman <em>Safe Margins</em>.<br>
+              <strong>Tanpa Lab:</strong> Gambar desain 3 kotak layar teks tersebut di kertas kerja (16:9), lalu pasang langsung teks slogan &amp; nama anggota kelompok pada rakitan video ILM 30–45 detik di HP kelompokmu!
+            </p>
+          </div>
+          <a href="/kumpul-tugas?id=pr-04" class="btn-cta-submit">
+            <span>🚀 BUKA FORM PENGUMPULAN TUGAS 04</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <div class="pr-shortcut-tag">⏭️ AGENDA MINGGU DEPAN (PERTEMUAN 05)</div>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>V1</kbd> : Studio Virtual</span>
+          <span class="pr-key-item"><kbd>V2</kbd> : Presenter Ultra Key</span>
+          <span class="pr-key-item"><kbd>V3</kbd> : B-Roll Liputan</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Pertemuan 05:</strong> Studio <strong>Green Screen (Ultra Key)</strong> &amp; Sisipan <strong>B-Roll</strong> Liputan Berita TV.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+
+<!-- MOBILE & DESKTOP INTERACTIVE SLIDE CAROUSEL + TOUCH SWIPE -->
+<style id="antigravity-mobile-slide-deck-css">
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .floating-nav-bar {
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    flex-wrap: nowrap !important;
+  }
+  .nav-link-btn,
+  .slide-counter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-brand-title {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    max-width: min(56vw, 740px);
+  }
+  .cover-title-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .cover-script,
+  .cover-serif {
+    display: block !important;
+  }
+  .cover-script {
+    margin-bottom: 0 !important;
+  }
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Single-slide carousel mode */
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop / Laptop clear clearance between top and bottom floating bars */
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 42px) clamp(32px, 3.8vw, 58px) !important;
+    }
+    body.ag-carousel-mode .cover-script {
+      font-size: clamp(60px, 5.8vw, 90px) !important;
+      line-height: 1.04 !important;
+      margin-bottom: 2px !important;
+    }
+    body.ag-carousel-mode .cover-serif {
+      font-size: clamp(28px, 2.8vw, 40px) !important;
+    }
+  }
+
+  /* Responsive Mobile & Tablet Adjustments for All 14 Slide Decks */
+  @media (max-width: 1024px) {
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    body {
+      padding: 62px 8px 84px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    body.ag-carousel-mode {
+      padding: 62px 8px 84px !important;
+      justify-content: flex-start !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+    }
+    .nav-link-btn {
+      font-size: 11.5px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-brand-title {
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: center !important;
+    }
+    .nav-divider { display: none !important; }
+    .slide-counter-pill {
+      font-size: 9.5px !important;
+      padding: 3px 8px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide > div:first-child {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      max-width: 100% !important;
+    }
+    .cover-center {
+      gap: 14px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-title-group {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-script {
+      display: block !important;
+      font-size: clamp(30px, 8.8vw, 48px) !important;
+      line-height: 1.05 !important;
+      margin-bottom: 4px !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+    .cover-serif {
+      display: block !important;
+      font-size: clamp(16.5px, 4.6vw, 24px) !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .cover-sub-box {
+      padding: 12px 14px !important;
+      font-size: 13.5px !important;
+      max-width: 100% !important;
+      line-height: 1.55 !important;
+    }
+    .cover-tags-row {
+      gap: 6px !important;
+    }
+    .tag-badge {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+    }
+    .slide-title-mixed {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      max-width: 100% !important;
+    }
+    .title-script {
+      font-size: clamp(28px, 7.8vw, 38px) !important;
+      line-height: 1.02 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .title-serif {
+      font-size: clamp(15px, 4.2vw, 18.5px) !important;
+      line-height: 1.28 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .slide-subtitle {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      max-width: 100% !important;
+    }
+    .slide-content {
+      margin: 6px 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .grid-2, .grid-3, .grid-2-col, .grid-3-col, .grid-4-col,
+    [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      min-width: 0 !important;
+    }
+    .card-surface, .card-box {
+      padding: 14px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    .card-title-group {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .card-heading, .card-title {
+      font-size: 14.5px !important;
+      line-height: 1.32 !important;
+      overflow-wrap: break-word !important;
+    }
+    .card-desc, .card-body {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .formula-badge, code, kbd {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .pr-shortcut-banner, .ae-shortcut-banner {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .pr-keys-list, .ae-keys-list {
+      border-right: none !important;
+      padding-right: 0 !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .pr-tutorial-text, .ae-tutorial-text {
+      font-size: 12.5px !important;
+      line-height: 1.45 !important;
+    }
+    .btn-cta-submit {
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      padding: 12px 14px !important;
+      font-size: 11.5px !important;
+    }
+    .slide-footer-meta {
+      font-size: 10px !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn {
+      padding: 7px 10px !important;
+      font-size: 11.5px !important;
+    }
+    .ag-slide-btn.secondary {
+      padding: 7px 9px !important;
+      font-size: 11px !important;
+    }
+    .ag-slide-indicator {
+      min-width: 52px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  @media print {
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+    body, body.ag-carousel-mode {
+      background: #ffffff !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important;
+      width: 1440px !important;
+      height: 810px !important;
+      max-width: none !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+  <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="agStepSlide(-1)">◀ Seblm</button>
+  <span class="ag-slide-indicator" id="agSlideIndicator">1 / 10</span>
+  <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="agStepSlide(1)">Lanjut ▶</button>
+  <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+</div>
+
+<script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

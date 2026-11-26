@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 1 PAV — Pra-Produksi Iklan Produk TVC & Storyboard Produk</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284C7;
+      --primary-dark: #0369A1;
+      --primary-light: #F0F9FF;
+      --accent-cyan: #0EA5E9;
+      --accent-sky: #38BDF8;
+      --bg-stage: #070B12;
+      --slide-bg: #FFFFFF;
+      --text-heading: #0C4A6E;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-card: rgba(2, 132, 199, 0.24);
+      --border-subtle: rgba(15, 23, 42, 0.12);
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    @page { size: 1440px 810px; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      padding: 75px 0 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .floating-nav-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+    .nav-brand-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      color: #FFFFFF;
+      letter-spacing: 0.08em;
+    }
+    .nav-divider { width: 1px; height: 18px; background: rgba(255,255,255,0.2); }
+    .nav-link-btn {
+      color: var(--accent-sky);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .slide-counter-pill {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      background: rgba(2, 132, 199, 0.3);
+      border: 1px solid var(--accent-sky);
+      color: #FFFFFF;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .slide {
+      width: 1440px;
+      height: 810px;
+      max-width: 96vw;
+      background-color: var(--slide-bg);
+      border: 1.5px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 68px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      page-break-after: always;
+    }
+    .slide-title-mixed {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .title-script {
+      font-family: var(--font-script);
+      font-size: 64px;
+      color: var(--primary);
+      line-height: 0.9;
+    }
+    .title-serif {
+      font-family: var(--font-heading);
+      font-size: 27px;
+      color: var(--text-heading);
+    }
+    .slide-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 14px 0;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-surface {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-surface.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .card-title-group { display: flex; align-items: center; gap: 10px; }
+    .step-pill {
+      font-family: var(--font-heading);
+      font-size: 10.5px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: 13.5px;
+      color: var(--text-heading);
+    }
+    .card-desc { font-size: 13.5px; line-height: 1.55; color: var(--text-body); }
+    .formula-badge {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      background: rgba(15, 23, 42, 0.05);
+      border-left: 3px solid var(--primary);
+      padding: 7px 11px;
+      border-radius: 4px;
+      margin-top: auto;
+    }
+    .pr-shortcut-banner {
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #FFFFFF;
+    }
+    .pr-shortcut-tag {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      color: var(--accent-sky);
+      white-space: nowrap;
+    }
+    .pr-keys-list { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; }
+    kbd {
+      background: #1E293B;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #38BDF8;
+    }
+    .pr-tutorial-text { font-size: 12px; color: #94A3B8; }
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 12px;
+    }
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      margin: auto 0;
+    }
+    .cover-script {
+      font-family: var(--font-script);
+      font-size: 100px;
+      color: var(--primary);
+      line-height: 0.85;
+      margin-bottom: -10px;
+    }
+    .cover-serif {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      color: var(--text-heading);
+      line-height: 1.12;
+    }
+    .cover-sub-box {
+      max-width: 880px;
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 15.5px;
+      line-height: 1.6;
+    }
+    .cover-tags-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag-badge {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+    .btn-cta-submit {
+      background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 13px 24px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 1 (PAV).pdf" data-pdf-mode="always">
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">← Beranda Kurikulum</a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">PAV PERTEMUAN 01 • STORYBOARD PRODUK (TVC)</span>
+    <a href="/downloads/Pertemuan%201%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="nav-link-btn" style="background:rgba(2,132,199,0.28);padding:4px 12px;border-radius:999px;border:1px solid rgba(56,189,248,0.4);">📄 PDF Materi</a>
+    <span class="slide-counter-pill">10 SLIDE 16:9</span>
+  </nav>
+  
+    <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <div class="slide-subtitle" style="font-family:var(--font-mono); font-size:12px; color:var(--primary); font-weight:700; letter-spacing:0.1em;">
+        PENGOLAHAN AUDIO & VIDEO • PERTEMUAN 01 DARI 06
+      </div>
+    </div>
+    <div class="cover-center">
+      <div class="cover-script">Pre-Production</div>
+      <h1 class="cover-serif">Pra-Produksi Iklan Produk TVC & Storyboard Produk</h1>
+      <div class="cover-sub-box">Merancang fondasi utama iklan produk sebelum menyentuh kamera: merumuskan Ide, Tema, dan Konsep Eksekusi TVC Monolog 16:9 (Slice of Life), menyusun Naskah 2 Kolom, dan menggambar Storyboard Produk 9 Frame.</div>
+      <div class="cover-tags-row">
+        <span class="tag-badge">IDE • TEMA • KONSEP</span>
+        <span class="tag-badge">TVC MONOLOG 16:9 (SLICE OF LIFE)</span>
+        <span class="tag-badge">STORYBOARD PRODUK 9 FRAME</span>
+        <span class="tag-badge">DETAIL PRODUK ECU / CU</span>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">fondasi awal</span>
+        <span class="title-serif">Mengapa Pra-Produksi Menentukan 70% Kualitas Iklan Produk?</span>
+      </div>
+      <div class="slide-subtitle">Di industri kreatif, perencanaan matang membuat syuting produk di lapangan lebih terarah, cepat, dan estetik:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">01 • IDE</span>
+            <h3 class="card-heading">Gagasan Pemicu Cerita</h3>
+          </div>
+          <p class="card-desc">Berawal dari pengamatan masalah harian nyata di sekitar kita, lalu menghadirkan produk sebagai solusi tepat guna (misal: ngantuk saat ngedit → kaleng kopi dingin penyegar fokus).</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">02 • TEMA</span>
+            <h3 class="card-heading">Nuansa Emosi Utama</h3>
+          </div>
+          <p class="card-desc">Payung besar rasa yang menjaga warna, gaya editing, dan musik tetap konsisten: Produktivitas (kopi/vitamin), Ketenangan (teh/parfum), Kepercayaan Diri (sepatu/skincare), atau Kesegaran.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">03 • KONSEP</span>
+            <h3 class="card-heading">Eksekusi TVC Monolog 16:9</h3>
+          </div>
+          <p class="card-desc">Cara penyajian teknis visual dan gaya penceritaan sinematik—bukan sekadar vlog selfie atau hard-selling kaku, melainkan potret aktivitas alami (Slice of Life).</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">konsep eksekusi</span>
+        <span class="title-serif">TVC Monolog (16:9) vs Vlog Biasa</span>
+      </div>
+      <div class="slide-subtitle">Membedakan iklan produk profesional berkonsep sinematik dengan video promosi amatir:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">DIHINDARI</span>
+            <h3 class="card-heading">Bukan Konsep Vlog / Hard-Selling Kaku</h3>
+          </div>
+          <p class="card-desc">• <strong>Bukan Selfie Talk:</strong> tidak berbicara langsung menatap kamera menyapa penonton.<br>• <strong>Bukan Hard-Selling:</strong> tidak memaksa penonton membeli dengan kalimat iklan kaku.<br>• <strong>Bukan Asal Rekam:</strong> hindari kamera goyang tanpa perencanaan komposisi sudut.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">STANDAR TVC</span>
+            <h3 class="card-heading">Konsep TVC Monolog Sinematik (16:9)</h3>
+          </div>
+          <p class="card-desc">• <strong>Slice of Life:</strong> potongan aktivitas keseharian dengan sudut kamera sinematik.<br>• <strong>Voice Over Monolog:</strong> suara hati/narasi lembut yang bercerita di balik gambar.<br>• <strong>Detail Produk Tajam:</strong> sorotan jarak dekat (ECU/CU) saat produk dibuka atau dipakai.</p>
+          <div class="formula-badge">Referensi: Ultra Milk • Scarlett • Slai O'lai TVC</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">struktur cerita</span>
+        <span class="title-serif">Alur 3 Babak Iklan Produk (30–45 Detik)</span>
+      </div>
+      <div class="slide-subtitle">Supaya iklan produk terasa natural dan memikat, susun alurnya dalam 3 babak ringkas:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">00:00 - 00:12</span>
+            <h3 class="card-heading">Babak 1: Masalah Harian (Hook)</h3>
+          </div>
+          <p class="card-desc">Tampilkan suasana aktivitas keseharian tokoh yang mengalami kendala nyata (misal lelah, gerah siang hari, atau kurang percaya diri).</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">00:12 - 00:30</span>
+            <h3 class="card-heading">Babak 2: Hadirnya Produk (Detail ECU/CU)</h3>
+          </div>
+          <p class="card-desc">Produk muncul sebagai solusi. Tampilkan shot dekat detail kemasan/tekstur produk (CU/ECU) disertai Voice Over Monolog dan SFX segar.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">00:30 - 00:45</span>
+            <h3 class="card-heading">Babak 3: Dampak Positif & Packshot</h3>
+          </div>
+          <p class="card-desc">Tunjukkan perubahan mood/energi tokoh yang lebih baik dan tutup dengan Packshot produk yang bersih + tagline singkat.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">naskah av</span>
+        <span class="title-serif">Menyusun Naskah Dua Kolom (Audio-Visual Script)</span>
+      </div>
+      <div class="slide-subtitle">Memisahkan apa yang dilihat mata (kolom kiri) dan apa yang didengar telinga (kolom kanan):</div>
+    </div>
+    <div class="slide-content">
+      <table class="table-modern">
+        <thead>
+          <tr><th>Scene &amp; Durasi</th><th>Kolom Visual (Kamera &amp; Produk)</th><th>Kolom Audio (Voice Over Monolog &amp; SFX)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Scene 1 (0–10d)</strong></td><td>[WS / MS] Siswa mengantuk di depan layar laptop saat jam siang.</td><td>[SFX]: Detak jam &amp; hening ruangan. [VO]: "Jam dua siang sering bikin fokus buyar..."</td></tr>
+          <tr><td><strong>Scene 2 (10–25d)</strong></td><td>[ECU / CU] Tangan membuka tutup botol dingin, uap es terlihat tajam.</td><td>[SFX]: Bunyi 'klik-pss' tutup botol segar + musik ritmis mulai masuk pelan.</td></tr>
+          <tr><td><strong>Scene 3 (25–45d)</strong></td><td>[MS → Packshot] Ekspresi kembali segar melanjutkan desain; logo produk tampil rapi.</td><td>[VO]: "Satu tegukan dingin, balikin ritme kreatifmu." + Tagline Produk.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6 -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">ukuran shot</span>
+        <span class="title-serif">Empat Ukuran Bidikan Kamera Iklan Produk</span>
+      </div>
+      <div class="slide-subtitle">Wajib cantumkan kode shot di setiap kotak Storyboard Produk agar kameramen tidak salah ambil gambar:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">WS</span><h3 class="card-heading">Wide Shot</h3></div>
+          <p class="card-desc">Menunjukkan lokasi penuh dan konteks aktivitas tokoh (meja kerja, taman, kafe, atau sekolah).</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">MS</span><h3 class="card-heading">Medium Shot</h3></div>
+          <p class="card-desc">Pinggang ke atas—menangkap interaksi natural tokoh saat menggunakan produk.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">CU</span><h3 class="card-heading">Close-Up</h3></div>
+          <p class="card-desc">Fokus ke ekspresi puas/segar wajah tokoh atau genggaman tangan terhadap kemasan produk.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">ECU</span><h3 class="card-heading">Extreme Close-Up</h3></div>
+          <p class="card-desc">Bidikan sangat dekat menonjolkan tekstur produk, embun dingin, semprotan parfum, atau logo kemasan.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7 -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">peta visual</span>
+        <span class="title-serif">Cara Menggambar Storyboard Produk 9 Frame</span>
+      </div>
+      <div class="slide-subtitle">Tidak harus jago melukis—yang penting batas frame, posisi produk, arah pandang, dan ukuran shot jelas:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">KOTAK 1–3</span><h3 class="card-heading">Setup Masalah &amp; Suasana</h3></div>
+          <p class="card-desc">Gambarkan situasi awal tokoh sebelum memakai produk. Cantumkan durasi detik dan posisi kamera (WS/MS).</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">KOTAK 4–6</span><h3 class="card-heading">Hero Product Shots (CU/ECU)</h3></div>
+          <p class="card-desc">Sorot produk sebagai pahlawan cerita: momen produk dibuka, dituang, dipakai, lengkap dengan panah gerak kamera.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">KOTAK 7–9</span><h3 class="card-heading">Hasil Nyata &amp; Packshot Akhir</h3></div>
+          <p class="card-desc">Tunjukkan tokoh kembali produktif/senang dan tutup di Kotak 9 dengan Packshot produk + penempatan teks tagline.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8 -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">detail suara</span>
+        <span class="title-serif">Menulis Naskah Monolog yang Natural &amp; Terasa Dekat</span>
+      </div>
+      <div class="slide-subtitle">Iklan Slice of Life mengandalkan Voice Over monolog yang terasa jujur seperti kata hati, bukan baca brosur:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">HINDARI</span><h3 class="card-heading">Gaya Promosi Kaku</h3></div>
+          <p class="card-desc">"Beli sekarang juga minuman X hanya Rp5.000! Rasanya paling enak sedunia, jangan sampai kehabisan!" → terasa memaksa dan mudah di-skip.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">GUNAKAN</span><h3 class="card-heading">Gaya Monolog Slice of Life</h3></div>
+          <p class="card-desc">"Kadang yang kita butuhin cuma jeda lima menit sebelum lanjut kejar deadline..." → terasa personal, santai, dan nyambung dengan visual produk.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9 -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">checklist produksi</span>
+        <span class="title-serif">Syarat ACC Storyboard Produk Sebelum Syuting</span>
+      </div>
+      <div class="slide-subtitle">Pastikan seluruh poin berikut sudah siap di lembar pra-produksi kelompok kalian:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface"><div class="card-title-group"><span class="step-pill">SYARAT 01</span><h3 class="card-heading">1 Produk Nyata</h3></div><p class="card-desc">Produk fisik tersedia dan mudah dibawa saat sesi pengambilan gambar.</p></div>
+        <div class="card-surface highlight"><div class="card-title-group"><span class="step-pill">SYARAT 02</span><h3 class="card-heading">Ide, Tema &amp; Konsep</h3></div><p class="card-desc">Rumusan Ide masalah–solusi, Tema emosi, dan Storyline 3 babak tertulis rapi.</p></div>
+        <div class="card-surface"><div class="card-title-group"><span class="step-pill">SYARAT 03</span><h3 class="card-heading">9 Frame + Shot Code</h3></div><p class="card-desc">Storyboard Produk 9 kotak lengkap dengan ukuran shot (WS/MS/CU/ECU) dan durasi detik.</p></div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10 -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tugas minggu 01</span>
+        <span class="title-serif">Instruksi Tugas 01 &amp; Persiapan Pertemuan 02</span>
+      </div>
+      <div class="slide-subtitle">Selesaikan dokumen pra-produksi Iklan Produk TVC sebagai tiket izin syuting:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">TUGAS 01 PAV</span><h3 class="card-heading">Kumpulkan Naskah &amp; Storyboard Produk</h3></div>
+          <p class="card-desc">Foto lembar Ide/Tema/Konsep, Naskah 2 Kolom (Monolog), dan Storyboard Produk 9 Kotak yang sudah di-ACC, lalu unggah ke Portal Tugas (format JPG/PNG/PDF).</p>
+          <a href="/kumpul-tugas?id=pr-01" class="btn-cta-submit" style="margin-top:12px;">📥 Kumpulkan Tugas 01 Sekarang →</a>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">MINGGU DEPAN</span><h3 class="card-heading">Pertemuan 02: Foldering &amp; Rough Cut (Q &amp; W)</h3></div>
+          <p class="card-desc">Di Pertemuan 02 kita mulai membuka Adobe Premiere Pro: menyusun 5 Folder Anti Media Offline dan merangkai Rough Cut cepat menggunakan tombol I, O, Q, dan W.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+  <script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap");
+@import url("https://fonts.cdnfonts.com/css/monument-extended");
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-glass-card: #ffffff;
+  --border-glass: rgba(37, 99, 235, 0.14);
+  --border-glass-hover: rgba(37, 99, 235, 0.42);
+  --border-light: #e2e8f0;
+
+  --text-primary: #0a0f1d;
+  --text-secondary: rgba(10, 15, 29, 0.72);
+  --text-muted: rgba(10, 15, 29, 0.48);
+
+  --metallic-blue-dark: #1e3a8a;
+  --metallic-blue-cobalt: #1d4ed8;
+  --metallic-blue: #2563eb;
+  --metallic-blue-light: #60a5fa;
+  --metallic-blue-ice: #dbeafe;
+  --metallic-gradient: linear-gradient(135deg, #1e3a8a 0%, #2563eb 45%, #60a5fa 85%, #93c5fd 100%);
+  --metallic-gradient-subtle: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(96, 165, 250, 0.04) 100%);
+
+  --accent-cyan: #2563eb;
+  --accent-purple: #4f46e5;
+  --accent-sky: #0284c7;
+  --accent-green: #0d9488;
+  --accent-amber: #d97706;
+  --accent-rose: #dc2626;
+
+  --font-heading: "Monument Extended", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-lusion: 0 14px 40px rgba(37, 99, 235, 0.08), 0 2px 10px rgba(10, 15, 29, 0.04);
+  --shadow-lusion-hover: 0 22px 54px rgba(37, 99, 235, 0.14), 0 4px 16px rgba(10, 15, 29, 0.06);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.lusion-canvas {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(37, 99, 235, 0.08), transparent 70%),
+    radial-gradient(circle at 100% 100%, rgba(96, 165, 250, 0.06) 0%, transparent 50%),
+    linear-gradient(rgba(37, 99, 235, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
+}
+
+/* Interactive Lusion Cobalt Watercolor Trail Canvas */
+#watercolorCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lusion-layer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Display Typography & Shimmer */
+.lusion-display {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+}
+
+.gradient-shimmer {
+  background: linear-gradient(135deg, #0a0f1d 15%, var(--metallic-blue) 62%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lusion-eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--metallic-blue);
+  display: inline-block;
+}
+
+/* Signature Lusion Floating Pill Navbar */
+.lusion-portal-header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  width: 100%;
+  padding: 16px 32px 12px;
+  pointer-events: none;
+}
+
+.lusion-portal-header-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  pointer-events: auto;
+}
+
+.lusion-portal-header .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-glass);
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 8px 26px rgba(10, 15, 29, 0.05);
+  transition: border-color 0.25s var(--ease-smooth), transform 0.25s var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.lusion-portal-header .nav-brand:hover {
+  border-color: var(--border-glass-hover);
+  transform: translateY(-1px);
+}
+
+.lusion-portal-header .brand-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: #000000;
+}
+
+.lusion-portal-header .brand-divider {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.lusion-portal-header .brand-tag {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.lusion-portal-header .nav-center-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  padding: 5px 7px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(10, 15, 29, 0.06);
+}
+
+.lusion-portal-header .nav-item {
+  font-family: var(--font-heading);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 9px 15px;
+  border-radius: 999px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.lusion-portal-header .nav-item:hover {
+  color: #000000;
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.lusion-portal-header .nav-item.active {
+  background: #000000;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(10, 15, 29, 0.18);
+}
+
+.lusion-portal-header .nav-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.lusion-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  box-shadow: 0 6px 18px rgba(10, 15, 29, 0.05);
+  white-space: nowrap;
+}
+
+.lusion-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.65);
+  flex-shrink: 0;
+}
+
+.lusion-nav-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(10, 15, 29, 0.05);
+  transition: all 0.22s var(--ease-smooth);
+}
+
+.lusion-nav-action-btn:hover {
+  border-color: #000000;
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Shared Lusion Hero, Cards & Pills */
+.lusion-hero-frame {
+  position: relative;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--border-glass);
+  border-radius: 26px;
+  padding: 30px 34px;
+  box-shadow: var(--shadow-lusion);
+  overflow: hidden;
+}
+
+.lusion-hero-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 28px;
+  right: 28px;
+  height: 2.5px;
+  border-radius: 0 0 999px 999px;
+  background: var(--metallic-gradient);
+  opacity: 0.85;
+}
+
+.lusion-spine-row {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.lusion-spine-rail {
+  position: relative;
+  width: 2px;
+  margin: 4px auto;
+  background: rgba(37, 99, 235, 0.14);
+  border-radius: 999px;
+}
+
+.lusion-spine-rail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000000;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.65);
+}
+
+.lusion-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0a0f1d;
+  color: #ffffff;
+  border: 1px solid #0a0f1d;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+
+.lusion-pill-dark:hover:not(:disabled) {
+  background: var(--metallic-blue);
+  border-color: var(--metallic-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.28);
+}
+
+.lusion-pill-dark:disabled {
+  background: #cbd5e1;
+  border-color: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.lusion-pill-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-glass);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s var(--ease-smooth);
+}
+
+.lusion-pill-glass:hover {
+  border-color: var(--metallic-blue);
+  color: var(--metallic-blue);
+  background: #f8faff;
+  transform: translateY(-1px);
+}
+
+.stat-bar-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--metallic-blue), transparent);
+}
+
+/* Lusion Linear Progress Track */
+.lusion-progress-track {
+  width: 100%;
+  height: 7px;
+  background: rgba(37, 99, 235, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.lusion-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--metallic-gradient);
+  transition: width 0.35s var(--ease-smooth);
+}
+
+/* Shared Lusion Portal Footer */
+.lusion-portal-footer {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  padding: 22px 24px;
+  border-top: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* Responsive Navigation Layout */
+@media (max-width: 1080px) {
+  .lusion-portal-header {
+    padding: 12px 16px 10px;
+  }
+  .lusion-portal-header-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .lusion-portal-header .nav-center-pill {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+  .lusion-portal-header .nav-center-pill::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .lusion-portal-header {
+    padding: 10px 12px 8px;
+  }
+  .lusion-portal-header .nav-brand {
+    padding: 6px 12px;
+  }
+  .lusion-portal-header .brand-tag,
+  .lusion-portal-header .brand-divider {
+    display: none;
+  }
+  .lusion-portal-header .brand-name {
+    font-size: 0.78rem;
+  }
+  .lusion-portal-header .nav-item {
+    font-size: 0.56rem;
+    padding: 8px 12px;
+  }
+  .lusion-hero-frame {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+  .lusion-spine-row {
+    grid-template-columns: 1fr;
+  }
+  .lusion-spine-rail {
+    display: none;
+  }
+}

@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Galeri &amp; Rekap Karya Siswa &bull; SMK Bina Bangsa</title>
+  <meta name="theme-color" content="#0a0f1d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Portal DKV">
+  <link rel="manifest" href="/manifest.webmanifest?v=bb2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2">
+  <link rel="icon" href="/favicon.ico?v=bb2">
+  <link rel="stylesheet" href="/assets/lusion-portal.css">
+  <script src="/assets/lusion-portal.js"></script>
+  <style>
+    :root {
+      --bg-base: #f4f7fb;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-card: #e2e8f0;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --gradient-blue: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #60a5fa 100%);
+      --dkv1-bg: #eff6ff;
+      --dkv1-text: #1d4ed8;
+      --dkv1-border: #bfdbfe;
+      --dkv2-bg: #ecfdf5;
+      --dkv2-text: #047857;
+      --dkv2-border: #a7f3d0;
+      --dkv3-bg: #fffbeb;
+      --dkv3-text: #b45309;
+      --dkv3-border: #fde68a;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.035), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-family: inherit;
+      min-height: 38px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-drive {
+      background: #f0fdf4;
+      color: #047857;
+      border-color: #a7f3d0;
+    }
+    .btn-drive:hover {
+      background: #dcfce7;
+      border-color: #34d399;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #eff6ff;
+    }
+
+    /* Main Container */
+    .main-wrap {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      max-width: 1280px;
+      width: 100%;
+      margin: 18px auto 56px;
+      padding: 0 24px;
+    }
+
+    /* Friendly Editorial Hero Banner */
+    .hero-box {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero-left {
+      max-width: 720px;
+      min-width: 0;
+    }
+
+    .live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0d9488;
+      box-shadow: 0 0 8px rgba(13, 148, 136, 0.55);
+    }
+
+    .hero-title {
+      font-family: var(--font-body);
+      font-size: clamp(1.35rem, 2.6vw, 1.95rem);
+      font-weight: 700;
+      line-height: 1.22;
+      margin-bottom: 8px;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 280px;
+    }
+    .hero-right .lusion-pill-glass {
+      white-space: nowrap;
+      justify-content: center;
+    }
+
+    /* Stats Row */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: #93c5fd;
+    }
+
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .stat-num {
+      font-family: var(--font-body);
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .stat-badge {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Filter & View Switcher Bar */
+    .control-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .class-tab {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 38px;
+    }
+
+    .class-tab.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.24);
+    }
+
+    .filter-select,
+    .search-box {
+      padding: 9px 13px;
+      border-radius: 11px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.84rem;
+      font-family: inherit;
+      font-weight: 400;
+      color: var(--text-main);
+      background: #fff;
+      outline: none;
+      min-height: 40px;
+      max-width: 100%;
+    }
+
+    .filter-select:focus,
+    .search-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .view-modes {
+      display: flex;
+      gap: 4px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 4px;
+      border-radius: 999px;
+    }
+
+    .view-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.22);
+    }
+
+    /* Gallery Cards Grid */
+    .submissions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 18px;
+    }
+
+    .sub-card {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sub-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .sub-media-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .sub-media-box video,
+    .sub-media-box iframe,
+    .sub-media-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: none;
+      background: #000;
+    }
+
+    .media-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #94a3b8;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+
+    .sub-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .sub-badges-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge-class {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .cls-dkv1 { background: var(--dkv1-bg); color: var(--dkv1-text); border: 1px solid var(--dkv1-border); }
+    .cls-dkv2 { background: var(--dkv2-bg); color: var(--dkv2-text); border: 1px solid var(--dkv2-border); }
+    .cls-dkv3 { background: var(--dkv3-bg); color: var(--dkv3-text); border: 1px solid var(--dkv3-border); }
+
+    .badge-group {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .sub-time {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .sub-task-title {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.38;
+    }
+
+    .sub-team-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 13px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #334155;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .sub-rep-line {
+      font-size: 0.8rem;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .sub-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-align: center;
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+      min-height: 38px;
+    }
+
+    .card-btn-drive {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+    .card-btn-drive:hover {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .card-btn-del {
+      flex: 0 0 auto;
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fecaca;
+      padding: 9px 12px;
+    }
+
+    /* Table View */
+    .table-wrap {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: var(--shadow-sm);
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #334155;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    /* Embedded Google Drive Folder View */
+    .drive-embed-section {
+      margin-top: 0;
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .drive-embed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .drive-iframe {
+      width: 100%;
+      height: 520px;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      background: #f8fafc;
+    }
+
+    /* Multi-Page Pagination Bar */
+    .db-pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding: 13px 16px;
+      background: #ffffff;
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .db-page-meta {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .db-page-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .db-page-btn {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #0f172a;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+    }
+    .db-page-btn:hover:not(:disabled):not(.active) {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #eff6ff;
+    }
+    .db-page-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+    }
+    .db-page-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+    .db-page-dots {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #94a3b8;
+      padding: 0 4px;
+    }
+
+    /* Empty State */
+    .empty-box {
+      grid-column: 1 / -1;
+      background: #fff;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 46px 22px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    /* Setup Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(8px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #fff;
+      max-width: 660px;
+      width: 100%;
+      max-height: 90dvh;
+      overflow-y: auto;
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.24);
+    }
+
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+      font-size: 0.74rem;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre;
+      margin: 10px 0 16px;
+    }
+
+    @media (max-width: 820px) {
+      .main-wrap {
+        padding: 0 14px;
+        margin: 14px auto 48px;
+      }
+      .hero-right {
+        width: 100%;
+        min-width: 0;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .stat-card {
+        padding: 14px;
+      }
+      .submissions-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .control-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px;
+      }
+      .control-bar > .filter-group:first-child {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+      }
+      .filter-group {
+        width: 100%;
+        justify-content: flex-start !important;
+      }
+      .class-tab {
+        width: 100%;
+        text-align: center;
+      }
+      .filter-select, .search-box {
+        width: 100%;
+        font-size: 16px;
+      }
+      .view-modes {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .view-btn {
+        flex: 1 1 auto;
+        padding: 8px 8px;
+        font-size: 0.75rem;
+      }
+      .db-pagination-bar {
+        justify-content: center;
+      }
+      .drive-iframe {
+        height: 400px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/pwa-mobile.css">
+  <link rel="stylesheet" href="/assets/dashboard-fonts.css">
+  <link rel="stylesheet" href="/assets/dashboard-ui.css">
+  <script defer src="/assets/pwa-shell.js?v=bb2"></script>
+</head>
+<body class="lusion-canvas dashboard-friendly">
+
+  <!-- FULL-SCREEN PIN LOCK OVERLAY (FRIENDLY GATE) -->
+  <div id="fullPagePinLock" style="position:fixed; inset:0; background:rgba(244,247,251,0.92); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; max-width:430px; width:100%; border-radius:24px; padding:34px 26px; text-align:center; box-shadow:0 20px 50px rgba(15,23,42,0.10), 0 4px 16px rgba(15,23,42,0.04); border:1px solid #e2e8f0;">
+      <div style="display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:999px; background:#eff6ff; border:1px solid #bfdbfe; color:#1d4ed8; font-family:var(--font-body); font-size:0.74rem; font-weight:600; margin-bottom:16px;">Akses Khusus Pengampu</div>
+      <div style="width:56px; height:56px; border-radius:16px; background:#2563eb; color:#ffffff; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; box-shadow:0 10px 24px rgba(37,99,235,0.24);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2 style="font-family:var(--font-body); font-size:1.25rem; font-weight:700; color:#0f172a; margin-bottom:6px; letter-spacing:-0.02em;">Database Tugas DKV</h2>
+      <p style="font-size:0.86rem; font-weight:300; color:#475569; margin-bottom:20px; line-height:1.55;">
+        Masukkan 6 digit PIN guru untuk melihat galeri video, rekap kelompok, dan folder tugas siswa.
+      </p>
+      <form onsubmit="event.preventDefault(); unlockDatabasePage();">
+        <div class="pwd-input-wrap" style="margin-bottom:12px;">
+          <input type="password" id="pagePinField" placeholder="PIN Pengampu (6 digit)" autocomplete="off" style="width:100%; padding:14px 44px; border-radius:14px; border:1.5px solid #cbd5e1; font-family:var(--font-body); font-size:1.05rem; text-align:center; letter-spacing:0.22em; font-weight:700; outline:none; background:#f8fafc; color:#0f172a;" />
+          <button type="button" class="pwd-toggle-btn" aria-label="Tampilkan atau sembunyikan PIN" onclick="toggleDbPinVisibility('pagePinField', this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div id="pagePinErr" style="display:none; color:#dc2626; font-size:0.8rem; font-weight:600; margin-bottom:10px;">PIN tidak sesuai. Silakan periksa kembali.</div>
+        <button type="submit" class="lusion-pill-dark" style="width:100%; padding:13px 20px; font-size:0.88rem; border-radius:12px; background:#2563eb; border-color:#2563eb;">
+          Buka Galeri Tugas &rarr;
+        </button>
+      </form>
+      <div style="margin-top:18px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;">
+        <a href="/kumpul-tugas" style="font-size:0.8rem; color:#2563eb; text-decoration:none; font-weight:600;">Portal Kumpul Tugas</a>
+        <span style="color:#cbd5e1;">&bull;</span>
+        <a href="/dashboard" style="font-size:0.8rem; color:#475569; text-decoration:none; font-weight:600;">Dashboard Guru</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="protectedDatabaseContent" class="lusion-layer" style="display:none; flex-direction:column; min-height:100vh;">
+
+  <!-- Shared Lusion Floating Pill Navigation -->
+  <div id="lusionNavMount"></div>
+
+  <main class="main-wrap">
+
+    <!-- Friendly Editorial Hero Banner -->
+    <section class="hero-box lusion-hero-frame">
+      <div class="lusion-spine-row" style="flex:1;">
+        <div class="lusion-spine-rail" aria-hidden="true"></div>
+        <div class="hero-left">
+          <div class="live-pill">
+            <span class="live-dot"></span>
+            <span id="syncStatusText">Galeri &amp; Rekap Karya Siswa</span>
+          </div>
+          <h1 class="hero-title gradient-shimmer">Galeri &amp; Rekap Karya Siswa</h1>
+          <p class="hero-desc">
+            Semua file video (<strong>.MP4</strong>), tautan Google Drive, YouTube, dan dokumen tugas dari halaman <strong>Kumpul Tugas</strong> otomatis tampil di sini dan terhubung dengan Dashboard Guru.
+          </p>
+        </div>
+      </div>
+      <div class="hero-right">
+        <a href="/kumpul-tugas?id=pr-03" class="lusion-pill-dark" style="justify-content:center; padding:12px 20px;">
+          Upload Video / Tugas Baru &rarr;
+        </a>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://drive.google.com/drive/folders/1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D" target="_blank" rel="noopener noreferrer" class="lusion-pill-glass" style="flex:1; padding:9px 14px; font-size:0.78rem;">
+            Folder Drive ↗
+          </a>
+          <a href="/dashboard" class="lusion-pill-glass" style="flex:1; padding:9px 14px; font-size:0.78rem;">
+            Dashboard Guru
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 Class Statistics Cards -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div>
+          <span class="stat-label">Total Tugas Masuk</span>
+          <span class="stat-num" id="statTotal">0</span>
+        </div>
+        <span class="stat-badge" style="background:#eff6ff; color:#1d4ed8;">Semua</span>
+        <div class="stat-bar-accent"></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-label">XI DKV 1</span>
+          <span class="stat-num" id="statDKV1">0</span>
+        </div>
+        <span class="stat-badge cls-dkv1">XI DKV 1</span>
+        <div class="stat-bar-accent"></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-label">XI DKV 2</span>
+          <span class="stat-num" id="statDKV2">0</span>
+        </div>
+        <span class="stat-badge cls-dkv2">XI DKV 2</span>
+        <div class="stat-bar-accent"></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-label">XI DKV 3</span>
+          <span class="stat-num" id="statDKV3">0</span>
+        </div>
+        <span class="stat-badge cls-dkv3">XI DKV 3</span>
+        <div class="stat-bar-accent"></div>
+      </div>
+      <div class="stat-card">
+        <div>
+          <span class="stat-label">Kelas X DKV (1&ndash;3)</span>
+          <span class="stat-num" id="statXDKV">0</span>
+        </div>
+        <span class="stat-badge" style="background:#ecfdf5; color:#047857;">X DKV</span>
+        <div class="stat-bar-accent"></div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Control Bar -->
+    <section class="control-bar">
+      <div class="filter-group" style="flex-wrap:wrap;">
+        <button type="button" class="class-tab active" data-cls="all" onclick="setClassFilter('all', this)">Semua Kelas</button>
+        <button type="button" class="class-tab" data-cls="X DKV 1" onclick="setClassFilter('X DKV 1', this)">X DKV 1</button>
+        <button type="button" class="class-tab" data-cls="X DKV 2" onclick="setClassFilter('X DKV 2', this)">X DKV 2</button>
+        <button type="button" class="class-tab" data-cls="X DKV 3" onclick="setClassFilter('X DKV 3', this)">X DKV 3</button>
+        <button type="button" class="class-tab" data-cls="XI DKV 1" onclick="setClassFilter('XI DKV 1', this)">XI DKV 1</button>
+        <button type="button" class="class-tab" data-cls="XI DKV 2" onclick="setClassFilter('XI DKV 2', this)">XI DKV 2</button>
+        <button type="button" class="class-tab" data-cls="XI DKV 3" onclick="setClassFilter('XI DKV 3', this)">XI DKV 3</button>
+      </div>
+
+      <div class="filter-group" style="flex:1; justify-content:flex-end; flex-wrap:wrap;">
+        <select id="filterSubjectSelect" class="filter-select" onchange="onDbFilterChange()" aria-label="Filter Berdasarkan Mata Pelajaran">
+          <option value="all">Semua Mata Pelajaran</option>
+          <option value="editing_audio_video">1. Editing Audio &amp; Video (Kelas XI)</option>
+          <option value="perangkat_lunak">2. Perangkat Lunak (Kelas XI)</option>
+          <option value="dkv_x">Dasar-Dasar DKV (Kelas X)</option>
+        </select>
+
+        <select id="filterTaskSelect" class="filter-select" onchange="onDbFilterChange()" aria-label="Filter Berdasarkan Pertemuan Tugas">
+          <option value="all">Semua Pertemuan / Tugas</option>
+          <option value="pr-03">Tugas 03 EAV: Klip Breaking News (15–20d) DeNoise</option>
+          <option value="pr-01">Tugas 01 EAV: Pra-Produksi &amp; Storyboard Produk (TVC)</option>
+          <option value="pr-02">Tugas 02 EAV: Foldering &amp; Rough Cut Q &amp; W</option>
+          <option value="pr-04">Tugas 04 EAV: Elemen Grafis Berita (Lower Third &amp; Running Text)</option>
+          <option value="pr-05">Tugas 05 EAV: Studio Green Screen &amp; B-Roll</option>
+          <option value="pr-06">Tugas 06 EAV: Color Grading &amp; Master Export Final</option>
+          <option value="ae-01">Latihan 01 PL: Toolbar &amp; Poros P-S-R-T-A</option>
+          <option value="ae-02">Tugas 1 PL: 10 Teknik Teks Animasi</option>
+          <option value="ae-03">Tugas 2 PL: Pembuatan Desain Aset Logo (.PNG Transparan)</option>
+          <option value="ae-04">Tugas 3 PL: Pengumpulan Animasi Logo yang Ingin Digunakan</option>
+          <option value="ae-05">Tugas 4 PL: Pengerjaan Animasi Logo (3D &amp; Lighting)</option>
+          <option value="ae-06">Tugas 5 PL (Final): Sound Design &amp; Animasi Logo Master Bumper</option>
+          <option value="dkvx-01">Tugas Kelas X DKV: Karya Praktik Dasar DKV</option>
+        </select>
+
+        <input type="text" id="searchQueryInput" class="search-box" placeholder="Cari nama siswa atau kelompok..." oninput="onDbFilterChange()" aria-label="Cari nama siswa atau kelompok">
+
+        <div class="view-modes" role="tablist" aria-label="Pilih Tampilan Data">
+          <button type="button" class="view-btn active" id="btnViewGallery" onclick="setViewMode('gallery')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="10 9 16 12 10 15 10 9"/></svg>
+            <span>Galeri</span>
+          </button>
+          <button type="button" class="view-btn" id="btnViewTable" onclick="setViewMode('table')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span>Tabel Rekap</span>
+          </button>
+          <button type="button" class="view-btn" id="btnViewDrive" onclick="setViewMode('drive')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Folder Drive</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 1: Live Video & Submission Cards Gallery -->
+    <section class="submissions-grid" id="galleryContainer"></section>
+
+    <!-- View 2: Teacher Spreadsheet Table View -->
+    <section class="table-wrap" id="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Kelas</th>
+            <th>Kelompok</th>
+            <th>Perwakilan</th>
+            <th>Susunan Tim yang Bertugas</th>
+            <th>Tugas</th>
+            <th>Berkas / Link</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+
+    <!-- Multi-Page Pagination Bar -->
+    <div id="dbPaginationBar"></div>
+
+    <!-- View 3: Live Embedded Google Drive Folder Section (Dedicated Page Tab) -->
+    <section class="drive-embed-section" id="driveEmbedSection" style="display:none;">
+      <div class="drive-embed-header">
+        <div>
+          <h2 style="font-family:var(--font-body); font-size:1.12rem; font-weight:700; color:#0f172a; display:flex; align-items:center; gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            Isi Folder Google Drive Pengumpulan Tugas
+          </h2>
+          <p class="friendly-light" style="font-size:0.84rem; margin-top:3px;">
+            Menampilkan isi langsung dari folder Google Drive pengumpulan karya siswa (ID: <code>1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D</code>).
+          </p>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button type="button" class="btn-pill btn-outline" onclick="switchDriveEmbed('grid')">Tampilan Grid</button>
+          <button type="button" class="btn-pill btn-outline" onclick="switchDriveEmbed('list')">Tampilan Daftar</button>
+          <a href="https://drive.google.com/drive/folders/1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D" target="_blank" rel="noopener noreferrer" class="btn-pill btn-drive">
+            Buka Penuh di Tab Baru ↗
+          </a>
+        </div>
+      </div>
+      <iframe
+        id="driveFolderIframe"
+        class="drive-iframe"
+        data-src="https://drive.google.com/embeddedfolderview?id=1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D#grid"
+        title="Folder Google Drive Tugas DKV"
+        loading="lazy"
+      ></iframe>
+    </section>
+
+  </main>
+
+  <footer class="lusion-portal-footer">
+    &copy; 2026 Adrian Ali Muthi &bull; Galeri &amp; Database Karya DKV &bull; Terintegrasi Google Drive &amp; Dashboard Guru
+  </footer>
+
+  </div><!-- End protectedDatabaseContent -->
+
+  <!-- Modal Pengaturan Auto-Upload Google Drive (Khusus Guru - PIN 201023) -->
+  <div class="modal-overlay" id="setupModal">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px;">
+        <h3 style="font-family:var(--font-body); font-size:1.08rem; font-weight:700; display:flex; align-items:center; gap:8px; color:#0f172a;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Pengaturan Simpan Otomatis ke Google Drive
+        </h3>
+        <button type="button" onclick="closeSetupModal()" aria-label="Tutup jendela pengaturan" style="background:#f1f5f9; border:none; width:34px; height:34px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:#475569;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- PIN Gate inside Modal -->
+      <div id="pinGateBox">
+        <p style="font-size:0.86rem; font-weight:300; color:#475569; margin-bottom:14px; line-height:1.55;">
+          Masukkan PIN pengampu untuk membuka pengaturan koneksi Google Apps Script ke Folder Drive siswa:
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <div class="pwd-input-wrap" style="flex:1; min-width:190px;">
+            <input type="password" id="guruPinInput" class="search-box" placeholder="Masukkan PIN pengampu..." style="width:100%;">
+            <button type="button" class="pwd-toggle-btn" aria-label="Tampilkan atau sembunyikan PIN" onclick="toggleDbPinVisibility('guruPinInput', this)">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <button type="button" class="btn-pill btn-primary" onclick="verifySetupPin()">Buka Pengaturan</button>
+        </div>
+      </div>
+
+      <!-- Config Content (Unlocked after PIN) -->
+      <div id="configContentBox" style="display:none;">
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:14px; padding:14px 16px; font-size:0.82rem; color:#1e3a8a; margin-bottom:16px; line-height:1.6;">
+          <strong>Cara Mengaktifkan Simpan Otomatis File .MP4 ke Folder Drive (1 Menit):</strong><br>
+          1. Buka <a href="https://script.google.com" target="_blank" style="font-weight:700; color:#1d4ed8;">script.google.com</a> menggunakan akun Google pemilik folder Drive.<br>
+          2. Klik <strong>+ Proyek Baru</strong>, hapus isinya, lalu klik tombol <strong>"Salin Kode Apps Script"</strong> di bawah dan tempel.<br>
+          3. Klik <strong>Terapkan (Deploy) &gt; Deployment baru &gt; Aplikasi Web</strong>.<br>
+          4. Pilih <em>Jalankan sebagai: Saya (Me)</em> dan <em>Yang memiliki akses: <strong>Siapa saja (Anyone)</strong></em>, lalu klik Terapkan.<br>
+          5. Tempelkan <strong>URL Aplikasi Web</strong> (<code>https://script.google.com/macros/s/.../exec</code>) di kolom berikut:
+        </div>
+
+        <label class="friendly-label" for="gasUrlInput">URL Web App Google Apps Script:</label>
+        <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+          <input type="text" id="gasUrlInput" class="search-box" placeholder="https://script.google.com/macros/s/.../exec" style="flex:1; min-width:210px;">
+          <button type="button" class="btn-pill btn-primary" onclick="saveGasUrl()">Simpan &amp; Sinkronkan</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+          <span style="font-size:0.78rem; font-weight:600; color:#334155;">Kode Google Apps Script (Folder ID: 1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D):</span>
+          <button type="button" class="btn-pill btn-drive" onclick="copyAppsScriptCode()" style="padding:6px 12px; font-size:0.74rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Salin Kode Apps Script
+          </button>
+        </div>
+        <pre class="code-box" id="appsScriptCodePreview"></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TARGET_DRIVE_FOLDER_ID = "1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D";
+    const TARGET_DRIVE_FOLDER_URL = "https://drive.google.com/drive/folders/1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D";
+    const STORAGE_KEY_SUBMISSIONS = "DKV_SUBMISSIONS_LIST_V1";
+    const STORAGE_KEY_GAS_URL = "DKV_GAS_WEBAPP_URL";
+    const GURU_PIN = "201023";
+
+    // Pure Web Audio API Sound Synthesizer (Zero-latency, no external audio files needed)
+    const AudioFX = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      playPop(freq = 580) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.45, this.ctx.currentTime + 0.07);
+          gain.gain.setValueAtTime(0.09, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.07);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.07);
+        } catch (e) {}
+      },
+      playTab() {
+        this.playPop(520);
+      },
+      playWhoosh() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(340, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch (e) {}
+      },
+      playSuccess() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Major Arpeggio)
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+            gain.gain.setValueAtTime(0.12, now + idx * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.38);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.06);
+            osc.stop(now + idx * 0.06 + 0.38);
+          });
+        } catch (e) {}
+      }
+    };
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = 'block';
+
+      const pieces = [];
+      const colors = ['#2563eb', '#38bdf8', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#f43f5e'];
+      for (let i = 0; i < 90; i++) {
+        pieces.push({
+          x: window.innerWidth / 2 + (Math.random() * 240 - 120),
+          y: window.innerHeight * 0.65,
+          vx: (Math.random() - 0.5) * 16,
+          vy: -Math.random() * 18 - 8,
+          size: Math.random() * 9 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rSpeed: (Math.random() - 0.5) * 12,
+          opacity: 1
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.45;
+          p.rotation += p.rSpeed;
+          if (p.vy > 0) p.opacity -= 0.012;
+          if (p.opacity > 0) {
+            alive = true;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.opacity);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            ctx.restore();
+          }
+        });
+        frames++;
+        if (alive && frames < 140) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.style.display = 'none';
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    let gasWebAppUrl = localStorage.getItem(STORAGE_KEY_GAS_URL) || "https://script.google.com/macros/s/AKfycbwFaoP2y-oVHt3Ta7pgcS2ncljzRNZ0MtKAIdECVdmDeFFYkUQ8M3Q2uURo5twhDz2XxA/exec";
+    let currentClassFilter = "all";
+    let currentViewMode = "gallery";
+    let currentDbPage = 1;
+    const DB_GALLERY_PAGE_SIZE = 6;
+    const DB_TABLE_PAGE_SIZE = 10;
+    let allSubmissions = [];
+    let localBlobUrlMap = {};
+
+    const APPS_SCRIPT_CODE = `const FOLDER_ID = "1vZ9mjxRs751xzAKSPHpPODeJqKY7tO4D";
+const DB_FILE_NAME = "_DATABASE_TUGAS_DKV.json";
+
+function getOrCreateSubfolder(parent, name) {
+  const iter = parent.getFoldersByName(name);
+  return iter.hasNext() ? iter.next() : parent.createFolder(name);
+}
+
+function getOrCreateDbFile(parent) {
+  const iter = parent.getFilesByName(DB_FILE_NAME);
+  return iter.hasNext() ? iter.next() : parent.createFile(DB_FILE_NAME, "[]", MimeType.PLAIN_TEXT);
+}
+
+function readDb(parent) {
+  try { return JSON.parse(getOrCreateDbFile(parent).getBlob().getDataAsString("UTF-8") || "[]"); }
+  catch (e) { return []; }
+}
+
+function doGet() {
+  const folder = DriveApp.getFolderById(FOLDER_ID);
+  return ContentService.createTextOutput(JSON.stringify({ status: "ok", submissions: readDb(folder) }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const data = JSON.parse(e.postData.contents || "{}");
+  const mainFolder = DriveApp.getFolderById(FOLDER_ID);
+  if (data.action === "delete" && data.submissionId) {
+    const list = readDb(mainFolder).filter(r => r.id !== data.submissionId);
+    getOrCreateDbFile(mainFolder).setContent(JSON.stringify(list, null, 2));
+    return ContentService.createTextOutput(JSON.stringify({ status: "ok" })).setMimeType(ContentService.MimeType.JSON);
+  }
+  let fileUrl = data.externalUrl || "", previewUrl = data.externalUrl || "", driveFileId = "";
+  let savedName = data.fileName || "Tugas.mp4";
+  if (data.method === "file" && data.fileBase64) {
+    const sub = getOrCreateSubfolder(mainFolder, data.className || "Kelas XI - 1");
+    savedName = (data.className || "DKV").replace(/\\\\s+/g, "_") + "_" + (data.groupNum || "Tim").replace(/\\\\s+/g, "_") + "_" + savedName;
+    const blob = Utilities.newBlob(Utilities.base64Decode(data.fileBase64), data.mimeType || "video/mp4", savedName);
+    const f = sub.createFile(blob);
+    try { f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch (err) {}
+    driveFileId = f.getId();
+    fileUrl = "https://drive.google.com/file/d/" + driveFileId + "/view?usp=sharing";
+    previewUrl = "https://drive.google.com/file/d/" + driveFileId + "/preview";
+  }
+  const now = new Date();
+  const rec = {
+    id: "sub_" + now.getTime(),
+    createdAt: now.toISOString(),
+    createdAtLabel: Utilities.formatDate(now, "Asia/Jakarta", "dd MMM yyyy, HH:mm") + " WIB",
+    className: data.className || "Kelas XI - 1",
+    taskId: data.taskId || "pr-03",
+    taskTitle: data.taskTitle || "Tugas Praktikum",
+    groupNum: data.groupNum || "Kelompok",
+    repName: data.repName || "Siswa",
+    members: data.members || "-",
+    method: data.method || "file",
+    fileName: savedName,
+    fileSizeLabel: data.fileSizeLabel || "",
+    mimeType: data.mimeType || "video/mp4",
+    driveFileId: driveFileId,
+    fileUrl: fileUrl,
+    previewUrl: previewUrl
+  };
+  const list = readDb(mainFolder);
+  list.unshift(rec);
+  getOrCreateDbFile(mainFolder).setContent(JSON.stringify(list, null, 2));
+  return ContentService.createTextOutput(JSON.stringify({ status: "ok", record: rec })).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+    function openMediaDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open("DKV_Media_Vault_DB", 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains("files")) {
+            db.createObjectStore("files", { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function loadLocalBlobs() {
+      try {
+        const db = await openMediaDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction("files", "readonly");
+          const req = tx.objectStore("files").getAll();
+          req.onsuccess = () => {
+            const items = req.result || [];
+            items.forEach(item => {
+              if (item && item.id && item.blob) {
+                localBlobUrlMap[item.id] = URL.createObjectURL(item.blob);
+              }
+            });
+            resolve();
+          };
+          req.onerror = () => resolve();
+        });
+      } catch (e) {}
+    }
+
+    async function loadAllSubmissions() {
+      await loadLocalBlobs();
+
+      // 1. Load local submissions
+      let localList = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_SUBMISSIONS);
+        if (raw) localList = JSON.parse(raw);
+      } catch (e) {}
+
+      // 2. Check drive-config.json
+      try {
+        const cfgRes = await fetch('/drive-config.json?t=' + Date.now());
+        if (cfgRes.ok) {
+          const cfg = await cfgRes.json();
+          if (cfg && cfg.scriptUrl && cfg.scriptUrl.startsWith("https://script.google.com/")) {
+            gasWebAppUrl = cfg.scriptUrl;
+            localStorage.setItem(STORAGE_KEY_GAS_URL, gasWebAppUrl);
+          }
+        }
+      } catch (e) {}
+
+      // 3. If GAS WebApp URL is configured, fetch cloud submissions from Google Drive folder
+      let cloudList = [];
+      if (gasWebAppUrl && gasWebAppUrl.startsWith("https://script.google.com/")) {
+        try {
+          document.getElementById('syncStatusText').textContent = "Tersinkronisasi dengan Google Drive Otomatis";
+          const res = await fetch(gasWebAppUrl + "?t=" + Date.now());
+          const data = await res.json();
+          if (data && Array.isArray(data.submissions)) {
+            cloudList = data.submissions;
+          }
+        } catch (err) {
+          console.warn("Cloud fetch warning:", err);
+        }
+      }
+
+      // Merge cloudList and localList without duplicates (abaikan baris kosong corrupt)
+      const map = new Map();
+      [...cloudList, ...localList].forEach(item => {
+        if (!item || !item.id) return;
+        const hasContent = !!(item.fileUrl || item.previewUrl || item.driveFileId || item.fileName);
+        if (!hasContent) return;
+        if (!map.has(item.id)) {
+          map.set(item.id, item);
+        }
+      });
+
+      allSubmissions = Array.from(map.values());
+      updateStats();
+      renderDatabase();
+    }
+
+    function canonicalClassName(raw) {
+      const s = String(raw || '').trim().toUpperCase().replace(/\s+/g, ' ');
+      if (/^X\s*DKV\s*1$/i.test(s) || s === 'XDKV1') return 'X DKV 1';
+      if (/^X\s*DKV\s*2$/i.test(s) || s === 'XDKV2') return 'X DKV 2';
+      if (/^X\s*DKV\s*3$/i.test(s) || s === 'XDKV3') return 'X DKV 3';
+      if (/^XI\s*DKV\s*1$/i.test(s) || s === 'KELAS XI - 1' || s === 'DKV1') return 'XI DKV 1';
+      if (/^XI\s*DKV\s*2$/i.test(s) || s === 'KELAS XI - 2' || s === 'DKV2') return 'XI DKV 2';
+      if (/^XI\s*DKV\s*3$/i.test(s) || s === 'KELAS XI - 3' || s === 'DKV3') return 'XI DKV 3';
+      return String(raw || '').trim() || 'XI DKV 1';
+    }
+
+    function inferSubjKey(sub) {
+      if (!sub) return 'editing_audio_video';
+      const cls = canonicalClassName(sub.className);
+      if (cls.startsWith('X ')) return 'dkv_x';
+      if (sub.subjectKey === 'perangkat_lunak' || sub.subjectKey === 'editing_audio_video') return sub.subjectKey;
+      const tid = String(sub.taskId || '').toLowerCase();
+      const title = String(sub.taskTitle || sub.subject || '').toLowerCase();
+      if (tid.startsWith('ae-') || tid === 't-05' || title.includes('after effect') || title.includes('perangkat lunak') || title.includes('logo') || title.includes('teks animasi') || title.includes('bumper')) {
+        return 'perangkat_lunak';
+      }
+      return 'editing_audio_video';
+    }
+
+    function subjectBadgeLabel(subjKey) {
+      if (subjKey === 'perangkat_lunak') return 'Perangkat Lunak';
+      if (subjKey === 'dkv_x') return 'Kelas X DKV';
+      return 'Editing Audio & Video';
+    }
+
+    function updateStats() {
+      document.getElementById('statTotal').textContent = allSubmissions.length;
+      document.getElementById('statDKV1').textContent = allSubmissions.filter(s => canonicalClassName(s.className) === 'XI DKV 1').length;
+      document.getElementById('statDKV2').textContent = allSubmissions.filter(s => canonicalClassName(s.className) === 'XI DKV 2').length;
+      document.getElementById('statDKV3').textContent = allSubmissions.filter(s => canonicalClassName(s.className) === 'XI DKV 3').length;
+      const statX = document.getElementById('statXDKV');
+      if (statX) statX.textContent = allSubmissions.filter(s => canonicalClassName(s.className).startsWith('X ')).length;
+    }
+
+    function onDbFilterChange() {
+      currentDbPage = 1;
+      renderDatabase();
+    }
+
+    function setClassFilter(cls, btn) {
+      AudioFX.playPop();
+      currentClassFilter = cls;
+      currentDbPage = 1;
+      document.querySelectorAll('.class-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderDatabase();
+    }
+
+    function setViewMode(mode) {
+      AudioFX.playTab();
+      const prevMode = currentViewMode;
+      currentViewMode = mode;
+      if (prevMode !== mode && mode !== 'drive') {
+        currentDbPage = 1;
+      }
+      document.getElementById('btnViewGallery').classList.toggle('active', mode === 'gallery');
+      document.getElementById('btnViewTable').classList.toggle('active', mode === 'table');
+      const driveBtn = document.getElementById('btnViewDrive');
+      if (driveBtn) driveBtn.classList.toggle('active', mode === 'drive');
+
+      document.getElementById('galleryContainer').style.display = mode === 'gallery' ? 'grid' : 'none';
+      document.getElementById('tableContainer').style.display = mode === 'table' ? 'block' : 'none';
+      const driveSection = document.getElementById('driveEmbedSection');
+      if (driveSection) {
+        driveSection.style.display = mode === 'drive' ? 'block' : 'none';
+      }
+      const pagBar = document.getElementById('dbPaginationBar');
+      if (pagBar) {
+        pagBar.style.display = mode === 'drive' ? 'none' : 'block';
+      }
+
+      if (mode === 'drive') {
+        const iframe = document.getElementById('driveFolderIframe');
+        if (iframe && !iframe.getAttribute('src')) {
+          iframe.src = iframe.getAttribute('data-src') || `https://drive.google.com/embeddedfolderview?id=${TARGET_DRIVE_FOLDER_ID}#grid`;
+        }
+      } else {
+        renderDatabase();
+      }
+    }
+
+    function goDbPage(page) {
+      AudioFX.playPop();
+      currentDbPage = page;
+      renderDatabase();
+      const bar = document.querySelector('.control-bar');
+      if (bar) {
+        const rect = bar.getBoundingClientRect();
+        if (rect.top < 0 || rect.top > window.innerHeight * 0.5) {
+          bar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    function renderDbPagination(totalItems, totalPages, startIdx, endIdx) {
+      const container = document.getElementById('dbPaginationBar');
+      if (!container) return;
+      if (currentViewMode === 'drive' || totalItems === 0) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const pages = [];
+      for (let p = 1; p <= totalPages; p++) {
+        if (p === 1 || p === totalPages || Math.abs(p - currentDbPage) <= 1) {
+          pages.push(p);
+        } else if (pages[pages.length - 1] !== '...') {
+          pages.push('...');
+        }
+      }
+
+      container.innerHTML = `
+        <div class="db-pagination-bar">
+          <div class="db-page-meta">
+            Menampilkan <strong>${startIdx + 1}–${endIdx}</strong> dari <strong>${totalItems}</strong> karya &bull; Halaman <strong>${currentDbPage}</strong> / ${totalPages}
+          </div>
+          <div class="db-page-controls">
+            <button type="button" class="db-page-btn" ${currentDbPage <= 1 ? 'disabled' : ''} onclick="goDbPage(${currentDbPage - 1})">&larr; Sebelumnya</button>
+            ${pages.map(p => p === '...'
+              ? '<span class="db-page-dots">...</span>'
+              : `<button type="button" class="db-page-btn ${p === currentDbPage ? 'active' : ''}" onclick="goDbPage(${p})">${p}</button>`
+            ).join('')}
+            <button type="button" class="db-page-btn" ${currentDbPage >= totalPages ? 'disabled' : ''} onclick="goDbPage(${currentDbPage + 1})">Berikutnya &rarr;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function buildMediaPreviewHtml(item) {
+      const localBlobUrl = localBlobUrlMap[item.id];
+      const mime = (item.mimeType || "").toLowerCase();
+      const fname = (item.fileName || "").toLowerCase();
+      const url = item.previewUrl || item.fileUrl || "";
+
+      if (localBlobUrl) {
+        if (mime.startsWith("video/") || /\.(mp4|mov|webm)$/i.test(fname)) {
+          return `<video src="${localBlobUrl}" controls playsinline preload="metadata"></video>`;
+        }
+        if (mime.startsWith("image/") || /\.(jpg|jpeg|png|webp)$/i.test(fname)) {
+          return `<img src="${localBlobUrl}" alt="${escapeHtml(item.fileName)}" />`;
+        }
+      }
+
+      if (url.includes("drive.google.com/file/d/")) {
+        const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+          return `<iframe src="https://drive.google.com/file/d/${match[1]}/preview" allow="autoplay; fullscreen"></iframe>`;
+        }
+      }
+
+      if (url.includes("youtube.com/") || url.includes("youtu.be/")) {
+        let vid = "";
+        const m1 = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+        const m2 = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+        if (m1) vid = m1[1];
+        else if (m2) vid = m2[1];
+        if (vid) {
+          return `<iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>`;
+        }
+      }
+
+      return `
+        <div class="media-placeholder">
+          <div style="width:46px; height:46px; border-radius:14px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; color:#93c5fd;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="10 9 16 12 10 15 10 9"/></svg>
+          </div>
+          <div style="font-weight:700; color:#e2e8f0;">${escapeHtml(item.fileName || item.taskTitle)}</div>
+          <div style="font-size:0.74rem; font-weight:300; color:#94a3b8;">${escapeHtml(item.fileSizeLabel || "Tersimpan di Google Drive")}</div>
+        </div>
+      `;
+    }
+
+    function renderDatabase() {
+      const subjectFilter = document.getElementById('filterSubjectSelect')?.value || 'all';
+      const taskFilter = document.getElementById('filterTaskSelect').value;
+      const query = document.getElementById('searchQueryInput').value.trim().toLowerCase();
+
+      const filtered = allSubmissions.filter(s => {
+        const normCls = canonicalClassName(s.className);
+        if (currentClassFilter !== "all" && normCls !== currentClassFilter) return false;
+        if (subjectFilter !== "all" && inferSubjKey(s) !== subjectFilter) return false;
+        if (taskFilter !== "all" && s.taskId !== taskFilter) return false;
+        if (query) {
+          const hay = `${normCls} ${s.className} ${s.groupNum} ${s.repName} ${s.members} ${s.taskTitle} ${s.fileName}`.toLowerCase();
+          if (!hay.includes(query)) return false;
+        }
+        return true;
+      });
+
+      const galleryEl = document.getElementById('galleryContainer');
+      const tableBody = document.getElementById('tableBody');
+
+      if (filtered.length === 0) {
+        galleryEl.innerHTML = `
+          <div class="empty-box">
+            <div style="width:54px; height:54px; border-radius:16px; background:#eff6ff; color:#2563eb; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <h3 style="font-family:var(--font-body); font-size:1.12rem; font-weight:700; color:#0f172a; margin-bottom:6px;">
+              Belum Ada Kiriman Tugas pada Filter Ini
+            </h3>
+            <p class="friendly-light" style="font-size:0.86rem; max-width:480px; margin:0 auto 18px;">
+              Saat siswa mengunggah file <strong>.MP4</strong> atau mengisi form di halaman <strong>Kumpul Tugas</strong>, karya mereka langsung muncul di sini.
+            </p>
+            <a href="/kumpul-tugas?id=pr-03" class="btn-pill btn-primary">+ Kumpulkan Tugas Pertama</a>
+          </div>
+        `;
+        tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:32px; color:#64748b;">Belum ada data pengumpulan tugas.</td></tr>`;
+        renderDbPagination(0, 1, 0, 0);
+        return;
+      }
+
+      const pageSize = currentViewMode === 'table' ? DB_TABLE_PAGE_SIZE : DB_GALLERY_PAGE_SIZE;
+      const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+      if (currentDbPage > totalPages) currentDbPage = totalPages;
+      if (currentDbPage < 1) currentDbPage = 1;
+      const startIdx = (currentDbPage - 1) * pageSize;
+      const endIdx = Math.min(filtered.length, startIdx + pageSize);
+      const pageItems = filtered.slice(startIdx, endIdx);
+
+      galleryEl.innerHTML = pageItems.map(item => {
+        const normCls = canonicalClassName(item.className);
+        const subjKey = inferSubjKey(item);
+        const clsBadge = normCls === 'XI DKV 2' ? 'cls-dkv2' : (normCls === 'XI DKV 3' ? 'cls-dkv3' : 'cls-dkv1');
+        return `
+          <article class="sub-card">
+            <div class="sub-media-box">
+              ${buildMediaPreviewHtml(item)}
+            </div>
+            <div class="sub-body">
+              <div class="sub-badges-row">
+                <span class="badge-class ${clsBadge}">${escapeHtml(normCls)}</span>
+                <span class="badge-group" style="background:${subjKey === 'perangkat_lunak' ? '#f5f3ff; color:#6d28d9' : '#eff6ff; color:#1d4ed8'};">${escapeHtml(subjectBadgeLabel(subjKey))}</span>
+                <span class="badge-group">${escapeHtml(item.groupNum)}</span>
+                <span class="sub-time">${escapeHtml(item.createdAtLabel || "")}</span>
+              </div>
+              <h3 class="sub-task-title">${escapeHtml(item.taskTitle)}</h3>
+              <div class="sub-rep-line" style="display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Perwakilan: <strong>${escapeHtml(item.repName)}</strong></span>
+              </div>
+              <div class="sub-team-box"><strong>Tim yang Bertugas:</strong>\n${escapeHtml(item.members)}</div>
+              <div class="sub-footer">
+                <a href="${escapeHtml(item.fileUrl || TARGET_DRIVE_FOLDER_URL)}" target="_blank" rel="noopener noreferrer" class="card-btn card-btn-drive">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  Buka di Google Drive ↗
+                </a>
+                ${localBlobUrlMap[item.id] ? `
+                  <a href="${localBlobUrlMap[item.id]}" download="${escapeHtml(item.fileName || 'Tugas.mp4')}" class="card-btn" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Unduh MP4
+                  </a>
+                ` : ''}
+                <button type="button" class="card-btn card-btn-del" title="Hapus (Khusus Guru)" aria-label="Hapus kiriman" onclick="deleteSubmission('${escapeHtml(item.id)}')">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      tableBody.innerHTML = pageItems.map(item => `
+        <tr>
+          <td style="white-space:nowrap;">${escapeHtml(item.createdAtLabel || "")}</td>
+          <td><strong>${escapeHtml(item.className)}</strong></td>
+          <td>${escapeHtml(item.groupNum)}</td>
+          <td>${escapeHtml(item.repName)}</td>
+          <td style="white-space:pre-line; max-width:280px;">${escapeHtml(item.members)}</td>
+          <td>${escapeHtml(item.taskTitle)}</td>
+          <td>
+            <a href="${escapeHtml(item.fileUrl || TARGET_DRIVE_FOLDER_URL)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb; font-weight:700;">
+              ${escapeHtml(item.fileName || "Buka Link ↗")}
+            </a>
+          </td>
+        </tr>
+      `).join("");
+
+      renderDbPagination(filtered.length, totalPages, startIdx, endIdx);
+    }
+
+    async function deleteSubmission(id) {
+      const pin = prompt("Masukkan PIN Pengampu untuk menghapus data ini:");
+      if (pin !== GURU_PIN) {
+        if (pin !== null) alert("PIN tidak sesuai!");
+        return;
+      }
+      allSubmissions = allSubmissions.filter(s => s.id !== id);
+      localStorage.setItem(STORAGE_KEY_SUBMISSIONS, JSON.stringify(allSubmissions));
+      if (gasWebAppUrl && gasWebAppUrl.startsWith("https://script.google.com/")) {
+        try {
+          await fetch(gasWebAppUrl, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "delete", submissionId: id })
+          });
+        } catch (e) {}
+      }
+      updateStats();
+      renderDatabase();
+    }
+
+    function exportToCSV() {
+      if (allSubmissions.length === 0) {
+        alert("Belum ada data tugas untuk diekspor.");
+        return;
+      }
+      AudioFX.playSuccess();
+      launchConfetti();
+      const headers = ["Waktu", "Kelas", "Kelompok", "Perwakilan", "Tim yang Bertugas", "ID Tugas", "Judul Tugas", "Nama File", "Link Drive"];
+      const rows = allSubmissions.map(s => [
+        s.createdAtLabel || s.createdAt,
+        s.className,
+        s.groupNum,
+        s.repName,
+        (s.members || "").replace(/\n/g, " | "),
+        s.taskId,
+        s.taskTitle,
+        s.fileName || "-",
+        s.fileUrl || TARGET_DRIVE_FOLDER_URL
+      ]);
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(v => `"${String(v || "").replace(/"/g, '""')}"`).join(","))
+        .join("\n");
+      const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Rekap_Tugas_DKV_" + new Date().toISOString().slice(0, 10) + ".csv";
+      a.click();
+    }
+
+    function switchDriveEmbed(mode) {
+      const iframe = document.getElementById('driveFolderIframe');
+      if (iframe) {
+        iframe.src = `https://drive.google.com/embeddedfolderview?id=${TARGET_DRIVE_FOLDER_ID}#${mode}`;
+      }
+    }
+
+    function openSetupModal() {
+      document.getElementById('setupModal').style.display = 'flex';
+      document.getElementById('appsScriptCodePreview').textContent = APPS_SCRIPT_CODE;
+      document.getElementById('gasUrlInput').value = gasWebAppUrl;
+    }
+
+    function closeSetupModal() {
+      document.getElementById('setupModal').style.display = 'none';
+    }
+
+    function verifySetupPin() {
+      const val = document.getElementById('guruPinInput').value.trim();
+      if (val === GURU_PIN) {
+        document.getElementById('pinGateBox').style.display = 'none';
+        document.getElementById('configContentBox').style.display = 'block';
+      } else {
+        alert("PIN salah!");
+      }
+    }
+
+    function saveGasUrl() {
+      const url = document.getElementById('gasUrlInput').value.trim();
+      gasWebAppUrl = url;
+      localStorage.setItem(STORAGE_KEY_GAS_URL, url);
+      alert("URL Google Apps Script berhasil disimpan! Sekarang semua upload file akan otomatis masuk ke Folder Google Drive Anda.");
+      closeSetupModal();
+      loadAllSubmissions();
+    }
+
+    function copyAppsScriptCode() {
+      navigator.clipboard.writeText(APPS_SCRIPT_CODE).then(() => {
+        alert("Kode Google Apps Script berhasil disalin! Silakan Paste di script.google.com.");
+      });
+    }
+
+    function toggleDbPinVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      if (btn) {
+        btn.setAttribute("aria-pressed", show ? "true" : "false");
+        btn.innerHTML = show
+          ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+          : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      }
+    }
+
+    function unlockDatabasePage() {
+      const val = document.getElementById('pagePinField').value.trim();
+      if (val === GURU_PIN) {
+        AudioFX.playSuccess();
+        sessionStorage.setItem('DKV_DB_UNLOCKED', '1');
+        document.getElementById('fullPagePinLock').style.display = 'none';
+        document.getElementById('protectedDatabaseContent').style.display = 'flex';
+        loadAllSubmissions();
+      } else {
+        const err = document.getElementById('pagePinErr');
+        if (err) err.style.display = 'block';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.initLusionPortal) {
+        window.initLusionPortal({
+          activeRoute: 'database',
+          subtitle: 'Galeri Karya Siswa',
+          rightHtml: '<button type="button" class="lusion-nav-action-btn" onclick="exportToCSV()">Unduh CSV</button><button type="button" class="lusion-nav-action-btn" onclick="openSetupModal()">Auto-Drive</button>'
+        });
+      }
+
+      if (sessionStorage.getItem('DKV_DB_UNLOCKED') === '1') {
+        document.getElementById('fullPagePinLock').style.display = 'none';
+        document.getElementById('protectedDatabaseContent').style.display = 'flex';
+        loadAllSubmissions();
+      } else {
+        const pf = document.getElementById('pagePinField');
+        if (pf) pf.focus();
+      }
+    });
+  </script>
+  <!-- Fullscreen Confetti Canvas Layer -->
+  <canvas id="confettiCanvas" style="position:fixed; inset:0; pointer-events:none; z-index:999999; display:none;"></canvas>
+</body>
+</html>

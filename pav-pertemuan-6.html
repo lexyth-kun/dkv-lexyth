@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 6 PAV — Color Grading (Lumetri Color) & Master Export H.264 (Final)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #ECFDF5;
+      --accent-cyan: #0EA5E9;
+      --accent-sky: #34D399;
+      --bg-stage: #070B0E;
+      --slide-bg: #FFFFFF;
+      --text-heading: #065F46;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-card: rgba(5, 150, 105, 0.24);
+      --border-subtle: rgba(5, 150, 105, 0.12);
+      
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @page {
+      size: 1440px 810px;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      padding: 75px 0 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .floating-nav-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(52, 211, 153, 0.28);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .nav-brand-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link-btn {
+      color: var(--accent-sky);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .slide-counter-pill {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      background: rgba(5, 150, 105, 0.35);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: var(--accent-sky);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .slide {
+      width: 1440px;
+      height: 810px;
+      max-width: 96vw;
+      background-color: var(--slide-bg);
+      border: 1.5px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 70px;
+      box-shadow: 0 25px 60px rgba(5, 150, 105, 0.15), 0 0 1px rgba(0, 0, 0, 0.2);
+      page-break-after: always;
+    }
+
+    .slide-header { position: relative; z-index: 10; }
+    .slide-title-mixed {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .title-script {
+      font-family: var(--font-script);
+      font-size: 68px;
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 0.9;
+      transform: translateY(2px);
+    }
+
+    .title-serif {
+      font-family: var(--font-heading);
+      font-size: 29px;
+      font-weight: 500;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      max-width: 1100px;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      margin: 15px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card-surface {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-surface.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-pill {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .formula-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(15, 23, 42, 0.05);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #0F172A;
+      margin-top: auto;
+    }
+
+    .pr-shortcut-banner {
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: #FFFFFF;
+    }
+
+    .pr-shortcut-tag {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-sky);
+      white-space: nowrap;
+    }
+
+    .pr-keys-list {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pr-key-item {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #E2E8F0;
+    }
+
+    kbd {
+      background: #1E293B;
+      border: 1px solid #475569;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #38BDF8;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .pr-tutorial-text {
+      font-size: 12.5px;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: auto 0;
+    }
+
+    .cover-script {
+      font-family: var(--font-script);
+      font-size: 110px;
+      color: var(--primary);
+      line-height: 0.85;
+      margin-bottom: -15px;
+    }
+
+    .cover-serif {
+      font-family: var(--font-heading);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 1200px;
+    }
+
+    .cover-sub-box {
+      max-width: 860px;
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+
+    .cover-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag-badge {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .btn-cta-submit {
+      background: linear-gradient(135deg, #059669, #0EA5E9);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cta-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(5, 150, 105, 0.5);
+    }
+
+    @media (max-width: 1200px) {
+      .slide { width: 95vw; height: auto; min-height: 700px; padding: 35px 25px; }
+      .title-script { font-size: 48px; }
+      .title-serif { font-size: 22px; }
+      .cover-script { font-size: 72px; }
+      .cover-serif { font-size: 32px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .pr-shortcut-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 6 (PAV).pdf" data-pdf-mode="auto">
+
+  <!-- Floating Sticky Nav Bar -->
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>BERANDA SILABUS</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">PAV • MINGGU 06 (Color Grading & Master Export H.264)</span>
+    <div class="nav-divider"></div>
+    <span class="slide-counter-pill">10 SLIDES DECK</span>
+  </nav>
+
+
+  
+  <section class="slide" id="slide-1">
+    <div style="display:flex; justify-content:space-between; font-family:var(--font-heading); font-size:11px; color:var(--primary); letter-spacing:0.12em;">
+      <span>MODUL PRAKTIKUM LAB MULTIMEDIA SMK</span>
+      <span>MINGGU KE-6 (PUNCAK PROYEK) • COLOR GRADING &amp; MASTER EXPORT</span>
+    </div>
+
+    <div class="cover-center">
+      <div class="cover-title-group">
+        <span class="cover-script">Finalisasi &amp;</span>
+        <span class="cover-serif">COLOR GRADING &amp; MASTER EXPORT</span>
+      </div>
+      <div class="cover-sub-box">
+        Pertemuan puncak Pengolahan Audio &amp; Video: menyamakan warna kamera (<strong>Color Correction</strong>), memberi nuansa emosi lewat <strong>Lumetri Color &amp; Adjustment Layer</strong>, melakukan <strong>Quality Control (QC)</strong>, dan mengekspor berkas Master Full HD <strong>H.264 (.MP4)</strong> dengan <kbd>Ctrl + M</kbd>.
+      </div>
+      <div class="cover-tags-row">
+        <span class="tag-badge">● LUMETRI COLOR</span>
+        <span class="tag-badge">S-CURVE &amp; ADJUSTMENT LAYER</span>
+        <span class="tag-badge">QUALITY CONTROL 5 TITIK</span>
+        <span class="tag-badge">EXPORT H.264 (CTRL + M)</span>
+        <span class="tag-badge">MASTER 1080P MP4</span>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">fondasi warna</span>
+        <span class="title-serif">Color Correction vs Color Grading</span>
+      </div>
+      <div class="slide-subtitle">Banyak siswa langsung menempelkan filter sinematik tanpa mengoreksi warna asli. Pahami dua tahapan terpisah ini!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">TAHAP 1</span>
+            <h3 class="card-heading">Color Correction (Koreksi Teknis Netral)</h3>
+          </div>
+          <p class="card-desc">
+            Memperbaiki kesalahan rekaman kamera agar gambar tampak <strong>alami dan netral sebagaimana dilihat mata manusia</strong>. Menyamakan exposure rekaman kamera HP presenter dengan rekaman kamera DSLR reporter lapangan agar seragam saat dipotong berselingan.
+          </p>
+          <div class="formula-badge">
+            TARGET: Kertas putih tampak putih murni, bayangan gelap hitam pekat, warna kulit alami.
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">TAHAP 2</span>
+            <h3 class="card-heading">Color Grading (Pewarnaan Emosional / Mood)</h3>
+          </div>
+          <p class="card-desc">
+            Menciptakan <strong>gaya visual artistik dan emosi psikologis</strong> tertentu pada adegan. Pada video ILM kebakaran hutan atau polusi, kita dapat memberi gradasi dingin muram (desaturasi hijau) atau panas membara (oranye pekat) untuk membangkitkan empati penonton.
+          </p>
+          <div class="formula-badge">
+            TARGET: Memperkuat narasi cerita (Duka, Harapan, Ketegangan, Kehangatan).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 1</span>
+        <span class="title-serif">Koreksi White Balance &amp; Exposure</span>
+      </div>
+      <div class="slide-subtitle">Langkah praktikum cepat di panel Lumetri Color &gt; Basic Correction untuk Premiere Pro 2021.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. WB</span>
+            <h3 class="card-heading">White Balance Pipet</h3>
+          </div>
+          <p class="card-desc">
+            Klik ikon pipet <strong>WB Selector</strong>. Arahkan kursor dan klik pada benda yang seharusnya berwarna putih netral di dalam video (kerah baju putih, kertas putih di meja, atau dinding putih). Premiere akan otomatis menyeimbangkan suhu warna (<kbd>Temp &amp; Tint</kbd>).
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. EXP</span>
+            <h3 class="card-heading">Exposure &amp; Contrast</h3>
+          </div>
+          <p class="card-desc">
+            Jika video agak gelap, naikkan <em>Exposure</em> perlahan (<kbd>+0.3 s.d. +0.8</kbd>). Jangan berlebihan agar tidak muncul noise bintik semut. Naikkan <em>Contrast</em> ke <kbd>+15</kbd> untuk mempertegas ketajaman subjek.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. TONAL</span>
+            <h3 class="card-heading">Highlights &amp; Shadows</h3>
+          </div>
+          <p class="card-desc">
+            Tarik <em>Highlights</em> ke <kbd>-20</kbd> untuk menyelamatkan detail langit/lampu yang terlalu terang. Naikkan <em>Shadows</em> ke <kbd>+15</kbd> agar detail rambut dan bayangan gelap subjek presenter terlihat jelas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 2</span>
+        <span class="title-serif">Kurva Kontras Sinematik (S-Curve)</span>
+      </div>
+      <div class="slide-subtitle">Rahasia gambar berdimensi mewah seperti film bioskop adalah pembentukan kurva S-Curve di panel Curves!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">CURVES</span>
+            <h3 class="card-heading">Teknik Membuat Kurva S-Curve</h3>
+          </div>
+          <p class="card-desc">
+            1. Buka sub-panel <strong>Lumetri Color &gt; Curves &gt; RGB Curves</strong>.<br>
+            2. Buat titik di kuadran atas (Highlights) lalu dorong sedikit ke atas untuk mencerahkan area terang.<br>
+            3. Buat titik di kuadran bawah (Shadows) lalu tarik sedikit ke bawah untuk memperdalam area bayangan gelap.<br>
+            4. Garis diagonal lurus kini meliuk membentuk huruf <strong>"S"</strong> halus!
+          </p>
+          <div class="formula-badge">
+            EFEK VISUAL: Gambar datar (flat) langsung berubah tajam, berbobot, dan kaya kontras sinematik!
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">HUE/SAT</span>
+            <h3 class="card-heading">Kurva Warna Spesifik (Hue vs Sat)</h3>
+          </div>
+          <p class="card-desc">
+            Jika warna daun pohon tampak kusam, gunakan kurva <strong>Hue vs Sat</strong>. Klik pipet pada daun hijau, titik otomatis terbentuk di kurva, lalu tarik titik ke atas untuk meningkatkan kesegaran warna hijau tanpa merusak warna kulit manusia!
+          </p>
+          <div class="formula-badge">
+            KEUNGGULAN: Seleksi warna super presisi tanpa memerlukan masking manual.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">efisiensi lab</span>
+        <span class="title-serif">Workflow Profesional: Adjustment Layer</span>
+      </div>
+      <div class="slide-subtitle">Jangan menempelkan efek Lumetri satu per satu ke puluhan potongan klip. Gunakan layer penyesuaian di track teratas!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1</span>
+            <h3 class="card-heading">Buat Adjustment Layer</h3>
+          </div>
+          <p class="card-desc">
+            Di panel Project, klik ikon <strong>New Item &gt; Adjustment Layer</strong> (1920x1080 29.97fps). Tarik ke timeline dan tempatkan di track <kbd>V4/V5</kbd> tepat di atas seluruh klip video.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2</span>
+            <h3 class="card-heading">Terapkan Lumetri Global</h3>
+          </div>
+          <p class="card-desc">
+            Klik klip Adjustment Layer tersebut, lalu atur kurva S-Curve atau LUT sinematik. Efek warna akan otomatis merembes memengaruhi seluruh video di layer bawahnya secara seragam!
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3</span>
+            <h3 class="card-heading">Non-Destruktif &amp; Fleksibel</h3>
+          </div>
+          <p class="card-desc">
+            Jika warna terasa terlalu tebal, cukup turunkan <strong>Opacity</strong> Adjustment Layer (misal dari 100% ke 65%). Bila guru meminta koreksi warna, cukup ubah di satu layer ini saja!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">standar industri</span>
+        <span class="title-serif">Prinsip Quality Control (QC) Penyiaran</span>
+      </div>
+      <div class="slide-subtitle">Di stasiun TV atau rumah produksi, video yang mengalami kesalahan teknis 1 detik saja akan langsung ditolak (QC Reject).</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. INTEGRITAS</span>
+            <h3 class="card-heading">Zero Flash Frame</h3>
+          </div>
+          <p class="card-desc">
+            Tidak boleh ada celah hitam (black gap) 1 frame pun di antara potongan klip di timeline. Selalu gunakan tombol <strong>Ripple Delete</strong> untuk membuang gap kosong.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. AUDIO</span>
+            <h3 class="card-heading">Zero Audio Clipping</h3>
+          </div>
+          <p class="card-desc">
+            Suara tidak boleh pernah menyentuh <strong>0 dBFS (Lampu Merah)</strong>. Suara presenter harus stabil di -12 dB hingga -6 dB, dan musik latar ter-ducking rapi di -24 dB.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. TEKS</span>
+            <h3 class="card-heading">Zero Typo &amp; Safe Margins</h3>
+          </div>
+          <p class="card-desc">
+            Seluruh nama orang, gelar jabatan, nomor telepon hotline, dan teks ticker harus 100% bebas salah ketik dan berada di dalam kotak <strong>Title Safe 90%</strong>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">audit audio</span>
+        <span class="title-serif">Checklist Pengujian Kualitas Suara</span>
+      </div>
+      <div class="slide-subtitle">Gunakan headphone tertutup di lab komputer dan perhatikan meteran Audio Track Mixer secara seksama:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">PARAMETER</span>
+            <h3 class="card-heading">Standar Batas Desibel (dBFS)</h3>
+          </div>
+          <ul class="card-desc" style="padding-left:18px; line-height:1.7;">
+            <li><strong>Dialog Presenter / Voiceover:</strong> Rata-rata <kbd>-12 dB s.d. -6 dB</kbd> (Area Kuning Sehat).</li>
+            <li><strong>Musik BGM Saat Berbicara:</strong> Rata-rata <kbd>-22 dB s.d. -26 dB</kbd> (Tidak menenggelamkan vokal).</li>
+            <li><strong>Musik BGM Saat Transisi:</strong> Maksimal <kbd>-12 dB</kbd> (Fade in / Fade out menggunakan Exponential Fade).</li>
+            <li><strong>Sound Effect (Whoosh, Doot):</strong> <kbd>-10 dB s.d. -8 dB</kbd> (Tegas namun tidak mengagetkan telinga).</li>
+            <li><strong>Master Peak Limiter:</strong> Pasang Hard Limiter di Master Track dengan <em>Input Gain 0 dB, Maximum Amplitude -1.0 dB</em>.</li>
+          </ul>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">MASALAH</span>
+            <h3 class="card-heading">Gejala Audio yang Harus Segera Diperbaiki</h3>
+          </div>
+          <ul class="card-desc" style="padding-left:18px; line-height:1.7;">
+            <li><strong>Pop / Click di Sambungan Potongan:</strong> Berikan transisi audio <em>Constant Power</em> durasi 2 frame di setiap potongan audio.</li>
+            <li><strong>Desis AC Lab Terdengar Keras:</strong> Aktifkan efek <em>DeNoise</em> di Essential Audio panel dengan intensitas <kbd>2.5% - 3.5%</kbd>.</li>
+            <li><strong>Suara Presenter Kiri-Kanan Tidak Seimbang:</strong> Klik kanan klip &gt; <em>Audio Channels</em> &gt; Centang channel kiri ke kanan agar stereo rata.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab</span>
+        <span class="title-serif">Pengaturan Master Export H.264 Full HD</span>
+      </div>
+      <div class="slide-subtitle">Panduan merender berkas video master menggunakan shortcut keyboard dan parameter standar Premiere Pro 2021.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 1</span>
+            <h3 class="card-heading">In/Out Point &amp; Shortcut</h3>
+          </div>
+          <p class="card-desc">
+            Tekan <kbd>Home</kbd> lalu tekan <kbd>I</kbd> di detik paling awal timeline. Geser playhead ke akhir video lalu tekan <kbd>O</kbd>. Tekan tombol sakti ekspor: <kbd>Ctrl + M</kbd> (Windows).
+          </p>
+          <div class="formula-badge">
+            SHORTCUT: Ctrl + M (Buka Jendela Export Settings)
+          </div>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 2</span>
+            <h3 class="card-heading">Format &amp; Preset</h3>
+          </div>
+          <p class="card-desc">
+            Pilih <strong>Format: H.264</strong> (menghasilkan file .mp4 yang kompatibel di semua TV, HP, dan YouTube). Pilih <strong>Preset: Match Source - High Bitrate</strong> (1920x1080 29.97fps).
+          </p>
+          <div class="formula-badge">
+            FORMAT: H.264 (.mp4) • PROFILE: High • LEVEL: 4.2
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 3</span>
+            <h3 class="card-heading">Bitrate &amp; Quality</h3>
+          </div>
+          <p class="card-desc">
+            Di tab <em>Video</em>, atur <strong>Bitrate Encoding: VBR, 1 Pass</strong> dengan <em>Target Bitrate: 15 Mbps</em> dan <em>Maximum Bitrate: 20 Mbps</em>. Centang opsi <strong>Use Maximum Render Quality</strong>.
+          </p>
+          <div class="formula-badge">
+            AUDIO: AAC, 320 kbps, 48000 Hz, Stereo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">arsip digital</span>
+        <span class="title-serif">Standar Penamaan File Master Industri</span>
+      </div>
+      <div class="slide-subtitle">Hilangkan kebiasaan menamai file dengan sebutan "video_final_fix_bismillah.mp4". Gunakan format baku industri:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">BERITA TV</span>
+            <h3 class="card-heading">Format File Siaran Berita Sekelas</h3>
+          </div>
+          <p class="card-desc">
+            Gunakan format nama terstruktur berikut untuk mempermudah arsip guru dan kurasi festival:<br><br>
+            <code>PAV_Tugas06_BeritaTV_KelasXI-DKV1_EdisiNov2026_Master1080p.mp4</code>
+          </p>
+          <div class="formula-badge">
+            ISI ARSIP: File Video Master MP4 + Folder Naskah AV Script PDF + Foto Kru Kelas
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">ILM KELOMPOK</span>
+            <h3 class="card-heading">Format File Iklan Layanan Masyarakat</h3>
+          </div>
+          <p class="card-desc">
+            Gunakan format nama kelompok berikut untuk pengumpulan tugas akhir:<br><br>
+            <code>PAV_Tugas06_ILM_Kelompok03_StopBullying_Master1080p.mp4</code>
+          </p>
+          <div class="formula-badge">
+            ISI ARSIP: File Video Master MP4 + Storyboard 9 Frame Scan PDF + Poster Mini
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">penilaian akhir</span>
+        <span class="title-serif">Color Grading &amp; Pengumpulan Master Export Tugas 06</span>
+      </div>
+      <div class="slide-subtitle">Selamat telah menuntaskan seluruh 6 pertemuan PAV! Selesaikan pewarnaan akhir &amp; ekspor Master MP4 kalian.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="card-surface highlight" style="margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h3 class="card-heading" style="font-size:16px; margin-bottom:8px;">TUGAS 06 (PENILAIAN AKHIR): COLOR GRADING &amp; MASTER EXPORT VIDEO (H.264 MP4)</h3>
+            <p class="card-desc" style="max-width:760px;">
+              <strong>1. Color Grading (Lumetri Color):</strong> Samakan pencahayaan antar klip dan terapkan <em>Adjustment Layer</em> untuk mood emosi video.<br>
+              <strong>2. Quality Control &amp; Export (Ctrl + M):</strong> Pasang <strong>Mark In (I)</strong> &amp; <strong>Mark Out (O)</strong>, cek suara (<code>-6 dB</code> vokal / <code>-24 dB</code> musik) &amp; teks Lower Third bebas typo, lalu ekspor ke <strong>H.264 Full HD 1080p (.MP4)</strong> dan kumpulkan tautan Google Drive / file via portal!
+            </p>
+          </div>
+          <a href="/kumpul-tugas?id=pr-06" class="btn-cta-submit">
+            <span>🚀 BUKA FORM PENGUMPULAN TUGAS AKHIR 06</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <div class="pr-shortcut-tag">🎓 KELULUSAN KOMPETENSI AUDIO &amp; VIDEO (PAV)</div>
+        <div class="pr-keys-list">
+          <span class="pr-key-item">✦ 6 Pertemuan Praktikum Selesai</span>
+          <span class="pr-key-item">✦ Karya Portofolio Siaran &amp; ILM</span>
+          <span class="pr-key-item">✦ Siap PKL &amp; Magang Studio</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Apresiasi Guru:</strong> Setiap karya yang lolos Quality Control akan ditayangkan pada sesi screening kelas dan diarsipkan sebagai portofolio resmi DKV!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+<!-- MOBILE & DESKTOP INTERACTIVE SLIDE CAROUSEL + TOUCH SWIPE -->
+<style id="antigravity-mobile-slide-deck-css">
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .floating-nav-bar {
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    flex-wrap: nowrap !important;
+  }
+  .nav-link-btn,
+  .slide-counter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-brand-title {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    max-width: min(56vw, 740px);
+  }
+  .cover-title-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .cover-script,
+  .cover-serif {
+    display: block !important;
+  }
+  .cover-script {
+    margin-bottom: 0 !important;
+  }
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Single-slide carousel mode */
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop / Laptop clear clearance between top and bottom floating bars */
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 42px) clamp(32px, 3.8vw, 58px) !important;
+    }
+    body.ag-carousel-mode .cover-script {
+      font-size: clamp(60px, 5.8vw, 90px) !important;
+      line-height: 1.04 !important;
+      margin-bottom: 2px !important;
+    }
+    body.ag-carousel-mode .cover-serif {
+      font-size: clamp(28px, 2.8vw, 40px) !important;
+    }
+  }
+
+  /* Responsive Mobile & Tablet Adjustments for All 14 Slide Decks */
+  @media (max-width: 1024px) {
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    body {
+      padding: 62px 8px 84px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    body.ag-carousel-mode {
+      padding: 62px 8px 84px !important;
+      justify-content: flex-start !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+    }
+    .nav-link-btn {
+      font-size: 11.5px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-brand-title {
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: center !important;
+    }
+    .nav-divider { display: none !important; }
+    .slide-counter-pill {
+      font-size: 9.5px !important;
+      padding: 3px 8px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide > div:first-child {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      max-width: 100% !important;
+    }
+    .cover-center {
+      gap: 14px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-title-group {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-script {
+      display: block !important;
+      font-size: clamp(30px, 8.8vw, 48px) !important;
+      line-height: 1.05 !important;
+      margin-bottom: 4px !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+    .cover-serif {
+      display: block !important;
+      font-size: clamp(16.5px, 4.6vw, 24px) !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .cover-sub-box {
+      padding: 12px 14px !important;
+      font-size: 13.5px !important;
+      max-width: 100% !important;
+      line-height: 1.55 !important;
+    }
+    .cover-tags-row {
+      gap: 6px !important;
+    }
+    .tag-badge {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+    }
+    .slide-title-mixed {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      max-width: 100% !important;
+    }
+    .title-script {
+      font-size: clamp(28px, 7.8vw, 38px) !important;
+      line-height: 1.02 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .title-serif {
+      font-size: clamp(15px, 4.2vw, 18.5px) !important;
+      line-height: 1.28 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .slide-subtitle {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      max-width: 100% !important;
+    }
+    .slide-content {
+      margin: 6px 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .grid-2, .grid-3, .grid-2-col, .grid-3-col, .grid-4-col,
+    [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      min-width: 0 !important;
+    }
+    .card-surface, .card-box {
+      padding: 14px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    .card-title-group {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .card-heading, .card-title {
+      font-size: 14.5px !important;
+      line-height: 1.32 !important;
+      overflow-wrap: break-word !important;
+    }
+    .card-desc, .card-body {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .formula-badge, code, kbd {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .pr-shortcut-banner, .ae-shortcut-banner {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .pr-keys-list, .ae-keys-list {
+      border-right: none !important;
+      padding-right: 0 !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .pr-tutorial-text, .ae-tutorial-text {
+      font-size: 12.5px !important;
+      line-height: 1.45 !important;
+    }
+    .btn-cta-submit {
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      padding: 12px 14px !important;
+      font-size: 11.5px !important;
+    }
+    .slide-footer-meta {
+      font-size: 10px !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn {
+      padding: 7px 10px !important;
+      font-size: 11.5px !important;
+    }
+    .ag-slide-btn.secondary {
+      padding: 7px 9px !important;
+      font-size: 11px !important;
+    }
+    .ag-slide-indicator {
+      min-width: 52px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  @media print {
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+    body, body.ag-carousel-mode {
+      background: #ffffff !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important;
+      width: 1440px !important;
+      height: 810px !important;
+      max-width: none !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+  <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="agStepSlide(-1)">◀ Seblm</button>
+  <span class="ag-slide-indicator" id="agSlideIndicator">1 / 10</span>
+  <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="agStepSlide(1)">Lanjut ▶</button>
+  <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+</div>
+
+<script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

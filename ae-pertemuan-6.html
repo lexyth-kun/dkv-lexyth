@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 6 AE — Sound Design & Render Final Master Bumper</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #D97706;
+      --primary-dark: #B45309;
+      --primary-light: #FFFBEB;
+      --accent-cyan: #F59E0B;
+      --accent-sky: #FBBF24;
+      --bg-stage: #0B0906;
+      --slide-bg: #FFFFFF;
+      --text-heading: #78350F;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-card: rgba(217, 119, 6, 0.24);
+      --border-subtle: rgba(217, 119, 6, 0.12);
+      
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @page {
+      size: 1440px 810px;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      padding: 75px 0 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .floating-nav-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(18, 14, 10, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .nav-brand-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link-btn {
+      color: var(--accent-sky);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .slide-counter-pill {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      background: rgba(217, 119, 6, 0.35);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      color: var(--accent-sky);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .slide {
+      width: 1440px;
+      height: 810px;
+      max-width: 96vw;
+      background-color: var(--slide-bg);
+      border: 1.5px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 70px;
+      box-shadow: 0 25px 60px rgba(217, 119, 6, 0.15), 0 0 1px rgba(0, 0, 0, 0.2);
+      page-break-after: always;
+    }
+
+    .slide-header { position: relative; z-index: 10; }
+    .slide-title-mixed {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .title-script {
+      font-family: var(--font-script);
+      font-size: 68px;
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 0.9;
+      transform: translateY(2px);
+    }
+
+    .title-serif {
+      font-family: var(--font-heading);
+      font-size: 29px;
+      font-weight: 500;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      max-width: 1100px;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      margin: 15px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card-surface {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-surface.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-pill {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .formula-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(15, 23, 42, 0.05);
+      border-left: 3px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #0F172A;
+      margin-top: auto;
+    }
+
+    .ae-shortcut-banner {
+      background: #111827;
+      border-radius: 12px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: #FFFFFF;
+    }
+
+    .ae-shortcut-tag {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-sky);
+      white-space: nowrap;
+    }
+
+    .ae-keys-list {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ae-key-item {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #E2E8F0;
+    }
+
+    kbd {
+      background: #1F2937;
+      border: 1px solid #4B5563;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #FBBF24;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .ae-tutorial-text {
+      font-size: 12.5px;
+      color: #9CA3AF;
+      line-height: 1.4;
+    }
+
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: auto 0;
+    }
+
+    .cover-script {
+      font-family: var(--font-script);
+      font-size: 110px;
+      color: var(--primary);
+      line-height: 0.85;
+      margin-bottom: -15px;
+    }
+
+    .cover-serif {
+      font-family: var(--font-heading);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 1200px;
+    }
+
+    .cover-sub-box {
+      max-width: 860px;
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+
+    .cover-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag-badge {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .btn-cta-submit {
+      background: linear-gradient(135deg, #D97706, #EA580C);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cta-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(217, 119, 6, 0.5);
+    }
+
+    @media (max-width: 1200px) {
+      .slide { width: 95vw; height: auto; min-height: 700px; padding: 35px 25px; }
+      .title-script { font-size: 48px; }
+      .title-serif { font-size: 22px; }
+      .cover-script { font-size: 72px; }
+      .cover-serif { font-size: 32px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .ae-shortcut-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 6 (PL).pdf" data-pdf-mode="auto">
+
+  <!-- Floating Sticky Nav Bar -->
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>BERANDA SILABUS</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">AE PERTEMUAN 06 (FINAL) • SOUND DESIGN &amp; RENDER .MP4</span>
+    <div class="nav-divider"></div>
+    <span class="slide-counter-pill">10 SLIDES DECK</span>
+  </nav>
+
+
+    <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <div class="slide-subtitle" style="font-family:var(--font-mono); font-size:12px; color:var(--primary); font-weight:700; letter-spacing:0.1em;">
+        PERANGKAT LUNAK DESAIN (AFTER EFFECTS 2021) • PERTEMUAN 06 DARI 06 (FINAL)
+      </div>
+    </div>
+    <div class="cover-center">
+      <div class="cover-script">Sound Design &amp; Final Render</div>
+      <h1 class="cover-serif">Sound Design Bumper (LL) &amp; Render Final Master Bumper (.MP4 Full HD)</h1>
+      <div class="cover-sub-box">Pertemuan puncak After Effects: menyatukan efek suara (SFX Whoosh, Impact, Shimmer) dengan gelombang suara (tombol LL), menambahkan Fade-Out hitam &amp; audio, mengunci durasi Work Area (B &amp; N), lalu merender file video Master Bumper .MP4 Full HD bersuara!</div>
+      <div class="cover-tags-row">
+        <span class="tag-badge">WAVEFORM AUDIO (TOMBOL LL)</span>
+        <span class="tag-badge">SFX WHOOSH • IMPACT • SHIMMER</span>
+        <span class="tag-badge">WORK AREA (B &amp; N)</span>
+        <span class="tag-badge">EXPORT .MP4 BERSUARA (TUGAS 5 AE)</span>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">kekuatan audio</span>
+        <span class="title-serif">Mengapa Jingle Menentukan Identitas Studio?</span>
+      </div>
+      <div class="slide-subtitle">Bahkan tanpa melihat layar sekalipun, telinga manusia dapat mengenali sebuah studio animasi hanya dari 2 detik suara jingle!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">SONIC BRANDING</span>
+            <h3 class="card-heading">Contoh Legendaris Industri Animasi &amp; Film</h3>
+          </div>
+          <p class="card-desc">
+            • <strong>Netflix:</strong> Bunyi dentuman bass ganda <em>"Ta-Dum"</em> (1.5 detik).<br>
+            • <strong>HBO:</strong> Bunyi statis TV analog diikuti paduan suara malaikat <em>"Ahhhh"</em>.<br>
+            • <strong>Pixar:</strong> Suara derit lampu meja melompat diikuti suara bohlam dipijat <em>"Pop"</em>.<br>
+            • <strong>20th Century Fox:</strong> Gebukan drum snare berirama tegap diikuti tiupan terompet orkestra megah.
+          </p>
+          <div class="formula-badge">
+            KESIMPULAN: Suara adalah jangkar ingatan emosional penonton yang paling awet!
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">AUDIO REACTIVE</span>
+            <h3 class="card-heading">Prinsip Audio Reactive (Visualisasi Irama)</h3>
+          </div>
+          <p class="card-desc">
+            Bumper logo modern tidak membiarkan visual dan audio berjalan terpisah. Ketika bass drum menendang kencang, logo bergetar atau memancarkan ledakan cahaya. Ketika denting piano berdawai lembut, partikel debu berkilauan tenang.
+          </p>
+          <div class="formula-badge">
+            TARGET LAB: Setiap nada jingle jagoanmu akan mengendalikan pendaran intensitas Glow secara otomatis!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">shortcut lab</span>
+        <span class="title-serif">Menampilkan Audio Waveform dengan Shortcut LL</span>
+      </div>
+      <div class="slide-subtitle">Jangan menebak-nebak di mana letak ketukan musik. Tampilkan grafik gelombang suara langsung di timeline!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">IMPORT</span>
+            <h3 class="card-heading">Memasukkan Berkas Audio ke Timeline</h3>
+          </div>
+          <p class="card-desc">
+            1. Tarik berkas jingle studio (format <code>.wav</code> 48 kHz 24-bit atau <code>.mp3</code> 320 kbps) ke panel Project.<br>
+            2. Drag file audio ke timeline komposisi bumper logo dan letakkan di layer paling dasar.<br>
+            3. Pastikan ikon speaker pada layer audio aktif berwarna biru.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">SHORTCUT LL</span>
+            <h3 class="card-heading">Tekan Tombol "L" Dua Kali Cepat</h3>
+          </div>
+          <p class="card-desc">
+            Pilih layer audio di timeline, lalu tekan tombol huruf <kbd>L</kbd> dua kali secara cepat: <kbd>L</kbd> + <kbd>L</kbd>. Layer akan otomatis terbuka menampilkan grafik gelombang suara (Waveform) berwarna hijau/biru!
+          </p>
+          <div class="formula-badge">
+            FUNGSI: Memungkinkan kita menyelaraskan keyframe kemunculan logo tepat di puncak grafik bukit suara jingle!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">shortcut audio</span>
+        <span class="title-serif">Shortcut Pemutaran Audio di After Effects 2021</span>
+      </div>
+      <div class="slide-subtitle">Seringkali siswa bingung mengapa menekan Spasi suaranya tidak keluar atau macet tersendat-sendat:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">NUMPAD .</span>
+            <h3 class="card-heading">Audio Only Preview</h3>
+          </div>
+          <p class="card-desc">
+            Tekan tanda titik pada Numpad keyboard (<kbd>.</kbd>) untuk memutar suara jingle instan tanpa perlu merender frame video. Sangat cepat untuk mendengarkan ketukan!
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">CTRL SCRUB</span>
+            <h3 class="card-heading">Audio Scrubbing di Timeline</h3>
+          </div>
+          <p class="card-desc">
+            Tahan tombol <kbd>Ctrl</kbd> lalu geser playhead timeline maju-mundur menggunakan mouse. Suara akan berbunyi mendecit frame-by-frame untuk mencari puncak nada!
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">PREVIEW PANEL</span>
+            <h3 class="card-heading">Pengaturan Panel Preview</h3>
+          </div>
+          <p class="card-desc">
+            Di panel Preview sebelah kanan, pastikan ikon speaker kecil menyala dan opsi <em>Mute Audio</em> tidak tercentang secara tidak sengaja.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">sound effects</span>
+        <span class="title-serif">Layering SFX Pendukung (Foley Bumper)</span>
+      </div>
+      <div class="slide-subtitle">Jingle melodi utama akan jauh lebih hidup bila dipadukan dengan 3 lapisan efek suara foley kecil:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. WHOOSH</span>
+            <h3 class="card-heading">Whoosh / Swish Muncul</h3>
+          </div>
+          <p class="card-desc">
+            Suara hembusan angin cepat di detik 00:00 saat garis simbol Trim Paths melesat masuk ke tengah frame. Memberikan sensasi massa dan kecepatan.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. GLINT</span>
+            <h3 class="card-heading">Chime / Ting Kilauan</h3>
+          </div>
+          <p class="card-desc">
+            Suara denting lonceng kristal di detik 02:22 tepat saat kilauan CC Light Sweep melintas di ujung tajam logo. Memicu kepuasan sensorik penonton.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. SUB-BASS</span>
+            <h3 class="card-heading">Sub-Bass Boom Akhir</h3>
+          </div>
+          <p class="card-desc">
+            Dentuman frekuensi rendah 60 Hz di detik 03:00 saat nama teks studio dan tagline terkunci kokoh di tempatnya. Memberikan wibawa dan stabilitas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 1</span>
+        <span class="title-serif">Membuat Layer Kamera (Two-Node Camera)</span>
+      </div>
+      <div class="slide-subtitle">Menghadirkan mata virtual sutradara ke dalam kanvas After Effects 2021.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 1</span>
+            <h3 class="card-heading">Menu New Camera</h3>
+          </div>
+          <p class="card-desc">
+            Buka menu atas: <strong>Layer &gt; New &gt; Camera...</strong> atau gunakan shortcut keyboard <kbd>Ctrl + Alt + Shift + C</kbd>.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 2</span>
+            <h3 class="card-heading">Pilih Preset Lensa</h3>
+          </div>
+          <p class="card-desc">
+            Pada jendela pengaturan kamera:<br>
+            • <strong>Type:</strong> <em>Two-Node Camera</em> (Kamera dengan target fokus tetap)<br>
+            • <strong>Preset:</strong> <em>35mm</em> atau <em>50mm</em> (Perspektif alami mata manusia)<br>
+            • Klik <strong>OK</strong>.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 3</span>
+            <h3 class="card-heading">Shortcut Navigasi: C</h3>
+          </div>
+          <p class="card-desc">
+            Tekan tombol huruf <kbd>C</kbd> pada keyboard berulang kali untuk berganti mode Camera Tool: <em>Orbit Camera, Track XY, dan Track Z (Dolly)</em> untuk mengintip sudut pandang 3D secara bebas!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 2</span>
+        <span class="title-serif">Animasi Gerakan Kamera Push-In (Dolly In)</span>
+      </div>
+      <div class="slide-subtitle">Menciptakan dorongan maju dramatis yang membawa penonton masuk menyelam ke dalam logo studio animasi.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">KEYFRAMING</span>
+            <h3 class="card-heading">Langkah Animasi Posisi Kamera Z</h3>
+          </div>
+          <p class="card-desc">
+            1. Buka layer Camera &gt; <em>Transform &gt; Position</em>.<br>
+            2. Di detik 00:00, aktifkan stopwatch keyframe <strong>Position</strong>. Atur nilai posisi Z di angka agak jauh: <kbd>Z: -2400</kbd> (Kamera berada agak jauh di belakang, logo terlihat mungil elegan).<br>
+            3. Geser playhead ke detik 04:00, dorong nilai posisi Z maju perlahan mendekati logo: <kbd>Z: -1200</kbd> (Kamera merangsek maju secara mantap).<br>
+            4. Di detik 05:00 s.d. 06:00, biarkan kamera terus bergerak maju sangat lambat (<em>Drift Forward</em> <kbd>Z: -1100</kbd>) sebelum layar fade-out ke hitam.
+          </p>
+          <div class="formula-badge">
+            KURVA BEZIER: Tekan F9 lalu tarik handle kurva awal ke 70% influence untuk akselerasi bioskop!
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">POINT OF INTEREST</span>
+            <h3 class="card-heading">Mengunci Titik Fokus Kamera</h3>
+          </div>
+          <p class="card-desc">
+            Pastikan properti <strong>Point of Interest</strong> tetap terkunci di koordinat tengah logo (<kbd>960, 540, 0</kbd>). Dengan begitu, sejauh atau sedekat apapun kamera bergerak maju, logo studio akan selalu berada tepat di tengah-tengah frame secara sempurna tanpa melenceng!
+          </p>
+          <div class="formula-badge">
+            STABILITAS TINGGI: Menjamin logo tidak goyang atau miring saat kamera meluncur.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial render</span>
+        <span class="title-serif">Merender Master Bumper di Render Queue AE</span>
+      </div>
+      <div class="slide-subtitle">Langkah merender file video master resolusi Full HD 1080p lengkap dengan audio jingle yang jernih.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. RENDER QUEUE</span>
+            <h3 class="card-heading">Add to Render Queue</h3>
+          </div>
+          <p class="card-desc">
+            Klik tab komposisi final bumper logo di timeline &gt; tekan shortcut <kbd>Ctrl + M</kbd> (atau menu <strong>Composition &gt; Add to Render Queue</strong>).
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. AUDIO OUTPUT</span>
+            <h3 class="card-heading">Wajib Aktifkan Audio Output!</h3>
+          </div>
+          <p class="card-desc">
+            Klik teks biru di samping <strong>Output Module</strong>. Ubah format menjadi QuickTime ProRes atau H.264. Di bagian paling bawah jendela, centang opsi <strong>Audio Output ON (48.000 kHz, 16 bit, Stereo)</strong> agar video yang diekspor bersuara jingle!
+          </p>
+          <div class="formula-badge">
+            PERINGATAN: Secara default AE mematikan audio output, jangan lupa dicentang!
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. MEDIA ENCODER</span>
+            <h3 class="card-heading">Alternatif: Media Encoder (MP4)</h3>
+          </div>
+          <p class="card-desc">
+            Siswa juga dapat memilih menu <strong>Composition &gt; Add to Adobe Media Encoder Queue</strong> untuk mengekspor langsung ke format <kbd>H.264 (.mp4)</kbd> Preset <em>Match Source - High Bitrate</em> dengan ukuran file ringan namun kualitas tajam.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+<section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">transparansi</span>
+        <span class="title-serif">Rubrik Penilaian Tugas Akhir After Effects</span>
+      </div>
+      <div class="slide-subtitle">Evaluasi karya bumper studio animasi dinilai berdasarkan 4 kriteria pencapaian teknis &amp; artistik:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">30%</span>
+            <h3 class="card-heading">Kerapian Outline &amp; Tipografi Studio</h3>
+          </div>
+          <p class="card-desc">Garis simbol logo muncul secara mulus menggunakan Trim Paths, dan nama studio tersusun anggun menggunakan Text Animator (Tracking/Opacity).</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">25%</span>
+            <h3 class="card-heading">Pencahayaan Glow &amp; CC Light Sweep</h3>
+          </div>
+          <p class="card-desc">Adanya pendaran warna magis Dual Glow serta 1 sapuan kilatan cahaya diagonal CC Light Sweep dengan kurva kecepatan luwes <kbd>F9</kbd>.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">25%</span>
+            <h3 class="card-heading">Kamera 3D Push-In &amp; Harmoni Jingle</h3>
+          </div>
+          <p class="card-desc">Pergerakan kamera 3D meluncur maju secara anggun (Dolly In Parallax), dilengkapi suara jingle audio-reactive yang sinkron dengan denyut visual.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">20%</span>
+            <h3 class="card-heading">Kualitas Render Master Full HD 1080p</h3>
+          </div>
+          <p class="card-desc">Video beresolusi tajam 1920x1080, durasi pas 5–7 detik, audio jernih tanpa clipping, serta tepat waktu dikumpulkan di akhir November 2026.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tugas akhir ae</span>
+        <span class="title-serif">Pengumpulan Tugas 5 AE: Master Bumper Studio (.MP4 Full HD)</span>
+      </div>
+      <div class="slide-subtitle">Pastikan audio menyala (Audio Output: ON), durasi 5–7 detik terkunci (B–N), lalu unggah hasilnya:</div>
+    </div>
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group"><span class="step-pill">TUGAS 5 AE (FINAL)</span><h3 class="card-heading">Master Opening Bumper Logo Studio (.MP4)</h3></div>
+          <p class="card-desc">Gabungan 3D Logo .PNG + Teks Animasi + Kilau Cahaya CC Light Sweep + Sound Design SFX yang telah di-render 1080p 30fps durasi 5–7 detik dengan Fade-Out halus.</p>
+          <a href="/kumpul-tugas?id=ae-06" class="btn-cta-submit" style="margin-top:12px;">📥 Kumpulkan Master Bumper Final →</a>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group"><span class="step-pill">CHECKLIST LULUS</span><h3 class="card-heading">5 Syarat Video Siap Tayang</h3></div>
+          <p class="card-desc">1. Resolusi 1920x1080 Full HD (30 fps).<br>2. Durasi terkunci 5–7 detik (B &amp; N).<br>3. Audio SFX sinkron &amp; tidak pecah.<br>4. Ada Fade-Out halus di akhir video.<br>5. Format .MP4 ringan (&lt; 25 MB).</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+  <script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

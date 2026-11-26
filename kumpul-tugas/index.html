@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="id" class="kumpul-app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Formulir Pengumpulan Tugas • Adrian Ali Muthi, S.Ds</title>
+  <meta name="theme-color" content="#0a0f1d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Portal DKV">
+  <link rel="manifest" href="/manifest.webmanifest?v=bb2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2">
+  <link rel="icon" href="/favicon.ico?v=bb2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/lusion-portal.css">
+  <script src="/assets/lusion-portal.js"></script>
+  <style>
+    :root {
+      --bg-base: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.94);
+      --text-main: #0a0f1d;
+      --text-muted: rgba(10, 15, 29, 0.68);
+      --text-subtle: rgba(10, 15, 29, 0.45);
+      --border-card: rgba(37, 99, 235, 0.14);
+      --border-focus: #2563eb;
+      --metallic-blue: #2563eb;
+      --metallic-gradient: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #60a5fa 100%);
+      --wa-green: #25D366;
+      --wa-green-hover: #20bd5a;
+      --wa-chat-bg: #efeae2;
+      --wa-bubble-bg: #d9fdd3;
+      --danger-color: #dc2626;
+      --danger-bg: #fef2f2;
+      --success-color: #0d9488;
+      --success-bg: #ecfdf5;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --radius-full: 999px;
+      --shadow-sm: 0 4px 12px rgba(37, 99, 235, 0.05);
+      --shadow-md: 0 14px 40px rgba(37, 99, 235, 0.08), 0 2px 10px rgba(10, 15, 29, 0.04);
+      --shadow-lg: 0 24px 60px rgba(37, 99, 235, 0.14), 0 4px 18px rgba(10, 15, 29, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Main Container */
+    .main-wrap {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      max-width: 1180px;
+      width: 100%;
+      margin: 22px auto 64px;
+      padding: 0 24px;
+    }
+
+    /* Lusion Editorial Hero */
+    .form-hero {
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      background: rgba(37, 99, 235, 0.07);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      color: var(--metallic-blue);
+      font-family: var(--font-heading);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--metallic-blue);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.35rem, 3vw, 2.25rem);
+      font-weight: 600;
+      color: #0a0f1d;
+      letter-spacing: -0.02em;
+      line-height: 1.18;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-size: clamp(0.86rem, 1.5vw, 0.96rem);
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.6;
+    }
+
+    .hero-meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .hero-meta-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #1e293b;
+      background: #f8fafc;
+      border: 1px solid rgba(37, 99, 235, 0.14);
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    /* Grid Layout: Form on Left, Live Preview on Right */
+    .form-layout-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    /* Card Panels */
+    .portal-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      transition: border-color 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth);
+    }
+
+    .portal-card:hover {
+      border-color: var(--border-glass-hover);
+    }
+
+    .card-section-title {
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0f1d;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-section-title svg {
+      color: var(--metallic-blue);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .required-star {
+      color: var(--danger-color);
+      margin-left: 2px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #cbd5e1;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: #0f172a;
+      background: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .form-control::placeholder {
+      color: #94a3b8;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+
+    .form-hint {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* Dropdown Selection for Task */
+    .task-select-box {
+      background: linear-gradient(135deg, #f8faff 0%, #edf2ff 100%);
+      border: 1.5px solid rgba(37, 99, 235, 0.25);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+
+    .task-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .task-subject-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+    }
+
+    .task-deadline-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #b45309;
+      background: #fef3c7;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Submission Method Selector (Tabs) */
+    .method-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(248, 250, 252, 0.95);
+      border: 1px solid rgba(37, 99, 235, 0.12);
+      padding: 5px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    .method-tab {
+      flex: 1;
+      padding: 10px 10px;
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: rgba(10, 15, 29, 0.6);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.25s var(--ease-smooth);
+      white-space: nowrap;
+    }
+
+    .method-tab.active {
+      background: #0a0f1d;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(10, 15, 29, 0.16);
+    }
+
+    .method-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .method-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* File Drop Area */
+    .file-dropzone {
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 24px 16px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .file-dropzone:hover, .file-dropzone.dragover {
+      border-color: var(--metallic-blue);
+      background: #eff6ff;
+    }
+
+    .file-dropzone input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .dropzone-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--metallic-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+    }
+
+    .dropzone-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-desc {
+      font-size: 0.74rem;
+      color: #64748b;
+    }
+
+    .dropzone-limit-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #dc2626;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.04em;
+    }
+
+    /* File Status Alert */
+    .file-status-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      display: none;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .file-status-box.error {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--danger-bg);
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    .file-status-box.success {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: var(--success-bg);
+      border: 1px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    /* Right Column: Submission Preview & Actions */
+    .preview-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 94px;
+    }
+
+    /* Elegant Studio Message Preview Container */
+    .preview-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .preview-header {
+      background: #ffffff;
+      color: #0a0f1d;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .preview-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #0a0f1d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(10, 15, 29, 0.18);
+    }
+
+    .preview-header-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .preview-header-name {
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.25;
+      color: #0a0f1d;
+    }
+
+    .preview-header-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .preview-badge-status {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      color: #38bdf8;
+    }
+
+    .preview-body {
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.04) 0%, transparent 60%),
+        radial-gradient(rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+      background-size: 100% 100%, 16px 16px;
+      padding: 22px 18px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .preview-bubble {
+      background: #ffffff;
+      border: 1.5px solid rgba(2, 132, 199, 0.25);
+      border-radius: 14px 14px 4px 14px;
+      padding: 16px;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
+      max-width: 100%;
+      align-self: flex-end;
+      position: relative;
+    }
+
+    .preview-bubble-text {
+      font-size: 0.86rem;
+      color: #0f172a;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .preview-bubble-text strong {
+      color: #0284c7;
+      font-weight: 700;
+    }
+
+    .preview-bubble-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 0.68rem;
+      color: #64748b;
+      border-top: 1px dashed rgba(226, 232, 240, 0.8);
+      padding-top: 6px;
+    }
+
+    /* Action Buttons */
+    .action-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-submit-task {
+      background: #0a0f1d;
+      color: #ffffff;
+      border: 1px solid #0a0f1d;
+      padding: 16px 24px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 12px 28px rgba(10, 15, 29, 0.16);
+      transition: all 0.25s var(--ease-smooth);
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .btn-submit-task:hover:not(:disabled) {
+      transform: translateY(-2px);
+      background: var(--metallic-blue);
+      border-color: var(--metallic-blue);
+      box-shadow: 0 16px 34px rgba(37, 99, 235, 0.28);
+    }
+
+    .btn-submit-task:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-copy {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1.5px solid #cbd5e1;
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copy:hover {
+      border-color: var(--metallic-blue);
+      color: var(--metallic-blue);
+      background: #f8faff;
+    }
+
+    /* Toast Notification */
+    .toast-popup {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast-popup.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(226, 232, 240, 0.8);
+      padding-top: 20px;
+    }
+
+    /* Responsive for Tablet & Mobile (up to 1080x1920) */
+    @media (max-width: 820px) {
+      .form-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .preview-col {
+        position: static;
+      }
+
+      .portal-card {
+        padding: 22px 18px;
+        border-radius: 16px;
+      }
+
+      .main-wrap {
+        margin: 20px auto 40px;
+        padding: 0 16px;
+      }
+
+      .method-tab {
+        font-size: 0.72rem;
+        padding: 8px 4px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-desc {
+        font-size: 0.82rem;
+      }
+      .portal-card {
+        padding: 18px 14px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      input,
+      select,
+      textarea,
+      .form-control {
+        font-size: 16px !important;
+      }
+      .method-tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .method-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .method-tab,
+      .btn-submit-task,
+      .btn-copy {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.25rem;
+      }
+      .btn-submit-task {
+        padding: 14px 18px;
+        font-size: 0.68rem;
+      }
+      .success-modal-actions {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+      .success-modal-actions > * {
+        width: 100% !important;
+        justify-content: center;
+      }
+    }
+
+    .input-error {
+      border-color: #ef4444 !important;
+      background-color: #fef2f2 !important;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    }
+
+    /* Modal Konfirmasi Berhasil */
+    .success-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+    .success-modal-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      max-width: 540px;
+      width: 100%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      0% { transform: scale(0.92); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-modal-icon {
+      width: 64px;
+      height: 64px;
+      background: #eff6ff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-modal-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .success-modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .success-preview-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      color: #1e293b;
+      text-align: left;
+      margin-bottom: 24px;
+      max-height: 150px;
+      overflow-y: auto;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .success-modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .btn-modal-primary {
+      flex: 1;
+      background: var(--metallic-gradient);
+      color: #fff;
+      padding: 13px 20px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+    }
+    .btn-modal-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+    .btn-modal-secondary {
+      flex: 1;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      padding: 13px 20px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-modal-secondary:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .btn-modal-close {
+      background: none;
+      border: none;
+      color: var(--text-subtle);
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 6px;
+    }
+    .btn-modal-close:hover {
+      color: var(--text-main);
+    }
+  </style>
+  <link rel="stylesheet" href="/assets/pwa-mobile.css">
+  <script defer src="/assets/pwa-shell.js?v=bb2"></script>
+</head>
+<body class="lusion-canvas kumpul-tugas-page" data-kumpul-tab="form">
+
+  <!-- Main Content Wrap (Tanpa Navbar - Halaman Terbuka Siswa) -->
+  <main class="main-wrap lusion-layer" style="margin-top: max(24px, calc(env(safe-area-inset-top) + 14px));">
+    
+    <!-- Lusion Editorial Hero Banner -->
+    <section class="form-hero lusion-hero-frame">
+      <div class="lusion-spine-row">
+        <div class="lusion-spine-rail" aria-hidden="true"></div>
+        <div>
+          <div class="hero-eyebrow-row">
+            <div class="hero-badge">
+              <span>SMK BINA BANGSA &bull; PENGUMPULAN TUGAS</span>
+            </div>
+            <a href="/" class="lusion-pill-glass" style="padding: 6px 14px; font-size: 0.72rem;">
+              <span>&larr; Kembali ke Beranda</span>
+            </a>
+          </div>
+          <h1 class="hero-title gradient-shimmer">PENGUMPULAN TUGAS DKV</h1>
+          <p class="hero-desc">
+            Kirim tautan Google Drive / YouTube atau unggah berkas karya langsung. Data otomatis masuk ke Rekap Tugas Guru.
+          </p>
+          <div class="hero-meta-chips">
+            <span class="hero-meta-chip">Premiere Pro &amp; After Effects</span>
+            <span class="hero-meta-chip">Upload Berkas atau Tautan Drive</span>
+            <span class="hero-meta-chip">Tercatat ke Dashboard Guru</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Native Mobile 2-Page Tab Switcher (Formulir <-> Pratinjau & Kirim) -->
+    <div class="mobile-kumpul-tabs" id="mobileKumpulTabs" role="tablist" aria-label="Halaman Pengumpulan Tugas">
+      <button type="button" class="mobile-seg-btn active" id="kumpulSegForm" onclick="switchKumpulTab('form')">1. Isi Formulir</button>
+      <button type="button" class="mobile-seg-btn" id="kumpulSegPreview" onclick="switchKumpulTab('preview')">2. Pratinjau &amp; Kirim</button>
+    </div>
+
+    <!-- Form & Preview Layout Grid -->
+    <div class="form-layout-grid">
+      
+      <!-- LEFT COLUMN: INPUT FORM -->
+      <div class="form-col">
+        <div class="portal-card">
+          <h2 class="card-section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            <span>Rincian Pengumpulan Tugas</span>
+          </h2>
+
+          <form id="submissionForm" onsubmit="event.preventDefault(); submitTaskForm();">
+            
+            <!-- 1. PILIH TUGAS -->
+            <div class="task-select-box">
+              <div class="task-badge-row">
+                <span class="task-subject-tag" id="taskSubjectTag">Premiere Pro</span>
+                <span class="task-deadline-tag" id="taskDeadlineTag">Wajib Dikumpulkan</span>
+              </div>
+              <label for="taskSelect" class="form-label">
+                <span>Pilih Tugas / Pertemuan Yang Dikumpulkan</span>
+              </label>
+              <select id="taskSelect" class="form-control" onchange="onTaskChange(this.value)">
+                <optgroup label="1. Editing Audio &amp; Video (Kelas XI DKV)">
+                  <option value="pr-01">Tugas 01: Pra-Produksi Iklan Produk &amp; Storyboard Produk</option>
+                  <option value="pr-02">Tugas 02: Foldering (5 Folder) &amp; Rough Cut Cepat (Tombol Q &amp; W)</option>
+                  <option value="pr-03">Tugas 03: Klip Breaking News (15–20 Detik) Audio DeNoise &amp; Audio Ducking</option>
+                  <option value="pr-04">Tugas 04: Elemen Grafis Berita (Lower Third, Running Text &amp; Teks ILM)</option>
+                  <option value="pr-05">Tugas 05: Pengambilan Video Bukti Isu (B-Roll) &amp; Komposisi Green Screen</option>
+                  <option value="pr-06">Tugas 06 (Penilaian Akhir): Color Grading &amp; Master Export Video (H.264 MP4)</option>
+                </optgroup>
+                <optgroup label="2. Perangkat Lunak (Kelas XI DKV)">
+                  <option value="ae-02">Tugas 1 PL (Pertemuan 02): 10 Teknik Teks Animasi (Smooth Position, Scale, Flicker, Fade, Typewriter, Pop Up, Flip, Blur)</option>
+                  <option value="ae-03">Tugas 2 PL (Pertemuan 03): Pembuatan Desain Aset Logo Studio (.PNG Transparan / Vektor)</option>
+                  <option value="ae-04">Tugas 3 PL (Pertemuan 04): Pengumpulan Animasi Logo yang Ingin Digunakan (Konsep &amp; Rancangan Gerak Logo)</option>
+                  <option value="ae-05">Tugas 4 PL (Pertemuan 05): Pengerjaan Animasi Logo (Komposisi 3D, Integrasi Teks, Lighting &amp; Glow)</option>
+                  <option value="ae-06">Tugas 5 PL (Pertemuan 06 - Final): Sound Design &amp; Animasi Logo Master Bumper (5–7 Detik .MP4 Full HD)</option>
+                </optgroup>
+                <optgroup label="Dasar-Dasar DKV (Kelas X DKV)">
+                  <option value="dkvx-01">Tugas Kelas X DKV: Karya Praktik Dasar Desain Komunikasi Visual</option>
+                </optgroup>
+              </select>
+              <div id="taskGuideBox" style="margin-top:12px; padding:12px 14px; background:rgba(37,99,235,0.06); border-left:3.5px solid #2563eb; border-radius:0 10px 10px 0; font-size:0.84rem; color:#1e293b; line-height:1.55;"></div>
+            </div>
+
+            <!-- 2. PILIH KELAS (KHUSUS X DKV 1-3 & XI DKV 1-3) -->
+            <div class="form-group">
+              <label for="classSelect" class="form-label">
+                <span>Pilih Kelas <span class="required-star">*</span></span>
+              </label>
+              <select id="classSelect" class="form-control" required onchange="updatePreview()">
+                <optgroup label="Kelas XI DKV (Mapel: Editing Audio &amp; Video / Perangkat Lunak)">
+                  <option value="XI DKV 1" selected>XI DKV 1</option>
+                  <option value="XI DKV 2">XI DKV 2</option>
+                  <option value="XI DKV 3">XI DKV 3</option>
+                </optgroup>
+                <optgroup label="Kelas X DKV">
+                  <option value="X DKV 1">X DKV 1</option>
+                  <option value="X DKV 2">X DKV 2</option>
+                  <option value="X DKV 3">X DKV 3</option>
+                </optgroup>
+              </select>
+              
+            </div>
+
+            <!-- 2B. NAMA PERWAKILAN -->
+            <div class="form-group">
+              <label for="repName" class="form-label">
+                <span>Nama Perwakilan Kelompok <span class="required-star">*</span></span>
+              </label>
+              <input type="text" id="repName" class="form-control" placeholder="Contoh: Budi Pratama" required autocomplete="name" oninput="updatePreview()">
+              
+            </div>
+
+            <!-- 3. KELOMPOK BERAPA -->
+            <div class="form-group">
+              <label for="groupNum" class="form-label">
+                <span>Nomor / Nama Kelompok <span class="required-star">*</span></span>
+              </label>
+              <select id="groupNum" class="form-control" required onchange="updatePreview()">
+                <option value="" disabled selected>-- Pilih Kelompok Anda --</option>
+                <option value="Kelompok 1">Kelompok 1</option>
+                <option value="Kelompok 2">Kelompok 2</option>
+                <option value="Kelompok 3">Kelompok 3</option>
+                <option value="Kelompok 4">Kelompok 4</option>
+                <option value="Kelompok 5">Kelompok 5</option>
+                <option value="Kelompok 6">Kelompok 6</option>
+                <option value="Kelompok 7">Kelompok 7</option>
+                <option value="Kelompok 8">Kelompok 8</option>
+                <option value="Kelompok 9">Kelompok 9</option>
+                <option value="Kelompok 10">Kelompok 10</option>
+                <option value="Kelompok Mandiri">Kelompok Mandiri / Individu</option>
+              </select>
+            </div>
+
+            <!-- 4. ANGGOTA KELOMPOK & TIM YANG BERTUGAS -->
+            <div class="form-group">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+                <label for="groupMembers" class="form-label" style="margin-bottom:0;">
+                  <span>Daftar Anggota &amp; Tim yang Bertugas <span class="required-star">*</span></span>
+                </label>
+                <button type="button" onclick="fillTeamTemplate()" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:999px; padding:4px 10px; font-size:0.72rem; font-weight:700; cursor:pointer;">
+                  + Isi Format Tim Breaking News
+                </button>
+              </div>
+              <textarea id="groupMembers" class="form-control" rows="4" placeholder="Contoh:&#10;Pembawa Berita (Anchor): Siti&#10;Kameramen: Ahmad&#10;Editor Audio DeNoise & Video: Budi&#10;Penulis Naskah: Rina" required oninput="updatePreview()"></textarea>
+              
+            </div>
+
+            <!-- 5. METODE PENGUMPULAN KARYA -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>Metode Penyerahan Karya <span class="required-star">*</span></span>
+              </label>
+
+              <!-- Method Tabs -->
+              <div class="method-tabs">
+                <button type="button" class="method-tab active" id="tabDrive" onclick="setMethod('drive')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                  <span>Link Drive</span>
+                </button>
+                <button type="button" class="method-tab" id="tabYoutube" onclick="setMethod('youtube')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="23 7 16 12 23 17 23 7"/>
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                  </svg>
+                  <span>Link YouTube</span>
+                </button>
+                <button type="button" class="method-tab" id="tabFile" onclick="setMethod('file')">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                  </svg>
+                  <span>Upload File</span>
+                </button>
+              </div>
+
+              <!-- Panel 1: Google Drive -->
+              <div class="method-panel active" id="panelDrive">
+                <input type="text" id="driveUrl" class="form-control" placeholder="drive.google.com/... atau tempel tautan Drive" oninput="updatePreview()">
+                <p class="form-hint">Pastikan tautan Google Drive dapat diakses publik (siapa saja yang memiliki tautan).</p>
+              </div>
+
+              <!-- Panel 2: YouTube -->
+              <div class="method-panel" id="panelYoutube">
+                <input type="text" id="youtubeUrl" class="form-control" placeholder="youtu.be/... atau tempel tautan YouTube" oninput="updatePreview()">
+                <p class="form-hint">Tautan video YouTube (Public atau Unlisted).</p>
+              </div>
+
+              <!-- Panel 3: Upload File (Maksimal 200 MB) -->
+              <div class="method-panel" id="panelFile">
+                <div class="file-dropzone" id="fileDropzone">
+                  <input type="file" id="fileUpload" accept=".mp4,.mov,.avi,.mkv,.mp3,.wav,.zip,.rar,.7z,.pdf,.prproj,.aep,.jpg,.jpeg,.png,.ai,.eps,.svg" onchange="handleFileSelect(event)">
+                  <div class="dropzone-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                    </svg>
+                  </div>
+                  <div class="dropzone-title" id="dropzoneLabel">Klik atau seret file .MP4 / Foto / Tugas ke sini</div>
+                  <div class="dropzone-desc">Pilih file video (.MP4), foto, atau dokumen tugas Anda untuk diunggah</div>
+                  <div class="dropzone-limit-badge">FORMAT: MP4, MOV, JPG, PNG, PDF, MP3, AEP (MAKS 200 MB)</div>
+                </div>
+
+                <!-- Live Local Video / Image Preview before upload -->
+                <div id="localMediaPreviewBox" style="display:none; margin-top:14px; background:#0f172a; border-radius:12px; padding:10px; text-align:center;"></div>
+
+                <!-- Upload Progress Bar -->
+                <div id="uploadProgressWrap" style="display:none; margin-top:14px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; padding:12px 14px;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; color:#1e3a8a; margin-bottom:6px;">
+                    <span id="uploadProgressText">Mengunggah file ke Google Drive &amp; Database...</span>
+                    <span id="uploadProgressPct">0%</span>
+                  </div>
+                  <div style="width:100%; height:8px; background:#e2e8f0; border-radius:999px; overflow:hidden;">
+                    <div id="uploadProgressBar" style="width:0%; height:100%; background:linear-gradient(90deg,#2563eb,#06b6d4); transition:width 0.25s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- Status Feedback Berkas -->
+                <div class="file-status-box" id="fileStatusBox"></div>
+
+
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: FORMAT PREVIEW & SUBMIT -->
+      <div class="preview-col">
+        <h2 class="card-section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Pratinjau Format Pesan Penyerahan</span>
+        </h2>
+
+        <div class="preview-card">
+          <!-- Header -->
+          <div class="preview-header">
+            <div class="preview-avatar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div class="preview-header-info">
+              <span class="preview-header-name">Adrian</span>
+              <span class="preview-header-sub">Pengumpulan Tugas Siswa</span>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="preview-body">
+            <div class="preview-bubble">
+              <div class="preview-bubble-text" id="previewBubbleText">Memuat format pesan...</div>
+              <div class="preview-bubble-meta">
+                <span id="previewTime">08:00</span>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission Buttons -->
+        <div class="action-btn-group">
+          <button type="button" class="btn-submit-task" id="btnSubmitTask" onclick="submitTaskForm()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+            <span id="btnSubmitLabel">UNGGAH &amp; KIRIM PENGUMPULAN TUGAS</span>
+          </button>
+
+          <button type="button" class="btn-copy" onclick="copyMessageText()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span>Salin Format Teks</span>
+          </button>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Sticky Native Mobile Submit Dock (Khusus Tampilan Aplikasi Mobile <= 768px) -->
+  <div class="mobile-submit-dock" id="mobileSubmitDock" role="region" aria-label="Kirim Tugas Cepat">
+    <div class="mobile-submit-dock-meta">
+      <strong id="mobSubmitTaskTitle">Tugas 03: Klip Breaking News</strong>
+      <span id="mobSubmitStatusText">Siap diunggah • Kelas XI - 1</span>
+    </div>
+    <button type="button" class="mobile-submit-dock-btn" id="mobSubmitBtn" onclick="if(window.BinaBangsaPWA) BinaBangsaPWA.vibrateTap(10); submitTaskForm();">
+      <span id="mobSubmitBtnLabel">Kirim Tugas &rarr;</span>
+    </button>
+  </div>
+
+  <footer class="lusion-portal-footer">
+    &copy; 2026 Adrian Ali Muthi, S.Ds &bull; Materi Pengolahan Audio Video &amp; Motion Design DKV
+  </footer>
+
+  <!-- Modal Konfirmasi / Sukses Pengumpulan -->
+  <div class="success-modal-overlay" id="successModal" style="display: none;">
+    <div class="success-modal-card">
+      <div class="success-modal-icon" style="background:#eff6ff; border:1px solid rgba(37,99,235,0.2);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3 class="success-modal-title" id="modalSuccessTitle">Tugas Berhasil Diunggah &amp; Terkirim</h3>
+      <p class="success-modal-desc" id="modalSuccessDesc">Berkas dan data pengumpulan tugas tim Anda telah berhasil diunggah ke sistem penyimpanan.</p>
+      <div class="success-preview-box" id="modalTextPreview"></div>
+      <div class="success-modal-actions" style="flex-wrap:wrap;">
+        <a id="btnModalOpen" href="#" target="_blank" rel="noopener noreferrer" class="btn-modal-primary" style="background:#0a0f1d;">Kirim Bukti via WA &rarr;</a>
+        <a href="/dashboard" class="btn-modal-secondary" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:6px;">Buka Dashboard Guru</a>
+        <button type="button" class="btn-modal-secondary" onclick="copyMessageText()">Salin Format Teks</button>
+      </div>
+      <button type="button" class="btn-modal-close" onclick="closeSuccessModal()">Tutup Jendela</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-popup" id="toastPopup">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: #34d399;">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+    <span id="toastMsg">Teks pengumpulan berhasil disalin!</span>
+  </div>
+
+  <script>
+    // Data Kurikulum Tugas Lengkap (Editing Audio & Video + Perangkat Lunak + Kelas X DKV)
+    const ASSIGNMENTS = {
+      "pr-01": {
+        id: "pr-01",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 01",
+        title: "Tugas 01: Naskah Monolog & Storyboard Produk 9 Kotak (Iklan Produk TVC)",
+        deadline: "Dikumpulkan & di-ACC Guru di Kelas",
+        guide: "<strong>Apa yang dikumpulkan?</strong> Foto dokumen Pra-Produksi Iklan Produk TVC (Ide, Tema, Konsep Monolog 16:9 Slice of Life, Naskah 2 Kolom, dan gambar Storyboard Produk 9 Kotak) yang sudah di-ACC untuk proyek iklan produk kelompokmu (30–45 detik)."
+      },
+      "pr-02": {
+        id: "pr-02",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 02",
+        title: "Tugas 02: Susunan 5 Folder & Potong Cepat Rough Cut ILM (Tombol Q & W)",
+        deadline: "Pertemuan Berikutnya, 23:59 WIB",
+        guide: "<strong>Apa yang dikumpulkan?</strong><br>• <strong>Jika di Lab:</strong> Screenshot 5 Folder Rapi + Timeline Premiere Pro berisi susunan kasar klip ILM (30–45 detik) tanpa celah hitam.<br>• <strong>Jika di Kelas:</strong> Foto Tabel Urutan Klip (Detik 00–45) di buku/kertas kerja + hasil potong kasar di HP kelompok."
+      },
+      "pr-03": {
+        id: "pr-03",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 03",
+        title: "Tugas 03: Klip Breaking News (15–20 Detik) dengan Audio DeNoise / Noise Reduction",
+        deadline: "XI DKV 1: 16 Nov • XI DKV 3: 17 Nov • XI DKV 2: 18 Nov 2026",
+        classDeadlines: {
+          "XI DKV 1": "Senin, 16 November 2026 (23:59 WIB)",
+          "XI DKV 3": "Selasa, 17 November 2026 (23:59 WIB)",
+          "XI DKV 2": "Rabu, 18 November 2026 (23:59 WIB)",
+          "Kelas XI - 1": "Senin, 16 November 2026 (23:59 WIB)",
+          "Kelas XI - 3": "Selasa, 17 November 2026 (23:59 WIB)",
+          "Kelas XI - 2": "Rabu, 18 November 2026 (23:59 WIB)"
+        },
+        guide: "<strong>Apa yang dikumpulkan?</strong><br>• <strong>Klip Video Breaking News (Durasi 15–20 Detik, Landscape 16:9):</strong> Membawakan berita singkat dengan struktur 5 folder rapi &amp; suara yang sudah dijernihkan menggunakan teknik <strong>Audio DeNoise / Noise Reduction</strong>.<br>• <strong>Wajib Cantumkan Tim yang Bertugas</strong> (di kolom Anggota / Catatan): Pembawa Berita (Anchor), Kameramen, Editor Audio DeNoise &amp; Video, serta Penulis Naskah.<br>• <strong>Batas Waktu Pengumpulan per Kelas (pukul 23:59 WIB):</strong><br>&nbsp;&nbsp;— <strong>XI DKV 1:</strong> Senin, 16 November 2026<br>&nbsp;&nbsp;— <strong>XI DKV 3:</strong> Selasa, 17 November 2026<br>&nbsp;&nbsp;— <strong>XI DKV 2:</strong> Rabu, 18 November 2026"
+      },
+      "pr-04": {
+        id: "pr-04",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 04",
+        title: "Tugas 04: Elemen Grafis Berita (Lower Third, Running Text & Teks ILM)",
+        deadline: "Pertemuan Berikutnya, 23:59 WIB",
+        guide: "<strong>Apa yang dikumpulkan?</strong><br>• <strong>Jika di Lab:</strong> Screenshot desain Teks Fakta Isu, papan nama <strong>Lower Third</strong>, dan <strong>Running Text</strong> di dalam garis Safe Margin (Essential Graphics, Track V4).<br>• <strong>Jika di Kelas:</strong> Foto gambar 3 kotak desain teks di kertas + screenshot video ILM/Berita di HP yang sudah dipasangi Lower Third &amp; teks slogan."
+      },
+      "pr-05": {
+        id: "pr-05",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 05",
+        title: "Tugas 05: Pengambilan Video Bukti Isu (B-Roll) & Komposisi Green Screen",
+        deadline: "Pertemuan Berikutnya, 23:59 WIB",
+        guide: "<strong>Apa yang dikumpulkan?</strong><br>• <strong>Jika di Lab:</strong> Screenshot komposisi Green Screen (Ultra Key) di V2 dan sisipan 4–6 klip video bukti isu (B-Roll) di V3.<br>• <strong>Jika di Kelas:</strong> Foto daftar 'Shot List' + bukti rekaman 6–8 potongan video pendek (masing-masing 5 detik, HP mendatar/landscape) di sekitar sekolah untuk gambar ILM kelompokmu."
+      },
+      "pr-06": {
+        id: "pr-06",
+        subjectKey: "editing_audio_video",
+        subject: "Editing Audio & Video",
+        week: "Minggu 06 (Penilaian Akhir)",
+        title: "Tugas 06 (Penilaian Akhir): Color Grading & Master Export Video (H.264 MP4)",
+        deadline: "Akhir November 2026, 23:59 WIB",
+        guide: "<strong>Apa yang dikumpulkan?</strong> File Video Akhir (<strong>format .MP4 Full HD 1080p, Ctrl + M H.264</strong>) yang sudah melalui tahap: (1) <strong>Color Grading</strong> (Lumetri Color / Adjustment Layer), (2) Suara Narator -6 dB &amp; Musik Audio Ducking -24 dB, (3) B-Roll &amp; Green Screen rapi, (4) Lower Third / Running Text bebas typo, dan (5) Lolos cek Quality Control 5 titik. Unggah file atau tautan Google Drive (akses publik) di bawah!"
+      },
+      "ae-01": {
+        id: "ae-01",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Pertemuan 01)",
+        week: "Minggu 01",
+        title: "Latihan Dasar Pertemuan 01: Toolbar, Anchor Point & 5 Shortcut Dasar (P-S-R-T-A)",
+        deadline: "Latihan Praktik di Kelas",
+        guide: "<strong>Latihan Dasar Pertemuan 01:</strong> Mengenal fungsi Toolbar (V, H, Y, Q, Ctrl+T), mengunci titik poros tengah (<strong>Ctrl + Alt + Home</strong>), dan menggerakkan objek dengan 5 shortcut dasar (<strong>P, S, R, T, A</strong>). Tugas penilaian pertama dimulai pada <strong>Tugas 1 PL (Pertemuan 02: 10 Teks Animasi)</strong>."
+      },
+      "ae-02": {
+        id: "ae-02",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Tugas 1 dari 5)",
+        week: "Pertemuan 02",
+        title: "Tugas 1 PL: Praktik 10 Teknik Teks Animasi untuk Bumper Studio Film",
+        deadline: "Rabu, 18 November 2026 (23:59 WIB)",
+        classDeadlines: {
+          "XI DKV 2": "Rabu, 18 November 2026 (23:59 WIB)",
+          "XI DKV 1": "Senin, 16 November 2026 (23:59 WIB)",
+          "XI DKV 3": "Selasa, 17 November 2026 (23:59 WIB)",
+          "Kelas XI - 2": "Rabu, 18 November 2026 (23:59 WIB)",
+          "Kelas XI - 1": "Senin, 16 November 2026 (23:59 WIB)",
+          "Kelas XI - 3": "Selasa, 17 November 2026 (23:59 WIB)"
+        },
+        guide: "<strong>Tugas Penilaian 1 Perangkat Lunak (10 Text Animations — Referensi YouTube: <a href='https://www.youtube.com/watch?v=lRYGnwitZpY&t=117s' target='_blank' style='color:#2563eb;font-weight:700;'>Tonton Tutorial ↗</a>):</strong><br>• Praktikkan teknik <strong>10 Teks Animasi</strong> menggunakan teks Nama Studio Film Animasi milikmu: <em>1. Smooth Position, 2. Smooth Scale, 3. Flicker, 4. Smooth Fade, 5. Typewriter, 6. Pop Up, 7. Masking Position, 8. Snappy Position, 9. 3D Flip, &amp; 10. Cinematic Blur</em>.<br>• <strong>Yang dikumpulkan:</strong> Video preview (<code>.MP4</code>) atau screenshot hasil latihan teks animasimu."
+      },
+      "ae-03": {
+        id: "ae-03",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Tugas 2 dari 5)",
+        week: "Pertemuan 03",
+        title: "Tugas 2 PL: Pembuatan Desain Aset Logo Studio (.PNG Transparan / Vektor)",
+        deadline: "XI DKV 1: Rabu, 18 Nov • XI DKV 2 & 3: Kamis, 19 Nov 2026",
+        classDeadlines: {
+          "XI DKV 1": "Rabu, 18 November 2026 (23:59 WIB)",
+          "XI DKV 2": "Kamis, 19 November 2026 (23:59 WIB)",
+          "XI DKV 3": "Kamis, 19 November 2026 (23:59 WIB)",
+          "Kelas XI - 1": "Rabu, 18 November 2026 (23:59 WIB)",
+          "Kelas XI - 2": "Kamis, 19 November 2026 (23:59 WIB)",
+          "Kelas XI - 3": "Kamis, 19 November 2026 (23:59 WIB)"
+        },
+        guide: "<strong>Tugas Penilaian 2 Perangkat Lunak (Desain Aset Logo Studio .PNG Transparan):</strong><br>• Siapkan &amp; kumpulkan <strong>1 file gambar Logo .PNG transparan</strong> (tanpa background putih, resolusi tinggi min. 2000×2000 px) atau file vektor (<code>.AI</code> / <code>.EPS</code>) milik Studio Film Animasi / Personal Branding milikmu.<br>• <strong>Penting:</strong> Logo ini wajib dikumpulkan sebelum/pada Pertemuan 3!<br>• <strong>Jadwal Pengumpulan:</strong> XI DKV 1: Rabu, 18 November • XI DKV 2 &amp; 3: Kamis, 19 November 2026 (23:59 WIB)."
+      },
+      "ae-04": {
+        id: "ae-04",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Tugas 3 dari 5)",
+        week: "Pertemuan 04",
+        title: "Tugas 3 PL: Pengumpulan Animasi Logo yang Ingin Digunakan (Konsep & Rancangan Gerak Logo)",
+        deadline: "Pertemuan Berikutnya, 23:59 WIB",
+        guide: "<strong>Tugas Penilaian 3 Perangkat Lunak (Konsep &amp; Rancangan Animasi Logo yang Ingin Digunakan):</strong><br>• Kumpulkan rancangan atau konsep animasi logo yang ingin kamu buat di After Effects (pilihan gaya gerakan: <em>3D Extrude &amp; Camera Orbit</em>, <em>Trim Paths Reveal</em>, atau <em>Track Matte</em>) beserta referensi animasi/storyboard.<br>• Tentukan juga 2 gaya teks animasi pendukung untuk nama studio dan sloganmu."
+      },
+      "ae-05": {
+        id: "ae-05",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Tugas 4 dari 5)",
+        week: "Pertemuan 05",
+        title: "Tugas 4 PL: Pengerjaan Animasi Logo (Komposisi 3D, Integrasi Teks, Lighting & Glow)",
+        deadline: "Pertemuan Berikutnya, 23:59 WIB",
+        guide: "<strong>Tugas Penilaian 4 Perangkat Lunak (Pengerjaan Animasi Logo &amp; Pencahayaan Sinematik):</strong><br>• Kerjakan animasi 3D logo milikmu, satukan dengan teks nama studio dari 10 teks animasi, pasang efek <strong>CC Light Sweep</strong> yang menyapu di wajah depan logo, dan aktifkan <strong>Depth of Field</strong> pada Camera 3D.<br>• <strong>Yang dikumpulkan:</strong> Video preview progress (<code>.MP4</code>) atau screenshot timeline kerja."
+      },
+      "ae-06": {
+        id: "ae-06",
+        subjectKey: "perangkat_lunak",
+        subject: "Perangkat Lunak (Tugas 5 Final)",
+        week: "Pertemuan 06 (Penilaian Akhir)",
+        title: "Tugas 5 PL (Final): Sound Design & Animasi Logo Final Master Bumper (5–7 Detik .MP4 Full HD)",
+        deadline: "Minggu Akhir November 2026, 23:59 WIB",
+        guide: "<strong>Tugas Penilaian 5 Perangkat Lunak (Karya Final Bumper Animasi Logo — Pertemuan 06):</strong><br>• Kumpulkan hasil render akhir <strong>Video Opening Bumper Animasi Logo Studio Film (durasi 5–7 detik, .MP4 Full HD 1080p, bersuara jernih)</strong>.<br>• Memuat: Animasi 3D Logo / Reveal, Teks Nama Studio &amp; Tagline, Efek Kilau Cahaya (CC Light Sweep &amp; Glow), Fade-Out, Work Area (B–N), dan Sinkronisasi Sound Effect (SFX Whoosh &amp; Impact Boom via tombol <code>LL</code>)."
+      },
+      "dkvx-01": {
+        id: "dkvx-01",
+        subjectKey: "dkv_x",
+        subject: "Dasar-Dasar DKV (Kelas X)",
+        week: "Tugas Praktik Kelas X",
+        title: "Tugas Kelas X DKV: Karya Praktik Dasar Desain Komunikasi Visual",
+        deadline: "Sesuai Jadwal Guru Kelas X DKV",
+        guide: "<strong>Pengumpulan Karya Praktik Kelas X DKV (X DKV 1, X DKV 2, X DKV 3):</strong><br>• Unggah hasil karya praktik desain/sketsa/fotografi/poster dasar (<code>.JPG</code>, <code>.PNG</code>, <code>.PDF</code>, atau <code>.MP4</code>) atau tautan Google Drive di bawah ini."
+      }
+    };
+
+    const MAX_FILE_SIZE_BYTES = 200 * 1024 * 1024; // 200 MB
+    const WA_PHONE_NUMBER = "27748304118";
+    const STORAGE_KEY_SUBMISSIONS = "DKV_SUBMISSIONS_LIST_V1";
+    const STORAGE_KEY_GAS_URL = "DKV_GAS_WEBAPP_URL";
+    let gasWebAppUrl = "https://script.google.com/macros/s/AKfycbwFaoP2y-oVHt3Ta7pgcS2ncljzRNZ0MtKAIdECVdmDeFFYkUQ8M3Q2uURo5twhDz2XxA/exec";
+
+    let currentMethod = 'file';
+    let selectedTaskId = 'pr-03';
+    let currentSelectedFile = null;
+    let isFileValid = true;
+
+    // IndexedDB helper for storing uploaded video/image blobs locally so sistem penyimpanan can play them immediately
+    function openMediaDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open("DKV_Media_Vault_DB", 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains("files")) {
+            db.createObjectStore("files", { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function saveFileToIndexedDB(id, file) {
+      try {
+        const db = await openMediaDB();
+        return new Promise((resolve) => {
+          const tx = db.transaction("files", "readwrite");
+          tx.objectStore("files").put({
+            id: id,
+            name: file.name,
+            type: file.type || "video/mp4",
+            size: file.size,
+            blob: file,
+            savedAt: Date.now()
+          });
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => resolve(false);
+        });
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function fileToBase64(file, onProgress) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onprogress = (e) => {
+          if (e.lengthComputable && onProgress) {
+            onProgress(Math.round((e.loaded / e.total) * 50));
+          }
+        };
+        reader.onload = () => {
+          const res = String(reader.result || "");
+          const base64 = res.includes(",") ? res.split(",")[1] : res;
+          resolve(base64);
+        };
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function fillTeamTemplate() {
+      const el = document.getElementById('groupMembers');
+      if (!el) return;
+      if (!el.value.trim()) {
+        el.value = "Pembawa Berita (Anchor): \nKameramen: \nEditor Audio DeNoise & Video: \nPenulis Naskah: ";
+      }
+      el.focus();
+      updatePreview();
+    }
+
+    // Inisialisasi Halaman (Tanpa Navbar)
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.initLusionPortal) {
+        window.initLusionPortal({ hideNav: true });
+      }
+
+      // Load drive-config.json if available
+      try {
+        const res = await fetch('/drive-config.json?t=' + Date.now());
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg && cfg.scriptUrl && cfg.scriptUrl.startsWith('https://script.google.com/')) {
+            gasWebAppUrl = cfg.scriptUrl;
+            localStorage.setItem(STORAGE_KEY_GAS_URL, gasWebAppUrl);
+          }
+        }
+      } catch (e) {}
+
+      // 1. Baca query param ?id=... dan ?kelas=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryId = urlParams.get('id');
+      if (queryId && ASSIGNMENTS[queryId]) {
+        selectedTaskId = queryId;
+      }
+      const taskSelectEl = document.getElementById('taskSelect');
+      if (taskSelectEl) taskSelectEl.value = selectedTaskId;
+
+      const queryKelas = urlParams.get('kelas');
+      if (queryKelas) {
+        const cs = document.getElementById('classSelect');
+        if (cs) cs.value = queryKelas;
+      }
+
+      onTaskChange(selectedTaskId);
+      setMethod('file'); // Default langsung ke tab Upload File (.MP4 / Berkas)
+
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const timeEl = document.getElementById('previewTime');
+      if (timeEl) timeEl.textContent = `${hours}:${minutes}`;
+
+      updatePreview();
+      setupDragDrop();
+    });
+
+    // Pure Web Audio API Sound Synthesizer (Zero-latency, no external audio files needed)
+    const AudioFX = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      playPop(freq = 580) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.45, this.ctx.currentTime + 0.07);
+          gain.gain.setValueAtTime(0.09, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.07);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.07);
+        } catch (e) {}
+      },
+      playTab() {
+        this.playPop(520);
+      },
+      playWhoosh() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(340, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch (e) {}
+      },
+      playSuccess() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Major Arpeggio)
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+            gain.gain.setValueAtTime(0.12, now + idx * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.38);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.06);
+            osc.stop(now + idx * 0.06 + 0.38);
+          });
+        } catch (e) {}
+      }
+    };
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = 'block';
+
+      const pieces = [];
+      const colors = ['#2563eb', '#38bdf8', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#f43f5e'];
+      for (let i = 0; i < 90; i++) {
+        pieces.push({
+          x: window.innerWidth / 2 + (Math.random() * 240 - 120),
+          y: window.innerHeight * 0.65,
+          vx: (Math.random() - 0.5) * 16,
+          vy: -Math.random() * 18 - 8,
+          size: Math.random() * 9 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rSpeed: (Math.random() - 0.5) * 12,
+          opacity: 1
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.45;
+          p.rotation += p.rSpeed;
+          if (p.vy > 0) p.opacity -= 0.012;
+          if (p.opacity > 0) {
+            alive = true;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.opacity);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            ctx.restore();
+          }
+        });
+        frames++;
+        if (alive && frames < 140) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.style.display = 'none';
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function onTaskChange(taskId) {
+      AudioFX.playWhoosh();
+      selectedTaskId = taskId;
+      const task = ASSIGNMENTS[taskId] || ASSIGNMENTS['pr-03'];
+
+      document.getElementById('taskSubjectTag').textContent = task.subject;
+      document.getElementById('taskDeadlineTag').textContent = task.deadline;
+      const guideEl = document.getElementById('taskGuideBox');
+      if (guideEl && task.guide) guideEl.innerHTML = task.guide;
+      updatePreview();
+    }
+
+    function setMethod(method) {
+      AudioFX.playTab();
+      currentMethod = method;
+
+      document.getElementById('tabDrive').classList.toggle('active', method === 'drive');
+      document.getElementById('tabYoutube').classList.toggle('active', method === 'youtube');
+      document.getElementById('tabFile').classList.toggle('active', method === 'file');
+
+      document.getElementById('panelDrive').classList.toggle('active', method === 'drive');
+      document.getElementById('panelYoutube').classList.toggle('active', method === 'youtube');
+      document.getElementById('panelFile').classList.toggle('active', method === 'file');
+
+      updatePreview();
+    }
+
+    function setupDragDrop() {
+      const dropzone = document.getElementById('fileDropzone');
+      if (!dropzone) return;
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add('dragover');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove('dragover');
+        });
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 0) {
+          processFile(files[0]);
+        }
+      });
+    }
+
+    function handleFileSelect(e) {
+      const files = e.target.files;
+      if (files && files.length > 0) {
+        processFile(files[0]);
+      }
+    }
+
+    function processFile(file) {
+      currentSelectedFile = file;
+      const statusBox = document.getElementById('fileStatusBox');
+      const label = document.getElementById('dropzoneLabel');
+      const btnSubmit = document.getElementById('btnSubmitTask');
+      const previewBox = document.getElementById('localMediaPreviewBox');
+
+      const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        isFileValid = false;
+        statusBox.className = 'file-status-box error';
+        statusBox.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <div>
+            <strong>Ukuran Berkas Melebihi 200 MB! (${fileSizeMB} MB)</strong><br>
+            Ukuran berkas melebihi 200 MB. Silakan kompres video Anda atau unggah ke Google Drive pribadi Anda lalu tempelkan link-nya di tab 'Link Drive'.
+          </div>
+        `;
+        label.textContent = `❌ ${file.name} (${fileSizeMB} MB) - Melebihi Batas 200 MB`;
+        if (previewBox) previewBox.style.display = 'none';
+        if (btnSubmit) btnSubmit.disabled = true;
+      } else {
+        isFileValid = true;
+        statusBox.className = 'file-status-box success';
+        statusBox.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <div>
+            <strong>Berkas Siap Diunggah: ${file.name} (${fileSizeMB} MB)</strong><br>
+            Ukuran aman (&lt; 200 MB). Klik tombol di bawah untuk mengunggah berkas tugas Anda.
+          </div>
+        `;
+        label.textContent = `✅ ${file.name} (${fileSizeMB} MB)`;
+        if (btnSubmit) btnSubmit.disabled = false;
+
+        // Tampilkan preview video .mp4 / gambar langsung di form
+        if (previewBox) {
+          const blobUrl = URL.createObjectURL(file);
+          if (file.type.startsWith('video/') || /\.(mp4|mov|webm)$/i.test(file.name)) {
+            previewBox.style.display = 'block';
+            previewBox.innerHTML = `
+              <div style="font-size:0.72rem; color:#93c5fd; font-weight:700; margin-bottom:6px; text-align:left;">🎬 PRATINJAU VIDEO YANG AKAN DIUNGGAH:</div>
+              <video src="${blobUrl}" controls playsinline style="width:100%; max-height:240px; border-radius:8px; background:#000;"></video>
+            `;
+          } else if (file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp)$/i.test(file.name)) {
+            previewBox.style.display = 'block';
+            previewBox.innerHTML = `
+              <div style="font-size:0.72rem; color:#93c5fd; font-weight:700; margin-bottom:6px; text-align:left;">🖼️ PRATINJAU GAMBAR YANG AKAN DIUNGGAH:</div>
+              <img src="${blobUrl}" alt="Preview" style="max-width:100%; max-height:220px; border-radius:8px; object-fit:contain;" />
+            `;
+          } else {
+            previewBox.style.display = 'none';
+          }
+        }
+      }
+
+      updatePreview();
+    }
+
+    function buildSubmissionText() {
+      const className = (document.getElementById('classSelect') && document.getElementById('classSelect').value) || 'Kelas XI - 1';
+      const repName = document.getElementById('repName').value.trim() || '[nama perwakilan]';
+      const groupNum = document.getElementById('groupNum').value.trim() || '[kelompok berapa]';
+      const rawMembers = document.getElementById('groupMembers').value.trim();
+
+      let formattedMembers = '[nama anggota & tim]';
+      if (rawMembers) {
+        formattedMembers = rawMembers
+          .split(/[\n,]+/)
+          .map(m => m.trim())
+          .filter(Boolean)
+          .join(', ');
+      }
+
+      const task = ASSIGNMENTS[selectedTaskId] || ASSIGNMENTS['pr-03'];
+      const taskTitle = task.title;
+
+      let detailKarya = '';
+      if (currentMethod === 'drive') {
+        let driveUrl = document.getElementById('driveUrl').value.trim();
+        if (driveUrl && !/^https?:\/\//i.test(driveUrl)) {
+          driveUrl = 'https://' + driveUrl;
+        }
+        detailKarya = driveUrl ? `link Drive: ${driveUrl}` : 'link Drive: [tautan link google drive]';
+      } else if (currentMethod === 'youtube') {
+        let ytUrl = document.getElementById('youtubeUrl').value.trim();
+        if (ytUrl && !/^https?:\/\//i.test(ytUrl)) {
+          ytUrl = 'https://' + ytUrl;
+        }
+        detailKarya = ytUrl ? `link YouTube: ${ytUrl}` : 'link YouTube: [tautan link youtube]';
+      } else if (currentMethod === 'file') {
+        if (currentSelectedFile) {
+          const mb = (currentSelectedFile.size / (1024 * 1024)).toFixed(1);
+          detailKarya = `file: ${currentSelectedFile.name} (${mb} MB)`;
+        } else {
+          detailKarya = 'file: [berkas video .mp4 / tugas]';
+        }
+      }
+
+      return `Halo, kami dari kelas *${className}* (*${groupNum}* - Perwakilan: *${repName}*) dengan susunan tim: *${formattedMembers}* telah mengumpulkan *${taskTitle}* (*${detailKarya}*).`;
+    }
+
+    function updatePreview() {
+      const className = (document.getElementById('classSelect') && document.getElementById('classSelect').value) || 'Kelas XI - 1';
+      const task = ASSIGNMENTS[selectedTaskId] || ASSIGNMENTS['pr-03'];
+      const dlTag = document.getElementById('taskDeadlineTag');
+      if (dlTag && task) {
+        if (task.classDeadlines && task.classDeadlines[className]) {
+          dlTag.textContent = `${className}: ${task.classDeadlines[className]}`;
+        } else {
+          dlTag.textContent = task.deadline;
+        }
+      }
+
+      const text = buildSubmissionText();
+      const bubbleEl = document.getElementById('previewBubbleText');
+      if (!bubbleEl) return;
+      
+      const htmlText = text
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+
+      bubbleEl.innerHTML = htmlText;
+
+      const btnSubmit = document.getElementById('btnSubmitTask');
+      if (btnSubmit) {
+        btnSubmit.disabled = (currentMethod === 'file' && !isFileValid);
+      }
+    }
+
+    async function submitTaskForm() {
+      document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+      const classSelect = document.getElementById('classSelect');
+      const className = classSelect ? classSelect.value : 'Kelas XI - 1';
+      const repNameInput = document.getElementById('repName');
+      const repName = repNameInput.value.trim();
+      const groupNumInput = document.getElementById('groupNum');
+      const groupNum = groupNumInput.value.trim();
+      const groupMembersInput = document.getElementById('groupMembers');
+      const groupMembers = groupMembersInput.value.trim();
+
+      if (!repName) {
+        repNameInput.classList.add('input-error');
+        repNameInput.focus();
+        showToast('Mohon masukkan Nama Perwakilan kelompok!', true);
+        return;
+      }
+
+      if (!groupNum) {
+        groupNumInput.classList.add('input-error');
+        groupNumInput.focus();
+        showToast('Mohon pilih Nomor Kelompok!', true);
+        return;
+      }
+
+      if (!groupMembers) {
+        groupMembersInput.classList.add('input-error');
+        groupMembersInput.focus();
+        showToast('Mohon isi Daftar Anggota / Tim yang Bertugas!', true);
+        return;
+      }
+
+      let externalUrl = '';
+      if (currentMethod === 'drive') {
+        const driveInput = document.getElementById('driveUrl');
+        externalUrl = driveInput.value.trim();
+        if (!externalUrl) {
+          driveInput.classList.add('input-error');
+          driveInput.focus();
+          showToast('Mohon masukkan Tautan Link Google Drive tugas Anda!', true);
+          return;
+        }
+        if (!/^https?:\/\//i.test(externalUrl)) externalUrl = 'https://' + externalUrl;
+      } else if (currentMethod === 'youtube') {
+        const ytInput = document.getElementById('youtubeUrl');
+        externalUrl = ytInput.value.trim();
+        if (!externalUrl) {
+          ytInput.classList.add('input-error');
+          ytInput.focus();
+          showToast('Mohon masukkan Tautan Video YouTube tugas Anda!', true);
+          return;
+        }
+        if (!/^https?:\/\//i.test(externalUrl)) externalUrl = 'https://' + externalUrl;
+      } else if (currentMethod === 'file') {
+        if (!currentSelectedFile) {
+          document.getElementById('fileUpload').focus();
+          showToast('Mohon pilih file video (.mp4) atau berkas tugas Anda terlebih dahulu!', true);
+          return;
+        }
+        if (!isFileValid || currentSelectedFile.size > MAX_FILE_SIZE_BYTES) {
+          showToast('Ukuran file melebihi 200 MB! Mohon gunakan opsi Link Drive.', true);
+          return;
+        }
+      }
+
+      const btnSubmit = document.getElementById('btnSubmitTask');
+      const btnLabel = document.getElementById('btnSubmitLabel');
+      const progWrap = document.getElementById('uploadProgressWrap');
+      const progBar = document.getElementById('uploadProgressBar');
+      const progPct = document.getElementById('uploadProgressPct');
+      const progText = document.getElementById('uploadProgressText');
+
+      if (btnSubmit) btnSubmit.disabled = true;
+      if (btnLabel) btnLabel.textContent = "SEDANG MENGUNGGAH & MENYIMPAN KE DATABASE...";
+      if (progWrap) {
+        progWrap.style.display = 'block';
+        progBar.style.width = '15%';
+        progPct.textContent = '15%';
+        progText.textContent = 'Menyiapkan berkas & menyusun metadata tugas...';
+      }
+
+      const now = new Date();
+      const subId = "sub_" + now.getTime() + "_" + Math.random().toString(36).slice(2, 7);
+      const task = ASSIGNMENTS[selectedTaskId] || ASSIGNMENTS['pr-03'];
+      const cleanClass = className.replace(/\s+/g, "_");
+      const cleanGroup = groupNum.replace(/\s+/g, "_");
+      const fileSizeMB = currentSelectedFile ? (currentSelectedFile.size / (1024 * 1024)).toFixed(2) + " MB" : "-";
+      const autoFileName = currentSelectedFile ? `${cleanClass}_${cleanGroup}_${currentSelectedFile.name}` : "";
+
+      const resolvedSubjKey = /^X\s*DKV/i.test(className)
+        ? "dkv_x"
+        : (task.subjectKey || (selectedTaskId.startsWith("ae-") ? "perangkat_lunak" : "editing_audio_video"));
+      const resolvedSubjLabel = resolvedSubjKey === "perangkat_lunak"
+        ? "Perangkat Lunak"
+        : (resolvedSubjKey === "dkv_x" ? "Dasar-Dasar DKV (Kelas X)" : "Editing Audio & Video");
+
+      let record = {
+        id: subId,
+        createdAt: now.toISOString(),
+        createdAtLabel: now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB',
+        className: className,
+        subjectKey: resolvedSubjKey,
+        subject: resolvedSubjLabel,
+        taskId: selectedTaskId,
+        taskTitle: task.title,
+        groupNum: groupNum,
+        repName: repName,
+        members: groupMembers,
+        method: currentMethod,
+        fileName: autoFileName,
+        origFileName: currentSelectedFile ? currentSelectedFile.name : "",
+        fileSizeLabel: fileSizeMB,
+        mimeType: currentSelectedFile ? (currentSelectedFile.type || "video/mp4") : "",
+        fileUrl: externalUrl || "",
+        previewUrl: externalUrl || "",
+        hasLocalBlob: false,
+        uploadedToDrive: false
+      };
+
+      // 1. Simpan blob video/gambar ke IndexedDB lokal agar langsung bisa diputar di sistem penyimpanan
+      if (currentMethod === 'file' && currentSelectedFile) {
+        const savedBlob = await saveFileToIndexedDB(subId, currentSelectedFile);
+        record.hasLocalBlob = savedBlob;
+        if (progBar) { progBar.style.width = '45%'; progPct.textContent = '45%'; }
+      }
+
+      // 2. Jika Google Apps Script Web App URL aktif, unggah otomatis ke Folder Google Drive 
+      let driveUploadSuccess = false;
+      if (gasWebAppUrl && gasWebAppUrl.startsWith("https://script.google.com/")) {
+        let uploadTick = null;
+        try {
+          if (progText) progText.textContent = `Mengunggah berkas tugas (${className})...`;
+          let fileBase64 = "";
+          if (currentMethod === 'file' && currentSelectedFile && currentSelectedFile.size <= 45 * 1024 * 1024) {
+            fileBase64 = await fileToBase64(currentSelectedFile, (p) => {
+              const pct = 45 + Math.round(p * 0.5);
+              if (progBar) { progBar.style.width = pct + '%'; progPct.textContent = pct + '%'; }
+            });
+          }
+          let curPct = 65;
+          uploadTick = setInterval(() => {
+            if (curPct < 94) {
+              curPct += 3;
+              if (progBar) { progBar.style.width = curPct + '%'; progPct.textContent = curPct + '%'; }
+            }
+          }, 350);
+          const payload = {
+            action: "upload",
+            className: className,
+            subjectKey: resolvedSubjKey,
+            subject: resolvedSubjLabel,
+            taskId: selectedTaskId,
+            taskTitle: task.title,
+            groupNum: groupNum,
+            repName: repName,
+            members: groupMembers,
+            method: currentMethod,
+            fileName: currentSelectedFile ? currentSelectedFile.name : "",
+            fileSizeLabel: fileSizeMB,
+            mimeType: currentSelectedFile ? (currentSelectedFile.type || "video/mp4") : "",
+            fileBase64: fileBase64,
+            externalUrl: externalUrl
+          };
+          const resp = await fetch(gasWebAppUrl, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+          if (uploadTick) clearInterval(uploadTick);
+          const resJson = await resp.json();
+          if (resJson && resJson.status === "ok" && resJson.record) {
+            record.fileUrl = resJson.record.fileUrl || record.fileUrl;
+            record.previewUrl = resJson.record.previewUrl || record.previewUrl;
+            record.driveFileId = resJson.record.driveFileId || "";
+            record.uploadedToDrive = true;
+            driveUploadSuccess = true;
+          }
+        } catch (err) {
+          if (uploadTick) clearInterval(uploadTick);
+          console.warn("Cloud Drive sync notice:", err);
+        }
+      }
+
+      if (progBar) { progBar.style.width = '100%'; progPct.textContent = '100%'; }
+      if (progText) progText.textContent = 'Selesai! Berkas tugas berhasil terkirim.';
+
+      // 3. Simpan ke daftar localStorage agar langsung tampil di sistem penyimpanan
+      try {
+        const existingRaw = localStorage.getItem(STORAGE_KEY_SUBMISSIONS);
+        const list = existingRaw ? JSON.parse(existingRaw) : [];
+        list.unshift(record);
+        localStorage.setItem(STORAGE_KEY_SUBMISSIONS, JSON.stringify(list));
+
+        // Sinkronisasi ke Dashboard Guru (SMK_GURU_MASTER_DASHBOARD_V1)
+        const DASH_KEY = "SMK_GURU_MASTER_DASHBOARD_V1";
+        const dashRaw = localStorage.getItem(DASH_KEY);
+        const dashState = dashRaw ? JSON.parse(dashRaw) : {};
+        if (!Array.isArray(dashState.submissions)) dashState.submissions = [];
+        const rawClass = String(record.className || record.class_key || "XI-1").toUpperCase();
+        const canonicalCls = rawClass.includes("XI - 3") ? "XI DKV 3"
+          : (rawClass.includes("XI - 2") ? "XI DKV 2"
+          : (rawClass.includes("XI - 1") ? "XI DKV 1" : (record.className || "XI DKV 1")));
+        const classKey = canonicalCls === "XI DKV 3" ? "DKV3"
+          : (canonicalCls === "XI DKV 2" ? "DKV2"
+          : (canonicalCls === "XI DKV 1" ? "DKV1" : canonicalCls));
+        const mappedTask = {
+          id: record.id || ("sub_" + Date.now()),
+          student_name: record.repName || record.studentName || record.student_name || "Siswa",
+          student_nis: record.studentNis || record.student_nis || "",
+          group_num: record.groupNum || "",
+          members: record.members || "",
+          class_key: classKey,
+          className: canonicalCls,
+          class_name: canonicalCls,
+          task_id: record.taskId || selectedTaskId || "tugas",
+          task_title: record.taskTitle || record.task_title || "Tugas Praktik",
+          created_at: record.createdAt || new Date().toISOString(),
+          submitted_at: record.createdAtLabel || record.submitted_at || new Date().toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }),
+          file_url: record.driveUrl || record.linkUrl || record.previewUrl || record.fileUrl || record.file_url || "",
+          file_name: record.fileName || record.origFileName || "Berkas_Tugas",
+          method: record.method || "link",
+          score: null,
+          status: "Pending",
+          note: record.notes || record.note || ""
+        };
+        const existsIdx = dashState.submissions.findIndex(item => item && item.id === mappedTask.id);
+        if (existsIdx >= 0) dashState.submissions[existsIdx] = mappedTask;
+        else dashState.submissions.unshift(mappedTask);
+        localStorage.setItem(DASH_KEY, JSON.stringify(dashState));
+      } catch (e) {}
+
+      if (btnSubmit) btnSubmit.disabled = false;
+      if (btnLabel) btnLabel.textContent = "UNGGAH & KIRIM PENGUMPULAN TUGAS";
+
+      const message = buildSubmissionText();
+      const encodedMsg = encodeURIComponent(message);
+      const targetWaUrl = `https://wa.me/${WA_PHONE_NUMBER}?text=${encodedMsg}`;
+
+      const modal = document.getElementById('successModal');
+      const modalPreview = document.getElementById('modalTextPreview');
+      const btnOpen = document.getElementById('btnModalOpen');
+      const modalTitle = document.getElementById('modalSuccessTitle');
+      const modalDesc = document.getElementById('modalSuccessDesc');
+
+      if (modal && modalPreview && btnOpen) {
+        modalPreview.textContent = message;
+        btnOpen.href = targetWaUrl;
+        if (driveUploadSuccess) {
+          if (modalTitle) modalTitle.textContent = "✅ Berkas Tugas Berhasil Diunggah!";
+          if (modalDesc) modalDesc.innerHTML = `Berkas <strong>${record.origFileName || record.fileName || "Tugas"}</strong> dari kelas <strong>${className} (${groupNum})</strong> telah berhasil diunggah (100%).`;
+        } else {
+          if (modalTitle) modalTitle.textContent = "✅ Pengumpulan Tugas Berhasil Terkirim!";
+          if (modalDesc) modalDesc.innerHTML = `Data pengumpulan tugas tim <strong>${className} (${groupNum})</strong> telah tercatat. Silakan klik tombol di bawah jika ingin mengirim bukti konfirmasi.`;
+        }
+        modal.style.display = 'flex';
+        AudioFX.playSuccess();
+        launchConfetti();
+      }
+
+      showToast('🎉 Berhasil! Tugas telah dicatat ke Database Tugas.');
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('successModal');
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function copyMessageText() {
+      const text = buildSubmissionText();
+      AudioFX.playSuccess();
+      launchConfetti();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✨ Format teks pengumpulan berhasil disalin!');
+      }).catch(() => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✨ Format teks pengumpulan berhasil disalin!');
+      });
+    }
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toastPopup');
+      const msg = document.getElementById('toastMsg');
+      msg.textContent = message;
+      toast.style.background = isError ? '#991b1b' : '#0f172a';
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+  <script>
+    function switchKumpulTab(tab) {
+      if (window.BinaBangsaPWA) window.BinaBangsaPWA.vibrateTap(8);
+      const next = tab === 'preview' ? 'preview' : 'form';
+      document.body.dataset.kumpulTab = next;
+      const bForm = document.getElementById('kumpulSegForm');
+      const bPrev = document.getElementById('kumpulSegPreview');
+      if (bForm) bForm.classList.toggle('active', next === 'form');
+      if (bPrev) bPrev.classList.toggle('active', next === 'preview');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    (function setupKumpulMobileDock() {
+      function syncMobileDock() {
+        const mobBtn = document.getElementById('mobSubmitBtn');
+        const mobBtnLbl = document.getElementById('mobSubmitBtnLabel');
+        const mobTitle = document.getElementById('mobSubmitTaskTitle');
+        const mobStatus = document.getElementById('mobSubmitStatusText');
+        const mainBtn = document.getElementById('btnSubmitTask');
+        const mainLbl = document.getElementById('btnSubmitLabel');
+        const taskSel = document.getElementById('taskSelect');
+        const clsSel = document.getElementById('classSelect');
+
+        if (mobTitle && taskSel) {
+          const opt = taskSel.options[taskSel.selectedIndex];
+          mobTitle.textContent = (opt ? opt.textContent : 'Pengumpulan Tugas').replace(/\s+/g, ' ').trim();
+        }
+        if (mobBtn && mainBtn) {
+          mobBtn.disabled = !!mainBtn.disabled;
+        }
+        if (mobBtnLbl && mainLbl) {
+          const raw = (mainLbl.textContent || '').trim();
+          mobBtnLbl.textContent = raw.includes('MENGUNGGAH') || raw.includes('PROSES') ? 'Mengunggah...' : 'Kirim Tugas →';
+        }
+        if (mobStatus) {
+          const cls = clsSel ? clsSel.value : 'Kelas XI - 1';
+          if (mainBtn && mainBtn.disabled) {
+            mobStatus.textContent = (currentMethod === 'file' && !isFileValid)
+              ? 'Pilih berkas valid dahulu'
+              : 'Sedang mengirim ke cloud...';
+          } else {
+            const methodText = currentMethod === 'file' ? 'Berkas' : (currentMethod === 'youtube' ? 'YouTube' : 'Drive');
+            mobStatus.textContent = `Via ${methodText} • ${cls}`;
+          }
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        syncMobileDock();
+        const mainBtn = document.getElementById('btnSubmitTask');
+        const mainLbl = document.getElementById('btnSubmitLabel');
+        if (mainBtn && window.MutationObserver) {
+          new MutationObserver(syncMobileDock).observe(mainBtn, { attributes: true, attributeFilter: ['disabled'] });
+        }
+        if (mainLbl && window.MutationObserver) {
+          new MutationObserver(syncMobileDock).observe(mainLbl, { childList: true, characterData: true, subtree: true });
+        }
+        if (typeof window.updatePreview === 'function') {
+          const origUpdatePreview = window.updatePreview;
+          window.updatePreview = function() {
+            const res = origUpdatePreview.apply(this, arguments);
+            syncMobileDock();
+            return res;
+          };
+        }
+      });
+    })();
+  </script>
+  <!-- Fullscreen Confetti Canvas Layer -->
+  <canvas id="confettiCanvas" style="position:fixed; inset:0; pointer-events:none; z-index:999999; display:none;"></canvas>
+</body>
+</html>

@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Slide Pembelajaran: Produksi Berita Televisi — Pengolahan Audio & Video SMK</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  
+  <!-- Typography: Playfair Display (Headlines), Plus Jakarta Sans (Body), JetBrains Mono (Code/Kbd) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --primary: #1849D6;
+    --primary-dark: #0F3299;
+    --primary-light: #EFF6FF;
+    --accent-sky: #38BDF8;
+    --accent-amber: #D97706;
+    --accent-emerald: #059669;
+    --bg-stage: #070B14;
+    --slide-bg: #FFFFFF;
+    --text-heading: #0F172A;
+    --text-body: #1E293B;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --border-card: rgba(24, 73, 214, 0.16);
+    --border-subtle: #E2E8F0;
+
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  @page {
+    size: 1440px 810px;
+    margin: 0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg-stage);
+    font-family: var(--font-sans);
+    color: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 85px 0 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  /* Sleek, Non-Intrusive Floating Navigation Bar */
+  .floating-nav-bar {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    padding: 6px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-brand-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .nav-link-btn {
+    color: var(--accent-sky);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+  }
+
+  .nav-link-btn:hover {
+    color: #FFFFFF;
+    transform: translateX(-2px);
+  }
+
+  .nav-ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-ctrl-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .slide-counter-pill {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    background: rgba(24, 73, 214, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: var(--accent-sky);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  /* 16:9 Presentation Canvas Container (Desktop 1440 x 810) */
+  .slide {
+    width: 1440px;
+    height: 810px;
+    max-width: 95vw;
+    background-color: var(--slide-bg);
+    border: 1.5px solid var(--border-card);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 42px 64px 34px;
+    box-shadow: 0 20px 50px rgba(24, 73, 214, 0.1), 0 0 1px rgba(0, 0, 0, 0.15);
+    page-break-after: always;
+    scroll-margin-top: 85px;
+  }
+
+  /* ========================================================= */
+  /* CLEAN EDITORIAL HEADER (NO AI SLOP BUTTONS/PILLS ABOVE)   */
+  /* ========================================================= */
+  .slide-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .slide-kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  .slide-title-main {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-heading);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+
+  .slide-subtitle {
+    font-size: 13.5px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 1150px;
+  }
+
+  .slide-subtitle strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  /* Content Area */
+  .slide-content {
+    position: relative;
+    z-index: 10;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    min-height: 0;
+  }
+
+  /* ========================================================= */
+  /* STRUCTURED CARDS & GRIDS                                  */
+  /* ========================================================= */
+  .cards-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .cards-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+
+  .cards-row-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .cards-row-5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .content-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .content-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(24, 73, 214, 0.08);
+  }
+
+  .card-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .card-label.amber { color: var(--accent-amber); }
+  .card-label.emerald { color: var(--accent-emerald); }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .card-body {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex-grow: 1;
+  }
+
+  .card-body strong {
+    color: var(--text-heading);
+    font-weight: 700;
+  }
+
+  .card-body ul, .card-body ol {
+    margin-left: 16px;
+    margin-top: 6px;
+  }
+
+  .card-body li {
+    margin-bottom: 4px;
+  }
+
+  /* ========================================================= */
+  /* PREMIERE PRO 2021 WINDOWS SHORTCUT BANNER                */
+  /* ========================================================= */
+  .pr-shortcut-banner {
+    background: #0B1120;
+    border: 1px solid #1E293B;
+    border-left: 4px solid var(--accent-sky);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .pr-shortcut-tag {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent-sky);
+    white-space: nowrap;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .pr-keys-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-right: 1px solid #334155;
+    padding-right: 14px;
+  }
+
+  .pr-key-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    color: #F1F5F9;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  kbd {
+    background: #020617;
+    color: var(--accent-sky);
+    border: 1px solid #0284C7;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.6);
+  }
+
+  .pr-tutorial-text {
+    font-size: 11.5px;
+    color: #CBD5E1;
+    line-height: 1.45;
+    flex: 1;
+  }
+
+  .pr-tutorial-text strong {
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .pr-tutorial-text code {
+    background: #020617;
+    border: 1px solid #334155;
+    color: var(--accent-sky);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+  }
+
+  /* ========================================================= */
+  /* CLEAN TABLES (RUNDOWN & RUBRIC)                           */
+  /* ========================================================= */
+  .slide-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #FFFFFF;
+  }
+
+  .slide-table th {
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 9px 14px;
+    text-align: left;
+  }
+
+  .slide-table td {
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--text-body);
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+  }
+
+  .slide-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .slide-table tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  .timecode-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-light);
+    border: 1px solid var(--border-card);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Slide Footer */
+  .slide-footer-meta {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+  }
+
+  /* ========================================================= */
+  /* SLIDE 1 (COVER) MINIMALIST MASTERPIECE                    */
+  /* ========================================================= */
+  .cover-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .cover-kicker {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 14px;
+  }
+
+  .cover-title {
+    font-family: var(--font-heading);
+    font-size: 44px;
+    font-weight: 900;
+    color: var(--text-heading);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .cover-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 860px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .cover-studio-svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ========================================================= */
+  /* SLIDE 12 (CLOSING) MASTERPIECE                            */
+  /* ========================================================= */
+  .closing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto 0;
+    position: relative;
+    z-index: 10;
+    gap: 18px;
+  }
+
+  .closing-quote-box {
+    background: #F8FAFC;
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 20px 32px;
+    max-width: 920px;
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--text-heading);
+    line-height: 1.65;
+  }
+
+  .closing-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-action.primary {
+    background: var(--primary);
+    color: #FFFFFF;
+  }
+
+  .btn-action.primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-action.secondary {
+    background: #FFFFFF;
+    color: var(--text-body);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .btn-action.secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .cover-studio-svg {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .cover-studio-svg svg {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    display: block;
+  }
+  .slide-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Multi-page interactive slide deck controls & carousel mode */
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: var(--font-sans);
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  html, body { max-width: 100%; overflow-x: clip; }
+
+  .floating-nav-bar {
+    max-width: calc(100vw - 16px);
+    white-space: nowrap;
+  }
+  .nav-link-btn, .nav-ctrl-btn, .slide-counter-pill {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 40px) clamp(32px, 3.8vw, 56px) !important;
+    }
+  }
+
+  /* Responsive Adjustments */
+  @media screen and (max-width: 1080px) {
+    html, body { max-width: 100% !important; overflow-x: clip !important; }
+    body, body.ag-carousel-mode {
+      padding: 62px 8px 92px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      padding: 6px 12px !important;
+      gap: 8px !important;
+      justify-content: space-between !important;
+    }
+    .nav-brand-title, .nav-divider, .nav-hide-mob { display: none !important; }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide-header-meta {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      font-size: 10px !important;
+    }
+    .cover-title {
+      font-size: clamp(26px, 7.6vw, 38px) !important;
+    }
+    .cover-desc {
+      font-size: 13.5px !important;
+      margin-bottom: 16px !important;
+    }
+    .slide-title-main {
+      font-size: clamp(20px, 5.5vw, 26px) !important;
+    }
+    .cards-row-2, .cards-row-3, .cards-row-4, .cards-row-5 {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+    .content-card {
+      padding: 14px !important;
+      min-width: 0 !important;
+    }
+    .slide-table {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+    }
+    .slide-table th,
+    .slide-table td {
+      font-size: 11px !important;
+      line-height: 1.4 !important;
+      padding: 8px 10px !important;
+      vertical-align: top;
+      min-width: 115px;
+    }
+    .slide-table th:first-child,
+    .slide-table td:first-child {
+      min-width: 104px;
+      width: auto !important;
+    }
+    .slide-table th:nth-child(2),
+    .slide-table td:nth-child(2) {
+      min-width: 132px;
+      width: auto !important;
+    }
+    .slide-table th:nth-child(3),
+    .slide-table td:nth-child(3),
+    .slide-table th:nth-child(4),
+    .slide-table td:nth-child(4) {
+      min-width: 185px;
+      width: auto !important;
+    }
+    .pr-shortcut-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 14px;
+    }
+    .pr-keys-list {
+      border-right: none;
+      padding-right: 0;
+      flex-wrap: wrap;
+    }
+    .closing-quote-box {
+      padding: 16px 18px;
+      font-size: 14px;
+    }
+    .closing-actions-row {
+      flex-direction: column;
+      width: 100%;
+    }
+    .closing-actions-row .btn-action {
+      width: 100%;
+      justify-content: center;
+    }
+    .slide-footer-meta {
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 10px;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn { padding: 7px 10px !important; font-size: 11.5px !important; }
+    .ag-slide-btn.secondary { padding: 7px 9px !important; font-size: 11px !important; }
+    .ag-slide-indicator { min-width: 52px !important; font-size: 11px !important; }
+  }
+
+  @media print {
+    body, body.ag-carousel-mode { background: transparent !important; padding: 0 !important; gap: 0 !important; }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important; box-shadow: none !important; border-radius: 0 !important; page-break-after: always;
+      width: 1440px !important; height: 810px !important; max-width: none !important; max-height: none !important; overflow: hidden !important;
+    }
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- CLEAN FLOATING NAVIGATION BAR -->
+  <header class="floating-nav-bar">
+    <div class="nav-brand-title">
+      <span>SMK BINA BANGSA</span>
+      <span style="opacity: 0.4;">•</span>
+      <span>PRODUKSI BERITA TV</span>
+    </div>
+    <div class="nav-divider"></div>
+    <a href="/" class="nav-link-btn">← Portal Utama</a>
+    <div class="nav-divider"></div>
+    <button class="nav-ctrl-btn nav-hide-mob" onclick="prevSlide()" title="Slide Sebelumnya (Arrow Left)">◀ Prev</button>
+    <span class="slide-counter-pill" id="slideIndicator">SLIDE 1 / 12</span>
+    <button class="nav-ctrl-btn nav-hide-mob" onclick="nextSlide()" title="Slide Berikutnya (Arrow Right)">Next ▶</button>
+    <div class="nav-divider"></div>
+    <a href="panduan-berita-karhutla.html" class="nav-ctrl-btn" style="text-decoration:none;" title="Buka Modul Guru & AV Script Terproteksi PIN">🔒 Modul Guru</a>
+    <button class="nav-ctrl-btn nav-hide-mob" onclick="toggleFullScreen()" title="Mode Layar Penuh">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <span>Fullscreen</span>
+    </button>
+    <button class="nav-ctrl-btn nav-hide-mob" onclick="window.print()" title="Cetak ke PDF">🖨️ Cetak</button>
+  </header>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 1: COVER                             -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header-meta" style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+      <span>Mata Pelajaran: Pengolahan Audio &amp; Video (PAV)</span>
+      <span>SMK Multimedia &amp; Broadcasting • Kelas XI / XII</span>
+    </div>
+
+    <div class="cover-container">
+      <div class="cover-kicker">Modul Proyek Kolaborasi Lintas Mapel</div>
+      <h1 class="cover-title">PRODUKSI BERITA TELEVISI</h1>
+      <p class="cover-desc">
+        Panduan Praktik Lengkap Jurnalisme Penyiaran: Kaidah 5W+1H &amp; Piramida Terbalik, Format Naskah Dua Kolom (AV Script), Liputan Investigasi Lapangan, Studio Virtual Green Screen, dan Pascaproduksi di Adobe Premiere Pro.
+      </p>
+
+      <div class="cover-studio-svg">
+        <svg viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Camera Left (x: 25 to 115) -->
+          <g transform="translate(25, 35)">
+            <rect x="10" y="20" width="65" height="40" rx="6" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+            <polygon points="75,28 95,18 95,62 75,52" fill="#0F172A"/>
+            <circle cx="22" cy="12" r="5" fill="#EF4444"/>
+            <rect x="25" y="8" width="24" height="12" rx="2" fill="#0F172A"/>
+            <line x1="42" y1="60" x2="18" y2="120" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+            <line x1="42" y1="60" x2="42" y2="120" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+            <line x1="42" y1="60" x2="66" y2="120" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="42" cy="60" r="4" fill="#0F172A"/>
+            <rect x="16" y="30" width="26" height="14" rx="3" fill="#0F172A"/>
+            <text x="29" y="40" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="8" fill="#FFFFFF" text-anchor="middle">REC</text>
+          </g>
+
+          <!-- Monitor TV Center (x: 165 to 435, width: 270) -->
+          <g transform="translate(165, 10)">
+            <rect x="0" y="0" width="270" height="155" rx="12" fill="#FFFFFF" stroke="#0F172A" stroke-width="3.5"/>
+            <rect x="14" y="14" width="242" height="105" rx="6" fill="#0B1120"/>
+            
+            <!-- Headline Bar Inside TV -->
+            <rect x="24" y="22" width="105" height="18" rx="3" fill="#1849D6"/>
+            <text x="76" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="9" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">NEWS BROADCAST</text>
+            
+            <!-- Graphic Illustration in Monitor (Anchor & Globe) -->
+            <circle cx="195" cy="55" r="24" fill="#1E293B" stroke="#38BDF8" stroke-width="1.5"/>
+            <path d="M195 31 C205 40, 205 70, 195 79 M171 55 C180 50, 210 50, 219 55" stroke="#38BDF8" stroke-width="1.2"/>
+            
+            <!-- Anchor Silhouette -->
+            <circle cx="80" cy="56" r="14" fill="#38BDF8"/>
+            <path d="M56 88 C56 72, 104 72, 104 88 Z" fill="#38BDF8"/>
+
+            <!-- Lower-Third Inside TV -->
+            <rect x="14" y="95" width="242" height="24" fill="#1849D6"/>
+            <text x="24" y="107" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="8" fill="#FFFFFF">LIVE REPORT</text>
+            <text x="24" y="115" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="6.5" fill="#BFDBFE">STUDIO REDAKSI • SMK BINA BANGSA</text>
+            
+            <!-- TV Stand Base -->
+            <path d="M115 155 L105 180 H165 L155 155 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+            <rect x="90" y="180" width="90" height="8" rx="4" fill="#0F172A"/>
+          </g>
+
+          <!-- News Mic Right (x: 490 to 560) -->
+          <g transform="translate(490, 35)">
+            <rect x="18" y="0" width="34" height="42" rx="16" fill="#FFFFFF" stroke="#0F172A" stroke-width="3"/>
+            <line x1="24" y1="14" x2="46" y2="14" stroke="#0F172A" stroke-width="2"/>
+            <line x1="24" y1="24" x2="46" y2="24" stroke="#0F172A" stroke-width="2"/>
+            <rect x="12" y="42" width="46" height="30" rx="4" fill="#1849D6"/>
+            <text x="35" y="61" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="12" fill="#FFFFFF" text-anchor="middle">NEWS</text>
+            <rect x="27" y="72" width="16" height="48" rx="4" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>PENGOLAHAN AUDIO &amp; VIDEO (PAV)</span>
+      <span>MODUL RESMI TUGAS PROYEK • FORMAT 16:9</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 2: KARAKTERISTIK BERITA TV            -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <span class="slide-kicker">Fondasi Jurnalistik Penyiaran</span>
+      <h2 class="slide-title-main">Karakteristik Berita Televisi &amp; 5 Nilai Berita</h2>
+      <p class="slide-subtitle">
+        Berita televisi menyampaikan informasi melalui kekuatan <strong>audio dan visual secara serempak</strong>. Setiap liputan berita harus berlandaskan fakta yang dapat diverifikasi dan memiliki nilai berita (<em>News Values</em>) bagi pemirsa.
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-3">
+        <div class="content-card">
+          <span class="card-label">Pilar 01</span>
+          <div class="card-title">Karakter Media Audio-Visual</div>
+          <div class="card-body">
+            Berita TV berbeda dengan media cetak:
+            <ul>
+              <li><strong>Sekilas Dengar &amp; Lihat:</strong> Penonton tidak bisa mengulang kalimat yang terlewat, sehingga bahasa harus lugas dan langsung ke pokok persoalan.</li>
+              <li><strong>Visual-Driven:</strong> Narasi voice-over hadir untuk melengkapi apa yang tidak terlihat di gambar, bukan mendikte apa yang sudah jelas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Pilar 02</span>
+          <div class="card-title">5 Kriteria Kelayakan Berita</div>
+          <div class="card-body">
+            Sebuah peristiwa layak menjadi berita TV jika memenuhi:
+            <ul>
+              <li><strong>Timeliness (Aktualitas):</strong> Peristiwa baru atau hangat.</li>
+              <li><strong>Impact (Dampak):</strong> Berpengaruh pada orang banyak.</li>
+              <li><strong>Proximity (Kedekatan):</strong> Dekat secara geografis/emosional.</li>
+              <li><strong>Prominence (Keterkenalan):</strong> Tokoh/isu penting.</li>
+              <li><strong>Human Interest:</strong> Menyentuh empati kemanusiaan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Pilar 03</span>
+          <div class="card-title">Pilihan Topik Bebas Kelompok</div>
+          <div class="card-body">
+            Siswa bebas memilih tema liputan berbobot:
+            <ul>
+              <li><strong>Isu Lingkungan &amp; Bencana:</strong> Karhutla, krisis sampah, banjir lokal, atau pencemaran air.</li>
+              <li><strong>Pendidikan &amp; Sekolah:</strong> Inovasi teknologi siswa, persiapan uji kompetensi, atau kegiatan OSIS.</li>
+              <li><strong>Sosial-Ekonomi Warga:</strong> Denyut pasar tradisional, UMKM lokal, atau fasilitas umum sekitar.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Ctrl + N</kbd> : New Sequence</span>
+          <span class="pr-key-item"><kbd>Ctrl + I</kbd> : Import Media</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Langkah Awal Project:</strong> Buka Premiere Pro &rarr; Tekan <kbd>Ctrl + N</kbd> &rarr; pilih <em>Digital SLR > 1080p > DSLR 1080p25</em> &rarr; Sequence Name: <code>BERITA_TV_KELOMPOK</code> &rarr; Tekan <kbd>Ctrl + I</kbd> untuk import seluruh aset raw footage.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 2 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 3: STRUKTUR RUANG REDAKSI             -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <span class="slide-kicker">Manajemen Produksi Ruang Redaksi</span>
+      <h2 class="slide-title-main">Pembagian 5 Peran Kunci Tim Produksi Berita</h2>
+      <p class="slide-subtitle">
+        Produksi paket berita televisi adalah kerja kolaboratif. Setiap anggota kelompok memegang tanggung jawab profesional agar alur kerja efisien:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-5">
+        <div class="content-card">
+          <span class="card-label">Peran 01</span>
+          <div class="card-title">News Anchor Studio</div>
+          <div class="card-body">
+            Membawakan lead-in di studio, membaca narasi Voice-Over (VO). Intonasi formal, kontak mata mantap ke lensa kamera, artikulasi tegas.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Peran 02</span>
+          <div class="card-title">Field Reporter</div>
+          <div class="card-body">
+            Laporan pandangan mata di lapangan (<em>stand-up report</em>), memegang mic liputan, dan mewawancarai narasumber secara aktif dan berempati.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Peran 03</span>
+          <div class="card-title">Narasumber / Warga</div>
+          <div class="card-body">
+            Menyampaikan fakta atau kesaksian langsung (<em>Sound on Tape / Vox Pop</em>): warga terdampak, saksi mata, atau pejabat yang berwenang.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Peran 04</span>
+          <div class="card-title">Juru Kamera &amp; Audio</div>
+          <div class="card-body">
+            Bertanggung jawab atas stabilitas framing 16:9 (<em>Rule of Thirds</em>), variasi shot WS-MS-CU, pencahayaan, dan kejernihan perekaman mic lavalier.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Peran 05</span>
+          <div class="card-title">Editor &amp; Motion</div>
+          <div class="card-body">
+            Menyusun timeline di Premiere Pro, kunci <em>Ultra Key</em> green screen, <em>Auto-Ducking</em> tata suara, dan memasang grafis TV berita.
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Ctrl + B</kbd> : New Bin (Folder)</span>
+          <span class="pr-key-item"><kbd>F2</kbd> : Rename</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Manajemen Folder Editor:</strong> Tekan <kbd>Ctrl + B</kbd> di Project Panel untuk membuat 5 bin rapi: <code>01_FOOTAGE_RAW</code>, <code>02_AUDIO_VO</code>, <code>03_BGM_SFX</code>, <code>04_GRAPHICS</code>, dan <code>05_EXPORTS</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 3 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 4: STRUKTUR RUNDOWN PAKET BERITA       -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <span class="slide-kicker">Struktur Segmen Penyiaran</span>
+      <h2 class="slide-title-main">Rundown Paket Berita TV Standar Siaran (04:30 Menit)</h2>
+      <p class="slide-subtitle">
+        Alur waktu terstruktur detik demi detik yang menjaga ritme penayangan tetap dinamis, padat informasi, dan menjaga atensi pemirsa:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <table class="slide-table">
+        <thead>
+          <tr>
+            <th style="width: 130px;">Timecode</th>
+            <th style="width: 220px;">Segmen Siaran</th>
+            <th>Elemen Visual &amp; Grafis (Video Track)</th>
+            <th style="width: 320px;">Elemen Audio &amp; Suara (Audio Track)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="timecode-tag">00:00 - 00:08</span></td>
+            <td><strong>Bumper Opening TV</strong></td>
+            <td>Animasi logo stasiun TV + headline program berita.</td>
+            <td>SFX News Drumhit Jingle menggelegar + Voice-Over stasiun TV.</td>
+          </tr>
+          <tr>
+            <td><span class="timecode-tag">00:08 - 00:45</span></td>
+            <td><strong>Anchor Lead-In Studio</strong></td>
+            <td>Anchor Medium Shot studio + Lower-Third identitas + OTS grafis.</td>
+            <td>Vokal Anchor jernih di track A1 + BGM Berita pelan (-22 dB ducking).</td>
+          </tr>
+          <tr>
+            <td><span class="timecode-tag">00:45 - 01:45</span></td>
+            <td><strong>B-Roll Footage &amp; Data</strong></td>
+            <td>Kompilasi rekaman lapangan, infografis data + Label Atribusi Sumber.</td>
+            <td>Voice-Over narasi fakta 5W+1H + Natural Sound suasana lingkungan.</td>
+          </tr>
+          <tr>
+            <td><span class="timecode-tag">01:45 - 02:30</span></td>
+            <td><strong>Stand-Up Reporter</strong></td>
+            <td>Reporter on-cam di lokasi peristiwa + Lower-Third nama reporter.</td>
+            <td>Vokal langsung mic reporter lapangan + ambient sound lokasi.</td>
+          </tr>
+          <tr>
+            <td><span class="timecode-tag">02:30 - 03:45</span></td>
+            <td><strong>Wawancara (Vox Pop)</strong></td>
+            <td>Shot 1: Warga / Saksi Mata &bull; Shot 2: Tokoh / Narasumber Ahli.</td>
+            <td>Soundbite pernyataan narasumber + BGM bernuansa empati.</td>
+          </tr>
+          <tr>
+            <td><span class="timecode-tag">03:45 - 04:30</span></td>
+            <td><strong>Solusi &amp; Closing Studio</strong></td>
+            <td>Visual aksi penanganan / solusi + Anchor menutup siaran berita.</td>
+            <td>Himbauan / pesan penutup Anchor + Musik BGM Outro Climax.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>M</kbd> : Add Marker</span>
+          <span class="pr-key-item"><kbd>Shift + M</kbd> : Next Marker</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Memasang Penanda Segmen:</strong> Geser Playhead ke detik <code>00:08</code>, <code>00:45</code>, <code>01:45</code>, <code>02:30</code>, <code>03:45</code> lalu tekan <kbd>M</kbd> untuk membuat Marker warna hijau di timeline sebagai batas setiap segmen rundown!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 4 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 5: STANDAR NASKAH DUA KOLOM           -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <span class="slide-kicker">Pra-Produksi &amp; Dokumen Siaran</span>
+      <h2 class="slide-title-main">Standar Naskah Dua Kolom (Audio vs Video Script)</h2>
+      <p class="slide-subtitle">
+        Format naskah baku industri penyiaran pertelevisian yang memisahkan instruksi <strong>Mata (Visual)</strong> dan <strong>Telinga (Audio)</strong> secara sejajar sebelum proses syuting:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-2">
+        <div class="content-card">
+          <span class="card-label">Kolom Kiri • Video (Visual)</span>
+          <div class="card-title">Instruksi Visual, Kamera &amp; Grafis</div>
+          <div class="card-body">
+            Ditulis dengan <strong>HURUF KAPITAL SINGKAT &amp; TEGAS</strong> untuk memandu juru kamera dan video editor:
+            <ul>
+              <li><strong>Type of Shot:</strong> WS (Wide Shot), MS (Medium Shot), CU (Close-Up).</li>
+              <li><strong>Camera Movement:</strong> Pan Left/Right, Tilt Up/Down, Static Tripod.</li>
+              <li><strong>On-Screen Graphics:</strong>
+                <br>&bull; <code>LOWER-THIRD:</code> Nama &amp; jabatan narasumber.
+                <br>&bull; <code>OTS:</code> Over-The-Shoulder kotak grafis di samping anchor.
+                <br>&bull; <code>TICKER:</code> Teks berjalan laporan darurat / update berita.
+              </li>
+              <li><strong>Label Atribusi:</strong> Atribusi sumber rekaman pihak ketiga.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Kolom Kanan • Audio (Suara)</span>
+          <div class="card-title">Instruksi Vokal, Narasi, Musik &amp; SFX</div>
+          <div class="card-body">
+            Memuat dialog dan petunjuk tata suara secara berurutan:
+            <ul>
+              <li><strong>ANCHOR (ON CAM):</strong> Suara pembaca berita saat wajahnya tampil di layar kaca.</li>
+              <li><strong>ANCHOR (VO / VOICE OVER):</strong> Suara narasi saat video menampilkan rekaman B-roll.</li>
+              <li><strong>SOT (SOUND ON TAPE):</strong> Suara rekaman asli narasumber saat diwawancarai di lapangan.</li>
+              <li><strong>NAT-SOUND:</strong> Suara alami lingkungan (gemuruh mesin, lalu lintas, suara warga).</li>
+              <li><strong>BGM &amp; SFX:</strong> Musik pengiring berita dan sound effect transisi (<em>whoosh, drum hit</em>).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Ctrl + S</kbd> : Quick Save</span>
+          <span class="pr-key-item"><kbd>Ctrl + Shift + S</kbd> : Save As</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Disiplin Manajemen File:</strong> Biasakan menekan <kbd>Ctrl + S</kbd> setiap kali selesai memotong klip agar progress editing tetap aman saat komputer lab mengalami kendala kelistrikan.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 5 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 6: RUMUS 5W+1H KEBENCANAAN / UMUM      -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <span class="slide-kicker">Kaidah Jurnalistik &amp; Narasi</span>
+      <h2 class="slide-title-main">Penerapan Rumus 5W + 1H &amp; Piramida Terbalik</h2>
+      <p class="slide-subtitle">
+        Menyusun fakta dengan prinsip <strong>Piramida Terbalik</strong>: fakta paling darurat dan penting ditaruh di detik pertama, diikuti penjelasan pendukung dan konteks:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-3">
+        <div class="content-card">
+          <span class="card-label">Elemen 01 &bull; Peristiwa &amp; Lokasi</span>
+          <div class="card-title">WHAT &amp; WHERE</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>WHAT (Apa peristiwanya?):</strong> Inti kejadian atau isu yang dilaporkan secara lugas dan faktual (misal: kebakaran lahan gambut, inovasi robotik sekolah, atau kenaikan harga pasar).</li>
+              <li><strong>WHERE (Di mana lokasinya?):</strong> Lokasi geografis spesifik: jalan, kelurahan, kecamatan, kabupaten, hingga provinsi tempat kejadian berlangsung.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Elemen 02 &bull; Waktu &amp; Pihak Terlibat</span>
+          <div class="card-title">WHEN &amp; WHO</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>WHEN (Kapan terjadinya?):</strong> Waktu kejadian secara presisi: hari, tanggal, jam, atau kronologi rentang waktu terjadinya peristiwa.</li>
+              <li><strong>WHO (Siapa pihak terkait?):</strong> Siapa saja yang terdampak, saksi mata, petugas pelaksana, instansi pemerintah yang menangani, atau warga masyarakat di lapangan.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Elemen 03 &bull; Alasan &amp; Tindak Lanjut</span>
+          <div class="card-title">WHY &amp; HOW</div>
+          <div class="card-body">
+            <ul>
+              <li><strong>WHY (Mengapa dapat terjadi?):</strong> Faktor pemicu atau latar belakang permasalahan (kondisi cuaca, kendala fasilitas, kebijakan baru, dsb).</li>
+              <li><strong>HOW (Bagaimana penanganannya?):</strong> Upaya yang sedang dilakukan di lapangan, solusi yang ditawarkan, atau himbauan resmi bagi masyarakat luas.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>C</kbd> : Razor Tool</span>
+          <span class="pr-key-item"><kbd>V</kbd> : Selection Tool</span>
+          <span class="pr-key-item"><kbd>Q</kbd> / <kbd>W</kbd> : Ripple Trim</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Memotong Kalimat Berita:</strong> Tekan <kbd>C</kbd> untuk memotong jeda atau kata 'eh/hmm' pada rekaman suara narasumber, lalu tekan <kbd>Q</kbd> untuk membuang bagian kiri dan merapatkan klip secara otomatis.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 6 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 7: KURASI FOOTAGE & ATRIBUSI B-ROLL    -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <span class="slide-kicker">Produksi Lapangan &amp; Manajemen Aset</span>
+      <h2 class="slide-title-main">Teknik Pengambilan Gambar &amp; Atribusi B-Roll</h2>
+      <p class="slide-subtitle">
+        Mengombinasikan rekaman asli kamera siswa dengan footage pendukung secara etis, stabil, dan taat pada kaidah hak cipta jurnalisme:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-3">
+        <div class="content-card">
+          <span class="card-label">Aturan 01</span>
+          <div class="card-title">Pola Potongan Shot 3 Detik</div>
+          <div class="card-body">
+            Hindari menayangkan satu shot B-roll lebih dari 4 detik agar penonton tidak jenuh. Terapkan variasi:
+            <ul>
+              <li><strong>Wide Shot (WS):</strong> Menunjukkan konteks suasana secara luas.</li>
+              <li><strong>Medium Shot (MS):</strong> Fokus pada aktivitas manusia/objek.</li>
+              <li><strong>Close-Up (CU):</strong> Detail ekspresi, tangan, atau objek penting.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Aturan 02</span>
+          <div class="card-title">Stabilitas &amp; Rule of Thirds</div>
+          <div class="card-body">
+            Kamera berita wajib stabil:
+            <ul>
+              <li>Gunakan <strong>tripod</strong> untuk rekaman anchor studio dan wawancara narasumber.</li>
+              <li>Jika bergerak (<em>panning/tilting</em>), lakukan perlahan tanpa hentakan.</li>
+              <li>Tempatkan mata narasumber pada sepertiga atas frame (<em>eye level</em>) dengan arah pandang (<em>lead room</em>) yang lapang.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Aturan 03</span>
+          <div class="card-title">Etika Atribusi Sumber Resmi</div>
+          <div class="card-body">
+            Jika menggunakan footage pihak ketiga (misal: arsip BMKG, BNPB, atau lembaga resmi):
+            <ul>
+              <li>Wajib menyematkan teks sumber di pojok kanan atas: <code>DOK. BNPB</code> atau <code>SUMBER: KOMPAS TV</code>.</li>
+              <li>Haram menggunakan rekaman hoaks, manipulasi AI tanpa label, atau video rekayasa yang menyesatkan.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Shift + Del</kbd> : Ripple Delete</span>
+          <span class="pr-key-item"><kbd>Alt + Drag</kbd> : Duplikat Klip</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Set to Frame Size:</strong> Jika klip B-roll memiliki resolusi 4K atau 720p, klik kanan pada klip di timeline &rarr; pilih <strong>Set to Frame Size</strong> agar video otomatis menyesuaikan dimensi 1080p tanpa terpotong!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 7 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 8: TEKNIK CHROMA KEY (ULTRA KEY)      -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <span class="slide-kicker">Pascaproduksi Studio Virtual</span>
+      <h2 class="slide-title-main">Chroma Keying Anchor Studio (Ultra Key)</h2>
+      <p class="slide-subtitle">
+        Langkah demi langkah menghilangkan latar belakang hijau (<em>green screen</em>) news anchor studio menjadi ruang studio virtual berita profesional di Adobe Premiere Pro:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-4">
+        <div class="content-card">
+          <span class="card-label">Langkah 01</span>
+          <div class="card-title">Susun Layer Timeline</div>
+          <div class="card-body">
+            Letakkan video background studio berita di track <strong>V1</strong>, dan rekaman anchor studio berlatar hijau di track <strong>V2</strong> tepat di atasnya.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Langkah 02</span>
+          <div class="card-title">Terapkan Efek Ultra Key</div>
+          <div class="card-body">
+            Buka panel <strong>Effects &gt; Video Effects &gt; Keying &gt; Ultra Key</strong>. Seret (<em>drag</em>) efek tersebut ke klip presenter di track V2.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Langkah 03</span>
+          <div class="card-title">Eyedropper Key Color</div>
+          <div class="card-body">
+            Gunakan pipet (<em>eyedropper</em>) pada opsi <strong>Key Color</strong>. Klik pada area hijau yang paling dekat dengan kepala atau bahu presenter.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Langkah 04</span>
+          <div class="card-title">Matte Cleanup &amp; Blur</div>
+          <div class="card-body">
+            Ubah setting ke <strong>Aggressive</strong>. Beri sedikit efek <code>Gaussian Blur (8-10px)</code> pada video background V1 agar kedalaman lensa tampak realistis.
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Shift + 5</kbd> : Effect Controls</span>
+          <span class="pr-key-item"><kbd>Shift + 7</kbd> : Panel Effects</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Menghilangkan Green Spill:</strong> Jika ada garis hijau di pinggir rambut anchor, buka Effect Controls &gt; Ultra Key &gt; <strong>Matte Cleanup</strong> &rarr; naikkan slider <em>Choke</em> ke <code>3</code> dan <em>Soften</em> ke <code>2</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 8 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 9: AUDIO MIXING & AUTO-DUCKING         -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <span class="slide-kicker">Tata Suara &amp; Balancing Siaran</span>
+      <h2 class="slide-title-main">Essential Sound &amp; Audio Auto-Ducking</h2>
+      <p class="slide-subtitle">
+        Mengatur volume musik latar berita agar otomatis mengecil saat presenter atau narasumber berbicara, dan naik kembali saat jeda:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-3">
+        <div class="content-card">
+          <span class="card-label">Tahap 01</span>
+          <div class="card-title">Tag Vokal Dialog (A1)</div>
+          <div class="card-body">
+            Pilih seluruh klip vokal (dialog anchor studio, reporter, dan wawancara narasumber) di track A1.
+            <br>Buka panel <strong>Essential Sound</strong>, klik tombol <strong>Dialogue</strong>.
+            <br>Centang opsi <em>Loudness &rarr; Auto-Match</em> (-23 LUFS).
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Tahap 02</span>
+          <div class="card-title">Tag Musik &amp; Aktifkan Ducking (A2)</div>
+          <div class="card-body">
+            Pilih klip musik berita di track A2. Pada panel Essential Sound, klik tombol <strong>Music</strong>.
+            <br>Centang kotak <strong>Ducking</strong>, lalu pilih ducking terhadap ikon <em>Dialogue</em>.
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Tahap 03</span>
+          <div class="card-title">Otomasi Kurva Keyframe</div>
+          <div class="card-body">
+            Atur parameter ducking:
+            <ul>
+              <li><strong>Duck Amount:</strong> <code>-22.0 dB</code></li>
+              <li><strong>Fade Sensitivity:</strong> <code>7.0</code></li>
+              <li><strong>Fade Duration:</strong> <code>600 ms</code></li>
+            </ul>
+            Klik <strong>Generate Keyframes</strong>. Kurva volume otomatis terbentuk rapi!
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>G</kbd> : Audio Gain</span>
+          <span class="pr-key-item"><kbd>[</kbd> / <kbd>]</kbd> : Volume Step 1dB</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Standar Broadcast Loudness:</strong> Vokal berita wajib berada di rentang <code>-12 dB s/d -6 dB</code> (tidak boleh merah/peak 0 dB). Pilih klip dialog &rarr; tekan <kbd>G</kbd> &rarr; pilih <em>Normalize Max Peak to -6 dB</em>.
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 9 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 10: DESAIN GRAFIS TELEVISI            -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <span class="slide-kicker">Kemasan Grafis Siaran Televisi</span>
+      <h2 class="slide-title-main">Lower-Third, News Ticker &amp; Title Safe Margins</h2>
+      <p class="slide-subtitle">
+        Memasang elemen identitas visual berita penyiaran dengan kaidah estetika televisi profesional dan batas aman pandang layar monitor:
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <div class="cards-row-3">
+        <div class="content-card">
+          <span class="card-label">Komponen 01</span>
+          <div class="card-title">Lower-Third Narasumber</div>
+          <div class="card-body">
+            Bilah nama di sudut kiri bawah layar:
+            <ul>
+              <li><strong>Baris 1 (Nama):</strong> Font tebal sans-serif (Plus Jakarta Sans Bold) 36pt warna putih.</li>
+              <li><strong>Baris 2 (Status):</strong> Ukuran 22pt (contoh: <em>Kepala BPBD / Guru Pembimbing / Saksi Mata</em>).</li>
+              <li><strong>Durasi Tampil:</strong> 5 hingga 7 detik pada awal narasumber berbicara.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Komponen 02</span>
+          <div class="card-title">Running Text (News Ticker)</div>
+          <div class="card-body">
+            Pita teks berjalan horizontal di bagian paling bawah layar:
+            <ul>
+              <li>Menampilkan ringkasan headline berita darurat atau update data statistik terkini.</li>
+              <li>Kecepatan gerak stabil dan nyaman dibaca (tidak terlalu cepat).</li>
+              <li>Warna kontras tinggi (misal: pita biru tua dengan teks putih/kuning).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <span class="card-label">Komponen 03</span>
+          <div class="card-title">Title Safe Margins (90%)</div>
+          <div class="card-body">
+            Aturan keselamatan visual broadcast:
+            <ul>
+              <li>Selalu aktifkan panduan garis pengaman (<em>Safe Margins</em>).</li>
+              <li>Pastikan seluruh teks dan logo berada di dalam kotak <strong>Title Safe (90%)</strong> agar tidak terpotong saat ditonton di monitor TV, smartphone, atau proyektor lab!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Ctrl + T</kbd> : New Text</span>
+          <span class="pr-key-item"><kbd>'</kbd> : Toggle Safe Margins</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Safe Margins Shortcut:</strong> Tekan tombol tanda petik <kbd>'</kbd> pada keyboard untuk memunculkan garis kotak pengaman teks di Program Monitor secara instan tanpa perlu mencari menu manual!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 10 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 11: RUBRIK PENILAIAN PROYEK           -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header">
+      <span class="slide-kicker">Standar Kelulusan &amp; Asesmen Guru</span>
+      <h2 class="slide-title-main">Spesifikasi Ekspor &amp; Rubrik Penilaian Proyek Berita TV</h2>
+      <p class="slide-subtitle">
+        Kriteria asesmen komprehensif mencakup bobot teknis video editing, integritas jurnalistik, dan kedisiplinan kerja tim (KKM: 78):
+      </p>
+    </div>
+
+    <div class="slide-content">
+      <table class="slide-table">
+        <thead>
+          <tr>
+            <th style="width: 180px;">Aspek Penilaian</th>
+            <th style="width: 80px;">Bobot</th>
+            <th>Indikator Capaian Kompetensi Siswa (Skor Maksimal)</th>
+            <th style="width: 180px;">Kriteria Kelulusan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Kaidah 5W+1H &amp; Naskah</strong></td>
+            <td><span class="timecode-tag">25%</span></td>
+            <td>Naskah 2 kolom (AV Script) lengkap, fakta piramida terbalik akurat, pertanyaan narasumber menggali solusi, bebas hoaks.</td>
+            <td>Minimal 78 (Kategori Baik)</td>
+          </tr>
+          <tr>
+            <td><strong>2. Editing &amp; Chroma Key</strong></td>
+            <td><span class="timecode-tag">25%</span></td>
+            <td>Hasil Ultra Key rapi tanpa green spill, ritme pergantian shot dinamis (tiap 3-4 detik), variasi shot WS-MS-CU variatif.</td>
+            <td>Minimal 80 (Kategori Bersih)</td>
+          </tr>
+          <tr>
+            <td><strong>3. Kualitas Suara &amp; Ducking</strong></td>
+            <td><span class="timecode-tag">20%</span></td>
+            <td>Vokal dialog jernih (-12 dB s/d -6 dB), musik latar berita otomatis ducking (-22 dB) saat vokal berbunyi, jingle opening sinkron.</td>
+            <td>Minimal 78 (Kategori Jernih)</td>
+          </tr>
+          <tr>
+            <td><strong>4. Desain Grafis TV &amp; Atribusi</strong></td>
+            <td><span class="timecode-tag">15%</span></td>
+            <td>Lower-Third terbaca rapi di dalam Title Safe Margins 90%, running text bergerak mulus, atribusi sumber rekaman dicantumkan.</td>
+            <td>Minimal 75 (Kategori Standar)</td>
+          </tr>
+          <tr>
+            <td><strong>5. Manajemen Tim &amp; Ekspor</strong></td>
+            <td><span class="timecode-tag">15%</span></td>
+            <td>Pembagian 5 peran redaksi berjalan kompak, master ekspor Full HD 1080p MP4 H.264, dikumpulkan tepat waktu via portal tugas.</td>
+            <td>Minimal 80 (Tepat Waktu)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pr-shortcut-banner">
+        <span class="pr-shortcut-tag">Premiere 2021 Windows</span>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Ctrl + M</kbd> : Export Media</span>
+          <span class="pr-key-item"><kbd>Enter</kbd> : Render In to Out</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Parameter Final Ekspor:</strong> Format: <strong>H.264</strong> &rarr; Preset: <strong>Match Source - High bitrate</strong> &rarr; Target Bitrate: <strong>14 Mbps</strong> &rarr; Audio: AAC Stereo 320kbps 48kHz &rarr; Centang <em>Use Maximum Render Quality</em> &rarr; Klik Export!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>MODUL 02.5: PRODUKSI BERITA TELEVISI</span>
+      <span>SLIDE 11 DARI 12</span>
+    </div>
+  </section>
+
+
+  <!-- ========================================== -->
+  <!-- SLIDE 12: KESIMPULAN & KODE ETIK           -->
+  <!-- ========================================== -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header-meta" style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+      <span>Epilog Penugasan Jurnalisme Penyiaran</span>
+      <span>Pengolahan Audio &amp; Video (PAV)</span>
+    </div>
+
+    <div class="closing-container">
+      <div class="cover-kicker">Etika Profesi &amp; Integritas</div>
+      <h2 style="font-family: var(--font-heading); font-size: 34px; font-weight: 900; color: var(--text-heading); letter-spacing: -0.01em;">
+        Integritas Jurnalisme Penyiaran Televisi
+      </h2>
+
+      <div class="closing-quote-box">
+        "Kekuatan jurnalisme penyiaran bukan semata-mata pada kecepatan mengabarkan, melainkan pada <strong>kejujuran verifikasi fakta</strong>, <strong>keberimbangan informasi (cover both sides)</strong>, dan bagaimana karya audio-visual kita mampu mencerdaskan serta menginspirasi masyarakat luas."
+      </div>
+
+      <div class="cards-row-4" style="max-width: 1080px; width: 100%;">
+        <div class="content-card" style="text-align: left;">
+          <span class="card-label">Prinsip 01</span>
+          <div class="card-title" style="font-size: 13.5px;">Akurasi &amp; Anti-Hoaks</div>
+          <div class="card-body" style="font-size: 11.5px;">Setiap data dan angka wajib melalui verifikasi sumber terpercaya sebelum ditayangkan.</div>
+        </div>
+
+        <div class="content-card" style="text-align: left;">
+          <span class="card-label">Prinsip 02</span>
+          <div class="card-title" style="font-size: 13.5px;">Cover Both Sides</div>
+          <div class="card-body" style="font-size: 11.5px;">Berikan porsi yang adil bagi berbagai pihak untuk memberikan klarifikasi secara objektif.</div>
+        </div>
+
+        <div class="content-card" style="text-align: left;">
+          <span class="card-label">Prinsip 03</span>
+          <div class="card-title" style="font-size: 13.5px;">Empati &amp; Privasi</div>
+          <div class="card-body" style="font-size: 11.5px;">Hormati martabat dan privasi narasumber, khususnya korban bencana atau anak di bawah umur.</div>
+        </div>
+
+        <div class="content-card" style="text-align: left;">
+          <span class="card-label">Prinsip 04</span>
+          <div class="card-title" style="font-size: 13.5px;">Kualitas Penyiaran</div>
+          <div class="card-body" style="font-size: 11.5px;">Terapkan standar visual 1080p, audio jernih bebas clipping, dan grafis title safe 90%.</div>
+        </div>
+      </div>
+
+      <div class="closing-actions-row">
+        <a href="#slide-1" onclick="scrollToSlide(1); return false;" class="btn-action secondary">⏮ Kembali ke Slide 1</a>
+        <a href="panduan-berita-karhutla.html" class="btn-action primary">🔒 Buka Modul Naskah Guru (PIN 201023)</a>
+        <a href="/" class="btn-action secondary">🏠 Portal Utama SMK</a>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SELAMAT BERKARYA DENGAN INTEGRITAS!</span>
+    </div>
+  </section>
+
+  <div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+    <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="prevSlide()">◀ Seblm</button>
+    <span class="ag-slide-indicator" id="agSlideIndicator">1 / 12</span>
+    <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="nextSlide()">Lanjut ▶</button>
+    <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+  </div>
+
+  <!-- Navigation Controller Script (Paged Carousel Mode + Full Scroll Mode) -->
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length || 12;
+    let currentSlide = 1;
+    let isCarouselMode = true;
+
+    function updateIndicator() {
+      const topInd = document.getElementById('slideIndicator');
+      const botInd = document.getElementById('agSlideIndicator');
+      const btnPrev = document.getElementById('agBtnPrev');
+      const btnNext = document.getElementById('agBtnNext');
+      const btnMode = document.getElementById('agBtnToggleMode');
+
+      if (isCarouselMode) {
+        document.body.classList.add('ag-carousel-mode');
+        slides.forEach((s, i) => s.classList.toggle('ag-active-slide', i + 1 === currentSlide));
+        if (slides[currentSlide - 1]) slides[currentSlide - 1].scrollTop = 0;
+        if (topInd) topInd.textContent = 'SLIDE ' + currentSlide + ' / ' + totalSlides;
+        if (botInd) botInd.textContent = currentSlide + ' / ' + totalSlides;
+        if (btnPrev) btnPrev.disabled = (currentSlide <= 1);
+        if (btnNext) btnNext.disabled = (currentSlide >= totalSlides);
+        if (btnMode) btnMode.textContent = '📜 Semua';
+      } else {
+        document.body.classList.remove('ag-carousel-mode');
+        slides.forEach(s => s.classList.remove('ag-active-slide'));
+        if (topInd) topInd.textContent = 'SLIDE ' + currentSlide + ' / ' + totalSlides;
+        if (botInd) botInd.textContent = totalSlides + ' Slide';
+        if (btnPrev) btnPrev.disabled = (currentSlide <= 1);
+        if (btnNext) btnNext.disabled = (currentSlide >= totalSlides);
+        if (btnMode) btnMode.textContent = '📱 Per Slide';
+      }
+    }
+
+    function scrollToSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+      updateIndicator();
+      if (isCarouselMode) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.getElementById('slide-' + n);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) scrollToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) scrollToSlide(currentSlide - 1);
+    }
+
+    function agToggleSlideMode() {
+      isCarouselMode = !isCarouselMode;
+      updateIndicator();
+      if (!isCarouselMode) {
+        const target = document.getElementById('slide-' + currentSlide);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        scrollToSlide(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        scrollToSlide(totalSlides);
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      }
+    });
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+      if (!e.changedTouches || !e.changedTouches.length) return;
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    document.addEventListener('touchend', (e) => {
+      if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+      const dx = e.changedTouches[0].screenX - touchStartX;
+      const dy = e.changedTouches[0].screenY - touchStartY;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+        if (dx < 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      if (isCarouselMode) return;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const num = parseInt(entry.target.id.replace('slide-', ''), 10);
+          if (!isNaN(num)) {
+            currentSlide = num;
+            updateIndicator();
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+    slides.forEach(s => observer.observe(s));
+
+    updateIndicator();
+  </script>
+</body>
+</html>

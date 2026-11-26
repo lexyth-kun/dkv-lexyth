@@ -1,0 +1,74 @@
+/* ============================================================================
+ * BINA BANGSA DASHBOARD — SELF-HOSTED INTER FONT FAMILY (@font-face)
+ * Mendukung penuh ketebalan: Light (300), Normal (400), Medium (500),
+ * SemiBold (600), Bold (700), dan ExtraBold (800) secara offline/lokal.
+ * ============================================================================ */
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/Inter-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: oblique 0deg 8deg;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Inter", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --fw-light: 300;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+}
+
+html,
+body,
+body.lusion-canvas,
+button,
+input,
+select,
+textarea,
+th,
+td {
+  font-family: var(--font-body) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Pastikan angka KPI, NIS, jam, nilai, & tabel selalu rapi sejajar */
+.stat-value,
+.stat-tile-value,
+.stat-num,
+.nexus-nav-pill,
+.nexus-pg-info,
+.pg-btn,
+.count-chip,
+.kkm-badge,
+.grade-input-box,
+.pin-input-field,
+.tabular-nums {
+  font-family: var(--font-body) !important;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+/* Utilitas Eksplisit Hirarki Ketebalan Inter */
+.fw-light { font-weight: 300 !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+.fw-extrabold { font-weight: 800 !important; }

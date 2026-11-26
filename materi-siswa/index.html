@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Materi &amp; Slide Presentasi Siswa (12 Pertemuan) — PAV &amp; After Effects</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2">
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070C16;
+      --card: #0F172A;
+      --surface: #1E293B;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+      --sky: #38BDF8;
+      --purple: #A78BFA;
+      --border: rgba(148, 163, 184, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { max-width: 100%; overflow-x: clip; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 72px;
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .nav-title { font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .pill {
+      background: #0284C7;
+      color: #FFF;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn:hover, .btn.primary { background: #0284C7; color: #FFF; border-color: var(--sky); }
+    .btn.quiz-btn { background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.42); color: #A7F3D0; }
+    .btn.quiz-btn:hover { background: #059669; border-color: #34D399; color: #FFF; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 28px 20px; }
+    .hero {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.22), rgba(124, 58, 237, 0.18));
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 22px;
+      padding: 26px 28px;
+      margin-bottom: 22px;
+    }
+    .hero h1 { font-size: clamp(20px, 2.8vw, 30px); font-weight: 800; margin-bottom: 8px; line-height: 1.25; }
+    .hero p { color: var(--muted); font-size: 14.5px; max-width: 900px; }
+
+    /* Multi-page filter & pagination toolbar */
+    .catalog-toolbar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: #CBD5E1;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover { border-color: var(--sky); color: #FFF; }
+    .filter-tab.active {
+      background: #0284C7;
+      border-color: var(--sky);
+      color: #FFF;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+    }
+    .filter-tab.ae.active {
+      background: #7C3AED;
+      border-color: var(--purple);
+      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.3);
+    }
+    .mode-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: var(--sky); }
+    .card.is-hidden-page { display: none; }
+    .w-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--sky);
+      background: rgba(56, 189, 248, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .w-badge.ae { color: var(--purple); background: rgba(167, 139, 250, 0.12); }
+    .card h3 { font-size: 16.5px; font-weight: 800; margin-bottom: 6px; line-height: 1.35; }
+    .card p { font-size: 13.5px; color: var(--muted); }
+    .card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+    /* Bottom Pagination Bar */
+    .pager-bar {
+      margin-top: 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pager-info {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--sky);
+    }
+    .pager-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pager-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 8px 13px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pager-btn:hover:not(:disabled) { background: #0284C7; border-color: var(--sky); color: #FFF; }
+    .pager-btn.active { background: #0284C7; border-color: var(--sky); color: #FFF; }
+    .pager-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    @media (max-width: 900px) {
+      .nav {
+        position: static;
+        padding: 12px 14px;
+      }
+      .nav-title { font-size: 13.5px; }
+      .container { padding: 16px 14px; }
+      .hero { padding: 18px 16px; border-radius: 18px; }
+      .grid { grid-template-columns: 1fr; }
+      .pager-bar { justify-content: center; text-align: center; }
+    }
+  </style>
+  <script defer src="/assets/kuis-materi.js?v=20261119b"></script>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-title">
+      <span class="pill">PORTAL SISWA SMK</span>
+      <span>Katalog Slide Presentasi &amp; Modul Praktikum (12 Pertemuan)</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="btn">🏠 Beranda Interaktif</a>
+      <a href="/kumpul-tugas" class="btn primary">🚀 Kumpulkan Tugas</a>
+      <a href="/karhutla" class="btn">📺 Studio Berita Karhutla</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Kurikulum Praktikum Berurutan: Premiere Pro &amp; After Effects</h1>
+      <p>
+        Pilih kategori mata pelajaran atau telusuri halaman demi halaman untuk membuka <strong>Slide Presentasi (16:9)</strong>, unduh modul PDF resmi, kerjakan <strong>Kuis Singkat</strong> lengkap dengan jawaban benarnya, dan akses form tugas mingguan.
+      </p>
+    </section>
+
+    <div class="catalog-toolbar">
+      <div class="filter-tabs" role="tablist" aria-label="Filter Mata Pelajaran">
+        <button type="button" class="filter-tab active" id="tab-all" onclick="setTrack('all')">Semua (12)</button>
+        <button type="button" class="filter-tab" id="tab-pav" onclick="setTrack('pav')">🎬 PAV Premiere Pro (01–06)</button>
+        <button type="button" class="filter-tab ae" id="tab-ae" onclick="setTrack('ae')">✨ After Effects (01–06)</button>
+      </div>
+      <div class="mode-meta-right">
+        <button type="button" class="filter-tab" id="btnToggleAllView" onclick="toggleShowAll()">📜 Tampilkan Semua</button>
+      </div>
+    </div>
+
+    <div class="grid" id="catalogGrid">
+      <!-- PAV 01-06 -->
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 01</span>
+          <h3>Pra-Produksi &amp; Storyboard</h3>
+          <p>Fondasi pra-produksi (Ide, Tema, Konsep), riset isu, penyusunan Naskah 2 Kolom (Visual-Audio), dan sketsa Storyboard (WS, MS, CU).</p>
+        </div>
+        <div class="card-actions">
+          <a href="/downloads/Pertemuan%201%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="btn primary">📄 Buka Slide M01 (PDF)</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-01" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-01', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-01" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 02</span>
+          <h3>Foldering &amp; Rough Cut (Q &amp; W)</h3>
+          <p>Disiplin 5 folder anti Media Offline, Workspace Premiere Pro, Sequence 1080p (Ctrl+N), Three-Point Editing (I &amp; O), dan Ripple Trim Q &amp; W.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/downloads/Pertemuan%202%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="btn primary">📄 Buka Slide M02 (PDF)</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-02" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-02', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-02" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 03</span>
+          <h3>Audio Denoise &amp; Ducking</h3>
+          <p>Pemisahan 3 Track Audio (A1 Vokal -6 dB, A2 SFX, A3 Musik), pembersihan desis ruangan dengan DeNoise, dan kurva Audio Ducking (-24 dB).</p>
+        </div>
+        <div class="card-actions">
+          <a href="/downloads/Pertemuan%203%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="btn primary">📄 Buka Slide M03 (PDF)</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-03" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-03', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-03" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 04</span>
+          <h3>Elemen Grafis Berita (Lower Third &amp; Running Text)</h3>
+          <p>Mengaktifkan Safe Margins (Title Safe 80%), mendesain papan nama Lower Third 2 baris beranimasi, Teks Fakta Isu, dan Running Text di Track V4.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/downloads/Pertemuan%204%20(PAV).pdf" target="_blank" rel="noopener noreferrer" class="btn primary">📄 Buka Slide M04 (PDF)</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-04" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-04', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-04" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 05</span>
+          <h3>Studio Green Screen (Ultra Key) &amp; B-Roll Berita</h3>
+          <p>Menyusun V1 Studio Virtual (+Gaussian Blur), V2 Presenter Green Screen dengan efek Ultra Key, Matte Cleanup, dan sisipan V3 B-Roll liputan.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/pav-pertemuan-5.html" class="btn primary">🖥️ Buka Slide M05</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-05" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-05', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-05" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="pav">
+        <div>
+          <span class="w-badge">PAV • PERTEMUAN 06 (PUNCAK)</span>
+          <h3>Color Grading &amp; Master Export H.264 (Ctrl + M)</h3>
+          <p>Koreksi warna &amp; mood emosi (Lumetri Color &amp; Adjustment Layer), Quality Control 5 titik, dan ekspor Master Full HD H.264 (.mp4).</p>
+        </div>
+        <div class="card-actions">
+          <a href="/pav-pertemuan-6.html" class="btn primary">🖥️ Buka Slide M06</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="pr-06" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('pr-06', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=pr-06" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <!-- AE 01-06 -->
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 01</span>
+          <h3>Fondasi Kanvas Studio &amp; 5 Shortcut (P, S, R, T, A)</h3>
+          <p>Membuat Composition 1080p 7 detik, mengunci titik poros Anchor Point di tengah (Ctrl+Alt+Home), dan membuat animasi dasar P, S, R, T.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-1.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 01</a>
+          <a href="/downloads/Modul_Pertemuan_01_After_Effects_PL.pdf" class="btn">📄 PDF Modul</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-01" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-01', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-01" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 02</span>
+          <h3>Kelembutan Gerak Organik: Easy Ease (F9) &amp; Speed Graph</h3>
+          <p>Mengubah keyframe kaku menjadi halus dengan tombol F9, menarik kurva gunung Speed Graph Editor, dan menyalakan Motion Blur.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-2.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 02</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-02" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-02', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-02" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 03</span>
+          <h3>Anatomi 3 Layer Logo, Parenting &amp; Garis Trim Paths</h3>
+          <p>Memecah struktur logo studio menjadi 3 bagian, mengikat hierarki Parenting (Pick Whip), dan membuat garis menggambar sendiri (Trim Paths).</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-3.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 03</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-03" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-03', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-03" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 04</span>
+          <h3>Animasi Teks Sinematik &amp; Alpha Track Matte (F4)</h3>
+          <p>Memunculkan teks nama Production House dari balik garis tak terlihat dengan Alpha Track Matte serta animasi renggang huruf (Tracking).</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-4.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 04</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-04" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-04', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-04" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 05</span>
+          <h3>Kemilau Cahaya Studio: Radial Ramp, Light Sweep &amp; Glow</h3>
+          <p>Membangun latar belakang kedalaman Radial Gradient Ramp, kilatan cahaya menyapu logo (CC Light Sweep), dan pendaran Double Glow.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-5.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 05</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-05" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-05', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-05" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+
+      <div class="card" data-track="ae">
+        <div>
+          <span class="w-badge ae">AE • PERTEMUAN 06 (PUNCAK)</span>
+          <h3>Sound Design (LL), Work Area (B–N) &amp; Render Final Bumper</h3>
+          <p>Sinkronisasi SFX Whoosh &amp; Impact dengan gelombang suara (LL), Fade-Out, kunci durasi 5–7 detik (B &amp; N), dan render Master Bumper .MP4 Full HD.</p>
+        </div>
+        <div class="card-actions">
+          <a href="/ae-pertemuan-6.html" class="btn primary" style="background:#7C3AED;border-color:#A78BFA;">🖥️ Buka Slide AE 06</a>
+          <button type="button" class="btn quiz-btn" data-quiz-trigger="ae-06" onclick="window.BinaBangsaQuiz && window.BinaBangsaQuiz.openModal('ae-06', 'dark')">Kuis Singkat (5 Soal)</button>
+          <a href="/kumpul-tugas?id=ae-06" class="btn">📥 Kumpul Tugas</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pager-bar" id="pagerBar">
+      <div class="pager-info" id="pagerInfo">Halaman 1 / 3 • Menampilkan 6 dari 12 modul</div>
+      <div class="pager-controls" id="pagerControls"></div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const PAGE_SIZE = 6;
+      let activeTrack = 'all';
+      let currentPage = 1;
+      let showAll = false;
+      const cards = Array.from(document.querySelectorAll('#catalogGrid .card'));
+
+      function renderCatalog() {
+        const filtered = cards.filter(c => activeTrack === 'all' || c.dataset.track === activeTrack);
+        const total = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+        if (currentPage > totalPages) currentPage = totalPages;
+
+        const startIdx = showAll ? 0 : (currentPage - 1) * PAGE_SIZE;
+        const endIdx = showAll ? total : Math.min(total, startIdx + PAGE_SIZE);
+
+        cards.forEach(c => c.classList.add('is-hidden-page'));
+        filtered.forEach((c, idx) => {
+          if (idx >= startIdx && idx < endIdx) {
+            c.classList.remove('is-hidden-page');
+          }
+        });
+
+        document.getElementById('tab-all').classList.toggle('active', activeTrack === 'all');
+        document.getElementById('tab-pav').classList.toggle('active', activeTrack === 'pav');
+        document.getElementById('tab-ae').classList.toggle('active', activeTrack === 'ae');
+        document.getElementById('btnToggleAllView').classList.toggle('active', showAll);
+        document.getElementById('btnToggleAllView').textContent = showAll ? '📑 Mode Berhalaman' : '📜 Tampilkan Semua';
+
+        const pagerBar = document.getElementById('pagerBar');
+        const infoEl = document.getElementById('pagerInfo');
+        const ctrlEl = document.getElementById('pagerControls');
+
+        if (showAll || totalPages <= 1) {
+          infoEl.textContent = 'Menampilkan ' + total + ' modul praktikum';
+          ctrlEl.innerHTML = '';
+        } else {
+          infoEl.textContent = 'Halaman ' + currentPage + ' / ' + totalPages + ' • Menampilkan ' + (startIdx + 1) + '–' + endIdx + ' dari ' + total + ' modul';
+          let html = '<button type="button" class="pager-btn" ' + (currentPage <= 1 ? 'disabled' : '') + ' onclick="goCatalogPage(' + (currentPage - 1) + ')">← Sebelumnya</button>';
+          for (let p = 1; p <= totalPages; p++) {
+            html += '<button type="button" class="pager-btn ' + (p === currentPage ? 'active' : '') + '" onclick="goCatalogPage(' + p + ')">' + p + '</button>';
+          }
+          html += '<button type="button" class="pager-btn" ' + (currentPage >= totalPages ? 'disabled' : '') + ' onclick="goCatalogPage(' + (currentPage + 1) + ')">Berikutnya →</button>';
+          ctrlEl.innerHTML = html;
+        }
+        pagerBar.style.display = total > 0 ? 'flex' : 'none';
+      }
+
+      window.setTrack = function (track) {
+        activeTrack = track;
+        currentPage = 1;
+        renderCatalog();
+      };
+
+      window.goCatalogPage = function (p) {
+        currentPage = p;
+        renderCatalog();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      window.toggleShowAll = function () {
+        showAll = !showAll;
+        renderCatalog();
+      };
+
+      renderCatalog();
+    })();
+  </script>
+  <script>
+    (function () {
+      function probePdf(card, pdfUrl) {
+        var encoded = encodeURI(pdfUrl);
+        fetch(encoded, { method: 'HEAD', cache: 'no-cache' })
+          .then(function (res) {
+            var ct = (res.headers.get('content-type') || '').toLowerCase();
+            if (!res.ok || ct.indexOf('pdf') === -1) return;
+            var actions = card.querySelector('.card-actions');
+            if (!actions) return;
+            var primary = actions.querySelector('a.btn.primary');
+            if (primary) {
+              primary.setAttribute('href', encoded);
+              primary.setAttribute('target', '_blank');
+              primary.setAttribute('rel', 'noopener noreferrer');
+              primary.textContent = primary.textContent.replace(/Buka (Slide|Materi)/i, 'Buka Slide') + (primary.textContent.indexOf('PDF') === -1 ? ' (PDF)' : '');
+            }
+            var existingPdf = actions.querySelector('a[href$=".pdf"]:not(.primary)');
+            if (existingPdf) existingPdf.style.display = 'none';
+          })
+          .catch(function () {});
+      }
+
+      document.querySelectorAll('#catalogGrid .card').forEach(function (card) {
+        var primary = card.querySelector('a[href^="/pav-pertemuan-"], a[href^="/ae-pertemuan-"]');
+        if (!primary) return;
+        var href = primary.getAttribute('href') || '';
+        var mPav = href.match(/pav-pertemuan-(\d+)\.html/);
+        if (mPav && Number(mPav[1]) >= 5) {
+          probePdf(card, '/downloads/Pertemuan ' + mPav[1] + ' (PAV).pdf');
+        }
+        var mAe = href.match(/ae-pertemuan-(\d+)\.html/);
+        if (mAe) {
+          probePdf(card, '/downloads/Pertemuan ' + mAe[1] + ' (PL).pdf');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

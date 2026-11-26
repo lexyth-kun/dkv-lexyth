@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materi Pertemuan 5 PAV — Studio Green Screen & B-Roll: Ultra Key Anchor Berita TV</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
+  <link rel="icon" href="/favicon.ico?v=bb2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/monument-extended" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-dark: #047857;
+      --primary-light: #ECFDF5;
+      --accent-cyan: #0EA5E9;
+      --accent-sky: #34D399;
+      --bg-stage: #070B0E;
+      --slide-bg: #FFFFFF;
+      --text-heading: #065F46;
+      --text-body: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-card: rgba(5, 150, 105, 0.24);
+      --border-subtle: rgba(5, 150, 105, 0.12);
+      
+      --font-heading: 'Monument Extended', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    @page {
+      size: 1440px 810px;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-stage);
+      font-family: var(--font-body);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+      padding: 75px 0 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .floating-nav-bar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(52, 211, 153, 0.28);
+      border-radius: 999px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .nav-brand-title {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-link-btn {
+      color: var(--accent-sky);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      color: #FFFFFF;
+      transform: translateX(-2px);
+    }
+
+    .slide-counter-pill {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      background: rgba(5, 150, 105, 0.35);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: var(--accent-sky);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .slide {
+      width: 1440px;
+      height: 810px;
+      max-width: 96vw;
+      background-color: var(--slide-bg);
+      border: 1.5px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 70px;
+      box-shadow: 0 25px 60px rgba(5, 150, 105, 0.15), 0 0 1px rgba(0, 0, 0, 0.2);
+      page-break-after: always;
+    }
+
+    .slide-header { position: relative; z-index: 10; }
+    .slide-title-mixed {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .title-script {
+      font-family: var(--font-script);
+      font-size: 68px;
+      font-weight: 400;
+      color: var(--primary);
+      line-height: 0.9;
+      transform: translateY(2px);
+    }
+
+    .title-serif {
+      font-family: var(--font-heading);
+      font-size: 29px;
+      font-weight: 500;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-family: var(--font-body);
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      max-width: 1100px;
+    }
+
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      margin: 15px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card-surface {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-surface.highlight {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-pill {
+      font-family: var(--font-heading);
+      font-size: 11px;
+      background: var(--primary);
+      color: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .card-heading {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      color: var(--text-heading);
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--text-body);
+      line-height: 1.55;
+    }
+
+    .formula-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(15, 23, 42, 0.05);
+      border-left: 3px solid var(--accent-cyan);
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #0F172A;
+      margin-top: auto;
+    }
+
+    .pr-shortcut-banner {
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: #FFFFFF;
+    }
+
+    .pr-shortcut-tag {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent-sky);
+      white-space: nowrap;
+    }
+
+    .pr-keys-list {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pr-key-item {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #E2E8F0;
+    }
+
+    kbd {
+      background: #1E293B;
+      border: 1px solid #475569;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #38BDF8;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .pr-tutorial-text {
+      font-size: 12.5px;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    .slide-footer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 24px;
+      margin: auto 0;
+    }
+
+    .cover-script {
+      font-family: var(--font-script);
+      font-size: 110px;
+      color: var(--primary);
+      line-height: 0.85;
+      margin-bottom: -15px;
+    }
+
+    .cover-serif {
+      font-family: var(--font-heading);
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 1200px;
+    }
+
+    .cover-sub-box {
+      max-width: 860px;
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 12px 12px 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-body);
+    }
+
+    .cover-tags-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag-badge {
+      background: #FFFFFF;
+      border: 1px solid var(--border-card);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .btn-cta-submit {
+      background: linear-gradient(135deg, #059669, #0EA5E9);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cta-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(5, 150, 105, 0.5);
+    }
+
+    @media (max-width: 1200px) {
+      .slide { width: 95vw; height: auto; min-height: 700px; padding: 35px 25px; }
+      .title-script { font-size: 48px; }
+      .title-serif { font-size: 22px; }
+      .cover-script { font-size: 72px; }
+      .cover-serif { font-size: 32px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .pr-shortcut-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body data-pdf-url="/downloads/Pertemuan 5 (PAV).pdf" data-pdf-mode="auto">
+
+  <!-- Floating Sticky Nav Bar -->
+  <nav class="floating-nav-bar">
+    <a href="/" class="nav-link-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>BERANDA SILABUS</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-brand-title">PAV • MINGGU 05 (Green Screen Ultra Key & B-Roll)</span>
+    <div class="nav-divider"></div>
+    <span class="slide-counter-pill">10 SLIDES DECK</span>
+  </nav>
+
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div style="display:flex; justify-content:space-between; font-family:var(--font-heading); font-size:11px; color:var(--primary); letter-spacing:0.12em;">
+      <span>MODUL PRAKTIKUM LAB MULTIMEDIA SMK</span>
+      <span>MINGGU KE-5 • ADOBE PREMIERE PRO (ULTRA KEY GREEN SCREEN)</span>
+    </div>
+
+    <div class="cover-center">
+      <div class="cover-title-group">
+        <span class="cover-script">Studio Virtual &amp;</span>
+        <span class="cover-serif">GREEN SCREEN ULTRA KEY &amp; B-ROLL</span>
+      </div>
+      <div class="cover-sub-box">
+        Menguasai teknik <strong>Chroma Keying</strong> menggunakan efek <strong>Ultra Key</strong> Premiere Pro 2021 untuk memisahkan presenter berita dari latar belakang layar hijau, menempatkan studio virtual 3D, serta menyelipkan lapisan rekaman <strong>B-Roll</strong> liputan lapangan.
+      </div>
+      <div class="cover-tags-row">
+        <span class="tag-badge">● ULTRA KEY CHROMA KEY</span>
+        <span class="tag-badge">MATTE GENERATION &amp; CLEANUP</span>
+        <span class="tag-badge">SPILL SUPPRESSION</span>
+        <span class="tag-badge">VIRTUAL STUDIO BACKGROUND</span>
+        <span class="tag-badge">MULTI-TRACK B-ROLL V1-V3</span>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 01 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: MENGAPA GREEN SCREEN -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">latar belakang</span>
+        <span class="title-serif">Mengapa Penyiaran TV Menggunakan Green Screen?</span>
+      </div>
+      <div class="slide-subtitle">Membangun set studio fisik televisi membutuhkan biaya ratusan juta rupiah. Layar hijau menghadirkan studio modern tanpa batas!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">01</span>
+            <h3 class="card-heading">Studio Virtual Fleksibel &amp; Dinamis</h3>
+          </div>
+          <p class="card-desc">
+            Dengan selembar kain hijau (Chromakey Green), presenter sekolah dapat seolah-olah berada di dalam gedung studio berita mewah berkaca besar, ruang kontrol canggih dengan video wall interaktif, atau studio berita khusus bertema lingkungan hidup.
+          </p>
+          <div class="formula-badge">
+            PILIHAN WARNA: Hijau dipilih karena spektrum warnanya paling jauh dari pigmen kulit manusia.
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">02</span>
+            <h3 class="card-heading">Penggabungan Video Wall &amp; B-Roll</h3>
+          </div>
+          <p class="card-desc">
+            Di samping pundak presenter, kita dapat menempatkan kotak layar virtual (Over-the-Shoulder Box) yang memutar potongan video liputan lapangan atau infografis data secara langsung sembari presenter membacakan naskah berita Bahasa Indonesia.
+          </p>
+          <div class="formula-badge">
+            STRUKTUR TIMELINE: Background di V1, Presenter di V2, Grafis/B-Roll di V3.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 02 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: PRINSIP PENCAHAYAAN -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">kunci sukses</span>
+        <span class="title-serif">Pencahayaan Rata: Kunci 90% Kesuksesan Keying</span>
+      </div>
+      <div class="slide-subtitle">Kesalahan utama pemula adalah menyalakan lampu ke orangnya, tetapi membiarkan kain hijau di belakang bergelombang dan gelap!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. BG LIGHT</span>
+            <h3 class="card-heading">Lampu Kain Hijau Wajib Rata</h3>
+          </div>
+          <p class="card-desc">
+            Sorot kain hijau menggunakan 2 lampu softbox kiri-kanan dengan intensitas sama. Tidak boleh ada lipatan kain, bayangan gelap, atau area gradasi warna hijau tua ke muda.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. JARAK</span>
+            <h3 class="card-heading">Jarak Subjek Minimal 1.5 Meter</h3>
+          </div>
+          <p class="card-desc">
+            Presenter harus berdiri minimal 1.5–2 meter di depan kain hijau. Jika berdiri terlalu dekat, bayangan tubuh presenter akan jatuh ke kain dan merusak proses keying!
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. BACKLIGHT</span>
+            <h3 class="card-heading">Rim Light / Hair Light</h3>
+          </div>
+          <p class="card-desc">
+            Gunakan lampu kecil dari belakang atas kepala presenter untuk menyinari pundak dan rambut. Garis cahaya tipis ini memotong pantulan hijau dan mempertegas siluet presenter.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 03 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: TUTORIAL ULTRA KEY -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 1</span>
+        <span class="title-serif">Menerapkan Efek Ultra Key di Premiere Pro 2021</span>
+      </div>
+      <div class="slide-subtitle">Langkah demi langkah di panel Effects Premiere Pro untuk menghilangkan latar belakang hijau dalam hitungan detik.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 1</span>
+            <h3 class="card-heading">Cari Efek Ultra Key</h3>
+          </div>
+          <p class="card-desc">
+            Buka panel <strong>Effects</strong> &gt; ketik <code>Ultra Key</code> (terletak di folder <em>Video Effects &gt; Keying &gt; Ultra Key</em>). Drag efek ke klip video presenter di track <kbd>V2</kbd>.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 2</span>
+            <h3 class="card-heading">Ambil Pipet Key Color</h3>
+          </div>
+          <p class="card-desc">
+            Buka panel <em>Effect Controls</em>. Klik ikon pipet <strong>Key Color</strong>. Klik pada warna hijau di monitor tepat di dekat telinga atau pundak presenter (bukan di sudut yang paling terang/gelap).
+          </p>
+          <div class="formula-badge">
+            TRIK LAB: Tahan tombol Ctrl saat mengklik pipet untuk mengambil sampel warna rata-rata 5x5 piksel!
+          </div>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">LANGKAH 3</span>
+            <h3 class="card-heading">Pilih Setting "Aggressive"</h3>
+          </div>
+          <p class="card-desc">
+            Ubah menu <em>Setting</em> dari <strong>Default</strong> menjadi <strong>Aggressive</strong>. Latar belakang hijau akan seketika tembus pandang 100% dan memperlihatkan studio di track <kbd>V1</kbd>!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 04 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: MATTE CLEANUP -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">tutorial lab 2</span>
+        <span class="title-serif">Matte Cleanup: Merapikan Tepi Rambut &amp; Baju</span>
+      </div>
+      <div class="slide-subtitle">Jangan percaya pada tampilan komposit warna. Ubah mode Output ke Alpha Channel untuk melihat lubang transparan!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">ALPHA CHANNEL</span>
+            <h3 class="card-heading">Memeriksa Tampilan Alpha (Hitam &amp; Putih)</h3>
+          </div>
+          <p class="card-desc">
+            Di panel Effect Controls, ubah <em>Output</em> dari <strong>Composite</strong> menjadi <strong>Alpha Channel</strong>:<br>
+            • <strong>Warna Putih Murni:</strong> Adalah subjek presenter yang padat 100%. Tidak boleh ada bintik hitam tembus pada baju atau wajah presenter!<br>
+            • <strong>Warna Hitam Murni:</strong> Adalah latar belakang yang terhapus 100%. Tidak boleh ada bintik putih melayang (Noise).
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">CLEANUP</span>
+            <h3 class="card-heading">Parameter Pembersih (Matte Cleanup)</h3>
+          </div>
+          <p class="card-desc">
+            • <strong>Pedestal (di Matte Generation):</strong> Naikkan ke <kbd>85 - 95</kbd> untuk menghapus sisa hijau di lantai atau sudut ruangan.<br>
+            • <strong>Choke (di Matte Cleanup):</strong> Atur ke <kbd>2 - 5</kbd> untuk menyusutkan tepi luar subjek sebesar beberapa piksel agar garis tepi hijau hilang.<br>
+            • <strong>Soften:</strong> Beri nilai <kbd>2 - 4</kbd> agar potongan tepi tubuh presenter tidak tajam kaku seperti potongan kertas gunting.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 05 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: SPILL SUPPRESSION -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">anti-bocor</span>
+        <span class="title-serif">Spill Suppression (Menghilangkan Aura Hijau)</span>
+      </div>
+      <div class="slide-subtitle">Seringkali cahaya hijau memantul ke kerah baju putih atau rambut presenter sehingga tampak kusam kehijauan.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1. DESATURATE</span>
+            <h3 class="card-heading">Hilangkan Saturasi Hijau</h3>
+          </div>
+          <p class="card-desc">
+            Buka tab <strong>Spill Suppression</strong> di efek Ultra Key. Naikkan nilai <em>Desaturate</em> ke <kbd>50 - 70</kbd> untuk memudarkan warna hijau yang menempel di baju presenter menjadi abu-abu netral.
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2. RANGE</span>
+            <h3 class="card-heading">Perluas Jangkauan Spill</h3>
+          </div>
+          <p class="card-desc">
+            Atur slider <em>Range</em> ke angka <kbd>60</kbd>. Ini akan membersihkan pantulan hijau pada helai-helai rambut tipis presenter tanpa merusak warna kulit wajah.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3. LUSTER</span>
+            <h3 class="card-heading">Pulihkan Kilau Alami</h3>
+          </div>
+          <p class="card-desc">
+            Atur <em>Luster</em> ke <kbd>50</kbd> untuk mengembalikan kilau cahaya alami presenter sehingga menyatu sempurna dengan pencahayaan studio virtual di belakangnya.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 06 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: VIRTUAL STUDIO SETUP -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">studio setting</span>
+        <span class="title-serif">Menata Studio Virtual &amp; Komposisi Layar</span>
+      </div>
+      <div class="slide-subtitle">Menempatkan presenter dan meja siaran agar memiliki skala dan perspektif yang wajar terhadap ruang virtual.</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">SKALA &amp; POSISI</span>
+            <h3 class="card-heading">Menyelaraskan Skala Tubuh Presenter</h3>
+          </div>
+          <p class="card-desc">
+            Di panel Effect Controls &gt; <em>Motion</em>:<br>
+            • Atur <strong>Scale:</strong> <kbd>90% - 105%</kbd> (jangan biarkan presenter tampak kerdil atau raksasa dibanding jendela gedung studio).<br>
+            • Atur <strong>Position Y:</strong> <kbd>540px - 580px</kbd> agar presenter tampak duduk atau berdiri mantap di lantai studio.<br>
+            • Jika presenter di sebelah kiri, kosongkan area kanan untuk video wall B-Roll!
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">BLUR LATAR</span>
+            <h3 class="card-heading">Beri Gaussian Blur Halus pada Background</h3>
+          </div>
+          <p class="card-desc">
+            Pasang efek <strong>Gaussian Blur</strong> (Blurriness: <kbd>8 - 12</kbd>) pada gambar studio virtual di track <kbd>V1</kbd>. Latar belakang yang sedikit memburam (bokeh) akan seketika memisahkan presenter ke depan dan memberikan kesan kamera lensa mahal!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 07 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: B-ROLL LAYERING -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">multi-track</span>
+        <span class="title-serif">Menyelipkan Lapisan B-Roll Liputan Lapangan</span>
+      </div>
+      <div class="slide-subtitle">Dalam siaran berita TV profesional, pemirsa tidak boleh dibiarkan hanya menatap wajah presenter selama 3 menit non-stop!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">V3 FULL</span>
+            <h3 class="card-heading">B-Roll Full Screen Cut-Away</h3>
+          </div>
+          <p class="card-desc">
+            Letakkan klip video liputan lapangan (kebakaran hutan, wawancara warga, suasana lab) di track <kbd>V3</kbd> menutupi layar penuh, sementara suara presenter di track audio <kbd>A1</kbd> tetap terus bercerita (L-Cut).
+          </p>
+        </div>
+
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">V3 BOX</span>
+            <h3 class="card-heading">Video Box Over-the-Shoulder</h3>
+          </div>
+          <p class="card-desc">
+            Kecilkan klip B-Roll ke <em>Scale: 40%</em> dan tempatkan di kotak samping kepala presenter. Beri bingkai putih tipis 2px menggunakan efek <em>Stroke</em> atau Essential Graphics.
+          </p>
+        </div>
+
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">DURASI</span>
+            <h3 class="card-heading">Aturan Durasi B-Roll 3–5 Detik</h3>
+          </div>
+          <p class="card-desc">
+            Ganti klip B-Roll setiap 3 sampai 5 detik mengikuti kalimat naskah presenter agar ritme visual dinamis dan tidak membosankan penonton.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 08 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: CHECKLIST EVALUASI KEYING -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">quality control</span>
+        <span class="title-serif">Checklist Evaluasi Green Screen di Lab</span>
+      </div>
+      <div class="slide-subtitle">Sebelum mengumpulkan tugas, periksa 4 titik rawan kebocoran green screen berikut di monitor:</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2">
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">1</span>
+            <h3 class="card-heading">Kebersihan Tepi Tubuh (No Green Halo)</h3>
+          </div>
+          <p class="card-desc">Pastikan tidak ada garis aura kehijauan berpendar di sekitar pundak, lengan, dan telinga presenter.</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">2</span>
+            <h3 class="card-heading">Kerapian Rambut &amp; Kacamata</h3>
+          </div>
+          <p class="card-desc">Helai rambut tidak boleh hilang terpotong botak dan lensa kacamata tidak boleh tembus pandang berlubang.</p>
+        </div>
+        <div class="card-surface">
+          <div class="card-title-group">
+            <span class="step-pill">3</span>
+            <h3 class="card-heading">Baju Bebas Unsur Hijau</h3>
+          </div>
+          <p class="card-desc">Presenter dilarang keras memakai baju hijau atau bermotif hijau karena bajunya akan tembus bolong!</p>
+        </div>
+        <div class="card-surface highlight">
+          <div class="card-title-group">
+            <span class="step-pill">4</span>
+            <h3 class="card-heading">Kesesuaian Arah Cahaya</h3>
+          </div>
+          <p class="card-desc">Jika cahaya lampu studio virtual datang dari kiri, bayangan wajah presenter di kamera juga harus di sebelah kanan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 09 / 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: TUGAS 04 & PREVIEW 05 -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div class="slide-title-mixed">
+        <span class="title-script">penugasan lab</span>
+        <span class="title-serif">Instruksi Tugas 05 &amp; Rencana Pertemuan 06</span>
+      </div>
+      <div class="slide-subtitle">Praktikkan proses Ultra Key pada rekaman presenter green screen lab komputer hari ini!</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="card-surface highlight" style="margin-bottom:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h3 class="card-heading" style="font-size:16px; margin-bottom:8px;">TUGAS 05: KOMPOSISI GREEN SCREEN ULTRA KEY ANCHOR &amp; B-ROLL</h3>
+            <p class="card-desc" style="max-width:760px;">
+              <strong>Di Lab:</strong> Terapkan efek <strong>Ultra Key</strong> pada klip Green Screen di V2 dan pasang potongan video bukti isu (<strong>B-Roll</strong>) di V3 di atas suara narator.<br><strong>Tanpa Lab:</strong> Tulis daftar <em>Shot List</em> di kertas, lalu <strong>rekam 6–8 potongan video pendek (tiap klip 5 detik, HP mendatar/landscape)</strong> di sekitar sekolah yang menunjukkan masalah & solusi isu ILM kelompokmu!
+            </p>
+          </div>
+          <a href="/kumpul-tugas?id=pr-05" class="btn-cta-submit">
+            <span>🚀 BUKA FORM PENGUMPULAN TUGAS 05</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="pr-shortcut-banner">
+        <div class="pr-shortcut-tag">⏭️ AGENDA MINGGU DEPAN (PERTEMUAN 06 — PUNCAK)</div>
+        <div class="pr-keys-list">
+          <span class="pr-key-item"><kbd>Lumetri Color</kbd> : Grading Emosi</span>
+          <span class="pr-key-item"><kbd>QC 5 Titik</kbd> : Audit Akhir</span>
+          <span class="pr-key-item"><kbd>Ctrl + M</kbd> : Export H.264 MP4</span>
+        </div>
+        <div class="pr-tutorial-text">
+          <strong>Pertemuan 06 (Final):</strong> <strong>Color Grading</strong> (Lumetri Color &amp; Adjustment Layer), <strong>Quality Control</strong>, dan <strong>Master Export H.264</strong>!
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer-meta">
+      <span>DKV • MULTIMEDIA</span>
+      <span>SLIDE 10 / 10</span>
+    </div>
+  </section>
+
+
+<!-- MOBILE & DESKTOP INTERACTIVE SLIDE CAROUSEL + TOUCH SWIPE -->
+<style id="antigravity-mobile-slide-deck-css">
+  html, body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+  .floating-nav-bar {
+    width: max-content !important;
+    max-width: calc(100vw - 24px) !important;
+    flex-wrap: nowrap !important;
+  }
+  .nav-link-btn,
+  .slide-counter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-brand-title {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 0 !important;
+    max-width: min(56vw, 740px);
+  }
+  .cover-title-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .cover-script,
+  .cover-serif {
+    display: block !important;
+  }
+  .cover-script {
+    margin-bottom: 0 !important;
+  }
+  .ag-slide-bottom-bar {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;
+    background: rgba(15, 23, 42, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4);
+    border-radius: 999px;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+    max-width: calc(100vw - 16px);
+  }
+  .ag-slide-btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .ag-slide-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .ag-slide-btn.secondary {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #e2e8f0;
+    padding: 7px 11px;
+    font-size: 11.5px;
+  }
+  .ag-slide-indicator {
+    color: #f8fafc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 72px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Single-slide carousel mode */
+  body.ag-carousel-mode {
+    padding: 72px 16px 76px !important;
+    gap: 0 !important;
+    min-height: 100vh;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body.ag-carousel-mode .slide {
+    display: none !important;
+  }
+  body.ag-carousel-mode .slide.ag-active-slide {
+    display: flex !important;
+    animation: agFadeSlide 0.22s ease-out;
+  }
+  @keyframes agFadeSlide {
+    from { opacity: 0.35; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop / Laptop clear clearance between top and bottom floating bars */
+  @media (min-width: 1025px) {
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: min(1360px, 95vw) !important;
+      max-width: 95vw !important;
+      height: auto !important;
+      min-height: min(690px, calc(100vh - 154px)) !important;
+      max-height: calc(100vh - 154px) !important;
+      overflow-y: auto !important;
+      padding: clamp(22px, 3vh, 42px) clamp(32px, 3.8vw, 58px) !important;
+    }
+    body.ag-carousel-mode .cover-script {
+      font-size: clamp(60px, 5.8vw, 90px) !important;
+      line-height: 1.04 !important;
+      margin-bottom: 2px !important;
+    }
+    body.ag-carousel-mode .cover-serif {
+      font-size: clamp(28px, 2.8vw, 40px) !important;
+    }
+  }
+
+  /* Responsive Mobile & Tablet Adjustments for All 14 Slide Decks */
+  @media (max-width: 1024px) {
+    html, body {
+      max-width: 100% !important;
+      overflow-x: clip !important;
+    }
+    body {
+      padding: 62px 8px 84px !important;
+      gap: 16px !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+    }
+    body.ag-carousel-mode {
+      padding: 62px 8px 84px !important;
+      justify-content: flex-start !important;
+    }
+    .floating-nav-bar {
+      top: 8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      padding: 7px 12px !important;
+      gap: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+    }
+    .nav-link-btn {
+      font-size: 11.5px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .nav-brand-title {
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-align: center !important;
+    }
+    .nav-divider { display: none !important; }
+    .slide-counter-pill {
+      font-size: 9.5px !important;
+      padding: 3px 8px !important;
+      white-space: nowrap !important;
+      flex-shrink: 0 !important;
+    }
+    .slide,
+    body.ag-carousel-mode .slide.ag-active-slide {
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      height: auto !important;
+      min-height: auto !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      padding: 18px 14px !important;
+      border-radius: 16px !important;
+      gap: 12px !important;
+    }
+    .slide > div:first-child {
+      flex-wrap: wrap !important;
+      gap: 4px 10px !important;
+      max-width: 100% !important;
+    }
+    .cover-center {
+      gap: 14px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-title-group {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    .cover-script {
+      display: block !important;
+      font-size: clamp(30px, 8.8vw, 48px) !important;
+      line-height: 1.05 !important;
+      margin-bottom: 4px !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+    .cover-serif {
+      display: block !important;
+      font-size: clamp(16.5px, 4.6vw, 24px) !important;
+      line-height: 1.25 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .cover-sub-box {
+      padding: 12px 14px !important;
+      font-size: 13.5px !important;
+      max-width: 100% !important;
+      line-height: 1.55 !important;
+    }
+    .cover-tags-row {
+      gap: 6px !important;
+    }
+    .tag-badge {
+      font-size: 10px !important;
+      padding: 4px 10px !important;
+    }
+    .slide-title-mixed {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      max-width: 100% !important;
+    }
+    .title-script {
+      font-size: clamp(28px, 7.8vw, 38px) !important;
+      line-height: 1.02 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .title-serif {
+      font-size: clamp(15px, 4.2vw, 18.5px) !important;
+      line-height: 1.28 !important;
+      max-width: 100% !important;
+      overflow-wrap: break-word !important;
+    }
+    .slide-subtitle {
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+      max-width: 100% !important;
+    }
+    .slide-content {
+      margin: 6px 0 !important;
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .grid-2, .grid-3, .grid-2-col, .grid-3-col, .grid-4-col,
+    [style*="grid-template-columns"] {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+      min-width: 0 !important;
+    }
+    .card-surface, .card-box {
+      padding: 14px !important;
+      border-radius: 12px !important;
+      gap: 8px !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    .card-title-group {
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+    }
+    .card-heading, .card-title {
+      font-size: 14.5px !important;
+      line-height: 1.32 !important;
+      overflow-wrap: break-word !important;
+    }
+    .card-desc, .card-body {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .formula-badge, code, kbd {
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+    .pr-shortcut-banner, .ae-shortcut-banner {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      padding: 12px 14px !important;
+      gap: 8px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .pr-keys-list, .ae-keys-list {
+      border-right: none !important;
+      padding-right: 0 !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      width: 100% !important;
+    }
+    .pr-tutorial-text, .ae-tutorial-text {
+      font-size: 12.5px !important;
+      line-height: 1.45 !important;
+    }
+    .btn-cta-submit {
+      width: 100% !important;
+      justify-content: center !important;
+      text-align: center !important;
+      white-space: normal !important;
+      padding: 12px 14px !important;
+      font-size: 11.5px !important;
+    }
+    .slide-footer-meta {
+      font-size: 10px !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .ag-slide-bottom-bar {
+      bottom: 8px !important;
+      width: calc(100vw - 16px) !important;
+      max-width: calc(100vw - 16px) !important;
+      justify-content: space-between !important;
+      padding: 6px 8px !important;
+      gap: 4px !important;
+    }
+    .ag-slide-btn {
+      padding: 7px 10px !important;
+      font-size: 11.5px !important;
+    }
+    .ag-slide-btn.secondary {
+      padding: 7px 9px !important;
+      font-size: 11px !important;
+    }
+    .ag-slide-indicator {
+      min-width: 52px !important;
+      font-size: 11px !important;
+    }
+  }
+
+  @media print {
+    .floating-nav-bar, .ag-slide-bottom-bar { display: none !important; }
+    body, body.ag-carousel-mode {
+      background: #ffffff !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    .slide, body.ag-carousel-mode .slide, body.ag-carousel-mode .slide.ag-active-slide {
+      display: flex !important;
+      width: 1440px !important;
+      height: 810px !important;
+      max-width: none !important;
+      max-height: none !important;
+      overflow: hidden !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<div class="ag-slide-bottom-bar" id="agSlideBottomBar">
+  <button type="button" class="ag-slide-btn" id="agBtnPrev" onclick="agStepSlide(-1)">◀ Seblm</button>
+  <span class="ag-slide-indicator" id="agSlideIndicator">1 / 10</span>
+  <button type="button" class="ag-slide-btn" id="agBtnNext" onclick="agStepSlide(1)">Lanjut ▶</button>
+  <button type="button" class="ag-slide-btn secondary" id="agBtnToggleMode" onclick="agToggleSlideMode()">📜 Semua</button>
+</div>
+
+<script id="antigravity-mobile-slide-deck-js">
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  let currentIdx = 0;
+  let isCarouselMode = true;
+
+  function renderSlideState() {
+    const ind = document.getElementById('agSlideIndicator');
+    const btnPrev = document.getElementById('agBtnPrev');
+    const btnNext = document.getElementById('agBtnNext');
+    const btnMode = document.getElementById('agBtnToggleMode');
+
+    if (isCarouselMode) {
+      document.body.classList.add('ag-carousel-mode');
+      slides.forEach((s, i) => {
+        s.classList.toggle('ag-active-slide', i === currentIdx);
+      });
+      if (slides[currentIdx]) slides[currentIdx].scrollTop = 0;
+      if (ind) ind.textContent = (currentIdx + 1) + ' / ' + slides.length;
+      if (btnPrev) btnPrev.disabled = (currentIdx <= 0);
+      if (btnNext) btnNext.disabled = (currentIdx >= slides.length - 1);
+      if (btnMode) btnMode.textContent = '📜 Semua';
+    } else {
+      document.body.classList.remove('ag-carousel-mode');
+      slides.forEach(s => s.classList.remove('ag-active-slide'));
+      if (ind) ind.textContent = slides.length + ' Slide';
+      if (btnPrev) btnPrev.disabled = false;
+      if (btnNext) btnNext.disabled = false;
+      if (btnMode) btnMode.textContent = '📱 Mode Geser';
+    }
+  }
+
+  window.agStepSlide = function(dir) {
+    if (!isCarouselMode) isCarouselMode = true;
+    const next = currentIdx + dir;
+    if (next >= 0 && next < slides.length) {
+      currentIdx = next;
+      renderSlideState();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  window.agToggleSlideMode = function() {
+    isCarouselMode = !isCarouselMode;
+    renderSlideState();
+    if (!isCarouselMode && slides[currentIdx]) {
+      slides[currentIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') window.agStepSlide(1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') window.agStepSlide(-1);
+    else if (e.key === 'Home') { currentIdx = 0; isCarouselMode = true; renderSlideState(); }
+    else if (e.key === 'End') { currentIdx = slides.length - 1; isCarouselMode = true; renderSlideState(); }
+  });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', function(e) {
+    if (!e.changedTouches || !e.changedTouches.length) return;
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    if (!isCarouselMode || !e.changedTouches || !e.changedTouches.length) return;
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      if (dx < 0) window.agStepSlide(1);
+      else window.agStepSlide(-1);
+    }
+  }, { passive: true });
+
+  renderSlideState();
+})();
+</script>
+
+<script src="/assets/pdf-materi-embed.js"></script>
+</body>
+</html>

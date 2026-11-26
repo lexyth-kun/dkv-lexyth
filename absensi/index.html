@@ -1,0 +1,3212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Presensi 10 Minggu &amp; Penilaian Siswa &bull; SMK Bina Bangsa</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2">
+  <link rel="icon" href="/favicon.ico?v=bb2">
+  <link rel="stylesheet" href="/assets/dashboard-fonts.css">
+  <style>
+    :root {
+      --bg-body: #f4f7fb;
+      --bg-card: #ffffff;
+      --bg-table-head: #f1f5f9;
+      --border-base: #e2e8f0;
+      --border-dark: #cbd5e1;
+      --border-blue: #93c5fd;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --primary-blue: #2563eb;
+      --primary-blue-dark: #1d4ed8;
+      --secondary-blue: #0284c7;
+      --accent-sky: #0ea5e9;
+      --blue-subtle: #eff6ff;
+      --blue-border-light: #bfdbfe;
+      --success-green: #10b981;
+      --warning-amber: #f59e0b;
+      --danger-rose: #ef4444;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'Inter', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.035);
+      --shadow-md: 0 4px 16px rgba(37,99,235,0.08);
+      --shadow-card: 0 2px 12px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      font-weight: 400;
+    }
+
+    .pwd-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .pwd-input-wrap input {
+      width: 100%;
+      padding-right: 44px !important;
+    }
+    .pwd-toggle-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .pwd-toggle-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* Fullscreen PIN Lock Modal */
+    #pinLockModal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(244, 247, 251, 0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .pin-card {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 24px;
+      max-width: 420px;
+      width: 100%;
+      padding: 34px 26px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+    }
+
+    .pin-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.24);
+    }
+
+    .pin-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-size: 0.74rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .pin-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .pin-desc {
+      font-size: 0.86rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.55;
+    }
+
+    .pin-input-field {
+      width: 100%;
+      padding: 13px 44px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      letter-spacing: 0.28em;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .pin-input-field:focus {
+      border-color: var(--primary-blue);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+    }
+
+    .pin-remember-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin: 14px 0 18px;
+      cursor: pointer;
+    }
+
+    .btn-pin-submit {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(37,99,235,0.28);
+      transition: all 0.2s;
+    }
+
+    .btn-pin-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(37,99,235,0.36);
+    }
+
+    .pin-err-msg {
+      color: var(--danger-rose);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    /* Top Navigation Header */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-base);
+      box-shadow: var(--shadow-sm);
+      padding: 12px 24px;
+    }
+
+    .top-header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #2563eb, #0284c7);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.24);
+    }
+
+    .brand-titles h1 {
+      font-family: var(--font-heading);
+      font-size: 1.04rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+
+    .brand-titles p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-badge-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #059669;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .status-badge-save.is-warn {
+      background: #fffbeb;
+      border-color: #fcd34d;
+      color: #b45309;
+    }
+    .status-badge-save.is-warn .save-dot { background: #f59e0b; }
+    .status-badge-save.is-syncing {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+    .status-badge-save.is-syncing .save-dot { background: #2563eb; }
+    .status-badge-save.is-error {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #dc2626;
+    }
+    .status-badge-save.is-error .save-dot { background: #ef4444; }
+
+    .save-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    button, input, select { font-family: inherit; }
+
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--border-base);
+      background: #ffffff;
+      color: var(--text-main);
+      transition: all 0.2s;
+      min-height: 36px;
+    }
+
+    .btn-header:hover {
+      background: #f1f5f9;
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .btn-header.btn-lock {
+      background: #fff1f2;
+      border-color: #fecdd3;
+      color: #e11d48;
+    }
+    .btn-header.btn-lock:hover {
+      background: #ffe4e6;
+    }
+
+    /* Main Container */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px 20px 80px;
+    }
+
+    /* SUBJECT SWITCHER (1. Editing Audio & Video | 2. Perangkat Lunak) */
+    .subject-banner {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 18px;
+      padding: 15px 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .subject-tabs {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 12px;
+      flex-wrap: wrap;
+    }
+
+    .subject-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 9px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .subject-btn:hover {
+      color: var(--text-main);
+    }
+
+    .subject-btn.active {
+      background: var(--primary-blue);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+    }
+
+    .subject-btn.active[data-subj="after_effects"] {
+      background: #7c3aed;
+      box-shadow: 0 4px 12px rgba(124,58,237,0.26);
+    }
+
+    .subject-x-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #047857;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .subject-meta {
+      font-size: 0.84rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+    .subject-meta strong {
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    /* CLASS TABS ROW */
+    .class-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .class-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      padding: 5px;
+      border-radius: 13px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .class-pill {
+      padding: 8px 16px;
+      border-radius: 9px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .class-pill:hover {
+      color: var(--text-main);
+      background: #f8fafc;
+    }
+
+    .class-pill.active {
+      background: var(--blue-subtle);
+      border-color: var(--blue-border-light);
+      color: var(--primary-blue);
+      font-weight: 700;
+    }
+
+    .count-chip {
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      font-family: var(--font-body);
+      color: #334155;
+    }
+    .class-pill.active .count-chip {
+      background: var(--primary-blue);
+      color: #ffffff;
+    }
+
+    .class-stats-meta {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .class-stats-meta strong {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* VIEW TABS BAR */
+    .view-navbar {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 16px;
+      padding: 9px 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .view-tabs-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .view-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 9px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .view-tab-btn:hover {
+      color: var(--primary-blue);
+      background: #f8fafc;
+    }
+
+    .view-tab-btn.active {
+      background: var(--blue-subtle);
+      border-color: var(--blue-border-light);
+      color: var(--primary-blue);
+      font-weight: 700;
+    }
+
+    .filter-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-select {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-dark);
+      background: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+      min-height: 38px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-input-field {
+      padding: 8px 12px 8px 34px;
+      border-radius: 999px;
+      border: 1px solid var(--border-dark);
+      background: #f8fafc;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-main);
+      outline: none;
+      width: 220px;
+      min-height: 38px;
+      transition: all 0.2s;
+    }
+
+    .search-input-field:focus {
+      border-color: var(--primary-blue);
+      background: #ffffff;
+      width: 255px;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .search-icon-svg {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* ACTION BAR & KODE STATUS PILL */
+    .action-toolbar {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 14px;
+      padding: 11px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .att-legend-items {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .att-legend-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+    .att-legend-pill.leg-h { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+    .att-legend-pill.leg-s { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .att-legend-pill.leg-i { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+    .att-legend-pill.leg-a { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+    .att-legend-pill.leg-w { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+    .swipe-hint-mobile {
+      display: none;
+      font-size: 0.76rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      width: 100%;
+    }
+
+    .btn-act {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      min-height: 36px;
+    }
+
+    .btn-act.btn-blue {
+      background: var(--blue-subtle);
+      border-color: var(--blue-border-light);
+      color: var(--primary-blue);
+    }
+    .btn-act.btn-blue:hover {
+      background: #dbeafe;
+    }
+
+    .btn-act.btn-green {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #059669;
+    }
+    .btn-act.btn-green:hover {
+      background: #d1fae5;
+    }
+
+    /* STATS SUMMARY TILES */
+    .stats-tiles-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat-tile {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 14px;
+      padding: 13px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-tile-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-tile-value {
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    .stat-tile-sub {
+      font-size: 0.74rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* MAIN TABLE CARD */
+    .table-card {
+      background: #ffffff;
+      border: 1px solid var(--border-base);
+      border-radius: 18px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: var(--shadow-card);
+    }
+
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+
+    .styled-table th {
+      background: var(--bg-table-head);
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.78rem;
+      padding: 10px 12px;
+      border-bottom: 1.5px solid var(--border-dark);
+      border-right: 1px solid #e2e8f0;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .styled-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border-base);
+      border-right: 1px solid #f1f5f9;
+      vertical-align: middle;
+      color: var(--text-main);
+    }
+
+    .styled-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Sticky kolom Nama Siswa saat tabel digeser ke samping */
+    .styled-table th:nth-child(3),
+    .styled-table td:nth-child(3) {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: #ffffff;
+      box-shadow: 2px 0 6px rgba(15, 23, 42, 0.05);
+      min-width: 175px;
+    }
+    .styled-table th:nth-child(3) {
+      background: var(--bg-table-head);
+      z-index: 3;
+    }
+    .styled-table tr:hover td:nth-child(3) {
+      background: #f8fafc;
+    }
+    .styled-table tr.row-keluar td:nth-child(3) {
+      background: #f8fafc !important;
+    }
+
+    /* Strikethrough for student who has left (Keluar) */
+    tr.row-keluar td {
+      background: #f8fafc !important;
+      color: #94a3b8 !important;
+    }
+    tr.row-keluar .name-text {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    .badge-keluar {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #fee2e2;
+      color: #b91c1c;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-left: 6px;
+      text-decoration: none !important;
+    }
+
+    .badge-status-aktif {
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .badge-status-keluar {
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    /* 10-WEEK ATTENDANCE BOXES (1 Kotak = 1 Minggu) */
+    .th-week {
+      text-align: center !important;
+      min-width: 46px;
+      width: 46px;
+      padding: 6px 2px !important;
+    }
+
+    .td-week-cell {
+      text-align: center !important;
+      padding: 4px 2px !important;
+      min-width: 46px;
+      width: 46px;
+    }
+
+    .week-box-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .week-box-btn:hover {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+    }
+
+    .week-box-btn.val-dot {
+      background: #ecfdf5;
+      color: #059669;
+      border-color: #a7f3d0;
+    }
+    .week-box-btn.val-S {
+      background: #eff6ff;
+      color: #0284c7;
+      border-color: #bfdbfe;
+    }
+    .week-box-btn.val-I {
+      background: #fffbeb;
+      color: #d97706;
+      border-color: #fde68a;
+    }
+    .week-box-btn.val-A {
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+
+    .week-header-btn {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--primary-blue);
+      cursor: pointer;
+      display: block;
+      margin: 3px auto 0;
+    }
+    .week-header-btn:hover {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+
+    /* Grade Inputs */
+    .grade-input-box {
+      width: 60px;
+      padding: 6px 6px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+    }
+    .grade-input-box:focus {
+      border-color: var(--primary-blue);
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    .kkm-badge {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .kkm-tuntas {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .kkm-belum {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    /* Toast popup */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.25);
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Settings Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15,23,42,0.58);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-container {
+      background: #ffffff;
+      border-radius: 20px;
+      max-width: 460px;
+      width: 100%;
+      padding: 26px;
+      box-shadow: 0 24px 48px rgba(15,23,42,0.22);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .modal-head h3 {
+      font-family: var(--font-heading);
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .modal-close {
+      background: #f1f5f9;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    /* PRINT LAYOUT */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9pt;
+      }
+      #pinLockModal, .top-header, .subject-banner, .class-nav-row, .view-navbar, .action-toolbar, .stats-tiles-row, .toast-box, .week-header-btn {
+        display: none !important;
+      }
+      .app-container {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .table-card {
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .styled-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+      .styled-table th:nth-child(3),
+      .styled-table td:nth-child(3) {
+        position: static !important;
+        box-shadow: none !important;
+        min-width: auto !important;
+      }
+      .styled-table th, .styled-table td {
+        border: 1px solid #333333 !important;
+        padding: 4px 6px !important;
+        color: #000000 !important;
+      }
+      .styled-table th {
+        background: #f1f5f9 !important;
+      }
+      .print-official-header {
+        display: block !important;
+        text-align: center;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 8px;
+      }
+      .print-sign-area {
+        display: flex !important;
+        justify-content: space-between;
+        margin-top: 36px;
+        page-break-inside: avoid;
+      }
+    }
+
+    .print-official-header, .print-sign-area {
+      display: none;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
+    @media (max-width: 900px) {
+      .top-header {
+        position: static;
+        padding: 12px 14px;
+      }
+      .top-header-inner {
+        gap: 10px;
+      }
+      .header-actions {
+        width: 100%;
+        gap: 6px;
+      }
+      .btn-header {
+        padding: 7px 11px;
+        font-size: 0.75rem;
+      }
+      .app-container {
+        width: 100%;
+        padding: 14px 12px 64px;
+      }
+      .subject-banner {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .subject-tabs {
+        width: 100%;
+        flex-direction: column;
+      }
+      .subject-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        text-align: center;
+      }
+      .subject-btn svg, .view-tab-btn svg, .btn-header svg, .btn-act svg {
+        flex-shrink: 0;
+      }
+      .class-pills {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+      }
+      .class-pill {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 4px;
+        font-size: 0.72rem;
+        white-space: nowrap;
+        gap: 4px;
+      }
+      .view-navbar {
+        padding: 10px 12px;
+      }
+      .view-tabs-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+      .view-tab-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 9px 8px;
+        font-size: 0.76rem;
+      }
+      .filter-search-wrap {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .filter-select,
+      .search-input-wrap,
+      .search-input-field {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 16px;
+      }
+      .action-toolbar {
+        padding: 11px 12px;
+      }
+      .swipe-hint-mobile {
+        display: block;
+      }
+      .stats-tiles-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+      .table-card {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .styled-table th:nth-child(3),
+      .styled-table td:nth-child(3) {
+        min-width: 138px;
+        max-width: 162px;
+        font-size: 0.76rem;
+        line-height: 1.3;
+      }
+      .week-box-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.92rem;
+      }
+      .th-week, .td-week-cell {
+        min-width: 50px;
+        width: 50px;
+      }
+      .pin-card {
+        padding: 26px 18px;
+      }
+    }
+  </style>
+</head>
+<body class="dashboard-friendly">
+
+  <!-- FULLSCREEN PIN ACCESS OVERLAY (Default PIN: 201023) -->
+  <div id="pinLockModal">
+    <div class="pin-card">
+      <div class="pin-badge">Akses Khusus Pengampu</div>
+      <div class="pin-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2 class="pin-title">Portal Presensi &amp; Nilai</h2>
+      <p class="pin-desc">Masukkan 6 digit PIN guru untuk membuka daftar hadir 10 minggu, nilai tugas, dan rekap rapor.</p>
+      
+      <form onsubmit="event.preventDefault(); verifyPin();">
+        <div class="pwd-input-wrap">
+          <input type="password" id="pinInput" class="pin-input-field" maxlength="6" placeholder="••••••" autocomplete="off" autofocus>
+          <button type="button" class="pwd-toggle-btn" aria-label="Tampilkan atau sembunyikan PIN" onclick="toggleAbsPinVisibility('pinInput', this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        
+        <label class="pin-remember-row">
+          <input type="checkbox" id="rememberDevice" checked>
+          <span>Ingat sesi di perangkat ini</span>
+        </label>
+
+        <button type="submit" class="btn-pin-submit">Buka Portal Presensi &rarr;</button>
+        <div class="pin-err-msg" id="pinErrMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRINT HEADER -->
+  <div class="print-official-header">
+    <h2 style="font-size: 14pt; font-weight: 800; text-transform: uppercase;">DAFTAR HADIR &amp; PENILAIAN PESERTA DIDIK</h2>
+    <h3 style="font-size: 11pt; font-weight: 700;">SMK BINA BANGSA • TAHUN PEMBELAJARAN 2026 / 2027</h3>
+    <p style="font-size: 9.5pt; color: #333;" id="printInfoLine">Mata Pelajaran: Editing Audio &amp; Video • Kelas: XI DKV 1</p>
+  </div>
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="top-header-inner">
+      <a href="/" class="brand-wrap">
+        <div class="brand-badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <div class="brand-titles">
+          <h1>Presensi &amp; Nilai Siswa</h1>
+          <p>X DKV 1&ndash;3 &amp; XI DKV 1&ndash;3 &bull; SMK Bina Bangsa</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="/dashboard" class="btn-header" style="text-decoration:none; color:#1d4ed8; font-weight:600; background:#eff6ff; border-color:#bfdbfe;" title="Buka Dashboard Guru">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Dashboard Guru</span>
+        </a>
+        <button type="button" class="status-badge-save is-syncing" id="saveBadge" onclick="syncAbsensiFromCloud(true)" title="Klik untuk sinkronisasi cloud antar perangkat">
+          <span class="save-dot"></span>
+          <span id="saveBadgeText">Memeriksa Cloud...</span>
+        </button>
+        <a href="/kumpul-tugas" class="btn-header" style="text-decoration:none; color:var(--primary-blue);" title="Buka Formulir Pengumpulan Tugas Siswa">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span>Kumpul Tugas</span>
+        </a>
+        <a href="/database-tugas" class="btn-header" style="text-decoration:none; color:#059669;" title="Buka Database &amp; Galeri Tugas Siswa">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          <span>Galeri Tugas</span>
+        </a>
+        <button type="button" class="btn-header" onclick="openSettingsModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Pengaturan</span>
+        </button>
+        <button type="button" class="btn-header btn-lock" onclick="lockPortal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Kunci Sesi</span>
+        </button>
+        <a href="/" class="btn-header">
+          <span>&larr; Beranda</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="app-container">
+
+    <!-- 1. SUBJECT SWITCHER BANNER (Terpisah Nilai & Daftar Hadir untuk Kelas XI) -->
+    <section class="subject-banner">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <span style="font-size: 0.82rem; font-weight: 700; color: #334155;" id="subjectBannerLabel">Mata Pelajaran Kelas XI:</span>
+        <div class="subject-tabs" id="subjectTabsXI">
+          <button type="button" class="subject-btn active" id="btnSubj-video" data-subj="video_editing" onclick="switchSubject('video_editing')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="10 9 16 12 10 15 10 9"/></svg>
+            <span>1. Editing Audio &amp; Video</span>
+          </button>
+          <button type="button" class="subject-btn" id="btnSubj-ae" data-subj="after_effects" onclick="switchSubject('after_effects')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>2. Perangkat Lunak</span>
+          </button>
+        </div>
+        <span class="subject-x-badge" id="subjectBadgeX" style="display:none;">
+          Dasar-Dasar DKV (Kelas X)
+        </span>
+      </div>
+      <div class="subject-meta">
+        Aktif: <strong id="activeSubjectName">Editing Audio &amp; Video</strong> &bull; Nilai &amp; Daftar Hadir Terpisah per Mapel
+      </div>
+    </section>
+
+    <!-- 2. CLASS NAV ROW (KHUSUS X DKV 1-3 & XI DKV 1-3) -->
+    <div class="class-nav-row">
+      <div class="class-pills">
+        <button type="button" class="class-pill" id="pill-XDKV1" onclick="switchClass('XDKV1')">
+          <span>X DKV 1</span>
+          <span class="count-chip" id="cnt-XDKV1">0</span>
+        </button>
+        <button type="button" class="class-pill" id="pill-XDKV2" onclick="switchClass('XDKV2')">
+          <span>X DKV 2</span>
+          <span class="count-chip" id="cnt-XDKV2">0</span>
+        </button>
+        <button type="button" class="class-pill" id="pill-XDKV3" onclick="switchClass('XDKV3')">
+          <span>X DKV 3</span>
+          <span class="count-chip" id="cnt-XDKV3">0</span>
+        </button>
+        <button type="button" class="class-pill" id="pill-DKV1" onclick="switchClass('DKV1')">
+          <span>XI DKV 1</span>
+          <span class="count-chip" id="cnt-DKV1">35</span>
+        </button>
+        <button type="button" class="class-pill active" id="pill-DKV2" onclick="switchClass('DKV2')">
+          <span>XI DKV 2</span>
+          <span class="count-chip" id="cnt-DKV2">36</span>
+        </button>
+        <button type="button" class="class-pill" id="pill-DKV3" onclick="switchClass('DKV3')">
+          <span>XI DKV 3</span>
+          <span class="count-chip" id="cnt-DKV3">37</span>
+        </button>
+      </div>
+
+      <div class="class-stats-meta" id="classStatsMeta">
+        <span>Siswa Aktif: <strong id="metaCountAktif">33</strong></span>
+        <span>&bull;</span>
+        <span>Siswa Keluar: <strong id="metaCountKeluar" style="color:#ef4444;">3</strong></span>
+        <span>&bull;</span>
+        <span>Laki-laki: <strong id="metaCountL">20</strong> | Perempuan: <strong id="metaCountP">16</strong></span>
+      </div>
+    </div>
+
+    <!-- 3. VIEW NAV BAR -->
+    <div class="view-navbar">
+      <div class="view-tabs-group">
+        <button type="button" class="view-tab-btn active" id="tabBtn-att" onclick="switchView('attendance')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Presensi 10 Minggu</span>
+        </button>
+        <button type="button" class="view-tab-btn" id="tabBtn-grade" onclick="switchView('grades')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>Nilai Tugas &amp; Ujian</span>
+        </button>
+        <button type="button" class="view-tab-btn" id="tabBtn-attitude" onclick="switchView('attitude')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Sikap &amp; Perilaku</span>
+        </button>
+        <button type="button" class="view-tab-btn" id="tabBtn-rekap" onclick="switchView('rekap')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Rekap Lengkap</span>
+        </button>
+      </div>
+
+      <div class="filter-search-wrap">
+        <select class="filter-select" id="filterStatusSelect" onchange="changeFilterStatus(this.value)" aria-label="Filter Status Siswa">
+          <option value="all">Semua Siswa</option>
+          <option value="aktif" selected>Hanya Siswa Aktif</option>
+          <option value="keluar">Hanya Siswa Keluar</option>
+        </select>
+
+        <div class="search-input-wrap">
+          <span class="search-icon-svg" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <input type="text" id="searchField" class="search-input-field" placeholder="Cari nama atau NIS..." oninput="handleSearch(this.value)" aria-label="Cari nama atau NIS siswa">
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. ACTION TOOLBAR -->
+    <div class="action-toolbar" id="actionToolbar">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- 5. STATS TILES -->
+    <div class="stats-tiles-row" id="statsTilesRow">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- 6. MASTER DATA TABLE CARD -->
+    <div class="table-card">
+      <table class="styled-table" id="masterTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- PRINT SIGNATURE AREA -->
+    <div class="print-sign-area">
+      <div style="text-align: center;">
+        <p>Mengetahui,</p>
+        <p>Kepala SMKS Bina Bangsa</p>
+        <br><br><br>
+        <p><strong>Retno Harjanti, SE, S.Pd</strong></p>
+      </div>
+      <div style="text-align: center;">
+        <p>Tangerang Selatan, <span id="printDatePlaceholder"></span></p>
+        <p>Guru Pengampu,</p>
+        <br><br><br>
+        <p><strong>Adrian Ali Muthi</strong></p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-backdrop" id="settingsModal" style="display: none;">
+    <div class="modal-container">
+      <div class="modal-head">
+        <h3>Pengaturan Portal</h3>
+        <button type="button" class="modal-close" onclick="closeSettingsModal()" aria-label="Tutup pengaturan">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="newPinInput" style="font-size: 0.82rem; font-weight: 600; color: #334155; display: block; margin-bottom: 6px;">Ubah PIN Akses (6 Angka)</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <div class="pwd-input-wrap" style="flex:1; min-width:170px;">
+              <input type="password" id="newPinInput" class="grade-input-box" style="width: 100%; text-align: left; padding: 9px 44px 9px 12px;" placeholder="PIN 6 Digit Baru" maxlength="6">
+              <button type="button" class="pwd-toggle-btn" aria-label="Tampilkan atau sembunyikan PIN baru" onclick="toggleAbsPinVisibility('newPinInput', this)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <button type="button" class="btn-act btn-blue" onclick="saveNewPin()">Simpan PIN</button>
+          </div>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0;">
+        <div>
+          <label style="font-size: 0.82rem; font-weight: 600; color: #334155; display: block; margin-bottom: 6px;">Cadangan &amp; Pemulihan Data</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-act btn-blue" onclick="exportDataJson()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Unduh Cadangan JSON</span>
+            </button>
+            <button type="button" class="btn-act btn-green" onclick="document.getElementById('importFile').click()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              <span>Pulihkan dari JSON</span>
+            </button>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDataJson(event)">
+          </div>
+        </div>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0;">
+        <div>
+          <label style="font-size: 0.82rem; font-weight: 600; color: #dc2626; display: block; margin-bottom: 6px;">Kembalikan ke Data Awal</label>
+          <button type="button" class="btn-act" style="background: #fef2f2; color: #b91c1c; border-color: #fecaca;" onclick="resetAllDefault()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span>Reset Semua Data ke Awal</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-box" id="toastBox">
+    <span id="toastIcon" style="display:inline-flex; align-items:center; color:#34d399;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>
+    <span id="toastText">Perubahan berhasil disimpan</span>
+  </div>
+
+  <script>
+    // Master Raw Data from Photos
+    const RAW_STUDENTS = {"DKV1": {"name": "Kelas XI - 1", "students": [{"no": 1, "induk": "1.25.10952", "name": "ADIKA PRAWIRA PUTRA MILANO", "gender": "L", "status": "aktif"}, {"no": 2, "induk": "1.25.10953", "name": "AL FATHYA PUTRI HIDAYAT", "gender": "P", "status": "aktif"}, {"no": 3, "induk": "1.25.10954", "name": "ANDREAS NEHEMIA MAIL", "gender": "P", "status": "keluar"}, {"no": 4, "induk": "1.25.10955", "name": "ATHALA RAFIT ODANG", "gender": "L", "status": "aktif"}, {"no": 5, "induk": "1.25.10956", "name": "BARRON PRAWIRO WASKITO", "gender": "L", "status": "aktif"}, {"no": 6, "induk": "1.25.10957", "name": "CARISSA AURELLIA RIHADATUL'AISYI", "gender": "P", "status": "aktif"}, {"no": 7, "induk": "1.25.10958", "name": "DAVA ADITYA", "gender": "L", "status": "aktif"}, {"no": 8, "induk": "1.25.10959", "name": "DEKA ROHMAT SUCIPTO", "gender": "L", "status": "aktif"}, {"no": 9, "induk": "1.25.10960", "name": "DEWA PAMUNGKAS", "gender": "L", "status": "aktif"}, {"no": 10, "induk": "1.25.10961", "name": "DIANA NABILAH", "gender": "P", "status": "aktif"}, {"no": 11, "induk": "1.25.10962", "name": "DJAZKA AHMAD RIZKI", "gender": "L", "status": "aktif"}, {"no": 12, "induk": "1.25.10963", "name": "ERLITA DIAZ NUR ALIIFA", "gender": "P", "status": "aktif"}, {"no": 13, "induk": "1.25.10964", "name": "FAHRISHALBAYU SAPUTRA", "gender": "L", "status": "aktif"}, {"no": 14, "induk": "1.25.10965", "name": "FARIZ MUHAMMAD RIZKY SUDRAJAT", "gender": "L", "status": "aktif"}, {"no": 15, "induk": "1.25.10966", "name": "FITRI RAMADHAN NINGRUM", "gender": "P", "status": "aktif"}, {"no": 16, "induk": "1.25.10967", "name": "FRISYLLA ANINDIA PUTRIE", "gender": "P", "status": "aktif"}, {"no": 17, "induk": "1.25.10968", "name": "IBNU ZAIDAN KAMIL", "gender": "L", "status": "aktif"}, {"no": 18, "induk": "1.25.10969", "name": "IRFAN FIRMANSYAH", "gender": "L", "status": "aktif"}, {"no": 19, "induk": "1.25.10970", "name": "KAINDRA RAFA ISKANDAR", "gender": "L", "status": "aktif"}, {"no": 20, "induk": "1.25.10971", "name": "KHOIRULYAN MURSAHDAT", "gender": "L", "status": "aktif"}, {"no": 21, "induk": "1.25.10972", "name": "MARIAM", "gender": "P", "status": "aktif"}, {"no": 22, "induk": "1.25.10973", "name": "MUHAMAD GALUH PRASETYO", "gender": "L", "status": "aktif"}, {"no": 23, "induk": "1.25.10974", "name": "MUHAMAD WAHYU HIDAYAT", "gender": "L", "status": "aktif"}, {"no": 24, "induk": "1.25.10976", "name": "MUHAMMAD FATHIR AL LUKMAN", "gender": "L", "status": "aktif"}, {"no": 25, "induk": "1.25.10977", "name": "MUHAMMAD MARSZAIDAN ARIEFYANTO", "gender": "L", "status": "aktif"}, {"no": 26, "induk": "1.25.10978", "name": "MUHAMMAD VINO ALVIAN", "gender": "L", "status": "aktif"}, {"no": 27, "induk": "1.25.10979", "name": "NEYZA ZULAYKHA SIMATUPANG", "gender": "P", "status": "aktif"}, {"no": 28, "induk": "1.25.10980", "name": "NUR AINI SYAFA'AH", "gender": "P", "status": "aktif"}, {"no": 29, "induk": "1.25.10981", "name": "RADITYA AHMAD", "gender": "L", "status": "aktif"}, {"no": 30, "induk": "1.25.10982", "name": "RAFI HIDAYATULLAH", "gender": "L", "status": "aktif"}, {"no": 31, "induk": "1.25.10983", "name": "RASYA INDRA PRATAMA", "gender": "L", "status": "aktif"}, {"no": 32, "induk": "1.25.10984", "name": "SAFIRA NURHAFIZAH", "gender": "P", "status": "aktif"}, {"no": 33, "induk": "1.25.10986", "name": "TEGAR PUTRA RISMAWAN", "gender": "L", "status": "aktif"}, {"no": 34, "induk": "1.25.10987", "name": "UZEL VICKY QURUNNUL BACHRI", "gender": "L", "status": "aktif"}, {"no": 35, "induk": "2.26.11135", "name": "FATHURRAHMAN GHAZALI", "gender": "L", "status": "aktif"}]}, "DKV2": {"name": "Kelas XI - 2", "students": [{"no": 1, "induk": "1.25.10988", "name": "ADLI IRSYAD", "gender": "L", "status": "aktif"}, {"no": 2, "induk": "1.25.10989", "name": "ALIF FAKHRY MAULANA", "gender": "L", "status": "aktif"}, {"no": 3, "induk": "1.25.10990", "name": "ALMIRA LUTHFIA RADIVA", "gender": "P", "status": "aktif"}, {"no": 4, "induk": "1.25.10991", "name": "ALYSYA NOVIA WIJAYA", "gender": "P", "status": "aktif"}, {"no": 5, "induk": "1.25.10992", "name": "AREL VA ANANDA BOY LUKITA", "gender": "L", "status": "aktif"}, {"no": 6, "induk": "1.25.10993", "name": "AULIA RAMADHANI", "gender": "P", "status": "aktif"}, {"no": 7, "induk": "1.25.10994", "name": "BIMA PRAYOGA ARIFIYANTO", "gender": "L", "status": "aktif"}, {"no": 8, "induk": "1.25.10995", "name": "CHAIRUL RACHMAT RAMADHAN", "gender": "L", "status": "aktif"}, {"no": 9, "induk": "1.25.10996", "name": "DEZZAN RAMADHAN IRAWAN PUTRA", "gender": "L", "status": "keluar"}, {"no": 10, "induk": "1.25.10997", "name": "DIMAS MAULANA", "gender": "L", "status": "aktif"}, {"no": 11, "induk": "1.25.10998", "name": "DWI ERI PRASETYO", "gender": "L", "status": "aktif"}, {"no": 12, "induk": "1.25.10999", "name": "EXHEL VANHOUTEN JUNAIDY", "gender": "L", "status": "keluar"}, {"no": 13, "induk": "1.25.11000", "name": "FAMELA AURORA JASMINE", "gender": "P", "status": "aktif"}, {"no": 14, "induk": "1.25.11001", "name": "FARREL CHRISTIAN KENT POLII", "gender": "L", "status": "keluar"}, {"no": 15, "induk": "1.25.11002", "name": "FRAMIS AHMADBANU MIBRAZ", "gender": "L", "status": "aktif"}, {"no": 16, "induk": "1.25.11003", "name": "HANIF FAKHRIANSYAH ZAIDAN", "gender": "L", "status": "aktif"}, {"no": 17, "induk": "1.25.11004", "name": "IDO ALFANDI", "gender": "L", "status": "aktif"}, {"no": 18, "induk": "1.25.11005", "name": "JASMINE CAHYA KHARISMA", "gender": "P", "status": "aktif"}, {"no": 19, "induk": "1.25.11006", "name": "KENKA FITRAH ARNANDUTA", "gender": "L", "status": "aktif"}, {"no": 20, "induk": "1.25.11007", "name": "M FARDAN AKBAR", "gender": "L", "status": "aktif"}, {"no": 21, "induk": "1.25.11008", "name": "MEGA NOR FADZILAH", "gender": "P", "status": "aktif"}, {"no": 22, "induk": "1.25.11009", "name": "MUHAMAD HADRIYAN", "gender": "L", "status": "aktif"}, {"no": 23, "induk": "1.25.11010", "name": "MUHAMAD YUSRON", "gender": "L", "status": "aktif"}, {"no": 24, "induk": "1.25.11011", "name": "MUHAMMAD DIMAS SAPUTRA", "gender": "L", "status": "aktif"}, {"no": 25, "induk": "1.25.11012", "name": "MUHAMMAD IKHSAN MAULANA", "gender": "L", "status": "aktif"}, {"no": 26, "induk": "1.25.11013", "name": "MUHAMMAD RAFFI", "gender": "L", "status": "aktif"}, {"no": 27, "induk": "1.25.11014", "name": "NABILA AZALIA DAMARA", "gender": "P", "status": "aktif"}, {"no": 28, "induk": "1.25.11015", "name": "NOVAL AZZURA ADITYA", "gender": "L", "status": "aktif"}, {"no": 29, "induk": "1.25.11016", "name": "NOVITA PUTRI MAHARANI", "gender": "P", "status": "aktif"}, {"no": 30, "induk": "1.25.11017", "name": "PANDU CAHYA PRATAMA", "gender": "L", "status": "aktif"}, {"no": 31, "induk": "1.25.11018", "name": "RAFA INDRA RAMADHAN", "gender": "L", "status": "aktif"}, {"no": 32, "induk": "1.25.11019", "name": "REVA FIRDHANIA AL-RIDHA", "gender": "P", "status": "aktif"}, {"no": 33, "induk": "1.25.11020", "name": "SATRIO FALENDRA", "gender": "L", "status": "aktif"}, {"no": 34, "induk": "1.25.11021", "name": "SIRIN NABILA", "gender": "P", "status": "aktif"}, {"no": 35, "induk": "1.25.11023", "name": "WAFRI RIZAL AKMAL", "gender": "L", "status": "aktif"}, {"no": 36, "induk": "2.26.11138", "name": "NAJIHAN AULIA FITRI", "gender": "P", "status": "aktif"}]}, "DKV3": {"name": "Kelas XI - 3", "students": [{"no": 1, "induk": "1.25.11024", "name": "AINI ASHARI", "gender": "P", "status": "aktif"}, {"no": 2, "induk": "1.25.11025", "name": "ALIKA AZKA PRADANA", "gender": "P", "status": "aktif"}, {"no": 3, "induk": "1.25.11026", "name": "ANANDA CALLISTA YULIANSYAH", "gender": "P", "status": "aktif"}, {"no": 4, "induk": "1.25.11027", "name": "ARIF RAKHMAN HAKIM AL BANJARI", "gender": "L", "status": "aktif"}, {"no": 5, "induk": "1.25.11028", "name": "ATHALLAH RADITHYA HARDEWA", "gender": "L", "status": "aktif"}, {"no": 6, "induk": "1.25.11029", "name": "BIMO DASHA ALFARIZI", "gender": "L", "status": "aktif"}, {"no": 7, "induk": "1.25.11030", "name": "CHARLOTE BENEDICT TSABITUL AZMI", "gender": "L", "status": "aktif"}, {"no": 8, "induk": "1.25.11031", "name": "DESTINA MAHARANI", "gender": "P", "status": "aktif"}, {"no": 9, "induk": "1.25.11032", "name": "DHEKA RAKA KAYAFI", "gender": "L", "status": "aktif"}, {"no": 10, "induk": "1.25.11033", "name": "DINA ZAHRA", "gender": "P", "status": "aktif"}, {"no": 11, "induk": "1.25.11034", "name": "ERJI MAULANA RAYA", "gender": "L", "status": "aktif"}, {"no": 12, "induk": "1.25.11035", "name": "FAHREZI HIDAYATULLOH", "gender": "L", "status": "aktif"}, {"no": 13, "induk": "1.25.11036", "name": "FAREL AHMAD BY HAQI", "gender": "L", "status": "aktif"}, {"no": 14, "induk": "1.25.11037", "name": "FAUZAN ALFIKRI", "gender": "L", "status": "aktif"}, {"no": 15, "induk": "1.25.11038", "name": "FRISYA AZHAR WHYLIANI", "gender": "P", "status": "aktif"}, {"no": 16, "induk": "1.25.11039", "name": "HASBY ROSIQI", "gender": "L", "status": "aktif"}, {"no": 17, "induk": "1.25.11040", "name": "IKHSAN SYAHRU RAMADHAN", "gender": "L", "status": "aktif"}, {"no": 18, "induk": "1.25.11041", "name": "JAUZA SITI AZ-ZAHRA", "gender": "P", "status": "aktif"}, {"no": 19, "induk": "1.25.11042", "name": "KEVIN ADITYA AKMAL RAMADHAN", "gender": "L", "status": "aktif"}, {"no": 20, "induk": "1.25.11043", "name": "MAHENDRA WIJAYA", "gender": "L", "status": "aktif"}, {"no": 21, "induk": "1.25.11044", "name": "MUHAMAD AZRIL FAUZI", "gender": "L", "status": "aktif"}, {"no": 22, "induk": "1.25.11045", "name": "MUHAMMAD RAIHAN", "gender": "L", "status": "aktif"}, {"no": 23, "induk": "1.25.11046", "name": "MUHAMMAD AISY FAJRIE", "gender": "L", "status": "aktif"}, {"no": 24, "induk": "1.25.11047", "name": "MUHAMMAD FADIL ALBAIS", "gender": "L", "status": "keluar"}, {"no": 25, "induk": "1.25.11048", "name": "MUHAMMAD ILHAM GUNAWAN", "gender": "L", "status": "aktif"}, {"no": 26, "induk": "1.25.11049", "name": "MUHAMMAD RIZKY AKBAR", "gender": "L", "status": "aktif"}, {"no": 27, "induk": "1.25.11050", "name": "NAJMI SHAHADA", "gender": "P", "status": "aktif"}, {"no": 28, "induk": "1.25.11051", "name": "PRICILLIA PUTRI", "gender": "P", "status": "aktif"}, {"no": 29, "induk": "1.25.11052", "name": "RAFAEL RAMADHAN", "gender": "L", "status": "aktif"}, {"no": 30, "induk": "1.25.11053", "name": "RAHMAN HAKIM MAULANA", "gender": "L", "status": "aktif"}, {"no": 31, "induk": "1.25.11054", "name": "RAKA PUTRA HAMDALAH", "gender": "L", "status": "aktif"}, {"no": 32, "induk": "1.25.11055", "name": "ROBY ARDIANSYAH", "gender": "L", "status": "aktif"}, {"no": 33, "induk": "1.25.11056", "name": "SHAFA APRILIA SALSABILAH", "gender": "P", "status": "aktif"}, {"no": 34, "induk": "1.25.11057", "name": "SURI ABU KHORI", "gender": "L", "status": "aktif"}, {"no": 35, "induk": "1.26.11133", "name": "RIZKY ARMANDA", "gender": "L", "status": "aktif"}, {"no": 36, "induk": "2.26.11134", "name": "NESA DWI AMELIA", "gender": "P", "status": "aktif"}, {"no": 37, "induk": "2.26.11136", "name": "ZAHRA JULITA ABIDIN", "gender": "P", "status": "aktif"}]}};
+    const SEEDED_GRADES = {"DKV2": {"1.25.10988": {"t1": 100, "t2": 80}, "1.25.10990": {"t1": 86}, "1.25.10991": {"t1": 86, "t2": 100}, "1.25.10992": {"t1": 86, "t2": 100}, "1.25.10993": {"t1": 86}, "1.25.10994": {"t1": 93, "t2": 92}, "1.25.10995": {"t1": 93, "t2": 100}, "1.25.10997": {"t1": 86}, "1.25.10998": {"t1": 86, "t2": 80}, "1.25.11000": {"t1": 86, "t2": 50}, "1.25.11002": {"t1": 95, "t2": 92}, "1.25.11003": {"t1": 86, "t2": 100}, "1.25.11004": {"t1": 100, "t2": 100}, "1.25.11005": {"t1": 86, "t2": 60, "t3": 80}, "1.25.11006": {"t1": 87, "t2": 100}, "1.25.11007": {"t1": 80, "t2": 100}, "1.25.11008": {"t1": 93, "t2": 100}, "1.25.11009": {"t1": 86, "t2": 92}, "1.25.11010": {"t1": 86, "t2": 100}, "1.25.11011": {"t1": 86, "t2": 100}, "1.25.11012": {"t1": 80, "t2": 100}, "1.25.11014": {"t1": 80, "t2": 100}, "1.25.11015": {"t1": 86, "t2": 82}, "1.25.11016": {"t1": 86, "t2": 100}, "1.25.11017": {"t1": 93, "t2": 92}, "1.25.11018": {"t1": 93, "t2": 86}, "1.25.11019": {"t1": 66, "t2": 70}, "1.25.11020": {"t1": 86, "t2": 100}, "1.25.11021": {"t1": 66, "t2": 86}, "1.25.11023": {"t1": 86, "t2": 100, "t3": 80}, "2.26.11138": {"t1": 86, "t2": 100}}, "DKV3": {"1.25.11028": {"t1": 80}, "1.25.11040": {"t1": 86}, "1.25.11041": {"t1": 86}, "1.25.11050": {"t1": 85}, "1.25.11051": {"t1": 86}, "1.25.11057": {"t1": 85}, "1.26.11133": {"t1": 70}}};
+    const SEEDED_ATTENDANCE = {"DKV2": {"1.25.10988": {"w1": ".", "w2": ".", "w3": "S"}, "1.25.10992": {"w1": ".", "w2": ".", "w3": "I"}, "1.25.11019": {"w1": ".", "w2": ".", "w3": "S"}}};
+
+    const STORAGE_KEY = "dkv_absensi_v2_clean_db";
+    const AUTH_KEY = "dkv_absensi_v2_auth";
+    const PIN_KEY = "dkv_absensi_v2_pin";
+    const DEFAULT_PIN = "201023";
+    const SEED_TS = "2026-01-01T00:00:00.000Z";
+    const GAS_URL_KEY = "BB_GAS_WEBAPP_URL_V2";
+    const GAS_MANUAL_KEY = "BB_GAS_WEBAPP_MANUAL_V2";
+    const FALLBACK_GAS_URL = "https://script.google.com/macros/s/AKfycbwFaoP2y-oVHt3Ta7pgcS2ncljzRNZ0MtKAIdECVdmDeFFYkUQ8M3Q2uURo5twhDz2XxA/exec";
+
+    const CLASS_META = {
+      XDKV1: { key: "XDKV1", label: "X DKV 1", grade: "X" },
+      XDKV2: { key: "XDKV2", label: "X DKV 2", grade: "X" },
+      XDKV3: { key: "XDKV3", label: "X DKV 3", grade: "X" },
+      DKV1:  { key: "DKV1",  label: "XI DKV 1", grade: "XI" },
+      DKV2:  { key: "DKV2",  label: "XI DKV 2", grade: "XI" },
+      DKV3:  { key: "DKV3",  label: "XI DKV 3", grade: "XI" }
+    };
+
+    const SUBJECT_META = {
+      video_editing: { key: "video_editing", name: "Editing Audio & Video", slug: "Editing_Audio_Video", classes: ["DKV1", "DKV2", "DKV3"] },
+      after_effects: { key: "after_effects", name: "Perangkat Lunak", slug: "Perangkat_Lunak", classes: ["DKV1", "DKV2", "DKV3"] },
+      kelas_x_dkv:   { key: "kelas_x_dkv",   name: "Dasar-Dasar DKV (Kelas X)", slug: "Kelas_X_DKV", classes: ["XDKV1", "XDKV2", "XDKV3"] }
+    };
+
+    function isGradeXKey(clsKey) {
+      return clsKey === "XDKV1" || clsKey === "XDKV2" || clsKey === "XDKV3";
+    }
+
+    function classCodeToAbsKey(raw) {
+      const s = String(raw || "").trim().toUpperCase().replace(/\s+/g, " ");
+      if (/^X\s*DKV\s*1$/i.test(s) || s === "XDKV1") return "XDKV1";
+      if (/^X\s*DKV\s*2$/i.test(s) || s === "XDKV2") return "XDKV2";
+      if (/^X\s*DKV\s*3$/i.test(s) || s === "XDKV3") return "XDKV3";
+      if (/^XI\s*DKV\s*1$/i.test(s) || s === "DKV1" || s === "KELAS XI - 1") return "DKV1";
+      if (/^XI\s*DKV\s*2$/i.test(s) || s === "DKV2" || s === "KELAS XI - 2") return "DKV2";
+      if (/^XI\s*DKV\s*3$/i.test(s) || s === "DKV3" || s === "KELAS XI - 3") return "DKV3";
+      return "";
+    }
+
+    function compactNis(raw) {
+      return String(raw || "").replace(/[^0-9]/g, "");
+    }
+
+    function isNewerTs(a, b) {
+      const sa = String(a || "").trim();
+      const sb = String(b || "").trim();
+      if (!sa) return false;
+      if (!sb) return true;
+      return sa > sb;
+    }
+
+    // App State
+    let currentSubject = "video_editing";     // 'video_editing' | 'after_effects' | 'kelas_x_dkv'
+    let lastGradeXISubject = "video_editing"; // Remembered XI subject when toggling X <-> XI
+    let currentClass = "DKV2";                // 'XDKV1'..'XDKV3' | 'DKV1'..'DKV3'
+    let currentView = "attendance";           // 'attendance' | 'grades' | 'attitude' | 'rekap'
+    let filterStatus = "aktif";               // 'all' | 'aktif' | 'keluar'
+    let searchQuery = "";
+
+    // Cloud Sync State
+    let cachedAbsGasUrl = "";
+    let cloudV4Supported = false;
+    let cloudChecked = false;
+    let cloudSyncInFlight = false;
+    let cloudSaveTimer = null;
+    let cloudDirty = false;
+    let initialAbsReconciled = false;
+
+    // In-memory Database
+    let db = {
+      updatedAt: SEED_TS,
+      subjects: {
+        video_editing: { name: "Editing Audio & Video", classes: {} },
+        after_effects: { name: "Perangkat Lunak", classes: {} },
+        kelas_x_dkv:   { name: "Dasar-Dasar DKV (Kelas X)", classes: {} }
+      }
+    };
+
+    // Pure Web Audio API Sound Synthesizer (Zero-latency, no external audio files needed)
+    const AudioFX = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === "suspended") {
+          this.ctx.resume().catch(() => {});
+        }
+      },
+      playPop(freq = 580) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.45, this.ctx.currentTime + 0.07);
+          gain.gain.setValueAtTime(0.09, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.07);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.07);
+        } catch (e) {}
+      },
+      playTab() {
+        this.playPop(520);
+      },
+      playWhoosh() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(340, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch (e) {}
+      },
+      playSuccess() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Major Arpeggio)
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+            gain.gain.setValueAtTime(0.12, now + idx * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.38);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.06);
+            osc.stop(now + idx * 0.06 + 0.38);
+          });
+        } catch (e) {}
+      }
+    };
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.display = 'block';
+
+      const pieces = [];
+      const colors = ['#2563eb', '#38bdf8', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#f43f5e'];
+      for (let i = 0; i < 90; i++) {
+        pieces.push({
+          x: window.innerWidth / 2 + (Math.random() * 240 - 120),
+          y: window.innerHeight * 0.65,
+          vx: (Math.random() - 0.5) * 16,
+          vy: -Math.random() * 18 - 8,
+          size: Math.random() * 9 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rSpeed: (Math.random() - 0.5) * 12,
+          opacity: 1
+        });
+      }
+
+      let frames = 0;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = false;
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.45;
+          p.rotation += p.rSpeed;
+          if (p.vy > 0) p.opacity -= 0.012;
+          if (p.opacity > 0) {
+            alive = true;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.opacity);
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+            ctx.restore();
+          }
+        });
+        frames++;
+        if (alive && frames < 140) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.style.display = 'none';
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function initApp() {
+      loadDatabase();
+      checkAuth();
+      updatePrintDate();
+      syncSubjectAndClassUI();
+      renderAll();
+      syncAbsensiFromCloud(false);
+
+      setInterval(() => {
+        if (!document.hidden && !cloudSyncInFlight) syncAbsensiFromCloud(false);
+      }, 15000);
+      window.addEventListener("focus", () => {
+        if (!cloudSyncInFlight) syncAbsensiFromCloud(false);
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && cloudDirty) {
+          pushAbsensiToCloud({ keepalive: true });
+        } else if (!document.hidden && !cloudSyncInFlight) {
+          syncAbsensiFromCloud(false);
+        }
+      });
+      window.addEventListener("pagehide", () => {
+        if (cloudDirty) pushAbsensiToCloud({ keepalive: true });
+      });
+    }
+
+    function checkAuth() {
+      const isUnlocked = localStorage.getItem(AUTH_KEY) === "true";
+      const overlay = document.getElementById("pinLockModal");
+      if (isUnlocked) {
+        overlay.style.display = "none";
+      } else {
+        overlay.style.display = "flex";
+        setTimeout(() => {
+          const pinField = document.getElementById("pinInput");
+          if (pinField) pinField.focus();
+        }, 100);
+      }
+    }
+
+    function toggleAbsPinVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      if (btn) {
+        btn.setAttribute("aria-pressed", show ? "true" : "false");
+        btn.innerHTML = show
+          ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+          : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      }
+    }
+
+    function verifyPin() {
+      const pinField = document.getElementById("pinInput");
+      const errBox = document.getElementById("pinErrMsg");
+      const remember = document.getElementById("rememberDevice").checked;
+      const expected = localStorage.getItem(PIN_KEY) || DEFAULT_PIN;
+
+      if (pinField.value === expected || pinField.value === DEFAULT_PIN) {
+        AudioFX.playSuccess();
+        errBox.textContent = "";
+        if (remember) {
+          localStorage.setItem(AUTH_KEY, "true");
+        }
+        document.getElementById("pinLockModal").style.display = "none";
+        showToast("Akses berhasil dibuka.");
+        syncAbsensiFromCloud(false);
+      } else {
+        errBox.textContent = "Kode PIN tidak sesuai. Silakan periksa kembali.";
+        pinField.value = "";
+        pinField.focus();
+      }
+    }
+
+    function lockPortal() {
+      localStorage.removeItem(AUTH_KEY);
+      document.getElementById("pinInput").value = "";
+      document.getElementById("pinLockModal").style.display = "flex";
+      showToast("Sesi berhasil dikunci.");
+    }
+
+    function buildEmptyClassBucket(clsKey, withInitialVideoSeed) {
+      const meta = CLASS_META[clsKey];
+      const raw = RAW_STUDENTS[clsKey];
+      const stList = raw
+        ? JSON.parse(JSON.stringify(raw.students)).map(s => Object.assign({}, s, { updatedAt: SEED_TS }))
+        : [];
+      const attMap = {};
+      const attTsMap = {};
+      const grMap = {};
+      const grTsMap = {};
+
+      if (withInitialVideoSeed && raw) {
+        stList.forEach(s => {
+          attMap[s.induk] = {
+            w1: s.status === 'aktif' ? '.' : '',
+            w2: s.status === 'aktif' ? '.' : '',
+            w3: '', w4: '', w5: '', w6: '', w7: '', w8: '', w9: '', w10: ''
+          };
+          attTsMap[s.induk] = {
+            w1: SEED_TS, w2: SEED_TS, w3: SEED_TS, w4: SEED_TS, w5: SEED_TS,
+            w6: SEED_TS, w7: SEED_TS, w8: SEED_TS, w9: SEED_TS, w10: SEED_TS
+          };
+        });
+
+        if (clsKey === "DKV2") {
+          if (attMap["1.25.10988"]) attMap["1.25.10988"].w3 = "S";
+          if (attMap["1.25.10992"]) attMap["1.25.10992"].w3 = "I";
+          if (attMap["1.25.11019"]) attMap["1.25.11019"].w3 = "S";
+        }
+
+        if (SEEDED_GRADES[clsKey]) {
+          Object.keys(SEEDED_GRADES[clsKey]).forEach(induk => {
+            grMap[induk] = Object.assign({}, SEEDED_GRADES[clsKey][induk]);
+            grTsMap[induk] = {};
+            Object.keys(grMap[induk]).forEach(f => { grTsMap[induk][f] = SEED_TS; });
+          });
+        }
+      } else {
+        stList.forEach(s => {
+          attMap[s.induk] = { w1: '', w2: '', w3: '', w4: '', w5: '', w6: '', w7: '', w8: '', w9: '', w10: '' };
+          attTsMap[s.induk] = {};
+        });
+      }
+
+      return {
+        name: meta ? meta.label : clsKey,
+        students: stList,
+        attendance10w: attMap,
+        attendance10wTs: attTsMap,
+        grades: grMap,
+        gradesTs: grTsMap,
+        attitude: {},
+        attitudeTs: {}
+      };
+    }
+
+    function importPortalStudentsIntoAbsensi(portalStudents) {
+      if (!Array.isArray(portalStudents) || !portalStudents.length) return false;
+      let changed = false;
+      portalStudents.forEach(ps => {
+        if (!ps || !ps.nis) return;
+        const absKey = classCodeToAbsKey(ps.classCode);
+        if (!absKey) return;
+        const targetSubjs = isGradeXKey(absKey) ? ["kelas_x_dkv"] : ["video_editing", "after_effects"];
+        const cleanInduk = String(ps.nis).trim();
+        const cNis = compactNis(cleanInduk);
+        targetSubjs.forEach(sk => {
+          const bucket = db.subjects[sk] && db.subjects[sk].classes && db.subjects[sk].classes[absKey];
+          if (!bucket) return;
+          const idx = bucket.students.findIndex(x => x && compactNis(x.induk) === cNis);
+          if (idx < 0) {
+            bucket.students.push({
+              no: bucket.students.length + 1,
+              induk: cleanInduk,
+              name: String(ps.name || "Siswa").trim().toUpperCase(),
+              gender: String(ps.gender || "L").toUpperCase() === "P" ? "P" : "L",
+              status: ps.status === "keluar" ? "keluar" : "aktif",
+              updatedAt: ps.updatedAt || SEED_TS
+            });
+            changed = true;
+          } else if (isNewerTs(ps.updatedAt, bucket.students[idx].updatedAt)) {
+            bucket.students[idx].name = String(ps.name || bucket.students[idx].name).trim().toUpperCase();
+            bucket.students[idx].status = ps.status === "keluar" ? "keluar" : "aktif";
+            bucket.students[idx].updatedAt = ps.updatedAt;
+            changed = true;
+          }
+        });
+      });
+      return changed;
+    }
+
+    function ensureDbIntegrity() {
+      if (!db || typeof db !== "object") db = {};
+      if (!db.subjects || typeof db.subjects !== "object") db.subjects = {};
+      if (!db.updatedAt) db.updatedAt = SEED_TS;
+      const backfillNow = new Date().toISOString();
+
+      Object.keys(SUBJECT_META).forEach(subjKey => {
+        const meta = SUBJECT_META[subjKey];
+        if (!db.subjects[subjKey] || typeof db.subjects[subjKey] !== "object") {
+          db.subjects[subjKey] = { name: meta.name, classes: {} };
+        }
+        db.subjects[subjKey].name = meta.name;
+        if (!db.subjects[subjKey].classes || typeof db.subjects[subjKey].classes !== "object") {
+          db.subjects[subjKey].classes = {};
+        }
+
+        // Hapus kelas di luar 6 kelas resmi
+        Object.keys(db.subjects[subjKey].classes).forEach(ck => {
+          if (!meta.classes.includes(ck)) delete db.subjects[subjKey].classes[ck];
+        });
+
+        meta.classes.forEach(clsKey => {
+          if (!db.subjects[subjKey].classes[clsKey]) {
+            db.subjects[subjKey].classes[clsKey] = buildEmptyClassBucket(clsKey, subjKey === "video_editing");
+          }
+          const bucket = db.subjects[subjKey].classes[clsKey];
+          bucket.name = CLASS_META[clsKey].label;
+          if (!Array.isArray(bucket.students)) bucket.students = [];
+          if (!bucket.attendance10w || typeof bucket.attendance10w !== "object") bucket.attendance10w = {};
+          if (!bucket.attendance10wTs || typeof bucket.attendance10wTs !== "object") bucket.attendance10wTs = {};
+          if (!bucket.grades || typeof bucket.grades !== "object") bucket.grades = {};
+          if (!bucket.gradesTs || typeof bucket.gradesTs !== "object") bucket.gradesTs = {};
+          if (!bucket.attitude || typeof bucket.attitude !== "object") bucket.attitude = {};
+          if (!bucket.attitudeTs || typeof bucket.attitudeTs !== "object") bucket.attitudeTs = {};
+
+          // Backfill timestamps untuk data lokal yang sudah ada sebelum v4.0
+          Object.keys(bucket.grades).forEach(induk => {
+            if (!bucket.gradesTs[induk]) bucket.gradesTs[induk] = {};
+            const row = bucket.grades[induk] || {};
+            const seedRow = (SEEDED_GRADES[clsKey] && SEEDED_GRADES[clsKey][induk]) || {};
+            Object.keys(row).forEach(field => {
+              if (!bucket.gradesTs[induk][field]) {
+                const isSameAsSeed = (seedRow[field] !== undefined && Number(seedRow[field]) === Number(row[field]));
+                bucket.gradesTs[induk][field] = isSameAsSeed ? SEED_TS : backfillNow;
+              }
+            });
+          });
+          Object.keys(bucket.attendance10w).forEach(induk => {
+            if (!bucket.attendance10wTs[induk]) bucket.attendance10wTs[induk] = {};
+            const row = bucket.attendance10w[induk] || {};
+            const seedAtt = (SEEDED_ATTENDANCE[clsKey] && SEEDED_ATTENDANCE[clsKey][induk]) || {};
+            Object.keys(row).forEach(wk => {
+              if (!bucket.attendance10wTs[induk][wk]) {
+                const val = row[wk];
+                const isDefaultW12 = (wk === "w1" || wk === "w2") && (val === "." || val === "");
+                const isSeedMatch = (seedAtt[wk] !== undefined && seedAtt[wk] === val) || val === "" || isDefaultW12;
+                bucket.attendance10wTs[induk][wk] = isSeedMatch ? SEED_TS : backfillNow;
+              }
+            });
+          });
+          Object.keys(bucket.attitude).forEach(induk => {
+            if (!bucket.attitudeTs[induk]) bucket.attitudeTs[induk] = backfillNow;
+          });
+        });
+      });
+
+      // Ikut muat daftar siswa dari Portal Dashboard Guru lokal (termasuk kelas X DKV 1-3)
+      try {
+        const rawMaster = localStorage.getItem("BB_NEXUS_PORTAL_V1");
+        if (rawMaster) {
+          const parsedMaster = JSON.parse(rawMaster);
+          if (parsedMaster && Array.isArray(parsedMaster.students)) {
+            importPortalStudentsIntoAbsensi(parsedMaster.students);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function loadDatabase() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          db = JSON.parse(saved);
+        } catch (e) {
+          initDefaultDb();
+        }
+      } else {
+        initDefaultDb();
+      }
+      ensureDbIntegrity();
+      saveDatabase(true);
+    }
+
+    function initDefaultDb() {
+      db = {
+        updatedAt: SEED_TS,
+        subjects: {
+          video_editing: { name: "Editing Audio & Video", classes: {} },
+          after_effects: { name: "Perangkat Lunak", classes: {} },
+          kelas_x_dkv:   { name: "Dasar-Dasar DKV (Kelas X)", classes: {} }
+        }
+      };
+
+      // HANYA Editing Audio & Video yang memuat seed lama; Perangkat Lunak bersih & terpisah!
+      ["DKV1", "DKV2", "DKV3"].forEach(clsKey => {
+        db.subjects.video_editing.classes[clsKey] = buildEmptyClassBucket(clsKey, true);
+        db.subjects.after_effects.classes[clsKey] = buildEmptyClassBucket(clsKey, false);
+      });
+      ["XDKV1", "XDKV2", "XDKV3"].forEach(clsKey => {
+        db.subjects.kelas_x_dkv.classes[clsKey] = buildEmptyClassBucket(clsKey, false);
+      });
+    }
+
+    function saveDatabase(skipCloud) {
+      try {
+        if (!skipCloud) db.updatedAt = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        if (!skipCloud) {
+          scheduleAbsensiCloudSave();
+        }
+      } catch (e) {
+        console.error("Gagal simpan ke localStorage", e);
+      }
+    }
+
+    // =========================================================================
+    // SINKRONISASI CLOUD ANTAR PERANGKAT (GOOGLE APPS SCRIPT NEXUS v4.0)
+    // =========================================================================
+    function setCloudBadge(mode, text) {
+      const badge = document.getElementById("saveBadge");
+      const label = document.getElementById("saveBadgeText");
+      if (!badge || !label) return;
+      badge.classList.remove("is-warn", "is-syncing", "is-error");
+      if (mode === "syncing") badge.classList.add("is-syncing");
+      else if (mode === "warn") badge.classList.add("is-warn");
+      else if (mode === "error") badge.classList.add("is-error");
+      label.textContent = text;
+    }
+
+    async function resolveAbsensiGasUrl() {
+      try {
+        const isManual = localStorage.getItem(GAS_MANUAL_KEY) === "1";
+        const local = localStorage.getItem(GAS_URL_KEY) || "";
+        if (isManual && local.startsWith("https://script.google.com/")) return local;
+        if (cachedAbsGasUrl) return cachedAbsGasUrl;
+        const res = await fetch("/drive-config.json?t=" + Date.now());
+        if (res.ok) {
+          const cfg = await res.json();
+          if (cfg && cfg.scriptUrl && cfg.scriptUrl.startsWith("https://script.google.com/")) {
+            cachedAbsGasUrl = cfg.scriptUrl;
+            localStorage.setItem(GAS_URL_KEY, cfg.scriptUrl);
+            return cfg.scriptUrl;
+          }
+        }
+        if (local.startsWith("https://script.google.com/")) return local;
+      } catch (e) {}
+      return FALLBACK_GAS_URL;
+    }
+
+    function mergeRemoteAbsensiBook(remoteBook) {
+      if (!remoteBook || typeof remoteBook !== "object" || !remoteBook.subjects) return false;
+      let changed = false;
+
+      Object.keys(SUBJECT_META).forEach(subjKey => {
+        const rSubj = remoteBook.subjects[subjKey];
+        if (!rSubj || !rSubj.classes) return;
+        const meta = SUBJECT_META[subjKey];
+        meta.classes.forEach(clsKey => {
+          const rCls = rSubj.classes[clsKey];
+          if (!rCls || typeof rCls !== "object") return;
+          const dst = db.subjects[subjKey].classes[clsKey];
+          if (!dst) return;
+
+          // Merge students
+          if (Array.isArray(rCls.students)) {
+            rCls.students.forEach(rs => {
+              if (!rs || !rs.induk) return;
+              const idx = dst.students.findIndex(x => x && compactNis(x.induk) === compactNis(rs.induk));
+              if (idx < 0) {
+                dst.students.push(rs);
+                changed = true;
+              } else if (isNewerTs(rs.updatedAt, dst.students[idx].updatedAt)) {
+                dst.students[idx] = Object.assign({}, dst.students[idx], rs);
+                changed = true;
+              }
+            });
+          }
+
+          // Merge attendance10w per cell by timestamp
+          const rAtt = rCls.attendance10w || {};
+          const rAttTs = rCls.attendance10wTs || {};
+          Object.keys(rAtt).forEach(induk => {
+            if (!dst.attendance10w[induk]) dst.attendance10w[induk] = {};
+            if (!dst.attendance10wTs[induk]) dst.attendance10wTs[induk] = {};
+            const row = rAtt[induk] || {};
+            const rowTs = rAttTs[induk] || {};
+            Object.keys(row).forEach(wk => {
+              const rTs = String(rowTs[wk] || remoteBook.updatedAt || "");
+              const lTs = String(dst.attendance10wTs[induk][wk] || "");
+              if (rTs && isNewerTs(rTs, lTs)) {
+                if (dst.attendance10w[induk][wk] !== row[wk]) changed = true;
+                dst.attendance10w[induk][wk] = row[wk];
+                dst.attendance10wTs[induk][wk] = rTs;
+              }
+            });
+          });
+
+          // Merge grades per field by timestamp (including deletions)
+          const rGr = rCls.grades || {};
+          const rGrTs = rCls.gradesTs || {};
+          const allInduks = new Set([...Object.keys(rGr), ...Object.keys(rGrTs)]);
+          allInduks.forEach(induk => {
+            if (!dst.grades[induk]) dst.grades[induk] = {};
+            if (!dst.gradesTs[induk]) dst.gradesTs[induk] = {};
+            const row = rGr[induk] || {};
+            const rowTs = rGrTs[induk] || {};
+            const allFields = new Set([...Object.keys(row), ...Object.keys(rowTs)]);
+            allFields.forEach(field => {
+              const rTs = String(rowTs[field] || remoteBook.updatedAt || "");
+              const lTs = String(dst.gradesTs[induk][field] || "");
+              if (rTs && isNewerTs(rTs, lTs)) {
+                const rVal = row[field];
+                if (rVal === undefined || rVal === null || rVal === "") {
+                  if (dst.grades[induk][field] !== undefined) changed = true;
+                  delete dst.grades[induk][field];
+                } else {
+                  if (dst.grades[induk][field] !== rVal) changed = true;
+                  dst.grades[induk][field] = rVal;
+                }
+                dst.gradesTs[induk][field] = rTs;
+              }
+            });
+          });
+
+          // Merge attitude per student by timestamp
+          const rAtd = rCls.attitude || {};
+          const rAtdTs = rCls.attitudeTs || {};
+          Object.keys(rAtd).forEach(induk => {
+            const rTs = String(rAtdTs[induk] || remoteBook.updatedAt || "");
+            const lTs = String(dst.attitudeTs[induk] || "");
+            if (rTs && isNewerTs(rTs, lTs)) {
+              dst.attitude[induk] = Object.assign({}, dst.attitude[induk] || {}, rAtd[induk]);
+              dst.attitudeTs[induk] = rTs;
+              changed = true;
+            }
+          });
+        });
+      });
+
+      if (changed) saveDatabase(true);
+      return changed;
+    }
+
+    function hasLocalNewerThanRemote(remoteBook) {
+      const rSubjects = (remoteBook && remoteBook.subjects) ? remoteBook.subjects : {};
+      for (const subjKey of Object.keys(SUBJECT_META)) {
+        const meta = SUBJECT_META[subjKey];
+        for (const clsKey of meta.classes) {
+          const lCls = db.subjects[subjKey] && db.subjects[subjKey].classes[clsKey];
+          const rCls = rSubjects[subjKey] && rSubjects[subjKey].classes && rSubjects[subjKey].classes[clsKey];
+          if (!lCls) continue;
+
+          for (const induk of Object.keys(lCls.gradesTs || {})) {
+            const lRowTs = lCls.gradesTs[induk] || {};
+            const rRowTs = (rCls && rCls.gradesTs && rCls.gradesTs[induk]) || {};
+            for (const f of Object.keys(lRowTs)) {
+              if (lRowTs[f] && lRowTs[f] !== SEED_TS && isNewerTs(lRowTs[f], rRowTs[f])) return true;
+            }
+          }
+          for (const induk of Object.keys(lCls.attendance10wTs || {})) {
+            const lRowTs = lCls.attendance10wTs[induk] || {};
+            const rRowTs = (rCls && rCls.attendance10wTs && rCls.attendance10wTs[induk]) || {};
+            for (const wk of Object.keys(lRowTs)) {
+              if (lRowTs[wk] && lRowTs[wk] !== SEED_TS && isNewerTs(lRowTs[wk], rRowTs[wk])) return true;
+            }
+          }
+          for (const induk of Object.keys(lCls.attitudeTs || {})) {
+            const lTs = lCls.attitudeTs[induk];
+            const rTs = (rCls && rCls.attitudeTs && rCls.attitudeTs[induk]) || "";
+            if (lTs && lTs !== SEED_TS && isNewerTs(lTs, rTs)) return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    function scheduleAbsensiCloudSave() {
+      cloudDirty = true;
+      if (cloudChecked && !cloudV4Supported) {
+        setCloudBadge("warn", "Lokal tersimpan • Perlu GAS v4.0");
+        return;
+      }
+      setCloudBadge("syncing", "Menyimpan ke Cloud...");
+      if (cloudSaveTimer) clearTimeout(cloudSaveTimer);
+      cloudSaveTimer = setTimeout(() => {
+        pushAbsensiToCloud({ keepalive: false });
+      }, 500);
+    }
+
+    async function pushAbsensiToCloud(opts) {
+      if (cloudSaveTimer) {
+        clearTimeout(cloudSaveTimer);
+        cloudSaveTimer = null;
+      }
+      try {
+        const url = await resolveAbsensiGasUrl();
+        if (!url) return false;
+        const bodyStr = JSON.stringify({ action: "save_absensi_book", absensiBook: db });
+        const keepalive = !!(opts && opts.keepalive);
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: bodyStr,
+          redirect: "follow",
+          keepalive: keepalive && bodyStr.length < 58000
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const json = await res.json();
+        const verNum = parseFloat(String(json.nexusVersion || "0")) || 0;
+        cloudChecked = true;
+        cloudV4Supported = verNum >= 4.0 && json.saved !== false && json.status === "ok";
+        if (cloudV4Supported) {
+          cloudDirty = false;
+          const timeLbl = new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", hour12: false });
+          setCloudBadge("synced", `Cloud v${json.nexusVersion} Tersinkron • ${timeLbl}`);
+          return true;
+        }
+        setCloudBadge("warn", `GAS v${json.nexusVersion || "lama"} — Perlu Update v4.0`);
+        return false;
+      } catch (e) {
+        setCloudBadge("error", "Offline (tersimpan lokal)");
+        return false;
+      }
+    }
+
+    async function syncAbsensiFromCloud(showNotice) {
+      if (cloudSyncInFlight && !showNotice) return;
+      cloudSyncInFlight = true;
+      if (showNotice) setCloudBadge("syncing", "Menyinkronkan Cloud...");
+      try {
+        const url = await resolveAbsensiGasUrl();
+        if (!url) return;
+        const res = await fetch(url + "?t=" + Date.now());
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const verNum = parseFloat(String(data.nexusVersion || "0")) || 0;
+        cloudChecked = true;
+        cloudV4Supported = verNum >= 4.0;
+
+        let changed = false;
+        if (data && data.portalDb) {
+          if (Array.isArray(data.portalDb.students) && importPortalStudentsIntoAbsensi(data.portalDb.students)) {
+            changed = true;
+          }
+          if (data.portalDb.absensiBook && mergeRemoteAbsensiBook(data.portalDb.absensiBook)) {
+            changed = true;
+          }
+          if (cloudV4Supported && (cloudDirty || (!initialAbsReconciled && hasLocalNewerThanRemote(data.portalDb.absensiBook)) || showNotice && hasLocalNewerThanRemote(data.portalDb.absensiBook))) {
+            await pushAbsensiToCloud({ keepalive: false });
+          }
+          initialAbsReconciled = true;
+        }
+
+        if (changed) {
+          saveDatabase(true);
+          renderAll();
+        } else {
+          updateClassCountChips();
+        }
+
+        if (cloudV4Supported) {
+          const timeLbl = new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit", hour12: false });
+          setCloudBadge("synced", `Cloud v${data.nexusVersion} Tersinkron • ${timeLbl}`);
+          if (showNotice) showToast("Sinkronisasi Cloud v" + data.nexusVersion + " selesai! Nilai & daftar hadir sama di semua perangkat.");
+        } else {
+          setCloudBadge("warn", `Server GAS v${data.nexusVersion || "lama"} — Perlu Update v4.0`);
+          if (showNotice) showToast("Apps Script masih versi lama (v" + (data.nexusVersion || "1.0") + "). Deploy v4.0 agar sinkron antar perangkat.");
+        }
+      } catch (e) {
+        setCloudBadge("error", "Offline (data lokal aktif)");
+        if (showNotice) showToast("Gagal terhubung ke Cloud. Data tetap aman tersimpan lokal.");
+      } finally {
+        cloudSyncInFlight = false;
+      }
+    }
+
+    function updateClassCountChips() {
+      Object.keys(CLASS_META).forEach(clsKey => {
+        const el = document.getElementById("cnt-" + clsKey);
+        if (!el) return;
+        const subjForCls = isGradeXKey(clsKey) ? "kelas_x_dkv" : lastGradeXISubject;
+        const bucket = db.subjects[subjForCls] && db.subjects[subjForCls].classes[clsKey];
+        el.textContent = bucket && Array.isArray(bucket.students) ? bucket.students.length : 0;
+      });
+    }
+
+    function syncSubjectAndClassUI() {
+      const isX = isGradeXKey(currentClass);
+      const bannerLabel = document.getElementById("subjectBannerLabel");
+      const tabsXI = document.getElementById("subjectTabsXI");
+      const badgeX = document.getElementById("subjectBadgeX");
+      if (isX) {
+        currentSubject = "kelas_x_dkv";
+        if (bannerLabel) bannerLabel.textContent = "Mata Pelajaran Kelas X:";
+        if (tabsXI) tabsXI.style.display = "none";
+        if (badgeX) {
+          badgeX.style.display = "inline-flex";
+          badgeX.textContent = `Dasar-Dasar DKV (${CLASS_META[currentClass].label})`;
+        }
+      } else {
+        currentSubject = lastGradeXISubject === "after_effects" ? "after_effects" : "video_editing";
+        if (bannerLabel) bannerLabel.textContent = "Mata Pelajaran Kelas XI:";
+        if (tabsXI) tabsXI.style.display = "flex";
+        if (badgeX) badgeX.style.display = "none";
+      }
+
+      document.querySelectorAll(".subject-btn").forEach(btn => btn.classList.remove("active"));
+      if (!isX) {
+        const targetBtn = document.getElementById(currentSubject === "video_editing" ? "btnSubj-video" : "btnSubj-ae");
+        if (targetBtn) targetBtn.classList.add("active");
+      }
+
+      document.querySelectorAll(".class-pill").forEach(p => p.classList.remove("active"));
+      const pill = document.getElementById(`pill-${currentClass}`);
+      if (pill) pill.classList.add("active");
+
+      const meta = SUBJECT_META[currentSubject] || SUBJECT_META.video_editing;
+      const activeNameEl = document.getElementById("activeSubjectName");
+      if (activeNameEl) activeNameEl.textContent = meta.name;
+      updateClassCountChips();
+    }
+
+    // Switch Subject (for Grade XI)
+    function switchSubject(subjKey) {
+      AudioFX.playTab();
+      lastGradeXISubject = subjKey === "after_effects" ? "after_effects" : "video_editing";
+      if (isGradeXKey(currentClass)) {
+        currentClass = "DKV1";
+      }
+      currentSubject = lastGradeXISubject;
+      syncSubjectAndClassUI();
+      renderAll();
+    }
+
+    // Switch Class (X DKV 1-3 & XI DKV 1-3)
+    function switchClass(clsKey) {
+      if (!CLASS_META[clsKey]) return;
+      AudioFX.playPop();
+      currentClass = clsKey;
+      syncSubjectAndClassUI();
+      renderAll();
+    }
+
+    // Switch View
+    function switchView(viewKey) {
+      AudioFX.playTab();
+      currentView = viewKey;
+      document.querySelectorAll(".view-tab-btn").forEach(b => b.classList.remove("active"));
+      const mapId = { attendance: 'tabBtn-att', grades: 'tabBtn-grade', attitude: 'tabBtn-attitude', rekap: 'tabBtn-rekap' };
+      const target = document.getElementById(mapId[viewKey]);
+      if (target) target.classList.add("active");
+      renderAll();
+    }
+
+    function changeFilterStatus(val) {
+      filterStatus = val;
+      renderTable();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      renderTable();
+    }
+
+    // Master Render
+    function renderAll() {
+      updateClassCountChips();
+      renderMetaStats();
+      renderActionToolbar();
+      renderStatsTiles();
+      renderTable();
+      updatePrintLine();
+    }
+
+    function renderMetaStats() {
+      const cls = db.subjects[currentSubject] && db.subjects[currentSubject].classes[currentClass];
+      if (!cls) return;
+      const countAktif = cls.students.filter(s => s.status === 'aktif').length;
+      const countKeluar = cls.students.filter(s => s.status === 'keluar').length;
+      const countL = cls.students.filter(s => s.status === 'aktif' && s.gender === 'L').length;
+      const countP = cls.students.filter(s => s.status === 'aktif' && s.gender === 'P').length;
+
+      document.getElementById("metaCountAktif").textContent = countAktif;
+      document.getElementById("metaCountKeluar").textContent = countKeluar;
+      document.getElementById("metaCountL").textContent = countL;
+      document.getElementById("metaCountP").textContent = countP;
+    }
+
+    function updatePrintLine() {
+      const line = document.getElementById("printInfoLine");
+      const meta = SUBJECT_META[currentSubject] || SUBJECT_META.video_editing;
+      const clsName = CLASS_META[currentClass] ? CLASS_META[currentClass].label : currentClass;
+      if (line) line.textContent = `Mata Pelajaran: ${meta.name} • Kelas: ${clsName} • Tahun Pembelajaran 2026/2027`;
+    }
+
+    function renderActionToolbar() {
+      const bar = document.getElementById("actionToolbar");
+      if (!bar) return;
+
+      const svgCheck = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+      const svgDownload = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+      const svgPrint = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>';
+
+      if (currentView === "attendance") {
+        bar.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 240px;">
+            <div class="att-legend-items">
+              <span style="font-size: 0.78rem; font-weight: 600; color: #334155; margin-right: 4px;">Klik kotak untuk ubah status:</span>
+              <span class="att-legend-pill leg-h">&bull; = Hadir</span>
+              <span class="att-legend-pill leg-s">S = Sakit</span>
+              <span class="att-legend-pill leg-i">I = Izin</span>
+              <span class="att-legend-pill leg-a">A = Alfa</span>
+              <span class="att-legend-pill leg-w">- = Kosong</span>
+            </div>
+            <div class="swipe-hint-mobile">Geser tabel ke kanan untuk melihat Minggu M1&ndash;M10 &rarr;</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-act btn-green" onclick="fillAllActivePresent('w1')">
+              ${svgCheck}<span>Hadirkan Semua M1</span>
+            </button>
+            <button type="button" class="btn-act btn-blue" onclick="exportAttendance10wCSV()">
+              ${svgDownload}<span>Ekspor CSV</span>
+            </button>
+            <button type="button" class="btn-act btn-blue" onclick="window.print()">
+              ${svgPrint}<span>Cetak Presensi</span>
+            </button>
+          </div>
+        `;
+      } else if (currentView === "grades") {
+        bar.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-blue);">7 Komponen Penilaian:</span>
+              <span style="font-size: 0.8rem; font-weight: 300; color: #475569;">5 Tugas Mingguan (T1&ndash;T5) + UTS &amp; UAS &bull; Batas Lulus KKM 75</span>
+            </div>
+            <div class="swipe-hint-mobile">Geser tabel ke kanan untuk mengisi kolom T1&ndash;UAS &rarr;</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-act btn-blue" onclick="exportGradesCSV()">
+              ${svgDownload}<span>Ekspor Nilai CSV</span>
+            </button>
+            <button type="button" class="btn-act btn-blue" onclick="window.print()">
+              ${svgPrint}<span>Cetak Lembar Nilai</span>
+            </button>
+          </div>
+        `;
+      } else if (currentView === "attitude") {
+        bar.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: #7c3aed;">Penilaian Sikap &amp; Karakter:</span>
+              <span style="font-size: 0.8rem; font-weight: 300; color: #475569;">Kedisiplinan, Keaktifan, Tanggung Jawab &amp; Catatan Perilaku</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-act btn-blue" onclick="exportAttitudeCSV()">
+              ${svgDownload}<span>Ekspor Sikap CSV</span>
+            </button>
+            <button type="button" class="btn-act btn-blue" onclick="window.print()">
+              ${svgPrint}<span>Cetak Evaluasi Sikap</span>
+            </button>
+          </div>
+        `;
+      } else {
+        bar.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: #059669;">Rekapitulasi Lengkap:</span>
+              <span style="font-size: 0.8rem; font-weight: 300; color: #475569;">Presensi 10 Minggu + 7 Nilai + Evaluasi Sikap</span>
+            </div>
+            <div class="swipe-hint-mobile">Geser tabel ke kanan untuk melihat seluruh kolom &rarr;</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn-act btn-green" onclick="exportMasterCSV()">
+              ${svgDownload}<span>Unduh Master (.csv)</span>
+            </button>
+            <button type="button" class="btn-act btn-blue" onclick="window.print()">
+              ${svgPrint}<span>Cetak Laporan</span>
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function renderStatsTiles() {
+      const tiles = document.getElementById("statsTilesRow");
+      if (!tiles) return;
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const activeStudents = cls.students.filter(s => s.status === 'aktif');
+
+      if (currentView === "attendance") {
+        let totalBoxes = activeStudents.length * 10;
+        let totalH = 0, totalS = 0, totalI = 0, totalA = 0;
+
+        activeStudents.forEach(s => {
+          const rec = cls.attendance10w[s.induk] || {};
+          for (let w = 1; w <= 10; w++) {
+            const st = rec[`w${w}`] || "";
+            if (st === "." || st === "H") totalH++;
+            else if (st === "S") totalS++;
+            else if (st === "I") totalI++;
+            else if (st === "A") totalA++;
+          }
+        });
+
+        const pct = totalBoxes > 0 ? Math.round((totalH / totalBoxes) * 100) : 0;
+
+        tiles.innerHTML = `
+          <div class="stat-tile" style="border-left: 4px solid var(--primary-blue);">
+            <div class="stat-tile-title">Siswa Aktif</div>
+            <div class="stat-tile-value" style="color:var(--primary-blue);">${activeStudents.length} <span style="font-size:0.85rem; color:#64748b;">siswa</span></div>
+            <div class="stat-tile-sub">${cls.students.length - activeStudents.length} siswa keluar/coret</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--success-green);">
+            <div class="stat-tile-title">Total Hadir (&bull;)</div>
+            <div class="stat-tile-value" style="color:#059669;">${totalH} <span style="font-size:0.85rem; color:#64748b;">kali</span></div>
+            <div class="stat-tile-sub">Kehadiran kelas: ${pct}%</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--secondary-blue);">
+            <div class="stat-tile-title">Sakit (S)</div>
+            <div class="stat-tile-value" style="color:#0284c7;">${totalS}</div>
+            <div class="stat-tile-sub">Surat dokter / izin</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--warning-amber);">
+            <div class="stat-tile-title">Izin (I)</div>
+            <div class="stat-tile-value" style="color:#d97706;">${totalI}</div>
+            <div class="stat-tile-sub">Keperluan resmi</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--danger-rose);">
+            <div class="stat-tile-title">Alfa (A)</div>
+            <div class="stat-tile-value" style="color:#dc2626;">${totalA}</div>
+            <div class="stat-tile-sub">Tanpa keterangan</div>
+          </div>
+        `;
+      } else if (currentView === "grades") {
+        let totalNA = 0, countTuntas = 0, validCount = 0;
+        activeStudents.forEach(s => {
+          const g = cls.grades[s.induk] || {};
+          const na = computeFinalScore(g);
+          if (na !== null) {
+            totalNA += na;
+            validCount++;
+            if (na >= 75) countTuntas++;
+          }
+        });
+
+        const avgNA = validCount > 0 ? (totalNA / validCount).toFixed(1) : "-";
+        const tuntasPct = validCount > 0 ? Math.round((countTuntas / validCount) * 100) : 0;
+
+        tiles.innerHTML = `
+          <div class="stat-tile" style="border-left: 4px solid var(--primary-blue);">
+            <div class="stat-tile-title">Rata-Rata Nilai</div>
+            <div class="stat-tile-value" style="color:var(--primary-blue);">${avgNA}</div>
+            <div class="stat-tile-sub">Dari ${validCount} siswa dinilai</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--success-green);">
+            <div class="stat-tile-title">Tuntas KKM (&ge; 75)</div>
+            <div class="stat-tile-value" style="color:#059669;">${countTuntas} <span style="font-size:0.85rem; color:#64748b;">siswa</span></div>
+            <div class="stat-tile-sub">Persentase: ${tuntasPct}%</div>
+          </div>
+          <div class="stat-tile" style="border-left: 4px solid var(--danger-rose);">
+            <div class="stat-tile-title">Belum Tuntas</div>
+            <div class="stat-tile-value" style="color:#dc2626;">${validCount - countTuntas} <span style="font-size:0.85rem; color:#64748b;">siswa</span></div>
+            <div class="stat-tile-sub">Perlu perbaikan tugas</div>
+          </div>
+        `;
+      } else {
+        tiles.innerHTML = "";
+      }
+    }
+
+    function computeFinalScore(g) {
+      const t1 = parseFloat(g.t1);
+      const t2 = parseFloat(g.t2);
+      const t3 = parseFloat(g.t3);
+      const t4 = parseFloat(g.t4);
+      const t5 = parseFloat(g.t5);
+      const uts = parseFloat(g.uts);
+      const uas = parseFloat(g.uas);
+
+      const tasks = [t1, t2, t3, t4, t5].filter(v => !isNaN(v));
+      if (tasks.length === 0 && isNaN(uts) && isNaN(uas)) return null;
+
+      const avgTask = tasks.length > 0 ? (tasks.reduce((a, b) => a + b, 0) / tasks.length) : 0;
+      let weighted = 0;
+      let totalW = 0;
+
+      if (tasks.length > 0) {
+        weighted += avgTask * 0.5;
+        totalW += 0.5;
+      }
+      if (!isNaN(uts)) {
+        weighted += uts * 0.25;
+        totalW += 0.25;
+      }
+      if (!isNaN(uas)) {
+        weighted += uas * 0.25;
+        totalW += 0.25;
+      }
+
+      if (totalW === 0) return null;
+      return Math.round((weighted / totalW) * 10) / 10;
+    }
+
+    function getGradePredicate(score) {
+      if (score === null || isNaN(score)) return "-";
+      if (score >= 90) return "A";
+      if (score >= 80) return "B";
+      if (score >= 75) return "C";
+      return "D";
+    }
+
+    // Render Table
+    function renderTable() {
+      const thead = document.getElementById("tableHead");
+      const tbody = document.getElementById("tableBody");
+      const cls = db.subjects[currentSubject] && db.subjects[currentSubject].classes[currentClass];
+      if (!cls) return;
+
+      let list = cls.students || [];
+
+      // Status filter
+      if (filterStatus === "aktif") {
+        list = list.filter(s => s.status === 'aktif');
+      } else if (filterStatus === "keluar") {
+        list = list.filter(s => s.status === 'keluar');
+      }
+
+      // Search filter
+      if (searchQuery) {
+        list = list.filter(s => s.name.toLowerCase().includes(searchQuery) || s.induk.includes(searchQuery));
+      }
+
+      if (!list.length) {
+        const clsLabel = CLASS_META[currentClass] ? CLASS_META[currentClass].label : currentClass;
+        thead.innerHTML = `<tr><th>Informasi Kelas ${escapeHtml(clsLabel)}</th></tr>`;
+        tbody.innerHTML = `
+          <tr>
+            <td style="text-align:center; padding:32px 18px; color:#475569;">
+              <strong style="display:block; font-size:0.95rem; color:#0f172a; margin-bottom:6px;">
+                ${cls.students.length === 0 ? `Belum ada data siswa di kelas ${escapeHtml(clsLabel)}` : "Tidak ada siswa yang cocok dengan filter pencarian"}
+              </strong>
+              <span style="font-size:0.82rem;">
+                ${cls.students.length === 0
+                  ? `Tambahkan / impor daftar siswa kelas <strong>${escapeHtml(clsLabel)}</strong> melalui <a href="/dashboard" style="color:#2563eb; font-weight:700;">Dashboard Guru &rarr; + Tambah / Impor Siswa</a>, lalu klik tombol status Cloud di kanan atas.`
+                  : "Ubah filter status siswa atau kosongkan kotak pencarian di atas."}
+              </span>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      if (currentView === "attendance") {
+        thead.innerHTML = `
+          <tr>
+            <th style="width:40px; text-align:center;">No</th>
+            <th style="width:112px;">NIS / Induk</th>
+            <th>Nama Peserta Didik</th>
+            <th style="width:44px; text-align:center;">L/P</th>
+            <th style="width:82px; text-align:center;">Status</th>
+            ${Array.from({length: 10}, (_, i) => `
+              <th class="th-week">
+                <div>M${i+1}</div>
+                <button type="button" class="week-header-btn" title="Tandai semua hadir minggu ${i+1}" onclick="fillWeekAllActive('w${i+1}')">+H</button>
+              </th>
+            `).join("")}
+            <th style="width:38px; text-align:center; background:#ecfdf5; color:#047857;">H</th>
+            <th style="width:38px; text-align:center; background:#eff6ff; color:#0284c7;">S</th>
+            <th style="width:38px; text-align:center; background:#fffbeb; color:#d97706;">I</th>
+            <th style="width:38px; text-align:center; background:#fef2f2; color:#dc2626;">A</th>
+            <th style="width:52px; text-align:center;">%</th>
+          </tr>
+        `;
+
+        tbody.innerHTML = list.map(s => {
+          const rec = cls.attendance10w[s.induk] || {};
+          const isKeluar = s.status === 'keluar';
+
+          let h = 0, sc = 0, ic = 0, a = 0;
+          for (let w = 1; w <= 10; w++) {
+            const val = rec[`w${w}`] || "";
+            if (val === "." || val === "H") h++;
+            else if (val === "S") sc++;
+            else if (val === "I") ic++;
+            else if (val === "A") a++;
+          }
+          const pct = Math.round((h / 10) * 100);
+
+          return `
+            <tr class="${isKeluar ? 'row-keluar' : ''}">
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-size:0.8rem; color:#64748b;">${s.no}</td>
+              <td style="font-variant-numeric:tabular-nums; font-size:0.78rem; font-weight:700; color:var(--primary-blue);">${escapeHtml(s.induk)}</td>
+              <td>
+                <span class="name-text">${escapeHtml(s.name)}</span>
+                ${isKeluar ? '<span class="badge-keluar">KELUAR</span>' : ''}
+              </td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-size:0.78rem; font-weight:700;">${escapeHtml(s.gender)}</td>
+              <td style="text-align:center;">
+                <span class="${isKeluar ? 'badge-status-keluar' : 'badge-status-aktif'}" onclick="toggleStudentStatus('${escapeHtml(s.induk)}')">
+                  ${isKeluar ? 'Keluar' : 'Aktif'}
+                </span>
+              </td>
+              ${Array.from({length: 10}, (_, i) => {
+                const wKey = `w${i+1}`;
+                const val = rec[wKey] || "";
+                let clsVal = "";
+                if (val === "." || val === "H") clsVal = "val-dot";
+                else if (val === "S") clsVal = "val-S";
+                else if (val === "I") clsVal = "val-I";
+                else if (val === "A") clsVal = "val-A";
+
+                return `
+                  <td class="td-week-cell">
+                    <button type="button" class="week-box-btn ${clsVal}" onclick="cycleAttendanceBox('${escapeHtml(s.induk)}', '${wKey}')">
+                      ${val === "." ? "•" : (val || "-")}
+                    </button>
+                  </td>
+                `;
+              }).join("")}
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:#059669;">${h}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:#0284c7;">${sc}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:#d97706;">${ic}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:#dc2626;">${a}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700;">${pct}%</td>
+            </tr>
+          `;
+        }).join("");
+
+      } else if (currentView === "grades") {
+        thead.innerHTML = `
+          <tr>
+            <th style="width:40px; text-align:center;">No</th>
+            <th>NIS</th>
+            <th>Nama Peserta Didik</th>
+            <th style="text-align:center;">T1</th>
+            <th style="text-align:center;">T2</th>
+            <th style="text-align:center;">T3</th>
+            <th style="text-align:center;">T4</th>
+            <th style="text-align:center;">T5</th>
+            <th style="text-align:center; background:#eff6ff; color:var(--primary-blue);">Rata Tugas</th>
+            <th style="text-align:center;">UTS</th>
+            <th style="text-align:center;">UAS</th>
+            <th style="text-align:center; background:#dbeafe; color:#1e40af;">Nilai Akhir</th>
+            <th style="text-align:center;">KKM</th>
+            <th style="text-align:center;">Predikat</th>
+          </tr>
+        `;
+
+        tbody.innerHTML = list.map(s => {
+          const g = cls.grades[s.induk] || {};
+          const isKeluar = s.status === 'keluar';
+
+          const t1 = parseFloat(g.t1);
+          const t2 = parseFloat(g.t2);
+          const t3 = parseFloat(g.t3);
+          const t4 = parseFloat(g.t4);
+          const t5 = parseFloat(g.t5);
+          const tasks = [t1, t2, t3, t4, t5].filter(v => !isNaN(v));
+          const avgTask = tasks.length > 0 ? (tasks.reduce((a, b) => a + b, 0) / tasks.length).toFixed(1) : "-";
+
+          const na = computeFinalScore(g);
+          const naText = na !== null ? na.toFixed(1) : "-";
+          const kkmBadge = na !== null ? (na >= 75 ? '<span class="kkm-badge kkm-tuntas">Tuntas</span>' : '<span class="kkm-badge kkm-belum">Belum</span>') : '-';
+          const pred = getGradePredicate(na);
+          const safeInduk = escapeHtml(s.induk);
+
+          return `
+            <tr class="${isKeluar ? 'row-keluar' : ''}">
+              <td style="text-align:center; font-variant-numeric:tabular-nums; color:#64748b;">${s.no}</td>
+              <td style="font-variant-numeric:tabular-nums; font-size:0.78rem; font-weight:700; color:var(--primary-blue);">${safeInduk}</td>
+              <td>
+                <span class="name-text">${escapeHtml(s.name)}</span>
+                ${isKeluar ? '<span class="badge-keluar">KELUAR</span>' : ''}
+              </td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.t1 ?? ''}" onchange="setGradeVal('${safeInduk}', 't1', this.value)"></td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.t2 ?? ''}" onchange="setGradeVal('${safeInduk}', 't2', this.value)"></td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.t3 ?? ''}" onchange="setGradeVal('${safeInduk}', 't3', this.value)"></td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.t4 ?? ''}" onchange="setGradeVal('${safeInduk}', 't4', this.value)"></td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.t5 ?? ''}" onchange="setGradeVal('${safeInduk}', 't5', this.value)"></td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:var(--primary-blue);">${avgTask}</td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.uts ?? ''}" onchange="setGradeVal('${safeInduk}', 'uts', this.value)"></td>
+              <td style="text-align:center;"><input type="number" min="0" max="100" class="grade-input-box" value="${g.uas ?? ''}" onchange="setGradeVal('${safeInduk}', 'uas', this.value)"></td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-size:0.95rem; font-weight:800; color:#1e40af;">${naText}</td>
+              <td style="text-align:center;">${kkmBadge}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700;">${pred}</td>
+            </tr>
+          `;
+        }).join("");
+
+      } else if (currentView === "attitude") {
+        thead.innerHTML = `
+          <tr>
+            <th style="width:40px; text-align:center;">No</th>
+            <th>NIS</th>
+            <th>Nama Peserta Didik</th>
+            <th style="text-align:center;">Kedisiplinan</th>
+            <th style="text-align:center;">Keaktifan</th>
+            <th style="text-align:center;">Tanggung Jawab</th>
+            <th style="text-align:center;">Predikat Sikap</th>
+            <th>Catatan Perilaku di Kelas</th>
+          </tr>
+        `;
+
+        tbody.innerHTML = list.map(s => {
+          const att = cls.attitude[s.induk] || { discipline: 'A', activity: 'A', teamwork: 'A', note: '' };
+          const isKeluar = s.status === 'keluar';
+          const safeInduk = escapeHtml(s.induk);
+
+          return `
+            <tr class="${isKeluar ? 'row-keluar' : ''}">
+              <td style="text-align:center; font-variant-numeric:tabular-nums; color:#64748b;">${s.no}</td>
+              <td style="font-variant-numeric:tabular-nums; font-size:0.78rem; font-weight:700; color:var(--primary-blue);">${safeInduk}</td>
+              <td>
+                <span class="name-text">${escapeHtml(s.name)}</span>
+                ${isKeluar ? '<span class="badge-keluar">KELUAR</span>' : ''}
+              </td>
+              <td style="text-align:center;">
+                <select class="filter-select" style="padding:4px 6px;" onchange="setAttitudeVal('${safeInduk}', 'discipline', this.value)">
+                  <option value="A" ${att.discipline === 'A' ? 'selected' : ''}>A (Sangat Baik)</option>
+                  <option value="B" ${att.discipline === 'B' ? 'selected' : ''}>B (Baik)</option>
+                  <option value="C" ${att.discipline === 'C' ? 'selected' : ''}>C (Cukup)</option>
+                  <option value="D" ${att.discipline === 'D' ? 'selected' : ''}>D (Kurang)</option>
+                </select>
+              </td>
+              <td style="text-align:center;">
+                <select class="filter-select" style="padding:4px 6px;" onchange="setAttitudeVal('${safeInduk}', 'activity', this.value)">
+                  <option value="A" ${att.activity === 'A' ? 'selected' : ''}>A (Sangat Aktif)</option>
+                  <option value="B" ${att.activity === 'B' ? 'selected' : ''}>B (Aktif)</option>
+                  <option value="C" ${att.activity === 'C' ? 'selected' : ''}>C (Cukup)</option>
+                  <option value="D" ${att.activity === 'D' ? 'selected' : ''}>D (Pasif)</option>
+                </select>
+              </td>
+              <td style="text-align:center;">
+                <select class="filter-select" style="padding:4px 6px;" onchange="setAttitudeVal('${safeInduk}', 'teamwork', this.value)">
+                  <option value="A" ${att.teamwork === 'A' ? 'selected' : ''}>A (Sangat Baik)</option>
+                  <option value="B" ${att.teamwork === 'B' ? 'selected' : ''}>B (Baik)</option>
+                  <option value="C" ${att.teamwork === 'C' ? 'selected' : ''}>C (Cukup)</option>
+                  <option value="D" ${att.teamwork === 'D' ? 'selected' : ''}>D (Kurang)</option>
+                </select>
+              </td>
+              <td style="text-align:center;">
+                <span style="font-weight:700; color:var(--primary-blue); font-size:0.84rem;">${computeAttitudePred(att)}</span>
+              </td>
+              <td>
+                <input type="text" class="grade-input-box" style="width:100%; min-width:190px; text-align:left; padding:5px 8px;" placeholder="Catatan khusus siswa..." value="${escapeHtml(att.note || '')}" onchange="setAttitudeVal('${safeInduk}', 'note', this.value)">
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+      } else {
+        // Rekapitulasi Lengkap
+        thead.innerHTML = `
+          <tr>
+            <th style="width:40px; text-align:center;">No</th>
+            <th>NIS</th>
+            <th>Nama Peserta Didik</th>
+            <th style="text-align:center;">Status</th>
+            <th style="text-align:center;">Kehadiran (%)</th>
+            <th style="text-align:center;">T1</th>
+            <th style="text-align:center;">T2</th>
+            <th style="text-align:center;">T3</th>
+            <th style="text-align:center;">T4</th>
+            <th style="text-align:center;">T5</th>
+            <th style="text-align:center;">UTS</th>
+            <th style="text-align:center;">UAS</th>
+            <th style="text-align:center; color:var(--primary-blue);">NA</th>
+            <th style="text-align:center;">KKM</th>
+            <th style="text-align:center;">Sikap</th>
+          </tr>
+        `;
+
+        tbody.innerHTML = list.map(s => {
+          const rec = cls.attendance10w[s.induk] || {};
+          const g = cls.grades[s.induk] || {};
+          const att = cls.attitude[s.induk] || {};
+          const isKeluar = s.status === 'keluar';
+
+          let h = 0;
+          for (let w = 1; w <= 10; w++) {
+            if (rec[`w${w}`] === "." || rec[`w${w}`] === "H") h++;
+          }
+          const attPct = Math.round((h / 10) * 100) + "%";
+
+          const na = computeFinalScore(g);
+          const naText = na !== null ? na.toFixed(1) : "-";
+          const kkmText = na !== null ? (na >= 75 ? '<span style="color:#059669; font-weight:700;">Tuntas</span>' : '<span style="color:#dc2626; font-weight:700;">Belum</span>') : '-';
+          const sikapPred = computeAttitudePred(att);
+
+          return `
+            <tr class="${isKeluar ? 'row-keluar' : ''}">
+              <td style="text-align:center; font-variant-numeric:tabular-nums; color:#64748b;">${s.no}</td>
+              <td style="font-variant-numeric:tabular-nums; font-size:0.78rem; font-weight:700; color:var(--primary-blue);">${escapeHtml(s.induk)}</td>
+              <td>
+                <span class="name-text">${escapeHtml(s.name)}</span>
+                ${isKeluar ? '<span class="badge-keluar">KELUAR</span>' : ''}
+              </td>
+              <td style="text-align:center; font-size:0.75rem; font-weight:600;">${isKeluar ? 'Keluar' : 'Aktif'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:700;">${attPct}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.t1 ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.t2 ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.t3 ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.t4 ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.t5 ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.uts ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums;">${g.uas ?? '-'}</td>
+              <td style="text-align:center; font-variant-numeric:tabular-nums; font-weight:800; color:var(--primary-blue);">${naText}</td>
+              <td style="text-align:center;">${kkmText}</td>
+              <td style="text-align:center; font-weight:600;">${sikapPred}</td>
+            </tr>
+          `;
+        }).join("");
+      }
+    }
+
+    function computeAttitudePred(att) {
+      const vals = [att.discipline || 'A', att.activity || 'A', att.teamwork || 'A'];
+      const mapVal = { 'A': 4, 'B': 3, 'C': 2, 'D': 1 };
+      const sum = vals.reduce((acc, v) => acc + (mapVal[v] || 3), 0);
+      const avg = sum / vals.length;
+      if (avg >= 3.5) return "A (Sangat Baik)";
+      if (avg >= 2.8) return "B (Baik)";
+      if (avg >= 2.0) return "C (Cukup)";
+      return "D (Kurang)";
+    }
+
+    // State Updates (dengan per-cell timestamp agar sinkron antar perangkat tanpa konflik)
+    function cycleAttendanceBox(induk, weekKey) {
+      AudioFX.playPop();
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      if (!cls.attendance10w[induk]) cls.attendance10w[induk] = {};
+      if (!cls.attendance10wTs) cls.attendance10wTs = {};
+      if (!cls.attendance10wTs[induk]) cls.attendance10wTs[induk] = {};
+      const cur = cls.attendance10w[induk][weekKey] || "";
+
+      // Cycle: "" -> "." (Hadir) -> "S" -> "I" -> "A" -> ""
+      let next = ".";
+      if (cur === "." || cur === "H") next = "S";
+      else if (cur === "S") next = "I";
+      else if (cur === "I") next = "A";
+      else if (cur === "A") next = "";
+      else next = ".";
+
+      cls.attendance10w[induk][weekKey] = next;
+      cls.attendance10wTs[induk][weekKey] = new Date().toISOString();
+      saveDatabase();
+      renderStatsTiles();
+      renderTable();
+    }
+
+    function fillWeekAllActive(weekKey) {
+      AudioFX.playSuccess();
+      launchConfetti();
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const nowIso = new Date().toISOString();
+      if (!cls.attendance10wTs) cls.attendance10wTs = {};
+      cls.students.forEach(s => {
+        if (s.status === 'aktif') {
+          if (!cls.attendance10w[s.induk]) cls.attendance10w[s.induk] = {};
+          if (!cls.attendance10wTs[s.induk]) cls.attendance10wTs[s.induk] = {};
+          cls.attendance10w[s.induk][weekKey] = ".";
+          cls.attendance10wTs[s.induk][weekKey] = nowIso;
+        }
+      });
+      saveDatabase();
+      renderStatsTiles();
+      renderTable();
+      showToast(`Seluruh siswa aktif (${SUBJECT_META[currentSubject].name}) ditandai Hadir di ${weekKey.toUpperCase()}.`);
+    }
+
+    function fillAllActivePresent(weekKey) {
+      fillWeekAllActive(weekKey);
+    }
+
+    function toggleStudentStatus(induk) {
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const s = cls.students.find(st => st.induk === induk);
+      if (!s) return;
+
+      const nowIso = new Date().toISOString();
+      s.status = (s.status === 'aktif') ? 'keluar' : 'aktif';
+      s.updatedAt = nowIso;
+
+      // Sinkronkan status aktif/keluar ke mapel lain di tingkat yang sama
+      const targetSubjs = isGradeXKey(currentClass) ? ["kelas_x_dkv"] : ["video_editing", "after_effects"];
+      targetSubjs.forEach(subj => {
+        const otherCls = db.subjects[subj] && db.subjects[subj].classes[currentClass];
+        if (!otherCls) return;
+        const otherS = otherCls.students.find(st => st.induk === induk);
+        if (otherS) {
+          otherS.status = s.status;
+          otherS.updatedAt = nowIso;
+        }
+      });
+
+      saveDatabase();
+      renderMetaStats();
+      renderStatsTiles();
+      renderTable();
+      showToast(`Siswa ${s.name} diubah status menjadi: ${s.status.toUpperCase()}`);
+    }
+
+    function setGradeVal(induk, field, val) {
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const nowIso = new Date().toISOString();
+      if (!cls.grades[induk]) cls.grades[induk] = {};
+      if (!cls.gradesTs) cls.gradesTs = {};
+      if (!cls.gradesTs[induk]) cls.gradesTs[induk] = {};
+
+      if (val === "" || val === null) {
+        delete cls.grades[induk][field];
+        cls.gradesTs[induk][field] = nowIso;
+      } else {
+        const parsed = parseFloat(val);
+        if (!isNaN(parsed)) {
+          cls.grades[induk][field] = Math.max(0, Math.min(100, parsed));
+          cls.gradesTs[induk][field] = nowIso;
+        }
+      }
+      saveDatabase();
+      renderStatsTiles();
+      renderTable();
+    }
+
+    function setAttitudeVal(induk, field, val) {
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      if (!cls.attitude[induk]) cls.attitude[induk] = { discipline: 'A', activity: 'A', teamwork: 'A', note: '' };
+      if (!cls.attitudeTs) cls.attitudeTs = {};
+      cls.attitude[induk][field] = val;
+      cls.attitudeTs[induk] = new Date().toISOString();
+      saveDatabase();
+      renderTable();
+    }
+
+    // Export Functions
+    function getActiveSubjectSlug() {
+      return (SUBJECT_META[currentSubject] && SUBJECT_META[currentSubject].slug) || currentSubject;
+    }
+
+    function exportAttendance10wCSV() {
+      AudioFX.playSuccess();
+      launchConfetti();
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const subjName = getActiveSubjectSlug();
+      let csv = "NO,NIS,NAMA SISWA,L/P,STATUS,M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,TOTAL_H,TOTAL_S,TOTAL_I,TOTAL_A,PERSEN\n";
+
+      cls.students.forEach(s => {
+        const rec = cls.attendance10w[s.induk] || {};
+        let h = 0, sc = 0, ic = 0, a = 0;
+        for (let w = 1; w <= 10; w++) {
+          const val = rec[`w${w}`] || "";
+          if (val === "." || val === "H") h++;
+          else if (val === "S") sc++;
+          else if (val === "I") ic++;
+          else if (val === "A") a++;
+        }
+        const pct = Math.round((h / 10) * 100);
+
+        csv += `${s.no},"${s.induk}","${s.name}",${s.gender},${s.status},` +
+          `"${rec.w1 || '-'}","${rec.w2 || '-'}","${rec.w3 || '-'}","${rec.w4 || '-'}","${rec.w5 || '-'}",` +
+          `"${rec.w6 || '-'}","${rec.w7 || '-'}","${rec.w8 || '-'}","${rec.w9 || '-'}","${rec.w10 || '-'}",` +
+          `${h},${sc},${ic},${a},${pct}%\n`;
+      });
+
+      downloadFile(csv, `Presensi_10Minggu_${subjName}_${cls.name.replace(/\s+/g, '_')}.csv`, "text/csv;charset=utf-8;");
+    }
+
+    function exportGradesCSV() {
+      AudioFX.playSuccess();
+      launchConfetti();
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const subjName = getActiveSubjectSlug();
+      let csv = "NO,NIS,NAMA SISWA,L/P,STATUS,T1,T2,T3,T4,T5,RATA_TUGAS,UTS,UAS,NILAI_AKHIR,PREDIKAT,KKM\n";
+
+      cls.students.forEach(s => {
+        const g = cls.grades[s.induk] || {};
+        const t1 = g.t1 ?? "";
+        const t2 = g.t2 ?? "";
+        const t3 = g.t3 ?? "";
+        const t4 = g.t4 ?? "";
+        const t5 = g.t5 ?? "";
+        const tasks = [parseFloat(t1), parseFloat(t2), parseFloat(t3), parseFloat(t4), parseFloat(t5)].filter(v => !isNaN(v));
+        const avgTask = tasks.length > 0 ? (tasks.reduce((a, b) => a + b, 0) / tasks.length).toFixed(1) : "";
+        const uts = g.uts ?? "";
+        const uas = g.uas ?? "";
+        const na = computeFinalScore(g);
+        const pred = getGradePredicate(na);
+        const kkm = na !== null ? (na >= 75 ? "TUNTAS" : "BELUM TUNTAS") : "";
+
+        csv += `${s.no},"${s.induk}","${s.name}",${s.gender},${s.status},${t1},${t2},${t3},${t4},${t5},${avgTask},${uts},${uas},${na ?? ''},${pred},${kkm}\n`;
+      });
+
+      downloadFile(csv, `Nilai_7Komponen_${subjName}_${cls.name.replace(/\s+/g, '_')}.csv`, "text/csv;charset=utf-8;");
+    }
+
+    function exportAttitudeCSV() {
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const subjName = getActiveSubjectSlug();
+      let csv = "NO,NIS,NAMA SISWA,STATUS,DISIPLIN,AKTIF,TANGGUNG_JAWAB,PREDIKAT,CATATAN\n";
+
+      cls.students.forEach(s => {
+        const att = cls.attitude[s.induk] || { discipline: 'A', activity: 'A', teamwork: 'A', note: '' };
+        const pred = computeAttitudePred(att);
+        csv += `${s.no},"${s.induk}","${s.name}",${s.status},"${att.discipline || 'A'}","${att.activity || 'A'}","${att.teamwork || 'A'}","${pred}","${att.note || ''}"\n`;
+      });
+
+      downloadFile(csv, `Sikap_${subjName}_${cls.name.replace(/\s+/g, '_')}.csv`, "text/csv;charset=utf-8;");
+    }
+
+    function exportMasterCSV() {
+      const cls = db.subjects[currentSubject].classes[currentClass];
+      const subjName = getActiveSubjectSlug();
+      let csv = "NO,NIS,NAMA SISWA,L/P,STATUS,HADIR_PERSEN,T1,T2,T3,T4,T5,UTS,UAS,NA,KKM,SIKAP\n";
+
+      cls.students.forEach(s => {
+        const rec = cls.attendance10w[s.induk] || {};
+        const g = cls.grades[s.induk] || {};
+        const att = cls.attitude[s.induk] || {};
+
+        let h = 0;
+        for (let w = 1; w <= 10; w++) {
+          if (rec[`w${w}`] === "." || rec[`w${w}`] === "H") h++;
+        }
+        const pct = Math.round((h / 10) * 100);
+
+        const na = computeFinalScore(g);
+        const naText = na !== null ? na.toFixed(1) : "";
+        const kkmText = na !== null ? (na >= 75 ? "TUNTAS" : "BELUM TUNTAS") : "";
+        const sikap = computeAttitudePred(att);
+
+        csv += `${s.no},"${s.induk}","${s.name}",${s.gender},${s.status},${pct}%,${g.t1 ?? ''},${g.t2 ?? ''},${g.t3 ?? ''},${g.t4 ?? ''},${g.t5 ?? ''},${g.uts ?? ''},${g.uas ?? ''},${naText},${kkmText},"${sikap}"\n`;
+      });
+
+      downloadFile(csv, `Master_Rekap_${subjName}_${cls.name.replace(/\s+/g, '_')}.csv`, "text/csv;charset=utf-8;");
+    }
+
+    function downloadFile(content, fileName, mimeType) {
+      const blob = new Blob(["\ufeff" + content], { type: mimeType });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast(`Berhasil mengunduh: ${fileName}`);
+    }
+
+    function exportDataJson() {
+      const jsonStr = JSON.stringify(db, null, 2);
+      downloadFile(jsonStr, `Cadangan_DKV_Master_${new Date().toISOString().slice(0,10)}.json`, "application/json");
+    }
+
+    function importDataJson(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const imported = JSON.parse(evt.target.result);
+          if (imported && imported.subjects) {
+            db = imported;
+            ensureDbIntegrity();
+            saveDatabase();
+            syncSubjectAndClassUI();
+            renderAll();
+            closeSettingsModal();
+            showToast("Berhasil memulihkan data dari berkas JSON & menyinkronkan ke Cloud.");
+          } else {
+            alert("Format berkas JSON tidak sesuai!");
+          }
+        } catch (err) {
+          alert("Gagal membaca berkas: " + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetAllDefault() {
+      if (confirm("Apakah Anda yakin ingin mengembalikan seluruh data ke default awal? Seluruh perubahan nilai dan absensi akan direset.")) {
+        localStorage.removeItem(STORAGE_KEY);
+        initDefaultDb();
+        ensureDbIntegrity();
+        saveDatabase(true);
+        syncSubjectAndClassUI();
+        renderAll();
+        closeSettingsModal();
+        showToast("Data lokal telah dikembalikan ke kondisi awal.");
+      }
+    }
+
+    function openSettingsModal() {
+      document.getElementById("settingsModal").style.display = "flex";
+    }
+
+    function closeSettingsModal() {
+      document.getElementById("settingsModal").style.display = "none";
+    }
+
+    function saveNewPin() {
+      const p = document.getElementById("newPinInput").value.trim();
+      if (p.length !== 6 || isNaN(p)) {
+        alert("PIN harus berupa 6 angka!");
+        return;
+      }
+      localStorage.setItem(PIN_KEY, p);
+      document.getElementById("newPinInput").value = "";
+      closeSettingsModal();
+      showToast("PIN baru berhasil disimpan.");
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toastBox");
+      const s = document.getElementById("toastText");
+      if (!t || !s) return;
+      s.textContent = msg;
+      t.style.display = "flex";
+      setTimeout(() => {
+        t.style.display = "none";
+      }, 3000);
+    }
+
+    function updatePrintDate() {
+      const d = new Date();
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      const p = document.getElementById("printDatePlaceholder");
+      if (p) p.textContent = d.toLocaleDateString("id-ID", options);
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+  <!-- Fullscreen Confetti Canvas Layer -->
+  <canvas id="confettiCanvas" style="position:fixed; inset:0; pointer-events:none; z-index:999999; display:none;"></canvas>
+</body>
+</html>
