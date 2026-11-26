@@ -1,13 +1,15 @@
 /* ============================================================================
  * BINA BANGSA NEXUS — SERVICE WORKER (PWA OFFLINE SHELL & SMART CACHE)
  * ============================================================================ */
-const SW_VERSION = "bb-nexus-pwa-v32";
+const SW_VERSION = "bb-nexus-pwa-v33";
 const STATIC_CACHE = `bb-static-${SW_VERSION}`;
 const RUNTIME_CACHE = `bb-runtime-${SW_VERSION}`;
 
 const APP_SHELL_URLS = [
   "/",
   "/index.html",
+  "/about/",
+  "/about/index.html",
   "/dashboard-guru.html",
   "/dashboard/",
   "/kumpul-tugas.html",
@@ -28,11 +30,14 @@ const APP_SHELL_URLS = [
   "/icons/icon-512.png",
   "/icons/icon-maskable-512.png",
   "/images/logo.png",
+  "/images/adrian-hologram.webp",
   "/assets/fonts/Inter-Variable.ttf",
   "/assets/dashboard-fonts.css",
   "/assets/dashboard-ui.css",
   "/assets/lusion-portal.css",
   "/assets/lusion-portal.js",
+  "/assets/lusion-experience.css",
+  "/assets/lusion-experience.js",
   "/assets/pwa-mobile.css",
   "/assets/pwa-shell.js",
   "/assets/bina-bangsa-seed.js",
@@ -94,12 +99,14 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Navigasi HTML, drive-config.json, serta core DB/UI JS & CSS -> Network First agar semua perangkat selalu pakai logika sinkronisasi terbaru
-  const isNav = req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/" || url.pathname.endsWith("/drive-config.json");
+  const isNav = req.mode === "navigate" || url.pathname.endsWith(".html") || url.pathname === "/" || url.pathname === "/about" || url.pathname === "/about/" || url.pathname.endsWith("/drive-config.json");
   const isCoreAsset =
     url.pathname.endsWith("/assets/bina-bangsa-db.js") ||
     url.pathname.endsWith("/assets/bina-bangsa-seed.js") ||
     url.pathname.endsWith("/assets/dashboard-ui.css") ||
-    url.pathname.endsWith("/assets/index-D0mw0hQR.js");
+    url.pathname.endsWith("/assets/index-D0mw0hQR.js") ||
+    url.pathname.endsWith("/assets/lusion-experience.js") ||
+    url.pathname.endsWith("/assets/lusion-experience.css");
 
   if (isNav || isCoreAsset) {
     event.respondWith(

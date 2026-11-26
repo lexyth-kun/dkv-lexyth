@@ -1,0 +1,1623 @@
+/* ============================================================================
+ * LUSION.CO SPACE TRANSITION & ABOUT EXPERIENCE FOR DKV.LEXYTH.MY.ID
+ * Palette: Pure Gallery White (#FFFFFF), Deep Cosmic Void (#03091A),
+ *          Metallic Cobalt (#2563EB), Electric Sky (#38BDF8 / #7DD3FC)
+ * ============================================================================ */
+
+:root {
+  --dkv-space-bg: #03091a;
+  --dkv-space-cobalt: #2563eb;
+  --dkv-space-sky: #38bdf8;
+  --dkv-space-ice: #bae6fd;
+  --dkv-ink: #0a0f1d;
+  --dkv-body: #334155;
+  --dkv-line: #dbe4f3;
+  --dkv-surface-alt: #f4f8ff;
+}
+
+/* Preserve position:sticky across desktop & mobile (overflow-x:hidden breaks sticky!) */
+html,
+body {
+  overflow-x: clip !important;
+}
+
+#mainContent,
+.lusion-master-page,
+.dkv-about-page {
+  overflow-x: clip;
+}
+
+/* Global accessible pointer & keyboard focus for upgraded Lusion controls */
+.dkv-space-root a[href],
+.dkv-space-root button:not(:disabled),
+.dkv-next-gate a[href],
+.dkv-next-gate button:not(:disabled),
+.dkv-about-page a[href],
+.dkv-about-page button:not(:disabled) {
+  cursor: pointer;
+}
+
+.dkv-space-root a:focus-visible,
+.dkv-space-root button:focus-visible,
+.dkv-next-gate button:focus-visible,
+.dkv-about-page a:focus-visible,
+.dkv-about-page button:focus-visible {
+  outline: 2px solid var(--dkv-space-cobalt);
+  outline-offset: 3px;
+}
+
+/* ============================================================================
+ * PART 1: LUSION.CO 4-ACT POST-SYLLABUS SPACE TRANSITION (#secAstronaut)
+ * ============================================================================ */
+.dkv-space-root {
+  position: relative;
+  width: 100%;
+  height: 580vh;
+  background: var(--dkv-space-bg);
+  color: #ffffff;
+  z-index: 4;
+  isolation: isolate;
+}
+
+.dkv-space-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.dkv-space-portal-mask {
+  position: absolute;
+  inset: 0;
+  background: var(--dkv-space-bg);
+  overflow: hidden;
+  will-change: clip-path, border-radius;
+}
+
+.dkv-space-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Act 1: Monumental "MELANGKAH KE DUNIA BARU." Word-Mask Reveal */
+.dkv-space-act1 {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.dkv-space-act1-inner {
+  max-width: 1180px;
+  padding: 28px 32px;
+  background: radial-gradient(ellipse at center, rgba(3, 9, 26, 0.8) 0%, rgba(3, 9, 26, 0) 74%);
+}
+
+.dkv-space-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.dkv-space-act1-title {
+  margin: 16px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(1.75rem, 4.4vw, 3.85rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.dkv-space-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.22em;
+  padding-bottom: 0.08em;
+}
+
+.dkv-space-word-mask:last-child {
+  margin-right: 0;
+}
+
+.dkv-space-word-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+.dkv-space-act1-sub {
+  margin: 18px auto 0;
+  max-width: 560px;
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(224, 242, 254, 0.86);
+}
+
+/* Act 2: Multi-World Spatial Choreography Stage */
+.dkv-space-act2 {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 96px 24px 28px;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.dkv-space-watermark-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dkv-space-watermark {
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(3.6rem, 14vw, 12.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.065);
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.dkv-space-hud-top {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  max-width: 720px;
+  padding: 10px 28px;
+  background: radial-gradient(ellipse at center, rgba(3, 9, 26, 0.84) 0%, rgba(3, 9, 26, 0) 76%);
+}
+
+.dkv-space-stage-title {
+  margin: 6px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(1rem, 2.2vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.dkv-space-stage-sub {
+  margin: 6px 0 0;
+  font-size: clamp(0.78rem, 1.2vw, 0.94rem);
+  color: rgba(186, 230, 253, 0.94);
+  line-height: 1.5;
+}
+
+.dkv-space-orbital-stage {
+  position: relative;
+  z-index: 15;
+  width: 100%;
+  flex: 1;
+}
+
+.dkv-space-group {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Frameless luminous floating DKV milestone nodes (zero heavy boxes) */
+.dkv-space-node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 224px;
+  margin-left: -112px;
+  margin-top: -36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(125, 211, 252, 0.42);
+  background: rgba(6, 20, 48, 0.78);
+  color: #ffffff;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgba(37, 99, 235, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.dkv-space-node:hover,
+.dkv-space-node:focus-visible {
+  z-index: 30;
+  border-color: #bae6fd;
+  background: rgba(12, 34, 80, 0.92);
+  box-shadow: 0 18px 46px rgba(56, 189, 248, 0.56), 0 0 0 1px rgba(186, 230, 253, 0.4);
+}
+
+.dkv-space-node-code {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #0a0f1d;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.36);
+}
+
+.dkv-space-node-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dkv-space-node-title {
+  font-family: var(--font-body, "Inter", sans-serif);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.22;
+  color: #ffffff;
+}
+
+.dkv-space-node-meta {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #93c5fd;
+}
+
+/* Bottom 4-Stage Interactive World Jump Pills */
+.dkv-space-nav {
+  position: relative;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.dkv-space-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dkv-space-tab {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(226, 232, 240, 0.76);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dkv-space-tab:hover {
+  border-color: rgba(125, 211, 252, 0.55);
+  color: #ffffff;
+}
+
+.dkv-space-tab.is-active {
+  border-color: rgba(125, 211, 252, 0.85);
+  background: rgba(37, 99, 235, 0.42);
+  color: #ffffff;
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.42);
+}
+
+.dkv-space-tab-num {
+  color: #7dd3fc;
+}
+
+.dkv-space-progress-track {
+  width: min(260px, 68vw);
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+
+.dkv-space-progress-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #bae6fd 0%, #38bdf8 55%, #2563eb 100%);
+  transform-origin: left center;
+  transform: scaleX(0.05);
+}
+
+/* Act 4: Pure White Reverse Black-Hole Supernova Reveal */
+.dkv-space-whiteout {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: #ffffff;
+  color: var(--dkv-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.dkv-space-act4-copy {
+  max-width: 920px;
+  will-change: opacity, transform;
+}
+
+.dkv-space-act4-eyebrow {
+  margin: 0 0 14px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-space-act4-title {
+  margin: 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(2rem, 5.4vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--dkv-ink);
+}
+
+.dkv-space-act4-sub {
+  margin: 20px auto 0;
+  max-width: 580px;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--dkv-body);
+}
+
+.dkv-space-act4-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.dkv-btn-primary {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: 999px;
+  border: 1px solid #0a0f1d;
+  background: #0a0f1d;
+  color: #ffffff;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dkv-btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--dkv-space-cobalt);
+  border-color: var(--dkv-space-cobalt);
+  box-shadow: 0 14px 32px rgba(37, 99, 235, 0.28);
+}
+
+.dkv-btn-ghost {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--dkv-ink);
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+}
+
+.dkv-btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--dkv-space-cobalt);
+  color: var(--dkv-space-cobalt);
+  background: #f8fbff;
+}
+
+/* Signature Lusion Bottom Next-Page Scroll Gate */
+.dkv-next-gate {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  background: #ffffff;
+  border-top: 1px solid var(--dkv-line);
+  padding: 72px 24px 88px;
+}
+
+.dkv-next-gate-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.dkv-next-gate-btn {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px;
+  border-radius: 28px;
+  border: 1px solid var(--dkv-line);
+  background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
+  text-align: left;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dkv-next-gate-btn:hover {
+  border-color: var(--dkv-space-cobalt);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 54px rgba(37, 99, 235, 0.12);
+}
+
+.dkv-next-gate-eyebrow {
+  display: block;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-next-gate-title {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(1.8rem, 4.8vw, 4rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--dkv-ink);
+}
+
+.dkv-next-gate-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--dkv-ink);
+  color: #ffffff;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dkv-next-gate-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.dkv-next-gate-fill {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* ============================================================================
+ * PART 2: LUSION.CO /ABOUT EXPERIENCE (.dkv-about-page)
+ * ============================================================================ */
+.dkv-about-page {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: #ffffff;
+  color: var(--dkv-ink);
+}
+
+.dkv-about-shell {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 01. Interactive Draggable 3D Physics Spheres Hero */
+.dkv-about-hero {
+  position: relative;
+  min-height: 94vh;
+  min-height: 94dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 108px 0 56px;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f7ff 52%, #ffffff 100%);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.dkv-about-hero.is-grabbing,
+.dkv-about-cta.is-grabbing {
+  cursor: grabbing;
+}
+
+.dkv-spheres-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dkv-about-hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 36px;
+}
+
+.dkv-about-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dkv-about-topbar-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.dkv-back-pill,
+.dkv-pause-pill {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--dkv-ink);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(10, 15, 29, 0.05);
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.dkv-back-pill:hover,
+.dkv-pause-pill:hover {
+  border-color: var(--dkv-space-cobalt);
+  color: var(--dkv-space-cobalt);
+  transform: translateY(-1px);
+}
+
+.dkv-about-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-about-h1 {
+  margin: 12px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(1.75rem, 4.5vw, 4.05rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--dkv-ink);
+}
+
+.dkv-about-h1-line {
+  display: block;
+}
+
+.dkv-about-h1-accent {
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-about-hero-bottom {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 28px;
+}
+
+.dkv-about-hero-lead {
+  margin: 0;
+  padding: 20px 24px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: clamp(0.95rem, 1.35vw, 1.12rem);
+  line-height: 1.7;
+  color: var(--dkv-body);
+}
+
+.dkv-about-scroll-cue {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid var(--dkv-line);
+  padding-top: 16px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dkv-space-cobalt);
+}
+
+/* 02. Solo Mentor Hologram Chamber ([[ 001 ]] Kak Adrian) */
+.dkv-about-founder {
+  padding: 96px 0 112px;
+  background: var(--dkv-surface-alt);
+  border-top: 1px solid var(--dkv-line);
+}
+
+.dkv-founder-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: 56px;
+}
+
+.dkv-holo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: #031126;
+  padding: 20px;
+  color: #ffffff;
+  box-shadow: 0 28px 70px rgba(3, 17, 38, 0.28);
+  transition: transform 0.22s ease-out;
+  will-change: transform;
+}
+
+.dkv-holo-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(125, 211, 252, 0.04) 0px,
+    rgba(125, 211, 252, 0.04) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.dkv-holo-iridescence {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--holo-x, 50%) var(--holo-y, 42%),
+    rgba(56, 189, 248, 0.22) 0%,
+    rgba(37, 99, 235, 0.06) 42%,
+    transparent 70%
+  );
+}
+
+.dkv-holo-reticle {
+  position: absolute;
+  z-index: 4;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  border-color: rgba(125, 211, 252, 0.78);
+  border-style: solid;
+  border-width: 0;
+}
+.dkv-holo-reticle.tl { left: 12px; top: 12px; border-left-width: 2px; border-top-width: 2px; }
+.dkv-holo-reticle.tr { right: 12px; top: 12px; border-right-width: 2px; border-top-width: 2px; }
+.dkv-holo-reticle.bl { left: 12px; bottom: 12px; border-left-width: 2px; border-bottom-width: 2px; }
+.dkv-holo-reticle.br { right: 12px; bottom: 12px; border-right-width: 2px; border-bottom-width: 2px; }
+
+.dkv-holo-header {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 6px 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #7dd3fc;
+}
+
+.dkv-holo-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dkv-holo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.dkv-holo-viewport {
+  position: relative;
+  z-index: 3;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: linear-gradient(180deg, #072047 0%, #041530 56%, #020c1e 100%);
+}
+
+.dkv-holo-canvas {
+  display: block;
+  width: 100%;
+  height: 410px;
+}
+
+.dkv-holo-tag-top {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.dkv-holo-chip {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  background: rgba(3, 17, 38, 0.82);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #bae6fd;
+}
+
+.dkv-holo-readout {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 20px 18px 16px;
+  background: linear-gradient(to top, #020c1e 20%, rgba(3, 17, 38, 0.82) 72%, transparent 100%);
+  pointer-events: none;
+}
+
+.dkv-holo-role-kicker {
+  margin: 0;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.dkv-holo-name {
+  margin: 4px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.dkv-holo-caption {
+  margin: 4px 0 0;
+  font-size: 0.76rem;
+  color: #bae6fd;
+}
+
+.dkv-holo-footer {
+  position: relative;
+  z-index: 4;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  color: #bae6fd;
+}
+
+.dkv-holo-footer a {
+  color: #7dd3fc;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.dkv-holo-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.dkv-founder-index-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-founder-line {
+  display: inline-block;
+  width: 38px;
+  height: 1px;
+  background: var(--dkv-space-cobalt);
+}
+
+.dkv-founder-title {
+  margin: 14px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(2rem, 4.6vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.04;
+  color: var(--dkv-ink);
+}
+
+.dkv-founder-role {
+  margin: 12px 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-founder-text {
+  margin: 18px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--dkv-body);
+}
+
+.dkv-founder-quote {
+  margin: 22px 0 0;
+  padding: 18px 22px;
+  border-left: 3px solid var(--dkv-space-cobalt);
+  border-radius: 0 16px 16px 0;
+  background: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.65;
+  color: var(--dkv-ink);
+}
+
+.dkv-founder-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 03. Pinned 3D Scroll-Flip Area of Expertise Deck (lusion.co/about) */
+.dkv-deck-section {
+  position: relative;
+  height: 290vh;
+  background: #ffffff;
+  border-top: 1px solid var(--dkv-line);
+}
+
+.dkv-deck-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 96px 0 56px;
+}
+
+.dkv-deck-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+
+.dkv-deck-title {
+  margin: 10px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(1.75rem, 3.8vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1.06;
+  color: var(--dkv-ink);
+}
+
+.dkv-deck-wave-meta {
+  max-width: 440px;
+}
+
+.dkv-deck-wave-label {
+  margin: 0;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-deck-wave-summary {
+  margin: 6px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--dkv-body);
+}
+
+.dkv-deck-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.dkv-deck-tab-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dkv-deck-tab {
+  min-height: 44px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--dkv-body);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+}
+
+.dkv-deck-tab:hover {
+  border-color: var(--dkv-space-cobalt);
+  color: var(--dkv-ink);
+}
+
+.dkv-deck-tab.is-active {
+  background: var(--dkv-ink);
+  border-color: var(--dkv-ink);
+  color: #ffffff;
+}
+
+.dkv-deck-progress-track {
+  width: 180px;
+  height: 3px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.dkv-deck-progress-bar {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  transform-origin: left center;
+  transform: scaleX(0.1);
+}
+
+.dkv-flip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  perspective: 1600px;
+}
+
+.dkv-flip-slot {
+  position: relative;
+  height: 340px;
+}
+
+.dkv-flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.dkv-flip-card.is-smooth-flip {
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dkv-flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 26px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.dkv-flip-face.is-front {
+  background: linear-gradient(155deg, #ffffff 0%, #f4f8ff 100%);
+  border: 1px solid #d4e2f7;
+  box-shadow: 0 16px 40px rgba(10, 15, 29, 0.06);
+  color: var(--dkv-ink);
+}
+
+.dkv-flip-face.is-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(155deg, #061634 0%, #0b2354 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 20px 46px rgba(3, 9, 26, 0.24);
+  color: #ffffff;
+}
+
+.dkv-flip-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.42) 50%, transparent 80%);
+  opacity: 0;
+}
+
+.dkv-flip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dkv-flip-code {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-flip-face.is-back .dkv-flip-code {
+  color: #7dd3fc;
+}
+
+.dkv-flip-tag {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-flip-face.is-back .dkv-flip-tag {
+  background: rgba(56, 189, 248, 0.18);
+  color: #bae6fd;
+}
+
+.dkv-flip-heading {
+  margin: 18px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 1.16rem;
+  font-weight: 700;
+  line-height: 1.28;
+}
+
+.dkv-flip-desc {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.62;
+  color: var(--dkv-body);
+}
+
+.dkv-flip-face.is-back .dkv-flip-desc {
+  color: rgba(224, 242, 254, 0.88);
+}
+
+.dkv-flip-footer {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.dkv-flip-action {
+  border: none;
+  background: transparent;
+  padding: 6px 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dkv-flip-action:hover {
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-flip-face.is-back .dkv-flip-action:hover {
+  color: #7dd3fc;
+}
+
+/* 04. Real Class Ecosystem & Quick Tools */
+.dkv-about-craft {
+  padding: 88px 0;
+  background: var(--dkv-surface-alt);
+  border-top: 1px solid var(--dkv-line);
+}
+
+.dkv-craft-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dkv-craft-item {
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid var(--dkv-line);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dkv-craft-icon {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-craft-name {
+  margin: 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--dkv-ink);
+}
+
+.dkv-craft-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--dkv-body);
+}
+
+.dkv-portal-links {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dkv-portal-chip {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--dkv-ink);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.dkv-portal-chip:hover {
+  border-color: var(--dkv-space-cobalt);
+  color: var(--dkv-space-cobalt);
+  transform: translateY(-2px);
+}
+
+/* 05. Finale Interactive 3D Spheres CTA ("AYO MULAI BERKARYA!") */
+.dkv-about-cta {
+  position: relative;
+  min-height: 78vh;
+  min-height: 78dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 96px 24px 80px;
+  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 55%, #ffffff 100%);
+  border-top: 1px solid var(--dkv-line);
+  text-align: center;
+  user-select: none;
+}
+
+.dkv-about-cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 920px;
+  padding: 36px 28px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(203, 213, 225, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.dkv-about-cta-title {
+  margin: 14px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(2.1rem, 6vw, 4.9rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--dkv-ink);
+}
+
+.dkv-about-cta-sub {
+  margin: 18px auto 0;
+  max-width: 580px;
+  font-size: clamp(0.95rem, 1.35vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--dkv-body);
+}
+
+.dkv-about-cta-actions {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dkv-about-socials {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--dkv-line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.dkv-about-socials a {
+  color: var(--dkv-body);
+  text-decoration: none;
+}
+
+.dkv-about-socials a:hover {
+  color: var(--dkv-space-cobalt);
+  text-decoration: underline;
+}
+
+/* ============================================================================
+ * RESPONSIVE MOBILE & TABLET REFLOW (Zero horizontal overflow)
+ * ============================================================================ */
+@media (max-width: 1023px) {
+  .dkv-founder-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .dkv-deck-section {
+    height: auto;
+  }
+
+  .dkv-deck-sticky {
+    position: relative;
+    min-height: auto;
+    padding: 72px 0;
+  }
+
+  .dkv-flip-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .dkv-flip-slot {
+    height: 290px;
+  }
+
+  .dkv-craft-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dkv-about-hero-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .dkv-about-scroll-cue {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .dkv-space-act2 {
+    padding: 84px 12px 20px;
+  }
+
+  .dkv-space-node {
+    width: 158px;
+    margin-left: -79px;
+    margin-top: -28px;
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .dkv-space-node-code {
+    width: 32px;
+    height: 32px;
+    font-size: 0.66rem;
+    border-radius: 9px;
+  }
+
+  .dkv-space-node-title {
+    font-size: 0.72rem;
+  }
+
+  .dkv-space-node-meta {
+    display: none;
+  }
+
+  .dkv-space-tab {
+    padding: 6px 10px;
+    font-size: 0.62rem;
+  }
+
+  .dkv-about-shell {
+    padding: 0 16px;
+  }
+
+  .dkv-holo-canvas {
+    height: 340px;
+  }
+
+  .dkv-craft-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dkv-next-gate-btn {
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lusion-nav-bar {
+    padding: 4px 8px !important;
+    gap: 4px !important;
+  }
+
+  .brand-name {
+    font-size: 0.64rem !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .nav-center-pill {
+    gap: 2px !important;
+    justify-content: center !important;
+  }
+
+  .lusion-nav-bar .nav-item {
+    font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif !important;
+    font-size: 0.58rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    padding: 7px 6px !important;
+  }
+
+  .audio-toggle-btn {
+    padding: 6px 8px !important;
+  }
+}
+
+/* Reduced Motion Accessibility (R-39) */
+@media (prefers-reduced-motion: reduce) {
+  .dkv-space-root {
+    height: auto;
+  }
+
+  .dkv-space-sticky {
+    position: relative;
+    height: auto;
+    min-height: auto;
+    display: block;
+    background: var(--dkv-space-bg);
+  }
+
+  .dkv-space-portal-mask {
+    position: relative;
+    clip-path: none !important;
+  }
+
+  .dkv-space-canvas {
+    display: none;
+  }
+
+  .dkv-space-act1,
+  .dkv-space-act2,
+  .dkv-space-whiteout {
+    position: relative;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+  }
+
+  .dkv-space-act1 {
+    padding: 64px 20px 24px;
+  }
+
+  .dkv-space-act2 {
+    padding: 24px 20px 48px;
+  }
+
+  .dkv-space-orbital-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .dkv-space-group {
+    position: relative;
+    opacity: 1 !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .dkv-space-node {
+    position: static;
+    margin: 0;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  .dkv-space-whiteout {
+    padding: 64px 20px;
+  }
+
+  .dkv-deck-section {
+    height: auto;
+  }
+
+  .dkv-deck-sticky {
+    position: relative;
+    min-height: auto;
+  }
+}
