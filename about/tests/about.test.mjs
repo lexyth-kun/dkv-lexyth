@@ -34,10 +34,16 @@ test('content.json passes schema validation with zero em dashes and zero placeho
   assert.equal(content.nextPage.href, '/database-tugas');
 });
 
-test('all local image assets referenced in content.json exist on disk', () => {
+test('all local image assets referenced in content.json exist and zero personal face photos are used', () => {
+  assert.equal(content.team.portraitMode, 'anonymous-hologram-silhouette');
+  assert.equal('portraitSrc' in content.team, false, 'Personal portrait photo must not be referenced');
+  assert.equal(fs.existsSync(path.join(rootDir, 'assets/adrian-lusion-portrait.webp')), false, 'Personal portrait file must be removed');
+
+  const rawContent = fs.readFileSync(contentPath, 'utf8');
+  assert.equal(/adrian-lusion-portrait|adrian-profile|adrian-hologram/i.test(rawContent), false, 'No personal photo path allowed in content.json');
+
   const imagePaths = [
     content.preloader.logoSrc,
-    content.team.portraitSrc,
     ...content.materiPertemuan.materiItems.map((m) => m.image)
   ];
   for (const rel of imagePaths) {

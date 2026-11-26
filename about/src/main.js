@@ -317,7 +317,6 @@ function mountTeamSection(content, stage, mountEl) {
     teamScene = createTeamPointCloudScene(
       stage.THREE,
       stage.particleTex,
-      team.portraitSrc,
       stage.isMobile
     );
     stage.registerScene('team', teamScene);

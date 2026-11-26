@@ -1,4 +1,4 @@
-export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMobile) {
+export function createTeamPointCloudScene(THREE, particleTex, isMobile) {
   const group = new THREE.Group();
 
   // Subtle vertical dotted rain matrix in background (Lusion Team signature)
@@ -24,12 +24,12 @@ export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMob
   const rainPoints = new THREE.Points(rainGeo, rainMat);
   group.add(rainPoints);
 
-  // Portrait holder group (rotates smoothly between 4 role poses)
-  const portraitRig = new THREE.Group();
-  portraitRig.position.set(isMobile ? 0 : -0.25, isMobile ? 0.55 : -0.05, 0.4);
-  group.add(portraitRig);
+  // Anonymous Faceless Hologram Silhouette Rig
+  const silhouetteRig = new THREE.Group();
+  silhouetteRig.position.set(isMobile ? 0 : -0.22, isMobile ? 0.52 : -0.05, 0.35);
+  group.add(silhouetteRig);
 
-  // Bold geometric background letter plane behind the 3D point-cloud (Lusion 'E' depth layering)
+  // Bold geometric background letter plane behind the 3D hologram silhouette
   const ROLE_GLYPHS = ['V', 'G', 'A', 'W'];
   const glyphCanvas = document.createElement('canvas');
   glyphCanvas.width = 512;
@@ -60,134 +60,229 @@ export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMob
   glyphPlane.position.set(isMobile ? 0.82 : 1.75, isMobile ? 1.25 : 0.15, -1.4);
   group.add(glyphPlane);
 
-  let portraitPoints = null;
-  let baseCoords = null;
-  let wispMask = null;
-  let phases = null;
-  let baseColors = null;
-  let currentRole = 0;
-  let morphImpulse = 0;
-  let curRotY = -0.08;
-  let curRotX = 0.02;
-  let curScale = isMobile ? 0.72 : 1.08;
+  // Build 100% Procedural 3D Faceless Hooded Anonymous Hologram Silhouette
+  // Zero facial features: hollow dark face cavity framed by glowing holographic cowl, collar, and shoulders
+  const pts = [];
+  const cols = [];
+  const isWisp = [];
+  const phs = [];
+  const rimFlags = [];
 
-  const ROLE_POSES = [
-    { rotY: -0.08, rotX: 0.02, scale: 1.08, cyanBoost: 0.14, spread: 0.0 },
-    { rotY: 0.24, rotX: -0.04, scale: 1.12, cyanBoost: 0.22, spread: 0.06 },
-    { rotY: -0.22, rotX: 0.06, scale: 1.06, cyanBoost: 0.44, spread: 0.1 },
-    { rotY: 0.12, rotX: -0.02, scale: 1.1, cyanBoost: 0.28, spread: 0.04 }
-  ];
+  const pushPt = (x, y, z, r, g, b, wisp = 0, rim = 0) => {
+    pts.push(x, y, z);
+    cols.push(r, g, b);
+    isWisp.push(wisp);
+    rimFlags.push(rim);
+    phs.push(Math.random() * Math.PI * 2);
+  };
 
-  // Sample real portrait photo into luminous high-contrast 3D point cloud
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => {
-    const sampleW = isMobile ? 124 : 184;
-    const sampleH = Math.round(sampleW * (img.naturalHeight / img.naturalWidth));
-    const off = document.createElement('canvas');
-    off.width = sampleW;
-    off.height = sampleH;
-    const ctx = off.getContext('2d', { willReadFrequently: true });
-    ctx.drawImage(img, 0, 0, sampleW, sampleH);
-    const data = ctx.getImageData(0, 0, sampleW, sampleH).data;
+  // Deterministic seeded pseudo-random for consistent crisp geometry
+  let seed = 133742;
+  const rand = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
 
-    const pts = [];
-    const cols = [];
-    const isWisp = [];
-    const phs = [];
+  const density = isMobile ? 0.62 : 1.0;
 
-    const lumAt = (x, y) => {
-      const cx = Math.max(0, Math.min(sampleW - 1, x));
-      const cy = Math.max(0, Math.min(sampleH - 1, y));
-      const idx = (cy * sampleW + cx) * 4;
-      if (data[idx + 3] < 40) return 0;
-      return (0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2]) / 255;
-    };
+  // 1. Sculpted Hood Cowl (wraps around back, crown, and sides; front face cavity stays EMPTY/DARK)
+  const hoodRings = Math.round(78 * density);
+  const hoodCols = Math.round(96 * density);
+  for (let iy = 0; iy < hoodRings; iy++) {
+    const v = iy / (hoodRings - 1); // 0 = base of hood/neck (y=0.52), 1 = top apex of hood (y=2.08)
+    const y = 0.52 + v * 1.56;
 
-    const aspect = sampleW / sampleH;
-    const worldH = isMobile ? 4.35 : 5.2;
-    const worldW = worldH * aspect;
+    // Natural sculpted hood profile: slightly wider around cheeks/jaw, smooth tapered apex
+    const crownProfile = Math.sin(Math.pow(v, 0.72) * Math.PI);
+    const rx = 0.62 + crownProfile * 0.34 - v * 0.08;
+    const rz = 0.68 + crownProfile * 0.36;
 
-    for (let y = 0; y < sampleH; y++) {
-      for (let x = 0; x < sampleW; x++) {
-        const idx = (y * sampleW + x) * 4;
-        const alpha = data[idx + 3];
-        if (alpha < 44) continue;
+    // Slight forward overhang at hood brow apex
+    const zShift = Math.sin(v * Math.PI) * 0.14 - 0.05;
 
-        const r = data[idx] / 255;
-        const g = data[idx + 1] / 255;
-        const b = data[idx + 2] / 255;
-        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+    for (let ix = 0; ix < hoodCols; ix++) {
+      const u = ix / hoodCols;
+      const theta = u * Math.PI * 2; // 0 = front (+Z), PI = back (-Z)
+      const frontAngle = Math.abs(Math.atan2(Math.sin(theta), Math.cos(theta))); // 0 at front, PI at back
 
-        const gx = Math.abs(lumAt(x + 1, y) - lumAt(x - 1, y));
-        const gy = Math.abs(lumAt(x, y + 1) - lumAt(x, y - 1));
-        const edge = Math.min(1, (gx + gy) * 3.0);
+      // Define the faceless oval opening in front of the hood (completely dark hollow void!)
+      const openingHalfAngle = 0.96 * Math.sin(Math.max(0, Math.min(1, (v - 0.05) / 0.84)) * Math.PI);
+      if (v > 0.06 && v < 0.88 && frontAngle < openingHalfAngle) {
+        continue; // Pure dark faceless cavity: ZERO eyes, ZERO nose, ZERO mouth
+      }
 
-        // Keep skin/collar/watch dense & bright; thin dark blazer interior for crisp monochrome photo clarity
-        if (lum < 0.09 && edge < 0.12 && Math.random() > 0.24) continue;
+      // Highlight the glowing sculptural rim framing the faceless hood opening
+      const distFromRim = Math.abs(frontAngle - openingHalfAngle);
+      const isOpeningRim = v > 0.06 && v < 0.9 && distFromRim < 0.14;
+      const isSilhouetteEdge = Math.abs(Math.sin(theta)) > 0.86;
+      const scanStripe = (iy % 3 === 0) ? 1.0 : 0.45;
 
-        const nx = (x / sampleW) - 0.5;
-        const ny = 0.5 - (y / sampleH);
+      // Thin back interior slightly so silhouette stays airy & clearly holographic
+      if (!isOpeningRim && !isSilhouetteEdge && rand() > 0.52 * scanStripe) continue;
 
-        const faceDist = Math.hypot((nx - 0.02) * 1.4, (ny - 0.22) * 1.3);
-        const convex = Math.max(0, 1 - faceDist * 1.15) * 0.72;
-        const px = nx * worldW + (Math.random() - 0.5) * 0.012;
-        const py = ny * worldH + (Math.random() - 0.5) * 0.012;
-        const pz = (lum * 0.85 + edge * 0.35 + convex - 0.42) * 1.15;
+      const x = Math.sin(theta) * rx + (rand() - 0.5) * 0.018;
+      const z = Math.cos(theta) * rz + zShift + (rand() - 0.5) * 0.018;
 
-        pts.push(px, py, pz);
-
-        // High-contrast monochrome lighting curve so face/eyes/collar read crisply like studio photography
-        const contrastLum = Math.pow(Math.min(1, lum * 1.25), 0.78);
-        const boost = Math.min(1, 0.12 + contrastLum * 0.92 + edge * 0.42);
-        const cyanTint = edge > 0.32 ? 0.24 : 0.03;
-        cols.push(
-          Math.min(1, boost * (1 - cyanTint * 0.45)),
-          Math.min(1, boost * (0.98 + cyanTint * 0.1)),
-          Math.min(1, boost * (1.0 + cyanTint * 0.32))
-        );
-        isWisp.push(0);
-        phs.push(Math.random() * Math.PI * 2);
-
-        if ((ny < 0.04 || edge > 0.36) && Math.random() < (isMobile ? 0.06 : 0.13)) {
-          const wispLen = 0.16 + Math.random() * 0.58;
-          pts.push(
-            px + (Math.random() - 0.5) * 0.2,
-            py - wispLen,
-            pz - Math.random() * 0.42
-          );
-          const wBright = 0.32 + Math.random() * 0.42;
-          cols.push(wBright * 0.78, wBright * 0.94, Math.min(1, wBright * 1.12));
-          isWisp.push(1);
-          phs.push(Math.random() * Math.PI * 2);
-        }
+      if (isOpeningRim) {
+        // Razor-crisp bright ice-cyan/white holographic hood rim defining the faceless silhouette
+        pushPt(x, y, z, 0.78, 0.98, 1.0, 0, 1);
+      } else if (isSilhouetteEdge || v > 0.91) {
+        pushPt(x, y, z, 0.68, 0.9, 1.0, 0, 1);
+      } else {
+        const shade = 0.22 + (1 - frontAngle / Math.PI) * 0.34;
+        pushPt(x, y, z, shade * 0.72, shade * 0.92, Math.min(1, shade * 1.15), 0, 0);
       }
     }
+  }
 
-    baseCoords = new Float32Array(pts);
-    baseColors = new Float32Array(cols);
-    wispMask = new Uint8Array(isWisp);
-    phases = new Float32Array(phs);
+  // Extra crisp double-pass rim ribbon around the faceless cowl opening for unmistakable silhouette read
+  const rimSteps = Math.round(260 * density);
+  for (let i = 0; i < rimSteps; i++) {
+    const t = i / (rimSteps - 1);
+    const v = 0.06 + t * 0.83;
+    const y = 0.52 + v * 1.56;
+    const crownProfile = Math.sin(Math.pow(v, 0.72) * Math.PI);
+    const rx = 0.62 + crownProfile * 0.34 - v * 0.08;
+    const rz = 0.68 + crownProfile * 0.36;
+    const zShift = Math.sin(v * Math.PI) * 0.14 - 0.05;
+    const openingHalfAngle = 0.96 * Math.sin(Math.max(0, Math.min(1, (v - 0.05) / 0.84)) * Math.PI);
 
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cols), 3));
+    for (const side of [-1, 1]) {
+      const ang = side * openingHalfAngle;
+      const x = Math.sin(ang) * rx + (rand() - 0.5) * 0.025;
+      const z = Math.cos(ang) * rz + zShift + (rand() - 0.5) * 0.025;
+      pushPt(x, y, z, 0.85, 0.99, 1.0, 0, 1);
+    }
+  }
 
-    const mat = new THREE.PointsMaterial({
-      size: isMobile ? 0.058 : 0.062,
-      map: particleTex,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.96,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      sizeAttenuation: true
-    });
+  // 2. Sculpted High Collar + Broad Anonymous Shoulders + Upper Torso Silhouette
+  const torsoRings = Math.round(92 * density);
+  const torsoCols = Math.round(112 * density);
+  for (let iy = 0; iy < torsoRings; iy++) {
+    const v = iy / (torsoRings - 1); // 0 = bottom fade (y=-2.25), 1 = neck/collar join (y=0.66)
+    const y = -2.25 + v * 2.91;
 
-    portraitPoints = new THREE.Points(geo, mat);
-    portraitRig.add(portraitPoints);
-  };
-  img.src = portraitSrc;
+    // Anatomically grounded silhouette width: narrow neck -> smooth sloping shoulders -> solid upper chest
+    let rx;
+    let rz;
+    if (v > 0.84) {
+      // High structured hoodie collar around neck
+      const k = (v - 0.84) / 0.16; // 0 = shoulder top, 1 = collar top
+      rx = 1.05 - k * 0.44;
+      rz = 0.64 - k * 0.1;
+    } else if (v > 0.62) {
+      // Broad shoulder slope
+      const k = (v - 0.62) / 0.22; // 0 = full shoulder breadth, 1 = collar base
+      const ease = 1 - k * k;
+      rx = 1.05 + ease * 0.88;
+      rz = 0.64 + ease * 0.18;
+    } else {
+      // Upper chest & jacket silhouette tapering cleanly down
+      const k = v / 0.62; // 0 = bottom, 1 = shoulder line
+      rx = 1.56 + k * 0.37;
+      rz = 0.68 + Math.sin(k * Math.PI * 0.85) * 0.16;
+    }
+
+    // Bottom holographic dissolve probability
+    const bottomFade = Math.min(1, v / 0.26);
+    const isScanBand = iy % 3 === 0;
+
+    for (let ix = 0; ix < torsoCols; ix++) {
+      const u = ix / torsoCols;
+      const theta = u * Math.PI * 2;
+      const sinT = Math.sin(theta);
+      const cosT = Math.cos(theta);
+
+      // Subtle V-seam along front center hoodie zipper/lapel
+      const isCenterSeam = cosT > 0.92 && Math.abs(sinT) < 0.09 && v > 0.18 && v < 0.88;
+      const isEdgeRim = Math.abs(sinT) > 0.84;
+      const isCollarRim = v > 0.83 && v < 0.94 && cosT > 0.15;
+
+      const keepProb = isEdgeRim || isCollarRim || isCenterSeam
+        ? 0.92 * bottomFade
+        : (isScanBand ? 0.56 : 0.22) * bottomFade;
+
+      if (rand() > keepProb) continue;
+
+      // Subtle cloth folds across shoulders & chest
+      const fold = Math.sin(theta * 5 + y * 2.2) * 0.028;
+      const x = sinT * (rx + fold) + (rand() - 0.5) * 0.02;
+      const z = cosT * (rz + fold * 0.5) + (rand() - 0.5) * 0.02;
+
+      if (isEdgeRim || isCollarRim) {
+        const bright = (0.68 + rand() * 0.3) * bottomFade;
+        pushPt(x, y, z, bright * 0.72, bright * 0.96, Math.min(1, bright * 1.15), 0, 1);
+      } else if (isCenterSeam) {
+        pushPt(x, y, z, 0.35 * bottomFade, 0.88 * bottomFade, 1.0 * bottomFade, 0, 1);
+      } else {
+        const frontLight = Math.max(0.14, cosT * 0.45 + 0.36) * bottomFade;
+        pushPt(x, y, z, frontLight * 0.78, frontLight * 0.9, Math.min(1, frontLight * 1.12), 0, 0);
+      }
+
+      // Drifting holographic energy wisps trailing off shoulders & lower silhouette
+      if ((isEdgeRim || v < 0.22) && rand() < (isMobile ? 0.09 : 0.16)) {
+        const drop = 0.18 + rand() * 0.72;
+        const wb = (0.34 + rand() * 0.45) * Math.max(0.45, bottomFade);
+        pushPt(
+          x + (rand() - 0.5) * 0.24,
+          y - drop,
+          z - rand() * 0.38,
+          wb * 0.55,
+          wb * 0.92,
+          Math.min(1, wb * 1.2),
+          1,
+          0
+        );
+      }
+    }
+  }
+
+  // 3. Subtle Holographic Projection Halo Ring at Shoulder/Neck Plane (pure geometric accent)
+  const ringPts = Math.round(180 * density);
+  for (let i = 0; i < ringPts; i++) {
+    const a = (i / ringPts) * Math.PI * 2;
+    const x = Math.cos(a) * 2.25;
+    const z = Math.sin(a) * 1.05;
+    const y = -1.95 + Math.sin(a * 2) * 0.06;
+    pushPt(x, y, z, 0.14, 0.78, 1.0, 0, 1);
+  }
+
+  const baseCoords = new Float32Array(pts);
+  const baseColors = new Float32Array(cols);
+  const wispMask = new Uint8Array(isWisp);
+  const rimMask = new Uint8Array(rimFlags);
+  const phases = new Float32Array(phs);
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3));
+  geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cols), 3));
+
+  const mat = new THREE.PointsMaterial({
+    size: isMobile ? 0.056 : 0.058,
+    map: particleTex,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.96,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    sizeAttenuation: true
+  });
+
+  const silhouettePoints = new THREE.Points(geo, mat);
+  silhouetteRig.add(silhouettePoints);
+
+  let currentRole = 0;
+  let morphImpulse = 0;
+  let curRotY = -0.14;
+  let curRotX = 0.03;
+  let curScale = isMobile ? 0.72 : 1.04;
+
+  const ROLE_POSES = [
+    { rotY: -0.14, rotX: 0.03, scale: 1.04, cyanBoost: 0.18, spread: 0.0 },
+    { rotY: 0.34, rotX: -0.05, scale: 1.08, cyanBoost: 0.28, spread: 0.06 },
+    { rotY: -0.32, rotX: 0.07, scale: 1.02, cyanBoost: 0.52, spread: 0.12 },
+    { rotY: 0.18, rotX: -0.03, scale: 1.06, cyanBoost: 0.32, spread: 0.04 }
+  ];
 
   return {
     group,
@@ -199,7 +294,7 @@ export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMob
       }
     },
     update(time, state, camera, dt) {
-      // Animate subtle vertical dotted matrix rain
+      // Animate vertical dotted matrix rain
       const rAttr = rainGeo.attributes.position;
       for (let i = 0; i < rainCount; i++) {
         let y = rAttr.array[i * 3 + 1] - rainSpeeds[i] * dt * 0.9;
@@ -214,12 +309,13 @@ export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMob
         drawGlyph(ROLE_GLYPHS[currentRole % ROLE_GLYPHS.length]);
       }
       morphImpulse = Math.max(0, morphImpulse - dt * 1.85);
+
       glyphPlane.position.x = (isMobile ? 0.82 : 1.75) - state.pointer.x * 0.22;
       glyphPlane.position.y = (isMobile ? 1.25 : 0.15) + state.pointer.y * 0.14;
 
       const pose = ROLE_POSES[currentRole % ROLE_POSES.length];
-      const mobileScale = isMobile ? 0.76 : 1.0;
-      const targetRotY = pose.rotY + state.pointer.x * 0.24;
+      const mobileScale = isMobile ? 0.72 : 1.0;
+      const targetRotY = pose.rotY + state.pointer.x * 0.28;
       const targetRotX = pose.rotX + state.pointer.y * 0.14;
       const targetScale = pose.scale * mobileScale;
 
@@ -227,51 +323,54 @@ export function createTeamPointCloudScene(THREE, particleTex, portraitSrc, isMob
       curRotX += (targetRotX - curRotX) * 0.08;
       curScale += (targetScale - curScale) * 0.08;
 
-      portraitRig.rotation.y = curRotY;
-      portraitRig.rotation.x = curRotX;
-      portraitRig.scale.setScalar(curScale);
+      silhouetteRig.rotation.y = curRotY;
+      silhouetteRig.rotation.x = curRotX;
+      silhouetteRig.scale.setScalar(curScale);
 
-      if (portraitPoints && baseCoords) {
-        const posAttr = portraitPoints.geometry.attributes.position;
-        const colAttr = portraitPoints.geometry.attributes.color;
-        const arr = posAttr.array;
-        const cArr = colAttr.array;
-        const total = wispMask.length;
-        const burst = morphImpulse * morphImpulse;
+      const posAttr = silhouettePoints.geometry.attributes.position;
+      const colAttr = silhouettePoints.geometry.attributes.color;
+      const arr = posAttr.array;
+      const cArr = colAttr.array;
+      const total = wispMask.length;
+      const burst = morphImpulse * morphImpulse;
 
-        for (let i = 0; i < total; i++) {
-          const i3 = i * 3;
-          const bx = baseCoords[i3];
-          const by = baseCoords[i3 + 1];
-          const bz = baseCoords[i3 + 2];
-          const ph = phases[i];
+      // Sweeping upward holographic scanline plane (-2.4 .. +2.2)
+      const scanY = -2.4 + ((time * 0.75) % 4.6);
 
-          if (wispMask[i] === 1) {
-            // Drifting shoulder wisps
-            const drift = ((time * 0.35 + ph) % 1.0);
-            arr[i3] = bx + Math.sin(time * 1.4 + ph) * 0.08;
-            arr[i3 + 1] = by - drift * 0.42;
-            arr[i3 + 2] = bz + Math.cos(time * 1.1 + ph) * 0.09;
-          } else {
-            // Subtle breathing + role-switch curl-noise scatter burst
-            const breath = Math.sin(time * 1.2 + ph) * 0.012;
-            const scatter = burst * (0.42 + pose.spread);
-            arr[i3] = bx + Math.sin(ph * 2.1 + time * 3.0) * scatter;
-            arr[i3 + 1] = by + Math.cos(ph * 1.7 + time * 2.6) * scatter * 0.7 + breath;
-            arr[i3 + 2] = bz + Math.sin(ph * 3.3) * (scatter * 1.4 + pose.spread * 0.25);
-          }
+      for (let i = 0; i < total; i++) {
+        const i3 = i * 3;
+        const bx = baseCoords[i3];
+        const by = baseCoords[i3 + 1];
+        const bz = baseCoords[i3 + 2];
+        const ph = phases[i];
 
-          // Subtle cyan highlight modulation per role
-          const cBoost = pose.cyanBoost;
-          cArr[i3] = Math.min(1, baseColors[i3] * (1 - cBoost * 0.18));
-          cArr[i3 + 1] = Math.min(1, baseColors[i3 + 1] + cBoost * 0.06);
-          cArr[i3 + 2] = Math.min(1, baseColors[i3 + 2] + cBoost * 0.18);
+        if (wispMask[i] === 1) {
+          const drift = (time * 0.38 + ph) % 1.0;
+          arr[i3] = bx + Math.sin(time * 1.4 + ph) * 0.09;
+          arr[i3 + 1] = by - drift * 0.45;
+          arr[i3 + 2] = bz + Math.cos(time * 1.1 + ph) * 0.09;
+        } else {
+          const breath = Math.sin(time * 1.15 + ph) * 0.012;
+          const scatter = burst * (0.42 + pose.spread);
+          arr[i3] = bx + Math.sin(ph * 2.1 + time * 3.0) * scatter;
+          arr[i3 + 1] = by + Math.cos(ph * 1.7 + time * 2.6) * scatter * 0.7 + breath;
+          arr[i3 + 2] = bz + Math.sin(ph * 3.3) * (scatter * 1.35 + pose.spread * 0.22);
         }
-        posAttr.needsUpdate = true;
-        colAttr.needsUpdate = true;
+
+        // Holographic scanline pulse + subtle cyan rim boost per role
+        const scanDist = Math.abs(by - scanY);
+        const scanPulse = scanDist < 0.28 ? (1 - scanDist / 0.28) * 0.55 : 0;
+        const rimBoost = rimMask[i] === 1 ? pose.cyanBoost * 0.22 : 0;
+
+        cArr[i3] = Math.min(1, baseColors[i3] + scanPulse * 0.35);
+        cArr[i3 + 1] = Math.min(1, baseColors[i3 + 1] + scanPulse * 0.75 + rimBoost * 0.5);
+        cArr[i3 + 2] = Math.min(1, baseColors[i3 + 2] + scanPulse * 0.95 + rimBoost);
       }
 
-      camera.position.set(state.pointer.x * 0.18, -state.pointer.y * 0.12, 6.3);
+      posAttr.needsUpdate = true;
+      colAttr.needsUpdate = true;
+
+      camera.position.set(state.pointer.x * 0.18, -state.pointer.y * 0.12, 6.2);
       camera.lookAt(0, isMobile ? 0.2 : 0, 0);
     }
   };

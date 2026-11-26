@@ -14,7 +14,7 @@
 3. **Menu Dropdown & Bar Hitam Next-Page:**
    - Karena codebase DKV tidak memiliki backend newsletter maupun halaman LABS, Menu Dropdown hanya menampilkan 4 tautan nyata (`BERANDA /`, `TENTANG /about/`, `MATERI /materi-siswa`, `KUMPUL TUGAS /kumpul-tugas`) tanpa form palsu dan tanpa kartu ketiga fiktif.
    - Bar Hitam Next-Page di bawah Footer diarahkan ke `/database-tugas` (`Galeri Karya Siswa`).
-4. **Potret Point-Cloud Team:** Memakai `/about/assets/adrian-lusion-portrait.webp` (salinan foto blazer hitam tanpa background milik Kak Adrian) yang di-sample secara prosedural menjadi point-cloud 3D dengan 4 variasi sudut, kedalaman, dan komposisi untuk 4 peran Kak Adrian (`Video & Audio Editor`, `Graphic Designer`, `AI Content Creator`, `Web Designer`).
+4. **Siluet Hologram Anonim 3D Team (Tanpa Wajah):** Atas permintaan terbaru pengguna, foto wajah pribadi dihapus dari folder `/about/` dan diganti dengan **siluet hologram anonim 3D prosedural tanpa wajah** (hooded silhouette dengan rongga wajah kosong gelap, garis rim hologram cyan-putih, scanline menyapu, dan energy wisps) dengan 4 variasi sudut kamera untuk 4 peran Kak Adrian (`Video & Audio Editor`, `Graphic Designer`, `AI Content Creator`, `Web Designer`).
 5. **Konflik Em Dash (R-02) & Kontak Footer:**
    - Em dash (`:`) pada dua teks contoh di prompt diganti koma/titik tengah (`•`) agar patuh R-02.
    - Footer memakai kontak nyata dari codebase (`SMK Bina Bangsa • XI DKV`, `hello@lexyth.my.id`, Instagram/YouTube/GitHub `@lexyth`) tanpa mengarang alamat jalan fisik maupun nomor telepon.

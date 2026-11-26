@@ -13,7 +13,7 @@ Rebuild penuh halaman About untuk portal pembelajaran XI DKV SMK Bina Bangsa (`d
 - `about/content.json`: Satu sumber kebenaran seluruh teks, 4 peran Kak Adrian, 8 keahlian DKV, 3 materi pilihan, 6 pertemuan, 4 pilar area keahlian, footer resmi, dan next-page.
 - `about/src/main.js`: Orkestrator Preloader `000->100`, Lenis (`lerp: 0.09`), GSAP ScrollTrigger, Header Inversion, Menu Dropdown, Web Audio toggle, dan Auto-Navigasi Next-Page.
 - `about/src/webgl-stage.js`: Shared Three.js WebGLRenderer (dengan Canvas 2D fallback & reduced-motion static fallback) + Hero particle cloud & 3D obsidian canyon explorer.
-- `about/src/scene-team.js`: 3D point-cloud portrait sampler dari `about/assets/adrian-lusion-portrait.webp` dengan 4 pose/sudut peran Kak Adrian, shoulder wisps, huruf latar 3D (`V`, `G`, `A`, `W`), dan dotted matrix rain.
+- `about/src/scene-team.js`: Siluet hologram anonim 3D prosedural tanpa wajah (hooded point-cloud silhouette dengan rongga wajah gelap, scanline hologram, shoulder wisps, huruf latar 3D `V`, `G`, `A`, `W`, dan dotted matrix rain) dengan 4 pose peran Kak Adrian.
 - `about/src/scene-keahlian.js`: 3D iridescent chrome faceted shard dengan custom GLSL thin-film Fresnel shader.
 - `about/src/scene-blue.js`: 3D white satin ribbon (Area Keahlian) dan 3D geometric particle arch (dots, `+`, segitiga) untuk CTA.
 - `about/src/ui-controllers.js`: Pure state machines, validasi skema `content.json`, dan kalkulator kontras WCAG AA.

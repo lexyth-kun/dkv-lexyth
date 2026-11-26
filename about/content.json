@@ -46,8 +46,8 @@
   },
   "team": {
     "sectionTag": "P E R A N",
-    "portraitSrc": "/about/assets/adrian-lusion-portrait.webp",
-    "portraitAlt": "Potret 3D point-cloud Kak Adrian",
+    "portraitMode": "anonymous-hologram-silhouette",
+    "portraitAlt": "Siluet hologram anonim 3D tanpa wajah",
     "fixedBio": "Kenalin, aku Kak Adrian, mentor Editing Audio & Video kelas XI DKV SMK Bina Bangsa. Di kelas, kita fokus jadi partner ngulik bareng supaya setiap siswa tidak hanya menghafal tombol software, tetapi mampu merancang karya audio-video yang rapi, komunikatif, dan relevan dengan industri kreatif.",
     "roles": [
       {
