@@ -1,30 +1,163 @@
 <!DOCTYPE html>
-<html lang="id" class="index-mobile-root" data-initial-route="about">
+<html lang="id" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Tentang Kak Adrian • Editing Audio &amp; Video Portal XI DKV</title>
-  <meta name="description" content="Profil Kak Adrian, pengajar Editing Audio &amp; Video (Adobe Premiere Pro) kelas XI DKV SMK Bina Bangsa, lengkap dengan hologram 3D interaktif dan keahlian utama." />
-  <meta name="theme-color" content="#0a0f1d" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Portal DKV" />
-  <link rel="manifest" href="/manifest.webmanifest?v=bb2" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=bb2" />
-  <link rel="icon" href="/favicon.ico?v=bb2" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=bb2" />
-  <script defer src="/assets/kuis-materi.js?v=20261126c"></script>
-  <script type="module" crossorigin src="/assets/index-D0mw0hQR.js?v=20261126c"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DDim2LYX.css?v=20261126c">
-  <link rel="stylesheet" href="/assets/lusion-experience.css?v=20261126c" />
-  <link rel="stylesheet" href="/assets/pwa-mobile.css" />
-  <script defer src="/assets/pwa-shell.js?v=bb2"></script>
+  <title>Tentang Kak Adrian • Portal DKV SMK Bina Bangsa</title>
+  <meta name="description" content="Profil Kak Adrian (Adrian Ali Muthi, S.Ds), mentor Editing Audio &amp; Video kelas XI DKV SMK Bina Bangsa, dengan eksplorasi visual 3D interaktif, keahlian utama, dan silabus praktikum." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="preload" as="image" href="/about/assets/logo.webp" fetchpriority="high" />
+  <link rel="stylesheet" href="/about/dist/about.bundle.css" />
 </head>
-<body class="index-mobile-locked">
-  <canvas id="watercolorCanvas"></canvas>
-  <div id="navContainer"></div>
-  <main id="mainContent"></main>
-  <div id="detailModalContainer" data-lenis-prevent data-lenis-prevent-touch data-lenis-prevent-wheel style="display: none;"></div>
+<body data-surface="black">
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+
+  <!-- Preloader: Pure Black, Centered Logo & Bar, Bottom-Left Giant Odometer Counter -->
+  <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Memuat halaman Tentang DKV">
+    <div class="preloader-center">
+      <img
+        src="/about/assets/logo.webp"
+        alt="Logo SMK Bina Bangsa Portal DKV"
+        width="84"
+        height="84"
+        fetchpriority="high"
+        decoding="sync"
+        class="preloader-logo"
+      />
+      <div class="preloader-bar-track" aria-hidden="true">
+        <div id="preloaderBar" class="preloader-bar-fill"></div>
+      </div>
+      <p id="preloaderLabel" class="preloader-label">MEMUAT STUDIO DKV</p>
+    </div>
+    <div class="preloader-counter-wrap" aria-hidden="true">
+      <span id="preloaderCounter" class="preloader-counter">000</span>
+    </div>
+  </div>
+
+  <!-- Shared Fixed Fullscreen WebGL / Canvas Stage -->
+  <div id="webglStage" class="webgl-stage" aria-hidden="true">
+    <canvas id="webglCanvas" class="webgl-canvas"></canvas>
+  </div>
+
+  <!-- Fixed Inverting Header (Inverts color automatically across Black / Electric Blue / White) -->
+  <header id="siteHeader" class="site-header" data-header-theme="dark">
+    <a id="headerBrand" class="brand-wordmark" href="/" aria-label="DKV Lexyth, kembali ke Beranda">LEXYTH</a>
+
+    <div class="header-controls">
+      <button
+        id="motionToggleBtn"
+        type="button"
+        class="header-circle-btn"
+        aria-label="Jeda animasi latar"
+        aria-pressed="false"
+        title="Jeda atau lanjutkan animasi latar"
+      >
+        <svg class="icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="4" y="3" width="2.5" height="10" fill="currentColor" />
+          <rect x="9.5" y="3" width="2.5" height="10" fill="currentColor" />
+        </svg>
+        <svg class="icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <polygon points="5,3 13,8 5,13" fill="currentColor" />
+        </svg>
+      </button>
+
+      <button
+        id="soundToggleBtn"
+        type="button"
+        class="header-circle-btn"
+        aria-label="Aktifkan suara latar"
+        aria-pressed="false"
+        title="Suara latar studio"
+      >
+        <span class="sound-bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
+      <a id="headerContactBtn" class="header-pill header-pill-dark" href="#kontak">
+        <span class="pill-text">HUBUNGI</span>
+        <span class="pill-dot" aria-hidden="true"></span>
+      </a>
+
+      <button
+        id="menuToggleBtn"
+        type="button"
+        class="header-pill header-pill-light"
+        aria-expanded="false"
+        aria-controls="floatingMenuCard"
+      >
+        <span id="menuToggleText" class="pill-text">MENU</span>
+        <span class="pill-dots" aria-hidden="true"><span></span><span></span></span>
+      </button>
+    </div>
+
+    <!-- Floating Rounded White Dropdown Menu Card (NOT fullscreen) -->
+    <nav
+      id="floatingMenuCard"
+      class="menu-dropdown"
+      aria-label="Navigasi utama Portal DKV"
+      hidden
+    >
+      <ul id="menuLinksList" class="menu-links-list"></ul>
+      <div class="menu-dropdown-meta">
+        <img src="/about/assets/logo.webp" alt="" width="24" height="24" class="menu-meta-logo" aria-hidden="true" />
+        <span id="menuMetaNote">SMK Bina Bangsa • XI DKV</span>
+      </div>
+    </nav>
+  </header>
+
+  <div id="menuBackdrop" class="menu-backdrop" hidden aria-hidden="true"></div>
+
+  <!-- Main Scroll Document -->
+  <main id="main-content" class="about-main">
+    <div id="dataStateBanner" class="state-banner" role="alert" hidden></div>
+
+    <!-- M1: HERO PINNED SECTION (#000000) -->
+    <section id="sec-hero" class="sec sec-hero" data-theme-section="hero" aria-label="Pembuka Tentang DKV">
+      <div class="hero-pin-viewport">
+        <div class="hero-crosshairs" aria-hidden="true">
+          <span>+</span><span>+</span><span>+</span><span>+</span><span>+</span>
+        </div>
+
+        <div class="hero-stage hero-stage-intro">
+          <p id="heroKicker" class="hero-kicker">PORTAL DKV • SMK BINA BANGSA</p>
+          <div class="hero-giant-wordmark" aria-hidden="true">LEXYTH</div>
+        </div>
+
+        <div class="hero-stage hero-stage-one">
+          <h1 id="heroHeadlinePrimary" class="hero-headline-primary"></h1>
+        </div>
+
+        <div class="hero-stage hero-stage-two">
+          <div class="hero-stage-two-inner">
+            <h2 id="heroHeadlineSecondary" class="hero-headline-secondary"></h2>
+            <p id="heroSubcopy" class="hero-subcopy"></p>
+          </div>
+        </div>
+
+        <div class="hero-bottom-bar">
+          <span class="hero-meta-tag">XI DKV • EDITING AUDIO &amp; VIDEO</span>
+          <a href="#sec-team" class="hero-scroll-cue" id="heroScrollCue">
+            <span id="heroScrollCueText">SCROLL TO EXPLORE</span>
+            <span class="hero-scroll-line" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mount slots for M2–M6 sections (populated progressively per milestone) -->
+    <div id="sectionsMount"></div>
+  </main>
+
+  <!-- Fullscreen Black Transition Overlay for Next-Page Navigation -->
+  <div id="pageTransitionOverlay" class="page-transition-overlay" aria-hidden="true" hidden>
+    <img src="/about/assets/logo.webp" alt="" width="72" height="72" class="transition-logo" />
+    <p class="transition-label">MEMBUKA GALERI KARYA SISWA</p>
+  </div>
+
+  <script type="module" src="/about/dist/about.bundle.js"></script>
 </body>
 </html>
