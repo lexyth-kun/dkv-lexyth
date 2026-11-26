@@ -618,6 +618,130 @@ function mountBrandsAndKeahlian(content, stage, mountEl) {
   }
 }
 
+function mountMateriAndPertemuan(content, stage, mountEl) {
+  const mp = content.materiPertemuan;
+  const section = document.createElement('section');
+  section.id = 'sec-materi';
+  section.className = 'sec sec-materi';
+  section.setAttribute('data-theme-section', 'materi');
+  section.setAttribute('aria-label', 'Materi Pilihan dan Daftar Pertemuan DKV');
+
+  section.innerHTML = `
+    <div class="outline-divider" aria-hidden="true">
+      <div class="outline-divider-line outline-divider-line-top">${escapeHtml(mp.dividerTop)}</div>
+      <div class="outline-divider-line outline-divider-line-bottom">${escapeHtml(mp.dividerBottom)}</div>
+    </div>
+
+    <div class="editorial-container">
+      <div class="subsec-header">
+        <div class="subsec-title-wrap">
+          <h2 class="subsec-title">${escapeHtml(mp.materiTitle)}</h2>
+          <span class="subsec-count">${escapeHtml(mp.materiCount)}</span>
+        </div>
+        <a class="subsec-action-link" href="/materi-siswa">Buka Semua Materi Siswa</a>
+      </div>
+
+      <div class="materi-grid">
+        ${mp.materiItems
+          .map(
+            (item) => `
+          <a class="materi-card" href="${escapeHtml(item.href)}">
+            <div class="materi-thumb-wrap">
+              <img
+                src="${escapeHtml(item.image)}"
+                alt="${escapeHtml(item.imageAlt)}"
+                width="960"
+                height="540"
+                loading="lazy"
+                decoding="async"
+                class="materi-thumb"
+              />
+            </div>
+            <div class="materi-body">
+              <span class="materi-code">${escapeHtml(item.code)}</span>
+              <h3 class="materi-card-title">${escapeHtml(item.title)}</h3>
+              <p class="materi-card-summary">${escapeHtml(item.summary)}</p>
+              <span class="materi-card-cta">${escapeHtml(item.cta)}</span>
+            </div>
+          </a>`
+          )
+          .join('')}
+      </div>
+
+      <div class="subsec-header" id="sec-pertemuan">
+        <div class="subsec-title-wrap">
+          <h2 class="subsec-title">${escapeHtml(mp.pertemuanTitle)}</h2>
+          <span class="subsec-count">${escapeHtml(mp.pertemuanCount)}</span>
+        </div>
+        <span class="keahlian-hint">SILABUS XI DKV • ADOBE PREMIERE PRO</span>
+      </div>
+
+      <ol class="pertemuan-list">
+        ${mp.pertemuanItems
+          .map(
+            (row) => `
+          <li class="pertemuan-item">
+            <a class="pertemuan-row" href="${escapeHtml(row.href)}">
+              <span class="pertemuan-week">${escapeHtml(row.week)}</span>
+              <span class="pertemuan-title-wrap">
+                <span class="pertemuan-title">${escapeHtml(row.title)}</span>
+                <span class="pertemuan-strike" aria-hidden="true"></span>
+              </span>
+              <span class="pertemuan-cat">${escapeHtml(row.category)}</span>
+            </a>
+          </li>`
+          )
+          .join('')}
+      </ol>
+    </div>
+  `;
+  mountEl.appendChild(section);
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top center',
+    end: 'bottom center',
+    onEnter: () => setSurfaceAndHeader('materi'),
+    onEnterBack: () => setSurfaceAndHeader('materi')
+  });
+
+  if (!prefersReducedMotion) {
+    // Subtle opposite horizontal drift on giant outline divider
+    const topLine = section.querySelector('.outline-divider-line-top');
+    const bottomLine = section.querySelector('.outline-divider-line-bottom');
+    if (topLine && bottomLine) {
+      gsap.fromTo(
+        topLine,
+        { xPercent: 4 },
+        {
+          xPercent: -6,
+          ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top bottom', end: 'top top', scrub: true }
+        }
+      );
+      gsap.fromTo(
+        bottomLine,
+        { xPercent: -4 },
+        {
+          xPercent: 6,
+          ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top bottom', end: 'top top', scrub: true }
+        }
+      );
+    }
+
+    // Lusion Talks signature: scroll-exit strikethrough as each Pertemuan row exits upper band
+    section.querySelectorAll('.pertemuan-item').forEach((item) => {
+      ScrollTrigger.create({
+        trigger: item,
+        start: 'top 36%',
+        onEnter: () => item.classList.add('is-passed'),
+        onLeaveBack: () => item.classList.remove('is-passed')
+      });
+    });
+  }
+}
+
 async function bootstrap() {
   const banner = document.getElementById('dataStateBanner');
   let content = null;
@@ -662,6 +786,7 @@ async function bootstrap() {
   if (mountEl) {
     mountTeamSection(content, stage, mountEl);
     mountBrandsAndKeahlian(content, stage, mountEl);
+    mountMateriAndPertemuan(content, stage, mountEl);
   }
   setSurfaceAndHeader('hero');
 
