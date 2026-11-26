@@ -712,6 +712,205 @@ button:disabled,
   display: inline-block;
 }
 
+/* =========================================================
+   SECTION 2: TEAM / PERAN KAK ADRIAN PINNED CAROUSEL (#000000)
+   ========================================================= */
+.sec-team {
+  background: transparent;
+  color: #FFFFFF;
+}
+
+.team-pin-viewport {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 680px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 12px) clamp(20px, 4vw, 48px) clamp(24px, 4vh, 44px);
+}
+
+.team-top-row {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.team-bracket-index {
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.team-section-tag {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.65em;
+  color: #E4E6EE;
+  text-transform: uppercase;
+  padding-right: 0;
+}
+
+.team-bg-glyph {
+  position: absolute;
+  top: 50%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(160px, 26vw, 340px);
+  font-weight: 800;
+  line-height: 0.85;
+  color: rgba(255, 255, 255, 0.92);
+  pointer-events: none;
+  z-index: 2;
+  user-select: none;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-rulers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.team-ruler-left,
+.team-ruler-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.team-ruler-left { left: clamp(16px, 3vw, 36px); }
+.team-ruler-right { right: clamp(16px, 3vw, 36px); }
+
+.team-bottom-grid {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: end;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.team-role-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+}
+
+.team-name-line {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-colons {
+  font-family: var(--font-mono);
+  color: var(--accent-cyan);
+  font-weight: 400;
+}
+
+.team-role-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.15vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #E2E6F2;
+  text-transform: uppercase;
+}
+
+.team-role-detail {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted-dark);
+}
+
+.team-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.team-arrow-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.team-arrow-btn:hover {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.team-arrow-btn-primary {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #FFFFFF;
+}
+
+.team-arrow-btn-primary:hover {
+  background: #2E4BFF;
+}
+
+.team-progress-track {
+  flex: 1;
+  max-width: 240px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+}
+
+.team-progress-fill {
+  width: 25%;
+  height: 100%;
+  background: #FFFFFF;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-bio-box {
+  background: rgba(0, 0, 0, 0.56);
+  padding: 16px 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.team-fixed-bio {
+  margin: 0;
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.65;
+  color: #E8EBF5;
+}
+
 /* Fullscreen Next-Page Transition Overlay */
 .page-transition-overlay {
   position: fixed;
@@ -764,6 +963,18 @@ button:disabled,
     border-right: none;
     border-left: 2px solid #FFFFFF;
   }
+
+  .team-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .team-bg-glyph {
+    left: 72%;
+    top: 38%;
+    font-size: clamp(120px, 28vw, 200px);
+    opacity: 0.72;
+  }
 }
 
 @media (max-width: 640px) {
@@ -794,6 +1005,31 @@ button:disabled,
 
   .hero-giant-wordmark {
     font-size: clamp(58px, 21vw, 96px);
+  }
+
+  .team-pin-viewport {
+    min-height: 100dvh;
+    padding-top: calc(var(--header-h) + 8px);
+    padding-bottom: 20px;
+  }
+
+  .team-rulers {
+    display: none;
+  }
+
+  .team-role-card {
+    background: rgba(0, 0, 0, 0.72);
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .team-bio-box {
+    padding: 12px 14px;
+  }
+
+  .team-fixed-bio {
+    font-size: 13px;
+    line-height: 1.5;
   }
 }
 

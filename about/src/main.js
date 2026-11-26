@@ -4,9 +4,11 @@ import Lenis from 'lenis';
 import {
   validateContentSchema,
   resolveHeaderTheme,
+  createTeamCarouselController,
   escapeHtml
 } from './ui-controllers.js';
 import { createWebGLStage } from './webgl-stage.js';
+import { createTeamPointCloudScene } from './scene-team.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -252,6 +254,162 @@ export function setSurfaceAndHeader(sectionId) {
   document.body.setAttribute('data-surface', surface);
 }
 
+function mountTeamSection(content, stage, mountEl) {
+  const { team } = content;
+  const first = team.roles[0];
+
+  const section = document.createElement('section');
+  section.id = 'sec-team';
+  section.className = 'sec sec-team';
+  section.setAttribute('data-theme-section', 'team');
+  section.setAttribute('aria-label', 'Peran Kak Adrian di Kelas DKV');
+  section.innerHTML = `
+    <div class="team-pin-viewport">
+      <div class="team-top-row">
+        <div id="teamIndexDisplay" class="team-bracket-index" aria-live="polite">[[ ${escapeHtml(first.index)} ]]</div>
+        <div class="team-section-tag">${escapeHtml(team.sectionTag)}</div>
+      </div>
+
+      <div class="team-rulers" aria-hidden="true">
+        <div class="team-ruler-left"><span>+</span><span>-</span><span>+</span><span>-</span><span>+</span></div>
+        <div class="team-ruler-right"><span>+</span><span>-</span><span>+</span><span>-</span><span>+</span></div>
+      </div>
+
+      <div class="team-bottom-grid">
+        <div class="team-role-card">
+          <h2 id="teamNameDisplay" class="team-name-line">
+            <span class="team-colons" aria-hidden="true">::</span>
+            <span>${escapeHtml(first.name)}</span>
+          </h2>
+          <p id="teamRoleDisplay" class="team-role-title">${escapeHtml(first.role)}</p>
+          <p id="teamDetailDisplay" class="team-role-detail">${escapeHtml(first.detail)}</p>
+          <div class="team-controls-row">
+            <button id="teamPrevBtn" type="button" class="team-arrow-btn" aria-label="Peran sebelumnya">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button id="teamNextBtn" type="button" class="team-arrow-btn team-arrow-btn-primary" aria-label="Peran berikutnya">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="team-progress-track" aria-hidden="true">
+              <div id="teamProgressFill" class="team-progress-fill" style="width: 25%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-bio-box">
+          <p class="team-fixed-bio">${escapeHtml(team.fixedBio)}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  mountEl.appendChild(section);
+
+  let teamScene = null;
+  if (stage.isWebGL && stage.THREE) {
+    teamScene = createTeamPointCloudScene(
+      stage.THREE,
+      stage.particleTex,
+      team.portraitSrc,
+      stage.isMobile
+    );
+    stage.registerScene('team', teamScene);
+  }
+
+  const ctrl = createTeamCarouselController(team.roles.length);
+  const idxEl = section.querySelector('#teamIndexDisplay');
+  const nameEl = section.querySelector('#teamNameDisplay');
+  const roleEl = section.querySelector('#teamRoleDisplay');
+  const detailEl = section.querySelector('#teamDetailDisplay');
+  const fillEl = section.querySelector('#teamProgressFill');
+
+  let renderedIndex = 0;
+  const applyRoleUI = (nextIdx) => {
+    renderedIndex = nextIdx;
+    const item = team.roles[nextIdx];
+    if (idxEl) idxEl.textContent = `[[ ${item.index} ]]`;
+    if (nameEl) {
+      nameEl.innerHTML = `<span class="team-colons" aria-hidden="true">::</span><span>${escapeHtml(item.name)}</span>`;
+    }
+    if (roleEl) roleEl.textContent = item.role;
+    if (detailEl) detailEl.textContent = item.detail;
+    if (fillEl) fillEl.style.width = `${((nextIdx + 1) / team.roles.length) * 100}%`;
+    stage.setState({ teamIndex: nextIdx });
+    teamScene?.triggerRole(nextIdx);
+  };
+
+  let teamTrigger = null;
+  const jumpToRole = (nextIdx) => {
+    ctrl.setIndex(nextIdx);
+    applyRoleUI(nextIdx);
+    if (teamTrigger && !prefersReducedMotion) {
+      const span = teamTrigger.end - teamTrigger.start;
+      const targetScroll = teamTrigger.start + ((nextIdx + 0.35) / team.roles.length) * span;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+  };
+
+  section.querySelector('#teamPrevBtn')?.addEventListener('click', () => {
+    const nextIdx = (renderedIndex - 1 + team.roles.length) % team.roles.length;
+    jumpToRole(nextIdx);
+  });
+
+  section.querySelector('#teamNextBtn')?.addEventListener('click', () => {
+    const nextIdx = (renderedIndex + 1) % team.roles.length;
+    jumpToRole(nextIdx);
+  });
+
+  section.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      jumpToRole((renderedIndex + 1) % team.roles.length);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      jumpToRole((renderedIndex - 1 + team.roles.length) % team.roles.length);
+    }
+  });
+
+  if (!prefersReducedMotion) {
+    teamTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: '+=2400',
+      pin: true,
+      scrub: 0.5,
+      onEnter() {
+        setSurfaceAndHeader('team');
+        stage.setState({ activeScene: 'team' });
+      },
+      onEnterBack() {
+        setSurfaceAndHeader('team');
+        stage.setState({ activeScene: 'team' });
+      },
+      onLeaveBack() {
+        setSurfaceAndHeader('hero');
+        stage.setState({ activeScene: 'hero' });
+      },
+      onUpdate(self) {
+        const nextIdx = ctrl.setFromProgress(self.progress);
+        stage.setState({ activeScene: 'team', teamProgress: self.progress, teamIndex: nextIdx });
+        if (nextIdx !== renderedIndex) {
+          applyRoleUI(nextIdx);
+        }
+      }
+    });
+  } else {
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top center',
+      end: 'bottom center',
+      onEnter: () => stage.setState({ activeScene: 'team' }),
+      onEnterBack: () => stage.setState({ activeScene: 'team' })
+    });
+  }
+}
+
 async function bootstrap() {
   const banner = document.getElementById('dataStateBanner');
   let content = null;
@@ -290,8 +448,12 @@ async function bootstrap() {
     gsap.ticker.lagSmoothing(0);
   }
 
+  const mountEl = document.getElementById('sectionsMount');
   initHeaderInteractions(content, stage);
   initHeroScrollChoreography(stage);
+  if (mountEl) {
+    mountTeamSection(content, stage, mountEl);
+  }
   setSurfaceAndHeader('hero');
 
   // Smooth jump for in-page anchor links
