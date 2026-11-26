@@ -1038,7 +1038,7 @@ function mountFooterAndNextPage(content, stage, mountEl, lenis) {
   mountEl.appendChild(footerEl);
 
   footerEl.querySelector('#backToTopBtn')?.addEventListener('click', () => {
-    if (lenis) lenis.scrollTo(0);
+    if (lenis) lenis.scrollTo(0, { duration: 0.75, force: true });
     else window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 
@@ -1231,7 +1231,7 @@ async function bootstrap() {
   }
   setSurfaceAndHeader('hero');
 
-  // Smooth jump for in-page anchor links
+  // Smooth jump for in-page anchor links (accurate past GSAP pinned spacers)
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const targetId = anchor.getAttribute('href');
@@ -1239,8 +1239,9 @@ async function bootstrap() {
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
-        if (lenis) lenis.scrollTo(targetEl);
-        else targetEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        const targetY = Math.max(0, Math.round(targetEl.getBoundingClientRect().top + window.scrollY));
+        if (lenis) lenis.scrollTo(targetY, { duration: 0.75, force: true });
+        else window.scrollTo({ top: targetY, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
       }
     });
   });

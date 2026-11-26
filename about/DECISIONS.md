@@ -1,4 +1,4 @@
-# DECISIONS.md — Catatan Keputusan Desain & Teknis (`/about/`)
+# DECISIONS.md: Catatan Keputusan Desain & Teknis (`/about/`)
 
 ## 1. Design Read & Arah Visual (R-37)
 - **Design Read:** Halaman About editorial-eksperimental untuk siswa XI DKV SMK Bina Bangsa dan pengunjung `dkv.lexyth.my.id/about/`, dengan bahasa visual studio kreatif avant-garde meniru koreografi dan arsitektur `lusion.co/about` 1:1, dial `ENERGY 3 / RHYTHM 3 / MOTION 3`.
@@ -16,7 +16,7 @@
    - Bar Hitam Next-Page di bawah Footer diarahkan ke `/database-tugas` (`Galeri Karya Siswa`).
 4. **Potret Point-Cloud Team:** Memakai `/about/assets/adrian-lusion-portrait.webp` (salinan foto blazer hitam tanpa background milik Kak Adrian) yang di-sample secara prosedural menjadi point-cloud 3D dengan 4 variasi sudut, kedalaman, dan komposisi untuk 4 peran Kak Adrian (`Video & Audio Editor`, `Graphic Designer`, `AI Content Creator`, `Web Designer`).
 5. **Konflik Em Dash (R-02) & Kontak Footer:**
-   - Em dash (`—`) pada dua teks contoh di prompt diganti koma/titik tengah (`•`) agar patuh R-02.
+   - Em dash (`:`) pada dua teks contoh di prompt diganti koma/titik tengah (`•`) agar patuh R-02.
    - Footer memakai kontak nyata dari codebase (`SMK Bina Bangsa • XI DKV`, `hello@lexyth.my.id`, Instagram/YouTube/GitHub `@lexyth`) tanpa mengarang alamat jalan fisik maupun nomor telepon.
 
 ## 3. Alasan Keputusan Visual & Teknis (R-31)
