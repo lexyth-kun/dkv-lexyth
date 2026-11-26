@@ -6,6 +6,7 @@ import {
   resolveHeaderTheme,
   createTeamCarouselController,
   createKeahlianDeckController,
+  computeNextPageCharge,
   escapeHtml
 } from './ui-controllers.js';
 import { createWebGLStage } from './webgl-stage.js';
@@ -958,6 +959,228 @@ function mountExpertiseAndCta(content, stage, mountEl) {
   }
 }
 
+function mountFooterAndNextPage(content, stage, mountEl, lenis) {
+  const { footer, nextPage, preloader } = content;
+
+  // 6A. WHITE FOOTER CURTAIN SLIDING UP OVER ELECTRIC BLUE
+  const footerEl = document.createElement('footer');
+  footerEl.id = 'kontak';
+  footerEl.className = 'sec sec-footer';
+  footerEl.setAttribute('data-theme-section', 'footer');
+  footerEl.setAttribute('aria-label', 'Footer dan Kontak Resmi Portal DKV');
+  footerEl.innerHTML = `
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-identity">
+          <div class="footer-brand-row">
+            <img
+              src="${escapeHtml(preloader.logoSrc)}"
+              alt="${escapeHtml(preloader.logoAlt)}"
+              width="48"
+              height="48"
+              loading="lazy"
+              class="footer-logo"
+            />
+            <div>
+              <p class="footer-school">${escapeHtml(footer.schoolName)}</p>
+              <h2 class="footer-mentor">${escapeHtml(footer.mentorName)}</h2>
+            </div>
+          </div>
+          <p class="footer-desc">${escapeHtml(footer.mentorRole)}</p>
+        </div>
+
+        <nav aria-label="Tautan Portal DKV">
+          <h3 class="footer-col-title">Portal DKV</h3>
+          <ul class="footer-link-list">
+            ${footer.portalLinks
+              .map(
+                (item) => `
+              <li>
+                <a class="footer-link" href="${escapeHtml(item.href)}">
+                  <span>${escapeHtml(item.label)}</span>
+                </a>
+              </li>`
+              )
+              .join('')}
+          </ul>
+        </nav>
+
+        <div>
+          <h3 class="footer-col-title">Kontak &amp; Kanal Resmi</h3>
+          <a class="footer-email-link" href="mailto:${escapeHtml(footer.contactEmail)}">${escapeHtml(footer.contactEmail)}</a>
+          <ul class="footer-link-list">
+            ${footer.socials
+              .map(
+                (s) => `
+              <li>
+                <a class="footer-link" href="${escapeHtml(s.href)}" target="_blank" rel="noopener noreferrer">
+                  <span>${escapeHtml(s.label)}</span>
+                  <span class="footer-handle">${escapeHtml(s.handle)}</span>
+                </a>
+              </li>`
+              )
+              .join('')}
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <p class="footer-copy">${escapeHtml(footer.copyright)}</p>
+        <button id="backToTopBtn" type="button" class="back-to-top-btn">
+          <span>${escapeHtml(footer.backToTopLabel)}</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 11V3M7 3L3.5 6.5M7 3L10.5 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  `;
+  mountEl.appendChild(footerEl);
+
+  footerEl.querySelector('#backToTopBtn')?.addEventListener('click', () => {
+    if (lenis) lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
+
+  // Invert header cleanly to dark ink while White Footer covers top viewport
+  ScrollTrigger.create({
+    trigger: footerEl,
+    start: 'top 84px',
+    end: 'bottom 84px',
+    onEnter() {
+      const header = document.getElementById('siteHeader');
+      if (header) header.setAttribute('data-header-theme', 'light');
+    },
+    onEnterBack() {
+      const header = document.getElementById('siteHeader');
+      if (header) header.setAttribute('data-header-theme', 'light');
+    },
+    onLeaveBack() {
+      setSurfaceAndHeader('cta');
+      stage.setState({ activeScene: 'cta' });
+    }
+  });
+
+  // 6B. BLACK NEXT-PAGE TEASER BAR + SCROLL-PAST-FOOTER AUTO-NAVIGATION
+  const nextSec = document.createElement('section');
+  nextSec.id = 'sec-nextpage';
+  nextSec.className = 'sec sec-nextpage';
+  nextSec.setAttribute('data-theme-section', 'nextpage');
+  nextSec.setAttribute('aria-label', 'Navigasi ke Halaman Galeri Karya Siswa');
+  nextSec.innerHTML = `
+    <a id="nextPageLink" class="nextpage-link" href="${escapeHtml(nextPage.href)}">
+      <div class="nextpage-inner">
+        <div>
+          <p class="nextpage-eyebrow">${escapeHtml(nextPage.eyebrow)}</p>
+          <h2 class="nextpage-title">${escapeHtml(nextPage.title)}</h2>
+          <p class="nextpage-hint">${escapeHtml(nextPage.hint)}</p>
+        </div>
+        <span class="nextpage-arrow-badge" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+    <div class="nextpage-charge-track" aria-hidden="true">
+      <div id="nextPageProgressFill" class="nextpage-charge-fill"></div>
+    </div>
+  `;
+  mountEl.appendChild(nextSec);
+
+  ScrollTrigger.create({
+    trigger: nextSec,
+    start: 'top 84px',
+    onEnter() {
+      const header = document.getElementById('siteHeader');
+      if (header) header.setAttribute('data-header-theme', 'dark');
+    },
+    onLeaveBack() {
+      const header = document.getElementById('siteHeader');
+      if (header) header.setAttribute('data-header-theme', 'light');
+    }
+  });
+
+  const fillEl = nextSec.querySelector('#nextPageProgressFill');
+  const linkEl = nextSec.querySelector('#nextPageLink');
+  const overlayEl = document.getElementById('pageTransitionOverlay');
+
+  let charge = 0;
+  let navigating = false;
+  let decayTimer = 0;
+
+  const triggerNextPageTransition = (targetHref) => {
+    if (navigating) return;
+    navigating = true;
+    if (fillEl) fillEl.style.transform = 'scaleX(1)';
+    if (prefersReducedMotion || !overlayEl) {
+      window.location.href = targetHref;
+      return;
+    }
+    overlayEl.hidden = false;
+    overlayEl.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => overlayEl.classList.add('is-active'));
+    setTimeout(() => {
+      window.location.href = targetHref;
+    }, 480);
+  };
+
+  linkEl?.addEventListener('click', (e) => {
+    if (prefersReducedMotion) return;
+    e.preventDefault();
+    triggerNextPageTransition(nextPage.href);
+  });
+
+  const applyWheelOrTouchCharge = (deltaY) => {
+    if (navigating || prefersReducedMotion) return;
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const isAtBottom = window.scrollY >= maxScroll - 8;
+    charge = computeNextPageCharge(charge, deltaY, isAtBottom, 520);
+    if (fillEl) fillEl.style.transform = `scaleX(${charge})`;
+
+    clearTimeout(decayTimer);
+    if (charge >= 1) {
+      triggerNextPageTransition(nextPage.href);
+    } else if (charge > 0) {
+      decayTimer = setTimeout(() => {
+        if (!navigating) {
+          charge = 0;
+          if (fillEl) fillEl.style.transform = 'scaleX(0)';
+        }
+      }, 900);
+    }
+  };
+
+  window.addEventListener(
+    'wheel',
+    (e) => {
+      if (e.deltaY > 0) applyWheelOrTouchCharge(e.deltaY);
+      else if (charge > 0) applyWheelOrTouchCharge(e.deltaY);
+    },
+    { passive: true }
+  );
+
+  let touchStartY = null;
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartY = e.touches[0]?.clientY ?? null;
+    },
+    { passive: true }
+  );
+  window.addEventListener(
+    'touchmove',
+    (e) => {
+      if (touchStartY === null) return;
+      const curY = e.touches[0]?.clientY ?? touchStartY;
+      const dy = touchStartY - curY;
+      touchStartY = curY;
+      if (dy > 0) applyWheelOrTouchCharge(dy * 2.2);
+    },
+    { passive: true }
+  );
+}
+
 async function bootstrap() {
   const banner = document.getElementById('dataStateBanner');
   let content = null;
@@ -1004,6 +1227,7 @@ async function bootstrap() {
     mountBrandsAndKeahlian(content, stage, mountEl);
     mountMateriAndPertemuan(content, stage, mountEl);
     mountExpertiseAndCta(content, stage, mountEl);
+    mountFooterAndNextPage(content, stage, mountEl, lenis);
   }
   setSurfaceAndHeader('hero');
 
