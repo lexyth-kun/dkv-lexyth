@@ -47,12 +47,123 @@ body {
 }
 
 /* ============================================================================
- * PART 1: LUSION.CO 4-ACT POST-SYLLABUS SPACE TRANSITION (#secAstronaut)
+ * PART 0: AMC-PARITY ARROW-FREE CUSTOM CURSOR & OIL-ON-WATER TRAIL
+ * ============================================================================ */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor summary,
+  html.has-custom-cursor select,
+  html.has-custom-cursor label,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor [role="tab"],
+  html.has-custom-cursor .dkv-about-hero,
+  html.has-custom-cursor .dkv-about-cta {
+    cursor: none !important;
+  }
+
+  html.has-custom-cursor input[type="text"],
+  html.has-custom-cursor input[type="tel"],
+  html.has-custom-cursor input[type="email"],
+  html.has-custom-cursor input[type="search"],
+  html.has-custom-cursor textarea {
+    cursor: text !important;
+  }
+}
+
+.dkv-oil-trail-canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 9990 !important;
+}
+
+#dkv-cursor-dot,
+#dkv-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  z-index: 9998;
+  opacity: 0;
+  will-change: transform;
+  transition: opacity 0.2s ease;
+}
+
+#dkv-cursor-dot {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  background: radial-gradient(circle at 35% 35%, #e0f2fe 0%, #38bdf8 55%, #0284c7 100%);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.72);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#dkv-cursor-dot.is-view-hover {
+  opacity: 0 !important;
+}
+
+#dkv-cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid rgba(56, 189, 248, 0.68);
+  box-shadow: 0 0 18px rgba(125, 211, 252, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.2s ease,
+    width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    margin 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+#dkv-cursor-label {
+  font-family: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #082f49;
+  opacity: 0;
+  transform: scale(0.75);
+  transition: opacity 0.22s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#dkv-cursor-ring.is-view-hover {
+  width: 72px;
+  height: 72px;
+  margin: -36px 0 0 -36px;
+  background: rgba(56, 189, 248, 0.94);
+  border-color: #ffffff;
+  box-shadow: 0 12px 32px rgba(2, 132, 199, 0.36);
+}
+
+#dkv-cursor-ring.is-view-hover #dkv-cursor-label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .dkv-oil-trail-canvas,
+  #dkv-cursor-dot,
+  #dkv-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* ============================================================================
+ * PART 1: LUSION.CO 6-WORLD POST-SYLLABUS SPACE TRANSITION (#secAstronaut)
  * ============================================================================ */
 .dkv-space-root {
   position: relative;
   width: 100%;
-  height: 580vh;
+  height: 640vh;
   background: var(--dkv-space-bg);
   color: #ffffff;
   z-index: 4;
@@ -489,86 +600,179 @@ body {
   background: #f8fbff;
 }
 
-/* Signature Lusion Bottom Next-Page Scroll Gate */
+/* Signature Lusion / AMC Dark-Navy Overscroll Charge Next-Page Gate */
 .dkv-next-gate {
   position: relative;
   z-index: 5;
   width: 100%;
-  background: #ffffff;
-  border-top: 1px solid var(--dkv-line);
-  padding: 72px 24px 88px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 36px 36px 0 0;
+  background: #082f49;
+  color: #ffffff;
 }
 
-.dkv-next-gate-inner {
+.dkv-next-gate-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgba(56, 189, 248, 0.52) 0%,
+    rgba(14, 165, 233, 0.18) 42%,
+    rgba(8, 47, 73, 0) 76%
+  );
+  transition: opacity 0.15s ease;
+}
+
+.dkv-next-gate-hairline {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(125, 211, 252, 0.6) 50%, transparent 100%);
+}
+
+.dkv-next-gate-trigger {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 44px 24px 48px;
+  color: #ffffff;
+  text-align: left;
+  transition: background-color 0.3s ease;
+}
+
+.dkv-next-gate-trigger:hover {
+  background: rgba(12, 74, 110, 0.42);
+}
+
+.dkv-next-gate-shell {
   max-width: 1240px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
 }
 
-.dkv-next-gate-btn {
-  width: 100%;
+.dkv-next-gate-crosshair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+}
+
+.dkv-next-gate-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 20px;
-  padding: 28px 32px;
-  border-radius: 28px;
-  border: 1px solid var(--dkv-line);
-  background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
-  text-align: left;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 24px;
 }
 
-.dkv-next-gate-btn:hover {
-  border-color: var(--dkv-space-cobalt);
-  transform: translateY(-3px);
-  box-shadow: 0 22px 54px rgba(37, 99, 235, 0.12);
+.dkv-next-gate-left {
+  flex: 1 1 420px;
 }
 
 .dkv-next-gate-eyebrow {
-  display: block;
+  margin: 0;
   font-family: var(--font-mono, "JetBrains Mono", monospace);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.74rem;
+  font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--dkv-space-cobalt);
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .dkv-next-gate-title {
-  display: block;
-  margin-top: 10px;
+  margin: 10px 0 0;
   font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
-  font-size: clamp(1.8rem, 4.8vw, 4rem);
+  font-size: clamp(1.9rem, 5.2vw, 4.4rem);
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  color: var(--dkv-ink);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dkv-next-gate-cta {
+.dkv-next-gate-trigger:hover .dkv-next-gate-title {
+  transform: translateX(8px);
+}
+
+.dkv-next-gate-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.dkv-next-gate-meter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dkv-next-gate-pct {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: #7dd3fc;
+}
+
+.dkv-next-gate-circle {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: var(--dkv-ink);
-  color: #ffffff;
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  justify-content: center;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.dkv-next-gate-trigger:hover .dkv-next-gate-circle {
+  transform: translateX(4px);
+  background: #38bdf8;
+  color: #082f49;
+}
+
+.dkv-next-gate-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.dkv-next-gate-hint {
+  margin: 0;
+  max-width: 300px;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.76);
+  text-align: right;
 }
 
 .dkv-next-gate-track {
+  margin-top: 26px;
   width: 100%;
   height: 4px;
   border-radius: 999px;
-  background: #e2e8f0;
+  background: rgba(255, 255, 255, 0.16);
   overflow: hidden;
 }
 
@@ -576,9 +780,10 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+  background: linear-gradient(90deg, #7dd3fc 0%, #38bdf8 55%, #ffffff 100%);
   transform-origin: left center;
   transform: scaleX(0);
+  transition: transform 0.08s ease-out;
 }
 
 /* ============================================================================
@@ -1264,87 +1469,278 @@ body {
   color: #7dd3fc;
 }
 
-/* 04. Real Class Ecosystem & Quick Tools */
-.dkv-about-craft {
+/* Lusion BlueLine Architectural Divider + Hologram Brand Pill */
+.dkv-blue-line {
+  width: 100%;
+  height: 1.5px;
+  margin-bottom: 44px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.55) 0%, rgba(56, 189, 248, 0.4) 55%, rgba(186, 230, 253, 0.15) 100%);
+}
+
+.dkv-holo-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  background: rgba(3, 17, 38, 0.86);
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #e0f2fe;
+}
+
+.dkv-holo-brand-pill img {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #ffffff;
+  object-fit: cover;
+  padding: 2px;
+}
+
+/* 03. Software & Creative Ecosystem Grid (Lusion "BRANDS WE WORK WITH") */
+.dkv-about-eco {
   padding: 88px 0;
+  background: #ffffff;
+  border-top: 1px solid var(--dkv-line);
+}
+
+.dkv-eco-header {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.dkv-eco-sub {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--dkv-body);
+}
+
+.dkv-eco-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dkv-eco-card {
+  padding: 22px 20px;
+  border-radius: 22px;
+  border: 1px solid var(--dkv-line);
+  background: linear-gradient(155deg, #ffffff 0%, #f4f9ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dkv-eco-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--dkv-space-sky);
+  box-shadow: 0 16px 36px rgba(2, 132, 199, 0.1);
+}
+
+.dkv-eco-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid #bae6fd;
+  background: #082f49;
+  color: #7dd3fc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.dkv-eco-name {
+  margin: 2px 0 0;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--dkv-ink);
+}
+
+.dkv-eco-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--dkv-body);
+}
+
+/* 04. Real Curriculum Architectural Ledger (Lusion "AWARDS 58") */
+.dkv-about-ledger {
+  padding: 92px 0;
   background: var(--dkv-surface-alt);
   border-top: 1px solid var(--dkv-line);
 }
 
-.dkv-craft-grid {
-  margin-top: 32px;
+.dkv-ledger-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 48px;
+  align-items: start;
 }
 
-.dkv-craft-item {
-  padding: 24px;
-  border-radius: 22px;
-  border: 1px solid var(--dkv-line);
-  background: #ffffff;
+.dkv-ledger-sticky {
+  position: sticky;
+  top: 108px;
+}
+
+.dkv-ledger-metric {
+  margin-top: 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.dkv-ledger-big {
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: clamp(3.8rem, 7vw, 6.4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, #0369a1 0%, #2563eb 55%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dkv-ledger-unit {
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--dkv-ink);
+}
+
+.dkv-ledger-caption {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--dkv-body);
+}
+
+.dkv-ledger-cta {
+  margin-top: 22px;
+  padding: 11px 18px;
+  font-size: 0.72rem;
+}
+
+.dkv-ledger-groups {
   display: flex;
   flex-direction: column;
+  gap: 36px;
+}
+
+.dkv-ledger-group-title {
+  margin: 0 0 14px;
+  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--dkv-ink);
+}
+
+.dkv-ledger-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.dkv-ledger-list li + li {
+  border-top: 1px solid #dbe4f3;
+}
+
+.dkv-ledger-row {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 15px 12px;
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  text-align: left;
+  text-decoration: none;
+  color: var(--dkv-ink);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.dkv-ledger-row:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.dkv-ledger-code {
+  font-family: var(--font-mono, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--dkv-space-cobalt);
+}
+
+.dkv-ledger-label {
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: var(--dkv-ink);
+}
+
+.dkv-ledger-note {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--dkv-body);
+  text-align: right;
+}
+
+/* 05. Active Wave Strip & Controls (matching amc.web.id/about) */
+.dkv-deck-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.dkv-deck-wave-strip {
+  margin: 18px 0 24px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  border: 1px solid #bae6fd;
+  background: #f0f9ff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
 
-.dkv-craft-icon {
-  font-family: var(--font-mono, "JetBrains Mono", monospace);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--dkv-space-cobalt);
-}
-
-.dkv-craft-name {
-  margin: 0;
-  font-family: var(--font-heading, "Monument Extended", "Inter", sans-serif);
-  font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--dkv-ink);
-}
-
-.dkv-craft-desc {
-  margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--dkv-body);
-}
-
-.dkv-portal-links {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.dkv-portal-chip {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
-  color: var(--dkv-ink);
+.dkv-deck-strip-link {
+  border: none;
+  background: transparent;
+  padding: 8px 4px;
   font-family: var(--font-mono, "JetBrains Mono", monospace);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  text-decoration: none;
-  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  color: #0369a1;
+  white-space: nowrap;
 }
 
-.dkv-portal-chip:hover {
-  border-color: var(--dkv-space-cobalt);
-  color: var(--dkv-space-cobalt);
-  transform: translateY(-2px);
+.dkv-deck-strip-link:hover {
+  text-decoration: underline;
 }
 
-/* 05. Finale Interactive 3D Spheres CTA ("AYO MULAI BERKARYA!") */
+/* 06. Finale Interactive 3D Spheres CTA ("AYO MULAI BERKARYA!") */
 .dkv-about-cta {
   position: relative;
   min-height: 78vh;
@@ -1354,7 +1750,7 @@ body {
   justify-content: center;
   overflow: hidden;
   padding: 96px 24px 80px;
-  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 55%, #ffffff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 55%, #e0f2fe 100%);
   border-top: 1px solid var(--dkv-line);
   text-align: center;
   user-select: none;
@@ -1380,6 +1776,10 @@ body {
   line-height: 1.04;
   letter-spacing: -0.025em;
   color: var(--dkv-ink);
+}
+
+.dkv-about-cta-title span {
+  display: block;
 }
 
 .dkv-about-cta-sub {
@@ -1427,9 +1827,32 @@ body {
  * RESPONSIVE MOBILE & TABLET REFLOW (Zero horizontal overflow)
  * ============================================================================ */
 @media (max-width: 1023px) {
-  .dkv-founder-grid {
+  .dkv-founder-grid,
+  .dkv-eco-header,
+  .dkv-ledger-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 32px;
+  }
+
+  .dkv-ledger-sticky {
+    position: relative;
+    top: 0;
+  }
+
+  .dkv-eco-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dkv-deck-controls {
+    align-items: flex-start;
+  }
+
+  .dkv-next-gate-right {
+    align-items: flex-start;
+  }
+
+  .dkv-next-gate-hint {
+    text-align: left;
   }
 
   .dkv-deck-section {
@@ -1451,8 +1874,14 @@ body {
     height: 290px;
   }
 
-  .dkv-craft-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .dkv-ledger-row {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+
+  .dkv-ledger-note {
+    grid-column: 1 / -1;
+    text-align: left;
+    padding-left: 72px;
   }
 
   .dkv-about-hero-bottom {
@@ -1494,8 +1923,9 @@ body {
   }
 
   .dkv-space-tab {
-    padding: 6px 10px;
-    font-size: 0.62rem;
+    padding: 5px 8px;
+    font-size: 0.56rem;
+    min-height: 32px;
   }
 
   .dkv-about-shell {
@@ -1506,12 +1936,17 @@ body {
     height: 340px;
   }
 
-  .dkv-craft-grid {
-    grid-template-columns: 1fr;
+  .dkv-eco-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
-  .dkv-next-gate-btn {
-    padding: 22px 20px;
+  .dkv-next-gate {
+    border-radius: 26px 26px 0 0;
+  }
+
+  .dkv-next-gate-trigger {
+    padding: 32px 16px 36px;
   }
 }
 
@@ -1546,6 +1981,12 @@ body {
 
 /* Reduced Motion Accessibility (R-39) */
 @media (prefers-reduced-motion: reduce) {
+  .dkv-oil-trail-canvas,
+  #dkv-cursor-dot,
+  #dkv-cursor-ring {
+    display: none !important;
+  }
+
   .dkv-space-root {
     height: auto;
   }

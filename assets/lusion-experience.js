@@ -1,6 +1,6 @@
 /* ============================================================================
- * LUSION.CO SPACE TRANSITION & ABOUT EXPERIENCE FOR DKV.LEXYTH.MY.ID
- * Clean modular ES module sharing the existing Three.js runtime (zero dup bloat)
+ * LUSION.CO FLUID CURSOR, 6-WORLD SPACE PORTAL & ABOUT EXPERIENCE
+ * For dkv.lexyth.my.id (aligned with amc.web.id Lusion system)
  * ============================================================================ */
 
 function clamp01(v) {
@@ -27,7 +27,371 @@ function cleanEmDash(text) {
 }
 
 /* ============================================================================
- * PART 1: 4-WORLD SPACE TUNNEL DATA & DETERMINISTIC CHOREOGRAPHY MATH
+ * PART 0: AMC-PARITY ARROW-FREE CUSTOM CURSOR & WHITE OIL-ON-WATER RIBBON TRAIL
+ * ============================================================================ */
+
+function computeOilWaterStopColors(phase, life, velocityNorm = 0.55) {
+  const alpha = clamp01(life);
+  const blueHue = Math.round(199 + Math.sin(phase * 0.65) * 6);
+  const prismHue = Math.round(206 + Math.sin(phase * 0.95 + velocityNorm) * 28);
+  return {
+    coreWhite: `rgba(255, 255, 255, ${(alpha * 0.56).toFixed(3)})`,
+    outlineLight: `rgba(255, 255, 255, ${(alpha * 0.84).toFixed(3)})`,
+    outlineBlue: `hsla(${blueHue}, 94%, 62%, ${(alpha * 0.58).toFixed(3)})`,
+    outlinePrism: `hsla(${prismHue}, 88%, 74%, ${(alpha * 0.36).toFixed(3)})`,
+    shadowBlue: `hsla(${blueHue}, 92%, 68%, ${(alpha * 0.24).toFixed(3)})`,
+  };
+}
+
+function stepFluidTrailDrops(drops, dt = 1) {
+  const step = Math.max(0.25, Math.min(2.2, dt));
+  const alive = [];
+  for (let i = 0; i < drops.length; i++) {
+    const d = drops[i];
+    d.life -= d.decay * step;
+    if (d.life <= 0.01) continue;
+    d.huePhase += 0.05 * step;
+    const curlX = Math.cos(d.huePhase * 1.1 + d.swirl) * 0.12 * step;
+    const curlY = Math.sin(d.huePhase * 0.95 - d.swirl) * 0.12 * step;
+    d.x += (d.vx + curlX) * step;
+    d.y += (d.vy + curlY) * step;
+    d.vx *= Math.pow(0.91, step);
+    d.vy *= Math.pow(0.91, step);
+    d.radius += (d.maxRadius - d.radius) * 0.075 * step;
+    alive.push(d);
+  }
+  return alive;
+}
+
+export function mountLusionFluidCursor(trailCanvas) {
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (reduced || !finePointer) {
+    return { destroy() {} };
+  }
+
+  // Hide default OS arrow cursor cleanly on fine-pointer desktop (matching amc.web.id)
+  document.documentElement.classList.add("has-custom-cursor");
+
+  // Reuse or create sleek AMC-style glowing sky-blue cursor dot + spring ring
+  let dot = document.getElementById("dkv-cursor-dot");
+  let ring = document.getElementById("dkv-cursor-ring");
+  let label = document.getElementById("dkv-cursor-label");
+
+  if (!dot) {
+    dot = document.createElement("div");
+    dot.id = "dkv-cursor-dot";
+    dot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(dot);
+  }
+  if (!ring) {
+    ring = document.createElement("div");
+    ring.id = "dkv-cursor-ring";
+    ring.setAttribute("aria-hidden", "true");
+    label = document.createElement("span");
+    label.id = "dkv-cursor-label";
+    label.textContent = "BUKA";
+    ring.appendChild(label);
+    document.body.appendChild(ring);
+  }
+
+  const canvas = trailCanvas || document.getElementById("watercolorCanvas");
+  const ctx = canvas ? canvas.getContext("2d", { alpha: true }) : null;
+
+  let trailW = window.innerWidth;
+  let trailH = window.innerHeight;
+  let drops = [];
+  let trailRafId = 0;
+  let trailRunning = false;
+  let lastTrailFrame = performance.now();
+  let phaseCursor = 0;
+  let hoveringInput = false;
+  let destroyed = false;
+
+  const resizeTrail = () => {
+    if (!canvas || !ctx) return;
+    trailW = window.innerWidth;
+    trailH = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(trailW * dpr);
+    canvas.height = Math.round(trailH * dpr);
+    canvas.style.width = `${trailW}px`;
+    canvas.style.height = `${trailH}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+
+  if (canvas && ctx) {
+    canvas.classList.add("dkv-oil-trail-canvas");
+    resizeTrail();
+    window.addEventListener("resize", resizeTrail);
+  }
+
+  const renderTrail = (now) => {
+    if (destroyed || !ctx || !canvas) {
+      trailRunning = false;
+      return;
+    }
+    const dt = Math.min(2, Math.max(0.4, (now - lastTrailFrame) / 16.667));
+    lastTrailFrame = now;
+
+    drops = stepFluidTrailDrops(drops, dt);
+    ctx.clearRect(0, 0, trailW, trailH);
+
+    // Single seamless closed liquid oil-on-water ribbon polygon:
+    // Pure white translucent core + ONLY continuous outer silhouette carries
+    // soft light-blue caustic shadow and refractive oil-on-water contour outline.
+    const n = drops.length;
+    if (n >= 3) {
+      const leftX = new Float32Array(n);
+      const leftY = new Float32Array(n);
+      const rightX = new Float32Array(n);
+      const rightY = new Float32Array(n);
+
+      for (let i = 0; i < n; i++) {
+        const prev = drops[Math.max(0, i - 1)];
+        const next = drops[Math.min(n - 1, i + 1)];
+        let tx = next.x - prev.x;
+        let ty = next.y - prev.y;
+        const len = Math.hypot(tx, ty) || 1;
+        tx /= len;
+        ty /= len;
+        const nx = -ty;
+        const ny = tx;
+
+        const t = i / (n - 1);
+        const taper = Math.pow(t, 0.85) * Math.sin(Math.min(1, t * 1.06) * Math.PI * 0.88);
+        const halfW = Math.max(0.6, drops[i].radius * 0.56 * taper * drops[i].life);
+
+        leftX[i] = drops[i].x + nx * halfW;
+        leftY[i] = drops[i].y + ny * halfW;
+        rightX[i] = drops[i].x - nx * halfW;
+        rightY[i] = drops[i].y - ny * halfW;
+      }
+
+      const head = drops[n - 1];
+      const tail = drops[0];
+      const avgLife = Math.min(1, head.life * 0.95);
+      const colors = computeOilWaterStopColors(head.huePhase, avgLife, 0.55);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(tail.x, tail.y);
+
+      for (let i = 1; i < n; i++) {
+        const mx = (leftX[i - 1] + leftX[i]) * 0.5;
+        const my = (leftY[i - 1] + leftY[i]) * 0.5;
+        ctx.quadraticCurveTo(leftX[i - 1], leftY[i - 1], mx, my);
+      }
+      ctx.quadraticCurveTo(leftX[n - 1], leftY[n - 1], head.x, head.y);
+      ctx.quadraticCurveTo(rightX[n - 1], rightY[n - 1], rightX[n - 1], rightY[n - 1]);
+
+      for (let i = n - 2; i >= 0; i--) {
+        const mx = (rightX[i + 1] + rightX[i]) * 0.5;
+        const my = (rightY[i + 1] + rightY[i]) * 0.5;
+        ctx.quadraticCurveTo(rightX[i + 1], rightY[i + 1], mx, my);
+      }
+      ctx.closePath();
+
+      // 1. Pure white clear-water interior + soft light-blue outer shadow ONLY
+      ctx.shadowColor = colors.shadowBlue;
+      ctx.shadowBlur = 16;
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 4;
+      ctx.fillStyle = `rgba(255, 255, 255, ${(avgLife * 0.88).toFixed(3)})`;
+      ctx.fill();
+
+      // 2. Crisp continuous refractive light-blue oil-on-water contour outline
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      const rimGrad = ctx.createLinearGradient(tail.x, tail.y, head.x, head.y);
+      rimGrad.addColorStop(0, "rgba(125, 211, 252, 0)");
+      rimGrad.addColorStop(0.35, colors.outlinePrism);
+      rimGrad.addColorStop(0.75, colors.outlineBlue);
+      rimGrad.addColorStop(1, colors.outlineLight);
+      ctx.strokeStyle = rimGrad;
+      ctx.lineWidth = 1.35;
+      ctx.lineJoin = "round";
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    if (drops.length > 0) {
+      trailRafId = requestAnimationFrame(renderTrail);
+    } else {
+      trailRunning = false;
+      trailRafId = 0;
+    }
+  };
+
+  const ensureTrailLoop = () => {
+    if (trailRunning || !ctx || destroyed) return;
+    trailRunning = true;
+    lastTrailFrame = performance.now();
+    trailRafId = requestAnimationFrame(renderTrail);
+  };
+
+  let mx = -100;
+  let my = -100;
+  let prevMx = -100;
+  let prevMy = -100;
+  let rx = -100;
+  let ry = -100;
+  let scale = 1;
+  let targetScale = 1;
+  let active = false;
+  let cursorRafId = 0;
+
+  const onPointerMove = (e) => {
+    if (e.pointerType && e.pointerType !== "mouse") return;
+    const nextX = e.clientX;
+    const nextY = e.clientY;
+
+    if (!active) {
+      active = true;
+      mx = prevMx = rx = nextX;
+      my = prevMy = ry = nextY;
+      if (!hoveringInput) {
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+      }
+      return;
+    }
+
+    const dx = nextX - prevMx;
+    const dy = nextY - prevMy;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist > 180) {
+      drops = [];
+      prevMx = nextX;
+      prevMy = nextY;
+      mx = nextX;
+      my = nextY;
+      return;
+    }
+
+    if (ctx && canvas && !hoveringInput && dist >= 5) {
+      const steps = Math.min(3, Math.max(1, Math.floor(dist / 14)));
+      const speedBoost = Math.min(1, dist / 34);
+      const angle = Math.atan2(dy, dx);
+      for (let s = 1; s <= steps; s++) {
+        const t = s / steps;
+        phaseCursor += 0.28;
+        drops.push({
+          x: prevMx + dx * t,
+          y: prevMy + dy * t,
+          vx: (dx / steps) * 0.08,
+          vy: (dy / steps) * 0.08,
+          radius: 10 + speedBoost * 6,
+          maxRadius: 19 + speedBoost * 10,
+          life: 0.9,
+          decay: 0.042,
+          huePhase: phaseCursor,
+          swirl: angle,
+        });
+      }
+      if (drops.length > 22) drops.splice(0, drops.length - 22);
+      if (canvas.dataset.trailActive !== "true") canvas.dataset.trailActive = "true";
+      ensureTrailLoop();
+    }
+
+    prevMx = nextX;
+    prevMy = nextY;
+    mx = nextX;
+    my = nextY;
+  };
+
+  const onMouseOver = (e) => {
+    const target = e.target;
+    if (!target || !target.closest) return;
+    hoveringInput = Boolean(target.closest("input, textarea, select"));
+    if (hoveringInput) {
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+      return;
+    }
+    if (active) {
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
+    }
+    const viewEl = Boolean(target.closest('[data-cursor="view"], .syllabus-card, .dkv-space-node'));
+    const interactive = Boolean(target.closest('a, button, [role="button"], [role="tab"], [data-cursor="hover"]'));
+    ring.classList.toggle("is-view-hover", viewEl);
+    dot.classList.toggle("is-view-hover", viewEl);
+    if (label) {
+      label.textContent = target.closest(".dkv-space-node") ? "MODUL" : "EXPLORE";
+    }
+    targetScale = viewEl ? 1.04 : interactive ? 1.5 : 1;
+  };
+
+  const onMouseOut = (e) => {
+    if (!e.relatedTarget) {
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+      ring.classList.remove("is-view-hover");
+      dot.classList.remove("is-view-hover");
+      active = false;
+    }
+  };
+
+  let cursorLoopRunning = false;
+
+  const ensureCursorLoop = () => {
+    if (cursorLoopRunning || destroyed) return;
+    cursorLoopRunning = true;
+    cursorRafId = requestAnimationFrame(cursorLoop);
+  };
+
+  const cursorLoop = () => {
+    if (destroyed || !active) {
+      cursorLoopRunning = false;
+      cursorRafId = 0;
+      return;
+    }
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    scale += (targetScale - scale) * 0.18;
+    dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+    ring.style.transform = `translate3d(${rx.toFixed(1)}px, ${ry.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+    if (Math.hypot(mx - rx, my - ry) > 0.25 || Math.abs(targetScale - scale) > 0.005) {
+      cursorRafId = requestAnimationFrame(cursorLoop);
+    } else {
+      cursorLoopRunning = false;
+      cursorRafId = 0;
+    }
+  };
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      onPointerMove(e);
+      if (active) ensureCursorLoop();
+    },
+    { passive: true }
+  );
+  document.addEventListener("mouseover", (e) => {
+    onMouseOver(e);
+    if (active) ensureCursorLoop();
+  });
+  window.addEventListener("mouseout", onMouseOut);
+
+  return {
+    destroy() {
+      destroyed = true;
+      cancelAnimationFrame(cursorRafId);
+      cancelAnimationFrame(trailRafId);
+      window.removeEventListener("mouseout", onMouseOut);
+      window.removeEventListener("resize", resizeTrail);
+      document.documentElement.classList.remove("has-custom-cursor");
+    },
+  };
+}
+
+/* ============================================================================
+ * PART 1: 6-WORLD SPACE TUNNEL DATA & DETERMINISTIC CHOREOGRAPHY MATH
+ * (1-to-1 architectural parity with amc.web.id #dunia-baru 6 formations)
  * ============================================================================ */
 
 const SPACE_WORLDS = [
@@ -35,103 +399,139 @@ const SPACE_WORLDS = [
     index: 0,
     code: "01",
     shortLabel: "Pra-Produksi",
-    label: "Pra-Produksi & Storyboard",
-    subtitle: "Merancang ide iklan TVC, konsep monolog 16:9, naskah 2 kolom, dan storyboard 9 frame.",
+    label: "Pra-Produksi & Storyboard Produk",
+    subtitle: "Merumuskan ide iklan TVC, konsep monolog 16:9, naskah 2 kolom, dan storyboard 9 frame.",
     watermark: "STORYBOARD",
     formation: "helix",
-    bgHex: 0x03091a,
+    bgHex: 0x06253c,
     accentHex: 0x38bdf8,
     ringSides: 6,
     nodes: [
-      { code: "M01", title: "Ide & Konsep TVC", meta: "Pertemuan 01", weekId: "pr-01" },
-      { code: "M01", title: "Naskah 2 Kolom", meta: "Visual & Audio VO", weekId: "pr-01" },
+      { code: "M01", title: "Ide & Konsep TVC", meta: "Tahap 01 • Pertemuan 01", weekId: "pr-01" },
+      { code: "M01", title: "Naskah 2 Kolom", meta: "Visual & Voice Over", weekId: "pr-01" },
       { code: "M01", title: "Storyboard 9 Frame", meta: "Shot WS / MS / CU", weekId: "pr-01" },
-      { code: "M02", title: "Manajemen Bins", meta: "Struktur Project", weekId: "pr-02" },
+      { code: "M01", title: "Brief Iklan 16:9", meta: "Cetak Biru Produksi", weekId: "pr-01" },
     ],
   },
   {
     index: 1,
     code: "02",
     shortLabel: "Timeline",
-    label: "Editing & Ritme Timeline",
-    subtitle: "Menata folder aset secara rapi, rough cut cepat dengan Q & W, dan melatih rasa pacing.",
+    label: "Foldering & Rough Cut Cepat (Q & W)",
+    subtitle: "Menata 5 folder aset secara rapi, memilih klip terbaik (I & O), dan ripple trim cepat Q & W.",
     watermark: "TIMELINE",
     formation: "spiral",
-    bgHex: 0x061433,
+    bgHex: 0x0a2246,
     accentHex: 0x60a5fa,
     ringSides: 48,
     nodes: [
-      { code: "M02", title: "Foldering Aset", meta: "Workflow Studio", weekId: "pr-02" },
-      { code: "M02", title: "Rough Cut Q & W", meta: "Ripple Trim Cepat", weekId: "pr-02" },
-      { code: "M02", title: "Pacing & Ritme Cut", meta: "Premiere Pro", weekId: "pr-02" },
-      { code: "M03", title: "Sinkronisasi Audio", meta: "J-Cut & L-Cut", weekId: "pr-03" },
+      { code: "M02", title: "5 Folder Aset Rapi", meta: "Manajemen Bins Studio", weekId: "pr-02" },
+      { code: "M02", title: "Pilih Klip I & O", meta: "Source Monitor Selection", weekId: "pr-02" },
+      { code: "M02", title: "Ripple Trim Q & W", meta: "Rough Cut Super Cepat", weekId: "pr-02" },
+      { code: "M02", title: "Pacing & Ritme Cut", meta: "Alur Cerita Timeline", weekId: "pr-02" },
     ],
   },
   {
     index: 2,
     code: "03",
     shortLabel: "Audio",
-    label: "Audio Mixing & Grafis Berita",
-    subtitle: "Membersihkan noise vokal, auto ducking BGM, hingga menyusun lower third dan running text.",
+    label: "Audio Denoise & Audio Ducking",
+    subtitle: "Memisahkan 3 jalur suara, menjernihkan vokal dengan DeNoise, dan auto ducking musik latar.",
     watermark: "MIXING",
     formation: "horizon",
-    bgHex: 0x041a36,
+    bgHex: 0x0b1f3d,
     accentHex: 0x7dd3fc,
     ringSides: 8,
     nodes: [
-      { code: "M03", title: "Audio Denoise", meta: "Restorasi Vokal", weekId: "pr-03" },
-      { code: "M03", title: "Audio Ducking", meta: "Essential Sound", weekId: "pr-03" },
-      { code: "M04", title: "Lower Third TV", meta: "Essential Graphics", weekId: "pr-04" },
-      { code: "M04", title: "Running Text Berita", meta: "Tipografi Siaran", weekId: "pr-04" },
+      { code: "M03", title: "3 Jalur Suara", meta: "VO, SFX & BGM", weekId: "pr-03" },
+      { code: "M03", title: "Restorasi DeNoise", meta: "Vokal Jernih Bebas Noise", weekId: "pr-03" },
+      { code: "M03", title: "Auto Ducking BGM", meta: "Essential Sound Mixing", weekId: "pr-03" },
+      { code: "M03", title: "Balance Loudness", meta: "Standar Siaran Nyaman", weekId: "pr-03" },
     ],
   },
   {
     index: 3,
     code: "04",
-    shortLabel: "Finishing",
-    label: "Green Screen & Color Grading",
-    subtitle: "Chroma key bersih dengan Ultra Key, layering B-Roll, Lumetri grading, dan master export H.264.",
+    shortLabel: "Grafis",
+    label: "Elemen Grafis Berita & Tipografi",
+    subtitle: "Menyalakan Safe Margin TV, menyusun teks fakta Lower Third, running text, hingga slogan penutup.",
+    watermark: "BROADCAST",
+    formation: "binary",
+    bgHex: 0x042838,
+    accentHex: 0x22d3ee,
+    ringSides: 6,
+    nodes: [
+      { code: "M04", title: "Batas Safe Margin", meta: "Standar Layar Siaran", weekId: "pr-04" },
+      { code: "M04", title: "Lower Third Berita", meta: "Essential Graphics", weekId: "pr-04" },
+      { code: "M04", title: "Running Text Fakta", meta: "Tipografi Informatif", weekId: "pr-04" },
+      { code: "M04", title: "Slogan Penutup CTA", meta: "Penutup Iklan Kuat", weekId: "pr-04" },
+    ],
+  },
+  {
+    index: 4,
+    code: "05",
+    shortLabel: "Chroma",
+    label: "Studio Green Screen & Visual B-Roll",
+    subtitle: "Konsep tumpukan multi-layer, hapus layar hijau bersih dengan Ultra Key, dan sisipkan B-Roll bukti.",
+    watermark: "CHROMA",
+    formation: "starburst",
+    bgHex: 0x082d52,
+    accentHex: 0x38bdf8,
+    ringSides: 5,
+    nodes: [
+      { code: "M05", title: "Tumpukan Multi-Layer", meta: "Konsep Kue Lapis Video", weekId: "pr-05" },
+      { code: "M05", title: "Ultra Key Hijau", meta: "Chroma Keying Bersih", weekId: "pr-05" },
+      { code: "M05", title: "Spill Suppression", meta: "Tepi Subjek Natural", weekId: "pr-05" },
+      { code: "M05", title: "Sisip Visual B-Roll", meta: "Konteks Cerita Kuat", weekId: "pr-05" },
+    ],
+  },
+  {
+    index: 5,
+    code: "06",
+    shortLabel: "Cinema",
+    label: "Color Grading & Master Export H.264",
+    subtitle: "Color correction lewat Adjustment Layer, pengecekan 5 titik QC, dan master export H.264.",
     watermark: "CINEMA",
     formation: "chevron",
-    bgHex: 0x040d28,
+    bgHex: 0x051c36,
     accentHex: 0xbae6fd,
     ringSides: 4,
     nodes: [
-      { code: "M05", title: "Ultra Key Chroma", meta: "Studio Green Screen", weekId: "pr-05" },
-      { code: "M05", title: "Visual B-Roll", meta: "Layering Multi-Track", weekId: "pr-05" },
-      { code: "M06", title: "Lumetri Color", meta: "Correction & Grading", weekId: "pr-06" },
-      { code: "M06", title: "Master Export H.264", meta: "QC & Penilaian Akhir", weekId: "pr-06" },
+      { code: "M06", title: "Color Correction", meta: "Lumetri Basic & Curves", weekId: "pr-06" },
+      { code: "M06", title: "Adjustment Layer", meta: "Look Grading Konsisten", weekId: "pr-06" },
+      { code: "M06", title: "5 Titik Quality Control", meta: "Cek Audio, Warna & Cut", weekId: "pr-06" },
+      { code: "M06", title: "Master Export H.264", meta: "Ctrl + M Siap Tayang", weekId: "pr-06" },
     ],
   },
 ];
 
 function computeSpacePhaseState(rawProgress) {
   const p = clamp01(rawProgress);
-  const phase = p < 0.16 ? 1 : p < 0.76 ? 2 : p < 0.9 ? 3 : 4;
+  const phase = p < 0.15 ? 1 : p < 0.78 ? 2 : p < 0.9 ? 3 : 4;
 
   const travelT = rangeMap(p, 0, 0.9);
-  const cameraZ = 18 - travelT * 96;
+  const cameraZ = 18 - travelT * 100;
 
-  const vortexT = rangeMap(p, 0.76, 0.9);
-  const tunnelRadiusScale = 1 - vortexT * 0.7;
-  const tunnelTwistRad = p * Math.PI * 3.2 + vortexT * Math.PI * 2.6;
+  const vortexT = rangeMap(p, 0.78, 0.9);
+  const tunnelRadiusScale = 1 - vortexT * 0.68;
+  const tunnelTwistRad = p * Math.PI * 3.4 + vortexT * Math.PI * 2.4;
 
-  const orbExpandT = Math.pow(rangeMap(p, 0.75, 0.9), 2.15);
-  const orbScale = 1 + rangeMap(p, 0.16, 0.75) * 0.32 + orbExpandT * 8.2;
-  const orbGlowIntensity = 1.25 + vortexT * 4.2;
+  const orbExpandT = Math.pow(rangeMap(p, 0.76, 0.9), 2.1);
+  const orbScale = 1 + rangeMap(p, 0.15, 0.76) * 0.3 + orbExpandT * 7.4;
+  const orbGlowIntensity = 1.25 + vortexT * 3.8;
 
-  const p1WordProgress = 0.48 + 0.52 * rangeMap(p, 0.0, 0.065);
-  const p1Opacity = p < 0.18 ? 1 - rangeMap(p, 0.11, 0.165) : 0;
+  const p1WordProgress = 0.52 + 0.48 * rangeMap(p, 0.0, 0.055);
+  const p1Opacity = p < 0.17 ? 1 - rangeMap(p, 0.11, 0.16) : 0;
 
-  const p2In = rangeMap(p, 0.145, 0.205);
-  const p2Out = 1 - rangeMap(p, 0.73, 0.79);
+  const p2In = rangeMap(p, 0.145, 0.2);
+  const p2Out = 1 - rangeMap(p, 0.75, 0.8);
   const phase2Opacity = Math.min(p2In, p2Out);
-  const showcaseProgress = rangeMap(p, 0.16, 0.75);
+  const showcaseProgress = rangeMap(p, 0.155, 0.765);
 
   const wavePulse = Math.abs(Math.sin(showcaseProgress * Math.PI * SPACE_WORLDS.length));
-  const warpStreakScale = 1 + (1 - wavePulse) * 1.05 + vortexT * 5.2;
+  const warpStreakScale = 1 + (1 - wavePulse) * 0.95 + vortexT * 4.8;
 
-  const whiteoutOpacity = p >= 0.9 ? 1 : Math.pow(rangeMap(p, 0.83, 0.9), 1.65);
+  const whiteoutOpacity = p >= 0.9 ? 1 : Math.pow(rangeMap(p, 0.83, 0.9), 1.6);
   const phase4Reveal = rangeMap(p, 0.9, 0.97);
 
   return {
@@ -164,9 +564,9 @@ function computeSpaceNodeMotion(showcaseProgress, worldIndex, itemIndex, totalIt
     return { visible: false, opacity: 0, xNorm: 0, yNorm: 0, scale: 0.4, rotateDeg: 0, tiltYDeg: 0 };
   }
 
-  const stagger = itemIndex * 0.022;
+  const stagger = itemIndex * 0.02;
   const enter = smoothstep(rangeMap(t, stagger, 0.25 + stagger));
-  const exit = smoothstep(rangeMap(t, 0.74 + stagger * 0.3, 1.0));
+  const exit = smoothstep(rangeMap(t, 0.74 + stagger * 0.28, 1.0));
   const opacity = clamp01(enter * (1 - exit));
 
   const formation = SPACE_WORLDS[worldIndex].formation;
@@ -174,33 +574,31 @@ function computeSpaceNodeMotion(showcaseProgress, worldIndex, itemIndex, totalIt
   let baseY = 0;
   let rotateDeg = 0;
   let tiltYDeg = 0;
+  let prominence = 1;
 
   if (formation === "helix") {
-    // 4 milestones framing central gyro orb in twin diagonal helix pairs
     const coords = [
-      [-0.76, -0.52],
+      [-0.78, -0.52],
       [-0.56, 0.56],
       [0.56, -0.56],
-      [0.76, 0.52],
+      [0.78, 0.52],
     ];
     const [cx, cy] = coords[itemIndex % coords.length];
     const wave = Math.sin((t - 0.5) * Math.PI * 1.2 + itemIndex * 1.1) * 0.09;
     baseX = cx;
     baseY = cy + wave;
-    rotateDeg = (itemIndex % 2 === 0 ? -1 : 1) * 3.5;
+    rotateDeg = (itemIndex % 2 === 0 ? -1 : 1) * 3.8;
     tiltYDeg = cx * 16;
   } else if (formation === "spiral") {
-    // Sculptural Bauhaus orbital arc clearing central orb cleanly
     const angles = [-Math.PI * 0.78, -Math.PI * 0.22, Math.PI * 0.26, Math.PI * 0.76];
-    const theta = angles[itemIndex % angles.length] + (t - 0.5) * 0.34;
-    const rx = itemIndex % 2 === 0 ? 0.84 : 0.72;
+    const theta = angles[itemIndex % angles.length] + (t - 0.5) * 0.36;
+    const rx = itemIndex % 2 === 0 ? 0.85 : 0.72;
     const ry = itemIndex % 2 === 0 ? 0.68 : 0.6;
     baseX = Math.cos(theta) * rx;
     baseY = Math.sin(theta) * ry;
-    rotateDeg = Math.cos(theta) * 4.5;
+    rotateDeg = Math.cos(theta) * 5;
     tiltYDeg = Math.sin(theta) * 14;
   } else if (formation === "horizon") {
-    // Dual panoramic broadcast stereo rows gliding in opposing parallax
     const row = itemIndex < 2 ? -1 : 1;
     const col = itemIndex % 2 === 0 ? -1 : 1;
     const drift = row * (t - 0.5) * 0.16;
@@ -209,8 +607,21 @@ function computeSpaceNodeMotion(showcaseProgress, worldIndex, itemIndex, totalIt
     baseY = row * 0.56 + eq;
     rotateDeg = row * col * 2.5;
     tiltYDeg = col * 14;
+  } else if (formation === "binary") {
+    const theta = (itemIndex / Math.max(1, totalItems)) * Math.PI * 2 + (t - 0.5) * Math.PI * 0.42 + Math.PI * 0.25;
+    baseX = Math.cos(theta) * 0.78;
+    baseY = Math.sin(theta) * 0.56;
+    rotateDeg = Math.sin(theta) * 5;
+    tiltYDeg = Math.cos(theta) * 18;
+    prominence = 1.04;
+  } else if (formation === "starburst") {
+    const theta = (itemIndex / Math.max(1, totalItems)) * Math.PI * 2 - Math.PI / 4 + (t - 0.5) * 0.35;
+    const pulse = 0.78 + Math.sin(t * Math.PI * 3 + itemIndex * 0.7) * 0.06;
+    baseX = Math.cos(theta) * pulse * 1.02;
+    baseY = Math.sin(theta) * pulse * 0.88;
+    rotateDeg = Math.sin(t * Math.PI * 2 + itemIndex) * 5;
+    tiltYDeg = Math.cos(theta) * 15;
   } else {
-    // Hyper-warp V-squadron chevron flanking supernova core
     const coords = [
       [-0.82, 0.44],
       [-0.46, -0.58],
@@ -220,13 +631,13 @@ function computeSpaceNodeMotion(showcaseProgress, worldIndex, itemIndex, totalIt
     const [cx, cy] = coords[itemIndex % coords.length];
     baseX = cx;
     baseY = cy + Math.sin(t * Math.PI * 2.2 + itemIndex) * 0.04;
-    rotateDeg = cx * 5;
+    rotateDeg = cx * 5.2;
     tiltYDeg = -cx * 18;
   }
 
-  const radial = 0.42 + enter * 0.58 + exit * 0.45;
+  const radial = 0.42 + enter * 0.58 + exit * 0.46;
   const breath = Math.sin(t * Math.PI * 2 + itemIndex * 0.9) * 0.02;
-  const scale = 0.48 + enter * 0.52 + breath + exit * 0.32;
+  const scale = (0.48 + enter * 0.52 + breath + exit * 0.32) * prominence;
 
   return {
     visible: opacity > 0.01,
@@ -242,11 +653,11 @@ function computeSpaceNodeMotion(showcaseProgress, worldIndex, itemIndex, totalIt
 function worldIndexToSpaceProgress(worldIndex) {
   const clamped = Math.max(0, Math.min(SPACE_WORLDS.length - 1, worldIndex));
   const showcaseTarget = (clamped + 0.5) / SPACE_WORLDS.length;
-  return 0.16 + showcaseTarget * 0.59;
+  return 0.155 + showcaseTarget * 0.61;
 }
 
 /* ============================================================================
- * PART 1B: THREE.JS VOLUMETRIC SPACE RENDERER (+ CANVAS2D FALLBACK)
+ * PART 1B: THREE.JS VOLUMETRIC 6-WORLD SPACE RENDERER (+ CANVAS2D FALLBACK)
  * ============================================================================ */
 
 function createCanvas2DSpaceFallback(canvas) {
@@ -375,10 +786,10 @@ function createLusionSpaceRenderer(canvas, T) {
     const fog = new T.FogExp2(SPACE_WORLDS[0].bgHex, 0.0185);
     scene.fog = fog;
 
-    const camera = new T.PerspectiveCamera(54, 1, 0.1, 155);
+    const camera = new T.PerspectiveCamera(55, 1, 0.1, 160);
     camera.position.set(0, 0, 18);
 
-    const ambient = new T.AmbientLight(0x7dd3fc, 1.4);
+    const ambient = new T.AmbientLight(0x7dd3fc, 1.45);
     scene.add(ambient);
 
     const coreLight = new T.PointLight(0x38bdf8, 16, 68);
@@ -411,8 +822,8 @@ function createLusionSpaceRenderer(canvas, T) {
           float angle = atan(p.y, p.x);
           float swirl = sin(angle * 3.0 + r * 5.0 - uTime * 1.1) * 0.5 + 0.5;
           float glow = exp(-r * 2.15) * (0.45 + swirl * 0.55);
-          vec3 col = mix(vec3(0.12, 0.34, 0.92), uAccent, swirl);
-          gl_FragColor = vec4(col * glow * 0.55, glow * 0.55);
+          vec3 col = mix(vec3(0.08, 0.32, 0.78), uAccent, swirl);
+          gl_FragColor = vec4(col * glow * 0.56, glow * 0.56);
         }
       `,
     });
@@ -501,7 +912,7 @@ function createLusionSpaceRenderer(canvas, T) {
 
     scene.add(orbGroup);
 
-    // 44 Multi-geometry architectural space portals aligned with camera look-ahead depth
+    // 48 Multi-geometry architectural space portals across all 6 themed zones along Z
     const tunnelGroup = new T.Group();
     const geomBySides = new Map();
     const getPortalGeom = (sides) => {
@@ -513,10 +924,11 @@ function createLusionSpaceRenderer(canvas, T) {
     };
 
     const portalMeshes = [];
-    const portalCount = 44;
+    const portalCount = 48;
     for (let i = 0; i < portalCount; i++) {
-      const z = 14 - i * 2.45;
-      const zoneIdx = z > -18 ? 0 : z > -38 ? 1 : z > -58 ? 2 : 3;
+      const z = 14 - i * 2.35;
+      const zoneIdx =
+        z > -16 ? 0 : z > -30 ? 1 : z > -44 ? 2 : z > -58 ? 3 : z > -72 ? 4 : 5;
       const zTheme = SPACE_WORLDS[zoneIdx];
       const mat = new T.MeshBasicMaterial({
         color: i % 3 === 0 ? 0xffffff : zTheme.accentHex,
@@ -532,26 +944,26 @@ function createLusionSpaceRenderer(canvas, T) {
       portalMeshes.push({ mesh, mat, idx: i });
     }
 
-    // 4 continuous luminous helical TubeGeometry energy rails running the whole wormhole
+    // 4 continuous luminous helical TubeGeometry energy rails running all 6 worlds
     const railMat = new T.MeshBasicMaterial({
       color: 0x60a5fa,
       transparent: true,
-      opacity: 0.24,
+      opacity: 0.26,
       blending: T.AdditiveBlending,
       depthWrite: false,
     });
     for (let r = 0; r < 4; r++) {
       const pts = [];
       const baseAngle = (r / 4) * Math.PI * 2;
-      for (let s = 0; s <= 44; s++) {
-        const frac = s / 44;
-        const z = 16 - frac * 110;
-        const theta = baseAngle + frac * Math.PI * 3.4;
-        const rad = 4.85 + Math.sin(frac * Math.PI * 5 + r) * 0.25;
+      for (let s = 0; s <= 52; s++) {
+        const frac = s / 52;
+        const z = 16 - frac * 116;
+        const theta = baseAngle + frac * Math.PI * 3.6;
+        const rad = 4.85 + Math.sin(frac * Math.PI * 6 + r) * 0.25;
         pts.push(new T.Vector3(Math.cos(theta) * rad, Math.sin(theta) * rad, z));
       }
       const curve = new T.CatmullRomCurve3(pts);
-      tunnelGroup.add(new T.Mesh(new T.TubeGeometry(curve, 76, 0.018, 5, false), railMat));
+      tunnelGroup.add(new T.Mesh(new T.TubeGeometry(curve, 84, 0.018, 5, false), railMat));
     }
     scene.add(tunnelGroup);
 
@@ -563,7 +975,7 @@ function createLusionSpaceRenderer(canvas, T) {
       const radius = 2.5 + ((i * 7) % 13) * 1.05;
       starPos[i * 3] = Math.cos(angle) * radius;
       starPos[i * 3 + 1] = Math.sin(angle) * radius;
-      starPos[i * 3 + 2] = 18 - (i / starCount) * 116;
+      starPos[i * 3 + 2] = 18 - (i / starCount) * 122;
     }
     const starGeom = new T.BufferGeometry();
     starGeom.setAttribute("position", new T.BufferAttribute(starPos, 3));
@@ -577,9 +989,9 @@ function createLusionSpaceRenderer(canvas, T) {
     });
     scene.add(new T.Points(starGeom, starMat));
 
-    // Elongated 3D hyper-warp speed beams (Z-scale stretches dynamically on warp!)
+    // Elongated 3D hyper-warp speed beams
     const streakGroup = new T.Group();
-    const streakCount = isCompact ? 42 : 84;
+    const streakCount = isCompact ? 46 : 96;
     const streakGeom = new T.BoxGeometry(0.022, 0.022, 1.0);
     const streakMat = new T.MeshBasicMaterial({
       color: 0xbae6fd,
@@ -593,7 +1005,7 @@ function createLusionSpaceRenderer(canvas, T) {
       const angle = (i * 1.6180339 * Math.PI * 2) % (Math.PI * 2);
       const radius = 3.1 + ((i * 11) % 9) * 0.72;
       const m = new T.Mesh(streakGeom, streakMat);
-      m.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 14 - (i / streakCount) * 108);
+      m.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 14 - (i / streakCount) * 116);
       streakGroup.add(m);
       streakMeshes.push(m);
     }
@@ -647,7 +1059,7 @@ function createLusionSpaceRenderer(canvas, T) {
         nebulaMat.uniforms.uAccent.value.copy(liveAccent);
         nebulaDisk.position.set(px * 0.6, -py * 0.4, state.cameraZ - 34);
 
-        const targetFov = 54 + Math.min(14, (state.warpStreakScale - 1) * 2.2);
+        const targetFov = 55 + Math.min(14, (state.warpStreakScale - 1) * 2.2);
         if (Math.abs(camera.fov - targetFov) > 0.08) {
           camera.fov = targetFov;
           camera.updateProjectionMatrix();
@@ -674,7 +1086,7 @@ function createLusionSpaceRenderer(canvas, T) {
         }
         streakMat.opacity = Math.min(0.85, 0.24 + (state.warpStreakScale - 1) * 0.14);
 
-        const orbAhead = 11.4 - rangeMap(state.progress, 0.75, 0.9) * 8.6;
+        const orbAhead = 11.4 - rangeMap(state.progress, 0.76, 0.9) * 8.6;
         orbGroup.position.set(
           px * 0.36,
           Math.sin(state.progress * Math.PI * 5 + time * 0.6) * 0.16 - py * 0.24,
@@ -690,7 +1102,7 @@ function createLusionSpaceRenderer(canvas, T) {
 
         energyCage.rotation.x = state.progress * Math.PI * 2.2 + time * 0.12;
         energyCage.rotation.y = -state.progress * Math.PI * 3.0;
-        energyCage.scale.setScalar(1 + rangeMap(state.progress, 0.75, 0.9) * 0.72);
+        energyCage.scale.setScalar(1 + rangeMap(state.progress, 0.76, 0.9) * 0.72);
         cageMat.opacity = Math.min(0.58, 0.18 + (state.warpStreakScale - 1) * 0.08);
 
         renderer.render(scene, camera);
@@ -709,11 +1121,221 @@ function createLusionSpaceRenderer(canvas, T) {
 }
 
 /* ============================================================================
- * PART 1C: SPACE MARKUP & CONTROLLER EXPORT
+ * PART 1C: REUSABLE LUSION.CO NEXT-PAGE OVERSCROLL CHARGE GATE (AMC PARITY)
+ * ============================================================================ */
+
+const GATE_RING_CIRCUMFERENCE = 163.36;
+
+function renderNextPageGateMarkup({
+  id,
+  title,
+  nextLabel = "HALAMAN BERIKUTNYA",
+  eyebrow = "TERUS SCROLL UNTUK LANJUT",
+  hint = "Scroll terus ke bawah atau klik untuk langsung berpindah halaman.",
+}) {
+  return `
+    <section
+      class="dkv-next-gate"
+      id="${id}"
+      aria-label="${nextLabel}: ${title}"
+    >
+      <div class="dkv-next-gate-glow" data-gate-glow aria-hidden="true"></div>
+      <div class="dkv-next-gate-hairline" aria-hidden="true"></div>
+
+      <button type="button" class="dkv-next-gate-trigger" data-gate-trigger data-cursor="hover">
+        <div class="dkv-next-gate-shell">
+          <div class="dkv-next-gate-crosshair" aria-hidden="true">
+            <span>+</span>
+            <span>${eyebrow}</span>
+            <span>+</span>
+          </div>
+
+          <div class="dkv-next-gate-row">
+            <div class="dkv-next-gate-left">
+              <p class="dkv-next-gate-eyebrow">${nextLabel}</p>
+              <h2 class="dkv-next-gate-title">${title}</h2>
+            </div>
+
+            <div class="dkv-next-gate-right">
+              <div class="dkv-next-gate-meter">
+                <span class="dkv-next-gate-pct" data-gate-pct>0%</span>
+                <span class="dkv-next-gate-circle" aria-hidden="true">
+                  <svg class="dkv-next-gate-svg" viewBox="0 0 56 56">
+                    <circle cx="28" cy="28" r="26" fill="none" stroke="rgba(125,211,252,0.28)" stroke-width="2"></circle>
+                    <circle
+                      data-gate-ring
+                      cx="28"
+                      cy="28"
+                      r="26"
+                      fill="none"
+                      stroke="#7DD3FC"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-dasharray="${GATE_RING_CIRCUMFERENCE}"
+                      stroke-dashoffset="${GATE_RING_CIRCUMFERENCE}"
+                    ></circle>
+                  </svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+              </div>
+              <p class="dkv-next-gate-hint">${hint}</p>
+            </div>
+          </div>
+
+          <div class="dkv-next-gate-track" aria-hidden="true">
+            <div class="dkv-next-gate-fill" data-gate-bar></div>
+          </div>
+        </div>
+      </button>
+    </section>
+  `;
+}
+
+function mountNextPageGateController(gateEl, onTrigger, soundEngine) {
+  if (!gateEl) return { destroy() {} };
+
+  const triggerBtn = gateEl.querySelector("[data-gate-trigger]");
+  const barEl = gateEl.querySelector("[data-gate-bar]");
+  const pctEl = gateEl.querySelector("[data-gate-pct]");
+  const ringEl = gateEl.querySelector("[data-gate-ring]");
+  const glowEl = gateEl.querySelector("[data-gate-glow]");
+
+  let charge = 0;
+  let triggered = false;
+  let destroyed = false;
+  let lastInputTs = 0;
+  let lastFrameTs = performance.now();
+  let touchStartY = null;
+  let rafId = 0;
+
+  const renderCharge = () => {
+    if (barEl) barEl.style.transform = `scaleX(${charge.toFixed(4)})`;
+    if (pctEl) pctEl.textContent = `${Math.round(charge * 100)}%`;
+    if (ringEl) ringEl.style.strokeDashoffset = (GATE_RING_CIRCUMFERENCE * (1 - charge)).toFixed(2);
+    if (glowEl) glowEl.style.opacity = (0.2 + charge * 0.78).toFixed(3);
+  };
+
+  const fire = () => {
+    if (triggered || destroyed) return;
+    triggered = true;
+    charge = 1;
+    renderCharge();
+    soundEngine && soundEngine.playWhoosh && soundEngine.playWhoosh(480, 110);
+    onTrigger && onTrigger();
+  };
+
+  const onClick = () => fire();
+  triggerBtn && triggerBtn.addEventListener("click", onClick);
+
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) {
+    return {
+      destroy() {
+        destroyed = true;
+        triggerBtn && triggerBtn.removeEventListener("click", onClick);
+      },
+    };
+  }
+
+  const isAtBottom = () => {
+    const scrollY = Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0);
+    const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    return maxY > 120 && scrollY >= maxY - 26;
+  };
+
+  const ensureDecayLoop = () => {
+    if (rafId || destroyed || triggered) return;
+    lastFrameTs = performance.now();
+    rafId = requestAnimationFrame(tick);
+  };
+
+  const tick = (now) => {
+    if (destroyed || triggered) {
+      rafId = 0;
+      return;
+    }
+    const dt = Math.min(0.08, (now - lastFrameTs) / 1000);
+    lastFrameTs = now;
+    if (charge > 0 && now - lastInputTs > 320) {
+      charge = Math.max(0, charge - dt * 0.9);
+      renderCharge();
+    }
+    if (charge > 0) {
+      rafId = requestAnimationFrame(tick);
+    } else {
+      rafId = 0;
+    }
+  };
+
+  const onWheel = (e) => {
+    if (triggered || destroyed) return;
+    if (!isAtBottom()) {
+      if (charge > 0 && e.deltaY < 0) {
+        charge = clamp01(charge + (e.deltaY * 1.4) / 440);
+        renderCharge();
+      }
+      return;
+    }
+    if (e.deltaY > 0) {
+      lastInputTs = performance.now();
+      charge = clamp01(charge + e.deltaY / 440);
+      renderCharge();
+      if (charge >= 0.995) fire();
+      else ensureDecayLoop();
+    } else if (e.deltaY < 0 && charge > 0) {
+      lastInputTs = performance.now();
+      charge = clamp01(charge + (e.deltaY * 1.4) / 440);
+      renderCharge();
+    }
+  };
+
+  const onTouchStart = (e) => {
+    if (e.touches.length === 1) touchStartY = e.touches[0].clientY;
+  };
+  const onTouchMove = (e) => {
+    if (triggered || destroyed || touchStartY === null || e.touches.length !== 1) return;
+    const curY = e.touches[0].clientY;
+    const dy = touchStartY - curY;
+    touchStartY = curY;
+    if (!isAtBottom()) return;
+    if (dy > 0) {
+      lastInputTs = performance.now();
+      charge = clamp01(charge + (dy * 1.6) / 340);
+      renderCharge();
+      if (charge >= 0.995) fire();
+      else ensureDecayLoop();
+    }
+  };
+  const onTouchEnd = () => {
+    touchStartY = null;
+  };
+
+  window.addEventListener("wheel", onWheel, { passive: true });
+  window.addEventListener("touchstart", onTouchStart, { passive: true });
+  window.addEventListener("touchmove", onTouchMove, { passive: true });
+  window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+  return {
+    destroy() {
+      destroyed = true;
+      cancelAnimationFrame(rafId);
+      triggerBtn && triggerBtn.removeEventListener("click", onClick);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    },
+  };
+}
+
+/* ============================================================================
+ * PART 1D: SPACE MARKUP & CONTROLLER EXPORT
  * ============================================================================ */
 
 export function renderLusionSpaceMarkup() {
-  const headlineWords = ["MELANGKAH", "KE", "DUNIA", "BARU."];
+  const headlineWords = ["MASUK", "KE", "DUNIA", "BARU."];
 
   const groupsHtml = SPACE_WORLDS.map(
     (world, wIdx) => `
@@ -736,7 +1358,7 @@ export function renderLusionSpaceMarkup() {
                 data-world-idx="${wIdx}"
                 data-item-idx="${nIdx}"
                 data-week-id="${node.weekId}"
-                data-cursor="hover"
+                data-cursor="view"
                 aria-label="Buka modul ${node.title}"
               >
                 <span class="dkv-space-node-code">${node.code}</span>
@@ -770,18 +1392,18 @@ export function renderLusionSpaceMarkup() {
 
   return `
     <!-- ===================================================================
-         SECTION 6: LUSION.CO 4-ACT SPACE PORTAL TRANSITION (#secAstronaut)
+         SECTION 6: LUSION.CO 6-WORLD SPACE PORTAL TRANSITION (#secAstronaut)
          =================================================================== -->
     <section
       class="dkv-space-root"
       id="secAstronaut"
-      aria-label="Transisi ruang angkasa interaktif menuju perjalanan kreatif XI DKV dan profil Kak Adrian"
+      aria-label="Transisi ruang angkasa 6 dunia interaktif menuju alur produksi XI DKV dan profil Kak Adrian"
     >
       <div class="dkv-space-sticky" id="dkvSpaceSticky">
         <div class="dkv-space-portal-mask" id="dkvSpacePortalMask">
           <canvas id="dkvSpaceCanvas" class="dkv-space-canvas" aria-hidden="true"></canvas>
 
-          <!-- Act 1 (0% - 16%): Dip Into Cosmic Void -->
+          <!-- Act 1 (0% - 15%): Dip Into Cosmic Void -->
           <div class="dkv-space-act1" id="dkvSpaceAct1">
             <div class="dkv-space-act1-inner">
               <p class="dkv-space-eyebrow">EKSPLORASI KREATIF • XI DKV SMK BINA BANGSA</p>
@@ -797,20 +1419,20 @@ export function renderLusionSpaceMarkup() {
                   .join("")}
               </h2>
               <p class="dkv-space-act1-sub">
-                Setelah memahami 6 pertemuan silabus Editing Audio &amp; Video, masuk ke ruang dimensi produksi studio dari pra-produksi hingga master export.
+                Selami 6 dunia alur produksi Editing Audio &amp; Video, mulai dari pra-produksi storyboard hingga color grading dan master export.
               </p>
             </div>
           </div>
 
-          <!-- Act 2 (16% - 76%): 4-World Spatial Choreography -->
+          <!-- Act 2 (15% - 78%): 6-World Spatial Choreography -->
           <div class="dkv-space-act2" id="dkvSpaceAct2">
             <div class="dkv-space-watermark-wrap" aria-hidden="true">
               <span class="dkv-space-watermark" id="dkvSpaceWatermark">${SPACE_WORLDS[0].watermark}</span>
             </div>
 
             <div class="dkv-space-hud-top">
-              <p class="dkv-space-eyebrow">ALUR PRODUKSI AUDIO &amp; VIDEO</p>
-              <p class="dkv-space-stage-title" id="dkvSpaceStageTitle">01/04 • ${SPACE_WORLDS[0].label}</p>
+              <p class="dkv-space-eyebrow">6 DUNIA PRODUKSI AUDIO &amp; VIDEO</p>
+              <p class="dkv-space-stage-title" id="dkvSpaceStageTitle">01/06 • ${SPACE_WORLDS[0].label}</p>
               <p class="dkv-space-stage-sub" id="dkvSpaceStageSub">${SPACE_WORLDS[0].subtitle}</p>
             </div>
 
@@ -819,7 +1441,7 @@ export function renderLusionSpaceMarkup() {
             </div>
 
             <div class="dkv-space-nav" id="dkvSpaceNav" style="pointer-events:none;">
-              <div class="dkv-space-tabs" role="tablist" aria-label="Pilih tahap ruang produksi DKV">
+              <div class="dkv-space-tabs" role="tablist" aria-label="Pilih 6 dunia produksi DKV">
                 ${tabsHtml}
               </div>
               <div class="dkv-space-progress-track" aria-hidden="true">
@@ -831,7 +1453,7 @@ export function renderLusionSpaceMarkup() {
           <!-- Act 3 -> 4 (83% - 100%): Reverse Black-Hole Supernova Pure-White Reveal -->
           <div class="dkv-space-whiteout" id="dkvSpaceWhiteout">
             <div class="dkv-space-act4-copy" id="dkvSpaceAct4Copy">
-              <p class="dkv-space-act4-eyebrow">SMK BINA BANGSA • XI DKV</p>
+              <p class="dkv-space-act4-eyebrow">DUNIA KREATIF XI DKV</p>
               <h2 class="dkv-space-act4-title">DAN BIARKAN IMAJINASIMU TERUS BERGERAK.</h2>
               <p class="dkv-space-act4-sub">
                 Seluruh modul Editing Audio &amp; Video disusun agar setiap karya kelas XI DKV tampil rapi, enak didengar, dan siap masuk standar industri kreatif.
@@ -852,25 +1474,15 @@ export function renderLusionSpaceMarkup() {
     </section>
 
     <!-- ===================================================================
-         SECTION 7: LUSION.CO NEXT PAGE SCROLL GATE -> ABOUT PAGE
+         SECTION 7: LUSION.CO OVERSCROLL CHARGE GATE -> ABOUT PAGE
          =================================================================== -->
-    <section class="dkv-next-gate" id="dkvNextPageGate" aria-label="Lanjut ke halaman Tentang Kak Adrian">
-      <div class="dkv-next-gate-inner">
-        <button type="button" class="dkv-next-gate-btn" id="btnNextGateAbout" data-cursor="hover">
-          <span>
-            <span class="dkv-next-gate-eyebrow">HALAMAN BERIKUTNYA</span>
-            <span class="dkv-next-gate-title">TENTANG KAK ADRIAN</span>
-          </span>
-          <span class="dkv-next-gate-cta">
-            <span>BUKA HALAMAN ABOUT</span>
-            <span aria-hidden="true">→</span>
-          </span>
-        </button>
-        <div class="dkv-next-gate-track" aria-hidden="true">
-          <div class="dkv-next-gate-fill" id="dkvNextGateFill"></div>
-        </div>
-      </div>
-    </section>
+    ${renderNextPageGateMarkup({
+      id: "dkvNextPageGate",
+      title: "TENTANG KAK ADRIAN",
+      nextLabel: "HALAMAN BERIKUTNYA",
+      eyebrow: "TERUS SCROLL UNTUK LANJUT",
+      hint: "Scroll terus ke bawah atau klik untuk membuka halaman profil hologram & area of expertise.",
+    })}
   `;
 }
 
@@ -890,7 +1502,6 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
   const whiteoutEl = document.getElementById("dkvSpaceWhiteout");
   const act4Copy = document.getElementById("dkvSpaceAct4Copy");
   const gateSection = document.getElementById("dkvNextPageGate");
-  const gateFill = document.getElementById("dkvNextGateFill");
 
   if (!section || !sticky || !canvas) {
     return { onScrollUpdate() {}, destroy() {} };
@@ -902,9 +1513,7 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
   const groupNodes = groups.map((g) => Array.from(g.querySelectorAll("[data-space-node]")));
   const tabs = Array.from(section.querySelectorAll("[data-space-tab]"));
 
-  // Wire buttons (work identically in both full motion and reduced motion)
   const btnAbout = document.getElementById("btnSpaceGoAbout");
-  const btnGate = document.getElementById("btnNextGateAbout");
   const btnSyllabus = document.getElementById("btnBackToTopSyllabus");
 
   const goAbout = () => {
@@ -912,15 +1521,20 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
     onNavigate && onNavigate("about");
   };
   btnAbout && btnAbout.addEventListener("click", goAbout);
-  btnGate && btnGate.addEventListener("click", goAbout);
   btnSyllabus &&
     btnSyllabus.addEventListener("click", () => {
       const target = document.getElementById("secCurriculum");
       if (target) {
         soundEngine && soundEngine.playWhoosh && soundEngine.playWhoosh(400, 95);
-        target.scrollIntoView({ behavior: "smooth" });
+        if (window.__dkvLenis && typeof window.__dkvLenis.scrollTo === "function") {
+          window.__dkvLenis.scrollTo(target, { duration: 1.1 });
+        } else {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
       }
     });
+
+  const nextGate = mountNextPageGateController(gateSection, goAbout, soundEngine);
 
   section.querySelectorAll("[data-space-node]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -934,7 +1548,12 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
 
   if (reduced) {
     if (navWrap) navWrap.style.pointerEvents = "auto";
-    return { onScrollUpdate() {}, destroy() {} };
+    return {
+      onScrollUpdate() {},
+      destroy() {
+        nextGate.destroy();
+      },
+    };
   }
 
   const visual = createLusionSpaceRenderer(canvas, three);
@@ -980,7 +1599,6 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
     currentProgress = clamp01(progress);
     const state = computeSpacePhaseState(currentProgress);
 
-    // Smooth curved portal aperture opening as user dives from white Silabus into Space
     if (portalMask) {
       const openT = smoothstep(entryRatio);
       const insetY = ((1 - openT) * 9).toFixed(2);
@@ -1001,12 +1619,8 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
     });
 
     const phase2Active = state.phase2Opacity > 0.5 && state.whiteoutOpacity < 0.25;
-    if (act2) {
-      act2.style.opacity = state.phase2Opacity.toFixed(3);
-    }
-    if (navWrap) {
-      navWrap.style.pointerEvents = phase2Active ? "auto" : "none";
-    }
+    if (act2) act2.style.opacity = state.phase2Opacity.toFixed(3);
+    if (navWrap) navWrap.style.pointerEvents = phase2Active ? "auto" : "none";
 
     const stageW = orbitalStage ? orbitalStage.clientWidth : window.innerWidth;
     const stageH = orbitalStage ? orbitalStage.clientHeight : window.innerHeight * 0.6;
@@ -1077,15 +1691,8 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
     const scrollable = Math.max(1, rect.height - vh);
     const prog = clamp01(-rect.top / scrollable);
     applyProgress(prog, entryRatio);
-
-    if (gateSection && gateFill) {
-      const gRect = gateSection.getBoundingClientRect();
-      const gateProg = clamp01((vh - gRect.top) / Math.max(1, gRect.height + vh * 0.1));
-      gateFill.style.transform = `scaleX(${gateProg.toFixed(4)})`;
-    }
   };
 
-  // Continuous lightweight RAF loop while space section is in viewport so gyro core & nebula stay alive
   const io = new IntersectionObserver(
     (entries) => {
       inView = Boolean(entries[0] && entries[0].isIntersecting);
@@ -1123,6 +1730,7 @@ export function mountLusionSpaceController({ three, soundEngine, onOpenDetail, o
       window.removeEventListener("scroll", onNativeScroll);
       sticky.removeEventListener("pointermove", updatePointer);
       sticky.removeEventListener("pointerleave", resetPointer);
+      nextGate.destroy();
       visual.destroy();
     },
   };
@@ -1892,12 +2500,56 @@ function waveToDeckProgress(idx) {
   return idx === 0 ? 0.04 : idx === 1 ? 0.54 : 0.96;
 }
 
+const CURRICULUM_LEDGER_GROUPS = [
+  {
+    title: "Editing Audio & Video (Adobe Premiere Pro)",
+    rows: [
+      { code: "M01", label: "Pra-Produksi & Storyboard Produk TVC", note: "Ide, Naskah 2 Kolom & 9 Frame", weekId: "pr-01" },
+      { code: "M02", label: "Foldering & Rough Cut Cepat (Q & W)", note: "5 Folder Rapi & Ripple Trim", weekId: "pr-02" },
+      { code: "M03", label: "Audio Denoise & Audio Ducking", note: "3 Jalur Suara & Essential Sound", weekId: "pr-03" },
+      { code: "M04", label: "Elemen Grafis Berita & Tipografi", note: "Safe Margin, Lower Third & CTA", weekId: "pr-04" },
+      { code: "M05", label: "Studio Green Screen & Visual B-Roll", note: "Ultra Key & Multi-Layer Video", weekId: "pr-05" },
+      { code: "M06", label: "Color Grading & Master Export H.264", note: "Lumetri, 5 Titik QC & Penilaian", weekId: "pr-06" },
+    ],
+  },
+  {
+    title: "Motion Graphics (Adobe After Effects)",
+    rows: [
+      { code: "AE01", label: "Dasar Composition & Keyframe", note: "Modul Pertemuan 01 AE", href: "/ae-pertemuan-1.html" },
+      { code: "AE02", label: "Shape Layer & Kinetic Motion", note: "Modul Pertemuan 02 AE", href: "/ae-pertemuan-2.html" },
+      { code: "AE03", label: "Masking, Track Matte & Transitions", note: "Modul Pertemuan 03 AE", href: "/ae-pertemuan-3.html" },
+      { code: "AE04", label: "Tipografi Gerak & Lower Third AE", note: "Modul Pertemuan 04 AE", href: "/ae-pertemuan-4.html" },
+      { code: "AE05", label: "Motion Tracking & Visual Compositing", note: "Modul Pertemuan 05 AE", href: "/ae-pertemuan-5.html" },
+      { code: "AE06", label: "Finishing Bumper Studio & Render", note: "Modul Pertemuan 06 AE", href: "/ae-pertemuan-6.html" },
+    ],
+  },
+  {
+    title: "Portal & Kanal Resmi Kelas XI DKV",
+    rows: [
+      { code: "001", label: "Absensi Digital Kelas", note: "Presensi siswa XI DKV SMK Bina Bangsa", href: "/absensi" },
+      { code: "002", label: "Kumpul Tugas Karya", note: "Upload link tugas video & storyboard", href: "/kumpul-tugas" },
+      { code: "003", label: "Materi Siswa Terpadu", note: "Akses slide PDF & panduan belajar", href: "/materi-siswa" },
+      { code: "004", label: "Galeri & Database Tugas", note: "Arsip progres & hasil proyek kelas", href: "/database-tugas" },
+    ],
+  },
+];
+
+const ECOSYSTEM_TOOLS = [
+  { badge: "Pr", name: "Premiere Pro", sub: "Editing & Timeline" },
+  { badge: "Ae", name: "After Effects", sub: "Motion Graphics" },
+  { badge: "Au", name: "Audio Mixing", sub: "DeNoise & Ducking" },
+  { badge: "Ps", name: "Graphic Design", sub: "Poster & Broadcast" },
+  { badge: "Lu", name: "Lumetri Color", sub: "Grading & QC" },
+  { badge: "AI", name: "AI Creative", sub: "Ideation & Riset" },
+  { badge: "UI", name: "Web Design", sub: "Portal Interaktif" },
+  { badge: "TV", name: "TVC & Berita", sub: "Storyboard 16:9" },
+];
+
 export function mountLusionAboutView({ container, profile, soundEngine, onNavigate, onOpenDetail }) {
   const bio = cleanEmDash(profile.bio);
   const quote = cleanEmDash(profile.quote);
   const email = (profile.socials && profile.socials.email) || "hello@lexyth.my.id";
   const socials = profile.socials || {};
-  const stack = Array.isArray(profile.softwareStack) ? profile.softwareStack : [];
 
   container.innerHTML = `
     <div class="dkv-about-page" id="dkvAboutPage">
@@ -1942,6 +2594,8 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
       <!-- 02. SOLO MENTOR 3D HOLOGRAM CHAMBER ([[ 001 ]] KAK ADRIAN) -->
       <section class="dkv-about-founder" id="dkvAboutFounder" aria-labelledby="dkvFounderHeading">
         <div class="dkv-about-shell">
+          <div class="dkv-blue-line" aria-hidden="true"></div>
+
           <div class="dkv-founder-grid">
             <div>
               <div class="dkv-holo-card" id="dkvMentorHoloCard" data-cursor="hover">
@@ -1956,7 +2610,7 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
                   <span>[[ 001 ]]</span>
                   <span class="dkv-holo-live">
                     <span class="dkv-holo-dot" aria-hidden="true"></span>
-                    <span>SOLO MENTOR • 1 / 1</span>
+                    <span>HOLOGRAM PROFIL • 1 / 1 PENGAJAR</span>
                   </span>
                 </div>
 
@@ -1968,7 +2622,10 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
                     aria-label="Foto profil hologram 3D interaktif Kak Adrian, pengajar Editing Audio dan Video XI DKV"
                   ></canvas>
                   <div class="dkv-holo-tag-top">
-                    <span class="dkv-holo-chip">XI DKV</span>
+                    <span class="dkv-holo-brand-pill">
+                      <img src="/images/logo.png" alt="Logo SMK Bina Bangsa" width="24" height="24" loading="lazy" />
+                      <span>XI DKV</span>
+                    </span>
                     <span class="dkv-holo-chip">3D HOLO</span>
                   </div>
                   <div class="dkv-holo-readout">
@@ -1979,7 +2636,7 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
                 </div>
 
                 <div class="dkv-holo-footer">
-                  <span>SMK Bina Bangsa • DKV</span>
+                  <span>SMK Bina Bangsa • XI DKV</span>
                   ${socials.instagram ? `<a href="${socials.instagram}" target="_blank" rel="noopener noreferrer">@lexyth →</a>` : `<span>${email}</span>`}
                 </div>
               </div>
@@ -2010,41 +2667,142 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
         </div>
       </section>
 
-      <!-- 03. PINNED 3D SCROLL-FLIP AREA OF EXPERTISE DECK (LUSION.CO/ABOUT) -->
+      <!-- 03. SOFTWARE & ECOSYSTEM GRID (LUSION "BRANDS WE WORK WITH") -->
+      <section class="dkv-about-eco" id="dkvAboutEco" aria-labelledby="dkvEcoHeading">
+        <div class="dkv-about-shell">
+          <div class="dkv-blue-line" aria-hidden="true"></div>
+
+          <div class="dkv-eco-header">
+            <div>
+              <p class="dkv-about-eyebrow">EKOSISTEM PERANGKAT &amp; BIDANG KREATIF</p>
+              <h2 class="dkv-deck-title" id="dkvEcoHeading">Perangkat Produksi Studio dalam Satu Kelas.</h2>
+            </div>
+            <p class="dkv-eco-sub">
+              Siswa XI DKV dibimbing mempraktikkan langsung software standar industri kreatif mulai dari editing video, motion graphics, restorasi suara, hingga desain web interaktif.
+            </p>
+          </div>
+
+          <div class="dkv-eco-grid">
+            ${ECOSYSTEM_TOOLS.map(
+              (tool) => `
+                <article class="dkv-eco-card">
+                  <span class="dkv-eco-badge" aria-hidden="true">${tool.badge}</span>
+                  <h3 class="dkv-eco-name">${tool.name}</h3>
+                  <p class="dkv-eco-desc">${tool.sub}</p>
+                </article>
+              `
+            ).join("")}
+          </div>
+        </div>
+      </section>
+
+      <!-- 04. REAL CURRICULUM ARCHITECTURAL LEDGER (LUSION "AWARDS 58") -->
+      <section class="dkv-about-ledger" id="dkvAboutLedger" aria-labelledby="dkvLedgerHeading">
+        <div class="dkv-about-shell">
+          <div class="dkv-blue-line" aria-hidden="true"></div>
+
+          <div class="dkv-ledger-grid">
+            <div class="dkv-ledger-aside">
+              <div class="dkv-ledger-sticky">
+                <p class="dkv-about-eyebrow">REKAM JEJAK KURIKULUM NYATA</p>
+                <h2 class="dkv-deck-title" id="dkvLedgerHeading">Struktur Kelas</h2>
+
+                <div class="dkv-ledger-metric">
+                  <span class="dkv-ledger-big">12</span>
+                  <span class="dkv-ledger-unit">Modul</span>
+                </div>
+                <p class="dkv-ledger-caption">
+                  6 Pertemuan Editing Audio &amp; Video (Premiere Pro) + 6 Modul Motion Graphics (After Effects) dan 4 Portal Kelas Digital.
+                </p>
+
+                <a href="/materi-siswa" class="dkv-btn-ghost dkv-ledger-cta" data-cursor="hover">
+                  <span>Buka Semua Materi Siswa →</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="dkv-ledger-groups">
+              ${CURRICULUM_LEDGER_GROUPS.map(
+                (group) => `
+                  <div class="dkv-ledger-group">
+                    <h3 class="dkv-ledger-group-title">${group.title}</h3>
+                    <ul class="dkv-ledger-list">
+                      ${group.rows
+                        .map((row) =>
+                          row.weekId
+                            ? `
+                              <li>
+                                <button type="button" class="dkv-ledger-row" data-ledger-week="${row.weekId}" data-cursor="hover">
+                                  <span class="dkv-ledger-code">${row.code}</span>
+                                  <span class="dkv-ledger-label">${row.label}</span>
+                                  <span class="dkv-ledger-note">${row.note} →</span>
+                                </button>
+                              </li>
+                            `
+                            : `
+                              <li>
+                                <a href="${row.href}" class="dkv-ledger-row" data-cursor="hover">
+                                  <span class="dkv-ledger-code">${row.code}</span>
+                                  <span class="dkv-ledger-label">${row.label}</span>
+                                  <span class="dkv-ledger-note">${row.note} →</span>
+                                </a>
+                              </li>
+                            `
+                        )
+                        .join("")}
+                    </ul>
+                  </div>
+                `
+              ).join("")}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05. PINNED 3D SCROLL-FLIP AREA OF EXPERTISE DECK (LUSION.CO/ABOUT) -->
       <section class="dkv-deck-section" id="dkvExpertiseDeck" aria-labelledby="dkvDeckHeading">
         <div class="dkv-deck-sticky">
           <div class="dkv-about-shell">
+            <div class="dkv-blue-line" aria-hidden="true"></div>
+
             <div class="dkv-deck-header">
               <div>
                 <p class="dkv-about-eyebrow">AREA OF EXPERTISE • 3D FLIP DECK</p>
                 <h2 class="dkv-deck-title" id="dkvDeckHeading">Keahlian &amp; Fokus Pembelajaran</h2>
               </div>
-              <div class="dkv-deck-wave-meta">
-                <p class="dkv-deck-wave-label" id="dkvDeckWaveLabel">01 / 03 • ${EXPERTISE_WAVES[0].label}</p>
-                <p class="dkv-deck-wave-summary" id="dkvDeckWaveSummary">${EXPERTISE_WAVES[0].summary}</p>
+
+              <div class="dkv-deck-controls">
+                <div class="dkv-deck-tab-group" role="tablist" aria-label="Pilih gelombang keahlian">
+                  ${EXPERTISE_WAVES.map(
+                    (w, i) => `
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected="${i === 0 ? "true" : "false"}"
+                        class="dkv-deck-tab ${i === 0 ? "is-active" : ""}"
+                        data-deck-tab="${i}"
+                        data-cursor="hover"
+                      >
+                        ${w.code} ${w.shortLabel}
+                      </button>
+                    `
+                  ).join("")}
+                </div>
+                <div class="dkv-deck-progress-track" aria-hidden="true">
+                  <div class="dkv-deck-progress-bar" id="dkvDeckProgressBar"></div>
+                </div>
               </div>
             </div>
 
-            <div class="dkv-deck-tabs">
-              <div class="dkv-deck-tab-group" role="tablist" aria-label="Pilih gelombang keahlian">
-                ${EXPERTISE_WAVES.map(
-                  (w, i) => `
-                    <button
-                      type="button"
-                      role="tab"
-                      aria-selected="${i === 0 ? "true" : "false"}"
-                      class="dkv-deck-tab ${i === 0 ? "is-active" : ""}"
-                      data-deck-tab="${i}"
-                      data-cursor="hover"
-                    >
-                      ${w.code} ${w.shortLabel}
-                    </button>
-                  `
-                ).join("")}
+            <!-- Active Wave Descriptor Strip (matching amc.web.id/about) -->
+            <div class="dkv-deck-wave-strip">
+              <div>
+                <p class="dkv-deck-wave-label" id="dkvDeckWaveLabel">01 / 03 • ${EXPERTISE_WAVES[0].label}</p>
+                <p class="dkv-deck-wave-summary" id="dkvDeckWaveSummary">${EXPERTISE_WAVES[0].summary}</p>
               </div>
-              <div class="dkv-deck-progress-track" aria-hidden="true">
-                <div class="dkv-deck-progress-bar" id="dkvDeckProgressBar"></div>
-              </div>
+              <button type="button" class="dkv-deck-strip-link" id="btnDeckOpenSyllabus" data-cursor="hover">
+                Buka Silabus Lengkap →
+              </button>
             </div>
 
             <div class="dkv-flip-grid" id="dkvFlipGrid">
@@ -2100,44 +2858,16 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
         </div>
       </section>
 
-      <!-- 04. REAL COMPETENCIES & PORTAL TOOLS -->
-      <section class="dkv-about-craft" aria-labelledby="dkvCraftHeading">
-        <div class="dkv-about-shell">
-          <p class="dkv-about-eyebrow">BIDANG UTAMA &amp; AKSES CEPAT KELAS</p>
-          <h2 class="dkv-deck-title" id="dkvCraftHeading">Ruang Eksperimen Kreatif</h2>
-
-          <div class="dkv-craft-grid">
-            ${stack
-              .map(
-                (item) => `
-                  <article class="dkv-craft-item">
-                    <div>
-                      <span class="dkv-craft-icon">${String(item.icon || "DKV").toUpperCase()}</span>
-                      <h3 class="dkv-craft-name" style="margin-top:10px;">${item.name}</h3>
-                    </div>
-                    <p class="dkv-craft-desc">${cleanEmDash(item.desc)}</p>
-                  </article>
-                `
-              )
-              .join("")}
-          </div>
-
-          <div class="dkv-portal-links" aria-label="Tautan cepat portal kelas">
-            <a href="/kumpul-tugas" class="dkv-portal-chip" data-cursor="hover">Kumpul Tugas →</a>
-            <a href="/materi-siswa" class="dkv-portal-chip" data-cursor="hover">Materi Siswa →</a>
-            <a href="/absensi" class="dkv-portal-chip" data-cursor="hover">Absensi Kelas →</a>
-            <a href="/database-tugas" class="dkv-portal-chip" data-cursor="hover">Galeri &amp; Database Tugas →</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- 05. FINALE INTERACTIVE 3D PHYSICS SPHERES CTA (LUSION "LET'S WORK TOGETHER") -->
+      <!-- 06. FINALE INTERACTIVE 3D PHYSICS SPHERES CTA (LUSION "LET'S WORK TOGETHER") -->
       <section class="dkv-about-cta" id="dkvAboutCta" data-spheres-stage aria-labelledby="dkvAboutCtaTitle">
         <canvas id="dkvAboutCtaSpheres" class="dkv-spheres-canvas" aria-hidden="true"></canvas>
 
         <div class="dkv-about-cta-inner">
           <p class="dkv-about-eyebrow">SIAP NGULIK BARENG DI KELAS?</p>
-          <h2 class="dkv-about-cta-title" id="dkvAboutCtaTitle">AYO MULAI BERKARYA!</h2>
+          <h2 class="dkv-about-cta-title" id="dkvAboutCtaTitle">
+            <span>AYO MULAI</span>
+            <span class="dkv-about-h1-accent">BERKARYA!</span>
+          </h2>
           <p class="dkv-about-cta-sub">
             Santai saja, Kak Adrian selalu terbuka untuk diskusi seputar Editing Audio &amp; Video, Graphic Design, AI Content, dan Web Design.
           </p>
@@ -2158,6 +2888,15 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
           </div>
         </div>
       </section>
+
+      <!-- 07. LUSION.CO OVERSCROLL CHARGE GATE -> SILABUS MATERI -->
+      ${renderNextPageGateMarkup({
+        id: "dkvAboutNextGate",
+        title: "SILABUS MATERI XI DKV",
+        nextLabel: "LANJUT BELAJAR",
+        eyebrow: "TERUS SCROLL UNTUK LANJUT",
+        hint: "Scroll terus ke bawah atau klik untuk langsung membuka seluruh modul silabus Editing Audio & Video.",
+      })}
     </div>
   `;
 
@@ -2175,8 +2914,26 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
   };
   const btnSyl1 = document.getElementById("btnAboutOpenSyllabus");
   const btnSyl2 = document.getElementById("btnExploreSyllabusFromAbout");
+  const btnSyl3 = document.getElementById("btnDeckOpenSyllabus");
   btnSyl1 && btnSyl1.addEventListener("click", goSyllabus);
   btnSyl2 && btnSyl2.addEventListener("click", goSyllabus);
+  btnSyl3 && btnSyl3.addEventListener("click", goSyllabus);
+
+  container.querySelectorAll("[data-ledger-week]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const weekId = btn.getAttribute("data-ledger-week");
+      if (weekId && onOpenDetail) {
+        soundEngine && soundEngine.playTick && soundEngine.playTick(1100);
+        onOpenDetail(weekId);
+      }
+    });
+  });
+
+  const aboutNextGate = mountNextPageGateController(
+    document.getElementById("dkvAboutNextGate"),
+    goSyllabus,
+    soundEngine
+  );
 
   // Mount Interactive 3D Physics Spheres in Hero & Finale CTA
   const heroSpheres = mountInteractiveSpheres(
@@ -2333,6 +3090,7 @@ export function mountLusionAboutView({ container, profile, soundEngine, onNaviga
     },
     destroy() {
       window.removeEventListener("scroll", syncDeckFromScroll);
+      aboutNextGate.destroy();
       heroSpheres.destroy();
       ctaSpheres.destroy();
       hologram.destroy();

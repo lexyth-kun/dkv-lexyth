@@ -1,7 +1,7 @@
 /* ============================================================================
  * BINA BANGSA NEXUS — SERVICE WORKER (PWA OFFLINE SHELL & SMART CACHE)
  * ============================================================================ */
-const SW_VERSION = "bb-nexus-pwa-v33";
+const SW_VERSION = "bb-nexus-pwa-v34";
 const STATIC_CACHE = `bb-static-${SW_VERSION}`;
 const RUNTIME_CACHE = `bb-runtime-${SW_VERSION}`;
 
