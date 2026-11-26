@@ -1,0 +1,318 @@
+{
+  "meta": {
+    "title": "Tentang Kak Adrian • Portal DKV SMK Bina Bangsa",
+    "description": "Profil Kak Adrian (Adrian Ali Muthi, S.Ds), mentor Editing Audio & Video kelas XI DKV SMK Bina Bangsa, lengkap dengan eksplorasi visual 3D interaktif, keahlian utama, dan silabus praktikum.",
+    "lang": "id"
+  },
+  "preloader": {
+    "logoSrc": "/about/assets/logo.webp",
+    "logoAlt": "Logo SMK Bina Bangsa Portal DKV",
+    "label": "MEMUAT STUDIO DKV"
+  },
+  "header": {
+    "brandText": "LEXYTH",
+    "brandAriaLabel": "DKV Lexyth, kembali ke Beranda",
+    "brandHref": "/",
+    "contactLabel": "HUBUNGI",
+    "contactHref": "#kontak",
+    "menuLabel": "MENU",
+    "closeMenuLabel": "TUTUP",
+    "soundLabel": "Suara Latar",
+    "motionPauseLabel": "Jeda Animasi"
+  },
+  "menu": {
+    "links": [
+      { "label": "BERANDA", "href": "/", "active": false },
+      { "label": "TENTANG", "href": "/about/", "active": true },
+      { "label": "MATERI", "href": "/materi-siswa", "active": false },
+      { "label": "KUMPUL TUGAS", "href": "/kumpul-tugas", "active": false }
+    ],
+    "metaNote": "SMK Bina Bangsa • XI DKV"
+  },
+  "hero": {
+    "kicker": "PORTAL DKV • SMK BINA BANGSA",
+    "headlinePrimary": [
+      "BELAJAR",
+      "DKV",
+      "LEBIH",
+      "DARI",
+      "SEKADAR",
+      "TOMBOL",
+      "SOFTWARE"
+    ],
+    "headlineSecondary": "PARTNER NGULIK BARENG DI KELAS XI DKV",
+    "subcopy": "Ruang belajar Editing Audio & Video, Motion Design, Graphic Design, dan Web UI bersama Kak Adrian agar setiap karya rapi, enak ditonton, dan siap dipakai di industri kreatif.",
+    "scrollCue": "SCROLL TO EXPLORE"
+  },
+  "team": {
+    "sectionTag": "P E R A N",
+    "portraitSrc": "/about/assets/adrian-lusion-portrait.webp",
+    "portraitAlt": "Potret 3D point-cloud Kak Adrian",
+    "fixedBio": "Kenalin, aku Kak Adrian, mentor Editing Audio & Video kelas XI DKV SMK Bina Bangsa. Di kelas, kita fokus jadi partner ngulik bareng supaya setiap siswa tidak hanya menghafal tombol software, tetapi mampu merancang karya audio-video yang rapi, komunikatif, dan relevan dengan industri kreatif.",
+    "roles": [
+      {
+        "index": "001",
+        "glyph": "V",
+        "name": "Kak Adrian",
+        "role": "VIDEO & AUDIO EDITOR",
+        "detail": "Timeline editing Adobe Premiere Pro, pacing cerita TVC & ILM, restorasi audio, green screen, hingga color grading."
+      },
+      {
+        "index": "002",
+        "glyph": "G",
+        "name": "Kak Adrian",
+        "role": "GRAPHIC DESIGNER",
+        "detail": "Identitas visual, tata letak editorial, poster, lower third siaran berita, dan sistem tipografi yang terbaca tajam."
+      },
+      {
+        "index": "003",
+        "glyph": "A",
+        "name": "Kak Adrian",
+        "role": "AI CONTENT CREATOR",
+        "detail": "Riset ide kreatif, penulisan konsep visual, dan produksi alur kerja multimedia modern berbasis perangkat AI."
+      },
+      {
+        "index": "004",
+        "glyph": "W",
+        "name": "Kak Adrian",
+        "role": "WEB DESIGNER",
+        "detail": "Perancangan antarmuka web edukasi yang interaktif, bersih, responsif di ponsel, dan nyaman dipakai siswa."
+      }
+    ]
+  },
+  "brands": {
+    "eyebrow": "PRINSIP BERKARYA",
+    "statement": [
+      "NGEDESAIN ITU RUANG EKSPERIMEN YANG ASYIK,",
+      "SANTAI NGERJAINNYA, SERIUS HASILNYA."
+    ],
+    "marqueeRows": [
+      "DKV • PREMIERE PRO • AFTER EFFECTS • AUDIO MIXING • COLOR GRADING • ",
+      "DKV   DKV   DKV   DKV   DKV   DKV   ",
+      "SMK BINA BANGSA • XI DKV • STORYBOARD TVC • MOTION BUMPER • WEB UI • "
+    ]
+  },
+  "keahlian": {
+    "title": "KEAHLIAN",
+    "count": "08",
+    "watermark": "KEAHLIAN",
+    "hint": "SCROLL, GESER, ATAU KLIK PANAH",
+    "items": [
+      {
+        "index": "01",
+        "title": "Timeline & Rough Cut",
+        "sublabel": "Premiere Pro • Foldering & Shortcut Q/W",
+        "description": "Menata folder proyek agar media tidak offline dan memotong adegan cepat menjaga ritme cerita."
+      },
+      {
+        "index": "02",
+        "title": "Audio Denoise & Ducking",
+        "sublabel": "Essential Sound • Voice Over & BGM",
+        "description": "Menjernihkan rekaman narator dari noise ruangan dan menyeimbangkan volume musik latar secara presisi."
+      },
+      {
+        "index": "03",
+        "title": "Grafis Siaran & Tipografi",
+        "sublabel": "Essential Graphics • Lower Third & Ticker",
+        "description": "Merancang papan nama narasumber, fakta isu, dan running text berita dengan keterbacaan siaran."
+      },
+      {
+        "index": "04",
+        "title": "Green Screen & Layering",
+        "sublabel": "Ultra Key • Multi-Track B-Roll",
+        "description": "Menghapus latar hijau secara bersih dan menumpuk cuplikan B-Roll bukti visual di atas narasi."
+      },
+      {
+        "index": "05",
+        "title": "Color Grading & Master Export",
+        "sublabel": "Lumetri Color • QC 5 Titik & H.264",
+        "description": "Membangun nuansa emosi lewat Adjustment Layer lalu mengekspor master MP4 Full HD siap tayang."
+      },
+      {
+        "index": "06",
+        "title": "Motion Design & Keyframe",
+        "sublabel": "After Effects • Easy Ease & Speed Graph",
+        "description": "Menghidupkan logo, trim paths, dan Alpha Track Matte dengan kurva gerak organik kelas studio."
+      },
+      {
+        "index": "07",
+        "title": "Graphic & Editorial Design",
+        "sublabel": "Identitas Visual • Poster & Layout",
+        "description": "Menyusun komposisi grid, kontras warna, dan hierarki tipografi yang tegas pada media cetak maupun digital."
+      },
+      {
+        "index": "08",
+        "title": "AI Workflow & Web UI",
+        "sublabel": "Ideasi Konten AI • Antarmuka Web Responsif",
+        "description": "Menggabungkan eksplorasi ide kreatif berbasis AI dengan desain antarmuka web yang fungsional."
+      }
+    ]
+  },
+  "materiPertemuan": {
+    "dividerTop": "MULTIDISCIPLINARY",
+    "dividerBottom": "KREATIF",
+    "materiTitle": "MATERI PILIHAN",
+    "materiCount": "03",
+    "materiItems": [
+      {
+        "code": "PAV • 01",
+        "title": "Pra-Produksi & Storyboard Produk TVC",
+        "summary": "Merumuskan ide, tema emosi, naskah dua kolom, serta storyboard iklan produk rasio 16:9.",
+        "image": "/about/assets/materi-01.webp",
+        "imageAlt": "Sampul materi Pra-Produksi dan Storyboard Produk TVC",
+        "href": "/pav-pertemuan-1.html",
+        "cta": "Buka Slide Pertemuan 01"
+      },
+      {
+        "code": "PAV • 03",
+        "title": "Audio Denoise & Audio Ducking",
+        "summary": "Teknik menjernihkan voice over narator dan mengatur dinamika musik latar Iklan Layanan Masyarakat.",
+        "image": "/about/assets/materi-02.webp",
+        "imageAlt": "Sampul materi Audio Denoise dan Audio Ducking",
+        "href": "/pav-pertemuan-3.html",
+        "cta": "Buka Slide Pertemuan 03"
+      },
+      {
+        "code": "PAV • 04",
+        "title": "Elemen Grafis Berita (Lower Third & Running Text)",
+        "summary": "Merancang papan nama narasumber, teks fakta isu, dan running text berita profesional di Essential Graphics.",
+        "image": "/about/assets/materi-03.webp",
+        "imageAlt": "Sampul materi Grafis Siaran Lower Third dan Running Text Pertemuan 4",
+        "href": "/pav-pertemuan-4.html",
+        "cta": "Buka Slide Pertemuan 04"
+      }
+    ],
+    "pertemuanTitle": "PERTEMUAN",
+    "pertemuanCount": "06",
+    "pertemuanItems": [
+      {
+        "week": "01",
+        "title": "Pra-Produksi & Storyboard Produk (Iklan Produk TVC)",
+        "category": "Pra-Produksi TVC",
+        "href": "/pav-pertemuan-1.html"
+      },
+      {
+        "week": "02",
+        "title": "Foldering & Rough Cut Cepat (Q & W)",
+        "category": "Manajemen Bins",
+        "href": "/pav-pertemuan-2.html"
+      },
+      {
+        "week": "03",
+        "title": "Audio Denoise & Audio Ducking",
+        "category": "Restorasi Suara",
+        "href": "/pav-pertemuan-3.html"
+      },
+      {
+        "week": "04",
+        "title": "Elemen Grafis Berita (Lower Third & Running Text)",
+        "category": "Grafis Siaran",
+        "href": "/pav-pertemuan-4.html"
+      },
+      {
+        "week": "05",
+        "title": "Studio Green Screen (Ultra Key) & Visual B-Roll",
+        "category": "Chroma Keying",
+        "href": "/pav-pertemuan-5.html"
+      },
+      {
+        "week": "06",
+        "title": "Color Grading & Master Export H.264",
+        "category": "Lumetri & QC",
+        "href": "/pav-pertemuan-6.html"
+      }
+    ]
+  },
+  "expertise": {
+    "sectionTitle": "AREA KEAHLIAN",
+    "sectionIndex": "04",
+    "cards": [
+      {
+        "letter": "E",
+        "title": "EDITING",
+        "subtitle": "Premiere Pro Workflow",
+        "items": [
+          { "left": "Pra-Produksi & Naskah", "right": "TVC 16:9" },
+          { "left": "Manajemen Folder & Bins", "right": "Anti Offline" },
+          { "left": "Ripple Rough Cut", "right": "Shortcut Q/W" },
+          { "left": "Multi-Track B-Roll", "right": "Ultra Key" }
+        ]
+      },
+      {
+        "letter": "A",
+        "title": "AUDIO & WARNA",
+        "subtitle": "Finishing & Broadcast",
+        "items": [
+          { "left": "Restorasi Voice Over", "right": "Denoise" },
+          { "left": "Keseimbangan BGM", "right": "Auto Ducking" },
+          { "left": "Pewarnaan Emosi", "right": "Lumetri Color" },
+          { "left": "Quality Control 5 Titik", "right": "Master H.264" }
+        ]
+      },
+      {
+        "letter": "D",
+        "title": "DESAIN",
+        "subtitle": "Grafis & Motion Studio",
+        "items": [
+          { "left": "Grafis Berita", "right": "Lower Third" },
+          { "left": "Kurva Gerak Organik", "right": "Speed Graph" },
+          { "left": "Anatomi Logo & Path", "right": "Trim Paths" },
+          { "left": "Tata Letak & Poster", "right": "Editorial Grid" }
+        ]
+      },
+      {
+        "letter": "W",
+        "title": "AI & WEB",
+        "subtitle": "Eksplorasi Digital",
+        "items": [
+          { "left": "Riset & Ideasi Visual", "right": "AI Workflow" },
+          { "left": "Konten Multimedia", "right": "Produksi Cepat" },
+          { "left": "Antarmuka Web Edukasi", "right": "UI Interaktif" },
+          { "left": "Layout Lintas Layar", "right": "Responsif" }
+        ]
+      }
+    ]
+  },
+  "cta": {
+    "eyebrowLines": [
+      "SIAP NGULIK",
+      "BARENG DI KELAS?"
+    ],
+    "headline": "Ayo Mulai Berkarya!",
+    "primaryAction": {
+      "label": "Buka Materi Siswa",
+      "href": "/materi-siswa"
+    },
+    "secondaryAction": {
+      "label": "Kumpulkan Tugas",
+      "href": "/kumpul-tugas"
+    },
+    "continueLabel": "CONTINUE TO SCROLL"
+  },
+  "footer": {
+    "schoolName": "SMK Bina Bangsa • XI DKV",
+    "mentorName": "Kak Adrian (Adrian Ali Muthi, S.Ds)",
+    "mentorRole": "Pengajar Editing Audio & Video, Graphic Design, AI Content Creator, dan Web Design.",
+    "portalLinks": [
+      { "label": "Beranda", "href": "/" },
+      { "label": "Materi Siswa", "href": "/materi-siswa" },
+      { "label": "Kumpul Tugas", "href": "/kumpul-tugas" },
+      { "label": "Galeri Karya Siswa", "href": "/database-tugas" },
+      { "label": "Presensi Kelas", "href": "/absensi" }
+    ],
+    "contactEmail": "hello@lexyth.my.id",
+    "socials": [
+      { "label": "Instagram", "handle": "@lexyth", "href": "https://instagram.com/lexyth" },
+      { "label": "YouTube", "handle": "@lexyth", "href": "https://youtube.com/@lexyth" },
+      { "label": "GitHub", "handle": "github.com/lexyth", "href": "https://github.com/lexyth" }
+    ],
+    "copyright": "© 2026 Portal DKV SMK Bina Bangsa • Kak Adrian",
+    "backToTopLabel": "Kembali ke Atas"
+  },
+  "nextPage": {
+    "eyebrow": "KARYA SISWA • HALAMAN BERIKUTNYA",
+    "title": "Galeri Karya Siswa",
+    "href": "/database-tugas",
+    "hint": "Terus scroll atau klik untuk membuka galeri"
+  }
+}
