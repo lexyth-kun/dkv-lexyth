@@ -11,6 +11,7 @@ import {
 import { createWebGLStage } from './webgl-stage.js';
 import { createTeamPointCloudScene } from './scene-team.js';
 import { createKeahlianShardScene } from './scene-keahlian.js';
+import { createExpertiseRibbonScene, createCtaParticleArchScene } from './scene-blue.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -699,10 +700,16 @@ function mountMateriAndPertemuan(content, stage, mountEl) {
 
   ScrollTrigger.create({
     trigger: section,
-    start: 'top center',
-    end: 'bottom center',
-    onEnter: () => setSurfaceAndHeader('materi'),
-    onEnterBack: () => setSurfaceAndHeader('materi')
+    start: 'top 65%',
+    end: 'bottom 35%',
+    onEnter: () => {
+      setSurfaceAndHeader('materi');
+      stage.setState({ activeScene: 'none' });
+    },
+    onEnterBack: () => {
+      setSurfaceAndHeader('materi');
+      stage.setState({ activeScene: 'none' });
+    }
   });
 
   if (!prefersReducedMotion) {
@@ -739,6 +746,215 @@ function mountMateriAndPertemuan(content, stage, mountEl) {
         onLeaveBack: () => item.classList.remove('is-passed')
       });
     });
+  }
+}
+
+function mountExpertiseAndCta(content, stage, mountEl) {
+  const { expertise, cta } = content;
+
+  // 5A. AREA KEAHLIAN: HARD SNAP BLACK -> ELECTRIC BLUE (#1D3CFF)
+  const expSec = document.createElement('section');
+  expSec.id = 'sec-expertise';
+  expSec.className = 'sec sec-expertise';
+  expSec.setAttribute('data-theme-section', 'expertise');
+  expSec.setAttribute('aria-label', 'Area Keahlian Utama DKV');
+  expSec.innerHTML = `
+    <div class="expertise-pin-viewport">
+      <div class="expertise-header">
+        <div class="expertise-title-wrap">
+          <h2 class="expertise-title">${escapeHtml(expertise.sectionTitle)}</h2>
+          <span class="expertise-count">${escapeHtml(expertise.sectionIndex)}</span>
+        </div>
+        <span class="keahlian-hint" style="color:#FFFFFF;">04 PILAR PRAKTIKUM DKV</span>
+      </div>
+
+      <div class="expertise-stage">
+        <div id="expertiseCardsGrid" class="expertise-cards-grid">
+          ${expertise.cards
+            .map(
+              (card, idx) => `
+            <article class="exp-card" data-card-idx="${idx}">
+              <div>
+                <div class="exp-card-top">
+                  <span class="exp-card-letter" aria-hidden="true">${escapeHtml(card.letter)}</span>
+                  <span class="exp-card-badge">0${idx + 1}</span>
+                </div>
+                <h3 class="exp-card-title">${escapeHtml(card.title)}</h3>
+                <p class="exp-card-sub">${escapeHtml(card.subtitle)}</p>
+              </div>
+              <ul class="exp-leader-list">
+                ${card.items
+                  .map(
+                    (row) => `
+                  <li class="exp-leader-item">
+                    <span class="exp-leader-left">${escapeHtml(row.left)}</span>
+                    <span class="exp-leader-dots" aria-hidden="true"></span>
+                    <span class="exp-leader-right">${escapeHtml(row.right)}</span>
+                  </li>`
+                  )
+                  .join('')}
+              </ul>
+            </article>`
+            )
+            .join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  mountEl.appendChild(expSec);
+
+  if (stage.isWebGL && stage.THREE) {
+    stage.registerScene('expertise', createExpertiseRibbonScene(stage.THREE, stage.isMobile));
+    stage.registerScene('cta', createCtaParticleArchScene(stage.THREE, stage.isMobile));
+  }
+
+  // HARD SNAP trigger: instant switch #000000 -> #1D3CFF (no soft fade!)
+  ScrollTrigger.create({
+    trigger: expSec,
+    start: 'top 68%',
+    end: 'bottom 20%',
+    onEnter() {
+      setSurfaceAndHeader('expertise');
+      stage.setState({ activeScene: 'expertise' });
+    },
+    onEnterBack() {
+      setSurfaceAndHeader('expertise');
+      stage.setState({ activeScene: 'expertise' });
+    },
+    onLeaveBack() {
+      setSurfaceAndHeader('materi');
+      stage.setState({ activeScene: 'none' });
+    }
+  });
+
+  // Pinned 4-card 3D fanning -> aligning choreography on desktop (stepped Z avoids card intersection)
+  const isDesktop = window.innerWidth >= 900;
+  if (!prefersReducedMotion && isDesktop) {
+    const cards = Array.from(expSec.querySelectorAll('.exp-card'));
+    const fanStates = [
+      { xPercent: 105, y: 42, z: -90, rotationZ: -11, rotationY: 12, scale: 0.9 },
+      { xPercent: 36, y: 16, z: -30, rotationZ: -4, rotationY: 5, scale: 0.95 },
+      { xPercent: -36, y: 16, z: 30, rotationZ: 4, rotationY: -5, scale: 0.95 },
+      { xPercent: -105, y: 42, z: 90, rotationZ: 11, rotationY: -12, scale: 0.9 }
+    ];
+
+    cards.forEach((card, i) => {
+      card.style.zIndex = String(i + 1);
+      gsap.set(card, fanStates[i]);
+    });
+
+    const expTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: expSec,
+        start: 'top top',
+        end: '+=2000',
+        pin: true,
+        scrub: 0.65,
+        onUpdate(self) {
+          stage.setState({ activeScene: 'expertise', expertiseProgress: self.progress });
+        }
+      }
+    });
+
+    expTl.to(
+      cards,
+      {
+        xPercent: 0,
+        y: 0,
+        z: 0,
+        rotationZ: 0,
+        rotationY: 0,
+        scale: 1,
+        stagger: 0.05,
+        duration: 0.72,
+        ease: 'power3.out'
+      },
+      0
+    );
+  }
+
+  // 5B. CTA SECTION ON CONTINUOUS ELECTRIC BLUE (#1D3CFF)
+  const ctaSec = document.createElement('section');
+  ctaSec.id = 'sec-cta';
+  ctaSec.className = 'sec sec-cta';
+  ctaSec.setAttribute('data-theme-section', 'cta');
+  ctaSec.setAttribute('aria-label', 'Ajakan Mulai Berkarya');
+
+  const headlineChars = Array.from(cta.headline)
+    .map((ch) =>
+      ch === ' '
+        ? '<span class="cta-char cta-char-space">&nbsp;</span>'
+        : `<span class="cta-char">${escapeHtml(ch)}</span>`
+    )
+    .join('');
+
+  ctaSec.innerHTML = `
+    <p class="cta-eyebrow">
+      ${cta.eyebrowLines.map((l) => `<span>${escapeHtml(l)}</span>`).join('<br />')}
+    </p>
+
+    <div class="cta-center">
+      <h2 class="cta-headline" aria-label="${escapeHtml(cta.headline)}">${headlineChars}</h2>
+      <div class="cta-actions">
+        <a class="cta-btn cta-btn-white" href="${escapeHtml(cta.primaryAction.href)}">${escapeHtml(cta.primaryAction.label)}</a>
+        <a class="cta-btn cta-btn-dark" href="${escapeHtml(cta.secondaryAction.href)}">${escapeHtml(cta.secondaryAction.label)}</a>
+      </div>
+    </div>
+
+    <button id="ctaContinueBtn" type="button" class="cta-continue-pill">
+      <span>${escapeHtml(cta.continueLabel)}</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  `;
+  mountEl.appendChild(ctaSec);
+
+  ctaSec.querySelector('#ctaContinueBtn')?.addEventListener('click', () => {
+    const footerEl = document.getElementById('kontak');
+    if (footerEl) {
+      footerEl.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    } else {
+      window.scrollBy({ top: window.innerHeight, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+  });
+
+  ScrollTrigger.create({
+    trigger: ctaSec,
+    start: 'top 62%',
+    end: 'bottom 25%',
+    onEnter() {
+      setSurfaceAndHeader('cta');
+      stage.setState({ activeScene: 'cta' });
+    },
+    onEnterBack() {
+      setSurfaceAndHeader('cta');
+      stage.setState({ activeScene: 'cta' });
+    },
+    onUpdate(self) {
+      stage.setState({ ctaProgress: self.progress });
+    }
+  });
+
+  if (!prefersReducedMotion) {
+    const chars = ctaSec.querySelectorAll('.cta-char');
+    gsap.fromTo(
+      chars,
+      { opacity: 0, y: 42, rotateX: -35 },
+      {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        stagger: 0.025,
+        duration: 0.65,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: ctaSec,
+          start: 'top 72%',
+          once: false
+        }
+      }
+    );
   }
 }
 
@@ -787,6 +1003,7 @@ async function bootstrap() {
     mountTeamSection(content, stage, mountEl);
     mountBrandsAndKeahlian(content, stage, mountEl);
     mountMateriAndPertemuan(content, stage, mountEl);
+    mountExpertiseAndCta(content, stage, mountEl);
   }
   setSurfaceAndHeader('hero');
 

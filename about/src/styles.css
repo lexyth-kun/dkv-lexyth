@@ -1472,6 +1472,294 @@ html.is-motion-paused .marquee-track {
   transform: scaleX(0);
 }
 
+/* =========================================================
+   SECTION 5A: AREA KEAHLIAN (HARD SNAP ELECTRIC BLUE #1D3CFF)
+   ========================================================= */
+.sec-expertise {
+  background: transparent;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.expertise-pin-viewport {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + 32px) clamp(20px, 4vw, 48px) clamp(28px, 5vh, 52px);
+  overflow: hidden;
+}
+
+.expertise-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.expertise-title-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.expertise-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
+}
+
+.expertise-count {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+.expertise-stage {
+  position: relative;
+  z-index: 6;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  padding: 24px 0;
+}
+
+.expertise-cards-grid {
+  width: 100%;
+  max-width: 1360px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+  transform-style: preserve-3d;
+}
+
+.exp-card {
+  background: #FFFFFF;
+  color: #09090B;
+  border-radius: 16px;
+  padding: clamp(20px, 2.2vw, 28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+  box-shadow: 0 22px 48px rgba(7, 17, 74, 0.28);
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  will-change: transform;
+}
+
+.exp-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.exp-card-letter {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 4.4vw, 68px);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: #1D3CFF;
+}
+
+.exp-card-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #09090B;
+  background: #EDF1FF;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.exp-card-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #09090B;
+}
+
+.exp-card-sub {
+  margin: 0 0 22px;
+  font-size: 13px;
+  color: var(--ink-muted-light);
+}
+
+.exp-leader-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exp-leader-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.exp-leader-left {
+  font-weight: 600;
+  color: #09090B;
+  flex-shrink: 0;
+}
+
+.exp-leader-dots {
+  flex: 1;
+  border-bottom: 1.5px dotted rgba(9, 9, 11, 0.32);
+  min-width: 12px;
+  transform: translateY(-3px);
+}
+
+.exp-leader-right {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #1D3CFF;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   SECTION 5B: CTA ON ELECTRIC BLUE (#1D3CFF) + PARTICLE ARCH
+   ========================================================= */
+.sec-cta {
+  position: relative;
+  min-height: 100dvh;
+  background: transparent;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: calc(var(--header-h) + 40px) clamp(20px, 4vw, 48px) clamp(32px, 5vh, 56px);
+  z-index: 4;
+}
+
+.cta-eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.7;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+
+.cta-center {
+  position: relative;
+  z-index: 6;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin: auto 0;
+}
+
+.cta-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 8.6vw, 132px);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.cta-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.cta-char-space {
+  width: 0.28em;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.cta-btn {
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+}
+
+.cta-btn-white {
+  background: #FFFFFF;
+  color: #09090B;
+}
+
+.cta-btn-dark {
+  background: #09090B;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.cta-continue-pill {
+  min-height: 46px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1.5px solid #FFFFFF;
+  background: rgba(9, 9, 11, 0.22);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cta-continue-pill:hover {
+  background: #FFFFFF;
+  color: #1D3CFF;
+}
+
 /* Fullscreen Next-Page Transition Overlay */
 .page-transition-overlay {
   position: fixed;
@@ -1568,6 +1856,19 @@ html.is-motion-paused .marquee-track {
     text-align: left;
     white-space: normal;
   }
+
+  .expertise-pin-viewport {
+    height: auto;
+    min-height: auto;
+  }
+
+  .expertise-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .exp-card {
+    min-height: 300px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1648,6 +1949,23 @@ html.is-motion-paused .marquee-track {
 
   .materi-grid {
     grid-template-columns: 1fr;
+  }
+
+  .expertise-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exp-card {
+    min-height: auto;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-btn {
+    width: 100%;
   }
 }
 
