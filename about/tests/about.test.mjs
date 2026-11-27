@@ -31,7 +31,7 @@ test('content.json passes schema validation with zero em dashes and zero placeho
   assert.equal(content.materiPertemuan.pertemuanItems.length, 6);
   assert.equal(content.expertise.cards.length, 4);
   assert.equal(content.menu.links.length, 4);
-  assert.equal(content.nextPage.href, '/database-tugas');
+  assert.equal(content.nextPage.href, '/#silabus');
 });
 
 test('all local image assets referenced in content.json exist and zero personal face photos are used', () => {

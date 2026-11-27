@@ -310,9 +310,9 @@
     "backToTopLabel": "Kembali ke Atas"
   },
   "nextPage": {
-    "eyebrow": "KARYA SISWA • HALAMAN BERIKUTNYA",
-    "title": "Galeri Karya Siswa",
-    "href": "/database-tugas",
-    "hint": "Terus scroll atau klik untuk membuka galeri"
+    "eyebrow": "SILABUS • HALAMAN BERIKUTNYA",
+    "title": "Silabus XI DKV",
+    "href": "/#silabus",
+    "hint": "Terus scroll atau klik untuk membuka silabus"
   }
 }

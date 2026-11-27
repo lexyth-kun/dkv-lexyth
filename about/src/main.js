@@ -1065,7 +1065,7 @@ function mountFooterAndNextPage(content, stage, mountEl, lenis) {
   nextSec.id = 'sec-nextpage';
   nextSec.className = 'sec sec-nextpage';
   nextSec.setAttribute('data-theme-section', 'nextpage');
-  nextSec.setAttribute('aria-label', 'Navigasi ke Halaman Galeri Karya Siswa');
+  nextSec.setAttribute('aria-label', 'Navigasi ke Halaman Silabus XI DKV');
   nextSec.innerHTML = `
     <a id="nextPageLink" class="nextpage-link" href="${escapeHtml(nextPage.href)}">
       <div class="nextpage-inner">
@@ -1185,7 +1185,7 @@ async function bootstrap() {
   let content = null;
 
   try {
-    const res = await fetch('/about/content.json?v=20261126d', { cache: 'no-cache' });
+    const res = await fetch('/about/content.json?v=20261126e', { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     content = await res.json();
     const check = validateContentSchema(content);
